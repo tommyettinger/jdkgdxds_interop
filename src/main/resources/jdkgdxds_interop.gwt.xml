@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.8.2//EN"
+        "http://www.gwtproject.org/doctype/2.8.2/gwt-module.dtd">
+
+<!-- To compile to Gwt, you need to reference this file in your master .gwt.xml
+     file (usually called GdxDefinition.gwt.xml) as follows:
+     
+     <inherits name="jdkgdxds_interop" />
+  -->
+<module>
+    <inherits name="jdkgdxds" />
+    <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
+	
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.support.LaserRandom" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.BinaryHeap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.CaseInsensitiveMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.CaseInsensitiveOrderedMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.FloatList" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.HolderOrderedSet" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.HolderSet" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IdentityObjectMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IdentityObjectOrderedMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntFloatMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntFloatOrderedMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntIntMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntIntOrderedMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntList" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntLongMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntLongOrderedMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntObjectMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntObjectOrderedMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntOrderedSet" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntSet" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongFloatMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongFloatOrderedMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongIntMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongIntOrderedMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongList" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongLongMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongLongOrderedMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongObjectMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongObjectOrderedMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongOrderedSet" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongSet" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.NumberedSet" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectFloatMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectFloatOrderedMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectIntMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectIntOrderedMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectList" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectLongMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectLongOrderedMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectObjectMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectObjectOrderedMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectOrderedSet" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectSet" />
+    <source path="com/github/tommyettinger/ds/interop" />
+</module>
