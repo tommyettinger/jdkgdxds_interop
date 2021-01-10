@@ -17,6 +17,55 @@ public class JsonSupport {
      * @param json a libGDX Json object that will have serializers registered for all JDKGDXDS types.
      */
     public static void registerWith(@Nonnull Json json) {
+        json.setSerializer(ObjectList.class, new Json.Serializer<ObjectList>() {
+            @Override
+            public void write(Json json, ObjectList object, Class knownType) {
+                if(object == null)
+                {
+                    json.writeValue(null);
+                    return;
+                }
+                json.writeArrayStart();
+                for (Object o : object){
+                    json.writeValue(o);
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public ObjectList read(Json json, JsonValue jsonData, Class type) {
+                if(jsonData == null || jsonData.isNull()) return null;
+                ObjectList data = new ObjectList<>(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.add(json.readValue(null, value));
+                }
+                return data;
+            }
+        });
+
+        json.setSerializer(IntList.class, new Json.Serializer<IntList>() {
+            @Override
+            public void write(Json json, IntList object, Class knownType) {
+                if(object == null)
+                {
+                    json.writeValue(null);
+                    return;
+                }
+                json.writeArrayStart();
+                PrimitiveIterator.OfInt it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.next());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public IntList read(Json json, JsonValue jsonData, Class type) {
+                if(jsonData == null || jsonData.isNull()) return null;
+                return IntList.with(jsonData.asIntArray());
+            }
+        });
+
         json.setSerializer(ObjectSet.class, new Json.Serializer<ObjectSet>() {
             @Override
             public void write(Json json, ObjectSet object, Class knownType) {

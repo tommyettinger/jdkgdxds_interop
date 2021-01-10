@@ -11,6 +11,45 @@ import java.util.PrimitiveIterator;
 
 public class JsonTest {
     @Test
+    public void testObjectList() {
+        Json json = new Json(JsonWriter.OutputType.json);
+        JsonSupport.registerWith(json);
+        ObjectList<String> words = ObjectList.with("Peanut", "Butter", "Jelly", "Time");
+        String data = json.toJson(words);
+        System.out.println(data);
+        ObjectList words2 = json.fromJson(ObjectList.class, data);
+        for(Object word : words2) {
+            System.out.print(word);
+            System.out.print(", ");
+        }
+        System.out.println();
+        ObjectList<GridPoint2> points = ObjectList.with(new GridPoint2(42, 42), new GridPoint2(666, 666), new GridPoint2(23, 23));
+        data = json.toJson(points);
+        System.out.println(data);
+        ObjectList points2 = json.fromJson(ObjectList.class, data);
+        for(Object point : points2) {
+            System.out.print(point);
+            System.out.print(", ");
+        }
+    }
+
+    @Test
+    public void testIntList() {
+        Json json = new Json(JsonWriter.OutputType.json);
+        JsonSupport.registerWith(json);
+        IntList numbers = IntList.with(42, 23, 666, 420);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        IntList numbers2 = json.fromJson(IntList.class, data);
+        PrimitiveIterator.OfInt it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.next());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+    }
+
+    @Test
     public void testObjectSet() {
         Json json = new Json(JsonWriter.OutputType.json);
         JsonSupport.registerWith(json);
