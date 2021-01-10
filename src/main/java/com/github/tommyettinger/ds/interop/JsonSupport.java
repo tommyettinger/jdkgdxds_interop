@@ -2,10 +2,13 @@ package com.github.tommyettinger.ds.interop;
 
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.github.tommyettinger.ds.IntOrderedSet;
+import com.github.tommyettinger.ds.IntSet;
 import com.github.tommyettinger.ds.ObjectOrderedSet;
 import com.github.tommyettinger.ds.ObjectSet;
 
 import javax.annotation.Nonnull;
+import java.util.PrimitiveIterator;
 
 @SuppressWarnings("rawtypes")
 public class JsonSupport {
@@ -67,5 +70,50 @@ public class JsonSupport {
                 return data;
             }
         });
+        json.setSerializer(IntSet.class, new Json.Serializer<IntSet>() {
+            @Override
+            public void write(Json json, IntSet object, Class knownType) {
+                if(object == null)
+                {
+                    json.writeValue(null);
+                    return;
+                }
+                json.writeArrayStart();
+                PrimitiveIterator.OfInt it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.next());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public IntSet read(Json json, JsonValue jsonData, Class type) {
+                if(jsonData == null || jsonData.isNull()) return null;
+                return IntSet.with(jsonData.asIntArray());
+            }
+        });
+        json.setSerializer(IntOrderedSet.class, new Json.Serializer<IntOrderedSet>() {
+            @Override
+            public void write(Json json, IntOrderedSet object, Class knownType) {
+                if(object == null)
+                {
+                    json.writeValue(null);
+                    return;
+                }
+                json.writeArrayStart();
+                PrimitiveIterator.OfInt it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.next());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public IntOrderedSet read(Json json, JsonValue jsonData, Class type) {
+                if(jsonData == null || jsonData.isNull()) return null;
+                return IntOrderedSet.with(jsonData.asIntArray());
+            }
+        });
+
     }
 }
