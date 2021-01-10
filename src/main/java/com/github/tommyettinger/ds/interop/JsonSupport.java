@@ -2,10 +2,7 @@ package com.github.tommyettinger.ds.interop;
 
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
-import com.github.tommyettinger.ds.IntOrderedSet;
-import com.github.tommyettinger.ds.IntSet;
-import com.github.tommyettinger.ds.ObjectOrderedSet;
-import com.github.tommyettinger.ds.ObjectSet;
+import com.github.tommyettinger.ds.*;
 
 import javax.annotation.Nonnull;
 import java.util.PrimitiveIterator;
@@ -112,6 +109,50 @@ public class JsonSupport {
             public IntOrderedSet read(Json json, JsonValue jsonData, Class type) {
                 if(jsonData == null || jsonData.isNull()) return null;
                 return IntOrderedSet.with(jsonData.asIntArray());
+            }
+        });
+        json.setSerializer(LongSet.class, new Json.Serializer<LongSet>() {
+            @Override
+            public void write(Json json, LongSet object, Class knownType) {
+                if(object == null)
+                {
+                    json.writeValue(null);
+                    return;
+                }
+                json.writeArrayStart();
+                PrimitiveIterator.OfLong it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.next());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public LongSet read(Json json, JsonValue jsonData, Class type) {
+                if(jsonData == null || jsonData.isNull()) return null;
+                return LongSet.with(jsonData.asLongArray());
+            }
+        });
+        json.setSerializer(LongOrderedSet.class, new Json.Serializer<LongOrderedSet>() {
+            @Override
+            public void write(Json json, LongOrderedSet object, Class knownType) {
+                if(object == null)
+                {
+                    json.writeValue(null);
+                    return;
+                }
+                json.writeArrayStart();
+                PrimitiveIterator.OfLong it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.next());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public LongOrderedSet read(Json json, JsonValue jsonData, Class type) {
+                if(jsonData == null || jsonData.isNull()) return null;
+                return LongOrderedSet.with(jsonData.asLongArray());
             }
         });
 

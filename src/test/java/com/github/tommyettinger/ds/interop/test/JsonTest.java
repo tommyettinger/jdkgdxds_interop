@@ -3,10 +3,7 @@ package com.github.tommyettinger.ds.interop.test;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
-import com.github.tommyettinger.ds.IntOrderedSet;
-import com.github.tommyettinger.ds.IntSet;
-import com.github.tommyettinger.ds.ObjectOrderedSet;
-import com.github.tommyettinger.ds.ObjectSet;
+import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.interop.JsonSupport;
 import org.junit.Test;
 
@@ -81,6 +78,36 @@ public class JsonTest {
         System.out.println(data);
         IntOrderedSet numbers2 = json.fromJson(IntOrderedSet.class, data);
         PrimitiveIterator.OfInt it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.next());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+    }
+    @Test
+    public void testLongSet() {
+        Json json = new Json(JsonWriter.OutputType.json);
+        JsonSupport.registerWith(json);
+        LongSet numbers = LongSet.with(42L, 23L, 666666666666L, 4200000000000000L);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        LongSet numbers2 = json.fromJson(LongSet.class, data);
+        PrimitiveIterator.OfLong it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.next());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+    }
+    @Test
+    public void testLongOrderedSet() {
+        Json json = new Json(JsonWriter.OutputType.json);
+        JsonSupport.registerWith(json);
+        LongOrderedSet numbers = LongOrderedSet.with(42L, 23L, 666666666666L, 4200000000000000L);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        LongOrderedSet numbers2 = json.fromJson(LongOrderedSet.class, data);
+        PrimitiveIterator.OfLong it = numbers2.iterator();
         while (it.hasNext()){
             System.out.print(it.next());
             if(it.hasNext())
