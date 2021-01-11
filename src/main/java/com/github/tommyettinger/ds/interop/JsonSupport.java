@@ -274,5 +274,28 @@ public class JsonSupport {
             }
         });
 
+        json.setSerializer(ObjectObjectOrderedMap.class, new Json.Serializer<ObjectObjectOrderedMap>() {
+            @Override
+            public void write(Json json, ObjectObjectOrderedMap object, Class knownType) {
+                if(object == null)
+                {
+                    json.writeValue(null);
+                    return;
+                }
+                json.writeObjectStart();
+                json.writeValue("k", new ObjectList(object.keySet()), null, null);
+                json.writeValue("v", new ObjectList(object.values()), null, null);
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public ObjectObjectOrderedMap<?, ?> read(Json json, JsonValue jsonData, Class type) {
+                if(jsonData == null || jsonData.isNull()) return null;
+                ObjectList<?> k = json.readValue("k", ObjectList.class, jsonData);
+                ObjectList<?> v = json.readValue("v", ObjectList.class, jsonData);
+                return new ObjectObjectOrderedMap<>(k, v);
+            }
+        });
+
     }
 }
