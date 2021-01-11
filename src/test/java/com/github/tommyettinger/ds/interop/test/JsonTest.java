@@ -246,5 +246,34 @@ public class JsonTest {
             System.out.print("; ");
         }
     }
+    @Test
+    public void testObjectLongMap() {
+        Json json = new Json(JsonWriter.OutputType.json);
+        JsonSupport.registerWith(json);
+        ObjectLongMap<String> words = new ObjectLongMap<>(new String[]{"foo", "bar", "baz"},
+                new long[]{42L, 23L, 666666666666L});
+        String data = json.toJson(words);
+        System.out.println(data);
+        ObjectLongMap<?> words2 = json.fromJson(ObjectLongMap.class, data);
+        for(ObjectLongMap.Entry<?> pair : words2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+        System.out.println();
+        ObjectLongMap<GridPoint2> points = new ObjectLongMap<>(
+                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(666, 666), new GridPoint2(23, 23)},
+                new long[]{42L, 23L, 666666666666L});
+        data = json.toJson(points);
+        System.out.println(data);
+        ObjectLongMap<?> points2 = json.fromJson(ObjectLongMap.class, data);
+        for(ObjectLongMap.Entry<?> pair : points2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+    }
 
 }

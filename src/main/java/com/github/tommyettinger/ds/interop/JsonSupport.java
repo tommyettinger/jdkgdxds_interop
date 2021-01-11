@@ -296,6 +296,28 @@ public class JsonSupport {
                 return new ObjectObjectOrderedMap<>(k, v);
             }
         });
+        json.setSerializer(ObjectLongMap.class, new Json.Serializer<ObjectLongMap>() {
+            @Override
+            public void write(Json json, ObjectLongMap object, Class knownType) {
+                if(object == null)
+                {
+                    json.writeValue(null);
+                    return;
+                }
+                json.writeObjectStart();
+                json.writeValue("k", new ObjectList(object.keySet()), null, null);
+                json.writeValue("v", new LongList(object.values()), null, null);
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public ObjectLongMap<?> read(Json json, JsonValue jsonData, Class type) {
+                if(jsonData == null || jsonData.isNull()) return null;
+                ObjectList<?> k = json.readValue("k", ObjectList.class, jsonData);
+                LongList v = json.readValue("v", LongList.class, jsonData);
+                return new ObjectLongMap<>(k, v);
+            }
+        });
 
     }
 }

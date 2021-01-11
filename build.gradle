@@ -59,7 +59,7 @@ repositories {
 
 dependencies {
     api "com.google.code.findbugs:jsr305:3.0.2"
-	api "com.github.tommyettinger:jdkgdxds:e7d3391f92"
+	api "com.github.tommyettinger:jdkgdxds:94ab40565c"
 	api "com.badlogicgames.gdx:gdx:1.9.13"
     testImplementation "junit:junit:4.13.1"
 }
