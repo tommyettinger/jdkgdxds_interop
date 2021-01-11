@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.interop.JsonSupport;
+import com.github.tommyettinger.ds.support.util.FloatIterator;
 import org.junit.Test;
 
 import java.util.PrimitiveIterator;
@@ -42,6 +43,38 @@ public class JsonTest {
         System.out.println(data);
         IntList numbers2 = json.fromJson(IntList.class, data);
         PrimitiveIterator.OfInt it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.next());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+    }
+
+    @Test
+    public void testLongList() {
+        Json json = new Json(JsonWriter.OutputType.json);
+        JsonSupport.registerWith(json);
+        LongList numbers = LongList.with(42, 23, 666, 420);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        LongList numbers2 = json.fromJson(LongList.class, data);
+        PrimitiveIterator.OfLong it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.next());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+    }
+
+    @Test
+    public void testFloatList() {
+        Json json = new Json(JsonWriter.OutputType.json);
+        JsonSupport.registerWith(json);
+        FloatList numbers = FloatList.with(42.42f, 23.23f, 666.666f, 420.42f);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        FloatList numbers2 = json.fromJson(FloatList.class, data);
+        FloatIterator it = numbers2.iterator();
         while (it.hasNext()){
             System.out.print(it.next());
             if(it.hasNext())

@@ -3,6 +3,7 @@ package com.github.tommyettinger.ds.interop;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.github.tommyettinger.ds.*;
+import com.github.tommyettinger.ds.support.util.FloatIterator;
 
 import javax.annotation.Nonnull;
 import java.util.PrimitiveIterator;
@@ -63,6 +64,52 @@ public class JsonSupport {
             public IntList read(Json json, JsonValue jsonData, Class type) {
                 if(jsonData == null || jsonData.isNull()) return null;
                 return IntList.with(jsonData.asIntArray());
+            }
+        });
+
+        json.setSerializer(LongList.class, new Json.Serializer<LongList>() {
+            @Override
+            public void write(Json json, LongList object, Class knownType) {
+                if(object == null)
+                {
+                    json.writeValue(null);
+                    return;
+                }
+                json.writeArrayStart();
+                PrimitiveIterator.OfLong it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.next());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public LongList read(Json json, JsonValue jsonData, Class type) {
+                if(jsonData == null || jsonData.isNull()) return null;
+                return LongList.with(jsonData.asLongArray());
+            }
+        });
+
+        json.setSerializer(FloatList.class, new Json.Serializer<FloatList>() {
+            @Override
+            public void write(Json json, FloatList object, Class knownType) {
+                if(object == null)
+                {
+                    json.writeValue(null);
+                    return;
+                }
+                json.writeArrayStart();
+                FloatIterator it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.next());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public FloatList read(Json json, JsonValue jsonData, Class type) {
+                if(jsonData == null || jsonData.isNull()) return null;
+                return FloatList.with(jsonData.asFloatArray());
             }
         });
 
