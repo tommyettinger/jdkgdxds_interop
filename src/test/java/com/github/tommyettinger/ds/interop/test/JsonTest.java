@@ -8,6 +8,7 @@ import com.github.tommyettinger.ds.interop.JsonSupport;
 import com.github.tommyettinger.ds.support.util.FloatIterator;
 import org.junit.Test;
 
+import java.util.Map;
 import java.util.PrimitiveIterator;
 
 public class JsonTest {
@@ -184,6 +185,35 @@ public class JsonTest {
             System.out.print(it.next());
             if(it.hasNext())
                 System.out.print(", ");
+        }
+    }
+    @Test
+    public void testObjectObjectMap() {
+        Json json = new Json(JsonWriter.OutputType.json);
+        JsonSupport.registerWith(json);
+        ObjectObjectMap<String, GridPoint2> words = new ObjectObjectMap<>(new String[]{"foo", "bar", "baz"},
+                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(666, 666), new GridPoint2(23, 23)});
+        String data = json.toJson(words);
+        System.out.println(data);
+        ObjectObjectMap<?, ?> words2 = json.fromJson(ObjectObjectMap.class, data);
+        for(Map.Entry<?, ?> pair : words2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+        System.out.println();
+        ObjectObjectMap<GridPoint2, String> points = new ObjectObjectMap<>(
+                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(666, 666), new GridPoint2(23, 23)},
+                new String[]{"foo", "bar", "baz"});
+        data = json.toJson(points);
+        System.out.println(data);
+        ObjectObjectMap<?, ?> points2 = json.fromJson(ObjectObjectMap.class, data);
+        for(Map.Entry<?, ?> pair : points2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
         }
     }
 

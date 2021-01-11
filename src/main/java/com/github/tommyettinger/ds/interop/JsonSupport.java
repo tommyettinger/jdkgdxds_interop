@@ -6,7 +6,7 @@ import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.support.util.FloatIterator;
 
 import javax.annotation.Nonnull;
-import java.util.PrimitiveIterator;
+import java.util.*;
 
 @SuppressWarnings("rawtypes")
 public class JsonSupport {
@@ -249,6 +249,28 @@ public class JsonSupport {
             public LongOrderedSet read(Json json, JsonValue jsonData, Class type) {
                 if(jsonData == null || jsonData.isNull()) return null;
                 return LongOrderedSet.with(jsonData.asLongArray());
+            }
+        });
+        json.setSerializer(ObjectObjectMap.class, new Json.Serializer<ObjectObjectMap>() {
+            @Override
+            public void write(Json json, ObjectObjectMap object, Class knownType) {
+                if(object == null)
+                {
+                    json.writeValue(null);
+                    return;
+                }
+                json.writeObjectStart();
+                json.writeValue("k", new ObjectList(object.keySet()), null, null);
+                json.writeValue("v", new ObjectList(object.values()), null, null);
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public ObjectObjectMap<?, ?> read(Json json, JsonValue jsonData, Class type) {
+                if(jsonData == null || jsonData.isNull()) return null;
+                ObjectList<?> k = json.readValue("k", ObjectList.class, jsonData);
+                ObjectList<?> v = json.readValue("v", ObjectList.class, jsonData);
+                return new ObjectObjectMap<>(k, v);
             }
         });
 
