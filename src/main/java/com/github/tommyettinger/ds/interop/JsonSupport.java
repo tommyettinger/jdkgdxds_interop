@@ -283,7 +283,7 @@ public class JsonSupport {
                     return;
                 }
                 json.writeObjectStart();
-                json.writeValue("k", new ObjectList(object.keySet()), null, null);
+                json.writeValue("k", object.order(), null, null);
                 json.writeValue("v", new ObjectList(object.values()), null, null);
                 json.writeObjectEnd();
             }
@@ -296,6 +296,7 @@ public class JsonSupport {
                 return new ObjectObjectOrderedMap<>(k, v);
             }
         });
+
         json.setSerializer(ObjectLongMap.class, new Json.Serializer<ObjectLongMap>() {
             @Override
             public void write(Json json, ObjectLongMap object, Class knownType) {
@@ -318,6 +319,7 @@ public class JsonSupport {
                 return new ObjectLongMap<>(k, v);
             }
         });
+
         json.setSerializer(ObjectLongOrderedMap.class, new Json.Serializer<ObjectLongOrderedMap>() {
             @Override
             public void write(Json json, ObjectLongOrderedMap object, Class knownType) {
@@ -341,5 +343,50 @@ public class JsonSupport {
             }
         });
 
+        json.setSerializer(ObjectIntMap.class, new Json.Serializer<ObjectIntMap>() {
+            @Override
+            public void write(Json json, ObjectIntMap object, Class knownType) {
+                if(object == null)
+                {
+                    json.writeValue(null);
+                    return;
+                }
+                json.writeObjectStart();
+                json.writeValue("k", new ObjectList(object.keySet()), null, null);
+                json.writeValue("v", new IntList(object.values()), null, null);
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public ObjectIntMap<?> read(Json json, JsonValue jsonData, Class type) {
+                if(jsonData == null || jsonData.isNull()) return null;
+                ObjectList<?> k = json.readValue("k", ObjectList.class, jsonData);
+                IntList v = json.readValue("v", IntList.class, jsonData);
+                return new ObjectIntMap<>(k, v);
+            }
+        });
+
+        json.setSerializer(ObjectIntOrderedMap.class, new Json.Serializer<ObjectIntOrderedMap>() {
+            @Override
+            public void write(Json json, ObjectIntOrderedMap object, Class knownType) {
+                if(object == null)
+                {
+                    json.writeValue(null);
+                    return;
+                }
+                json.writeObjectStart();
+                json.writeValue("k", object.order(), null, null);
+                json.writeValue("v", new IntList(object.values()), null, null);
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public ObjectIntOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
+                if(jsonData == null || jsonData.isNull()) return null;
+                ObjectList<?> k = json.readValue("k", ObjectList.class, jsonData);
+                IntList v = json.readValue("v", IntList.class, jsonData);
+                return new ObjectIntOrderedMap<>(k, v);
+            }
+        });
     }
 }
