@@ -246,6 +246,7 @@ public class JsonTest {
             System.out.print("; ");
         }
     }
+
     @Test
     public void testObjectLongMap() {
         Json json = new Json(JsonWriter.OutputType.json);
@@ -269,6 +270,36 @@ public class JsonTest {
         System.out.println(data);
         ObjectLongMap<?> points2 = json.fromJson(ObjectLongMap.class, data);
         for(ObjectLongMap.Entry<?> pair : points2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+    }
+
+    @Test
+    public void testObjectLongOrderedMap() {
+        Json json = new Json(JsonWriter.OutputType.json);
+        JsonSupport.registerWith(json);
+        ObjectLongOrderedMap<String> words = new ObjectLongOrderedMap<>(new String[]{"foo", "bar", "baz"},
+                new long[]{42L, 23L, 666666666666L});
+        String data = json.toJson(words);
+        System.out.println(data);
+        ObjectLongOrderedMap<?> words2 = json.fromJson(ObjectLongOrderedMap.class, data);
+        for(ObjectLongOrderedMap.Entry<?> pair : words2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+        System.out.println();
+        ObjectLongOrderedMap<GridPoint2> points = new ObjectLongOrderedMap<>(
+                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(666, 666), new GridPoint2(23, 23)},
+                new long[]{42L, 23L, 666666666666L});
+        data = json.toJson(points);
+        System.out.println(data);
+        ObjectLongOrderedMap<?> points2 = json.fromJson(ObjectLongOrderedMap.class, data);
+        for(ObjectLongOrderedMap.Entry<?> pair : points2) {
             System.out.print(pair.getKey());
             System.out.print("=");
             System.out.print(pair.getValue());
