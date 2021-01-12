@@ -307,7 +307,6 @@ public class JsonTest {
         }
     }
 
-
     @Test
     public void testObjectIntMap() {
         Json json = new Json(JsonWriter.OutputType.json);
@@ -368,4 +367,64 @@ public class JsonTest {
         }
     }
 
+
+    @Test
+    public void testObjectFloatMap() {
+        Json json = new Json(JsonWriter.OutputType.json);
+        JsonSupport.registerWith(json);
+        ObjectFloatMap<String> words = new ObjectFloatMap<>(new String[]{"foo", "bar", "baz"},
+                new float[]{42.42f, 23.23f, 666.666f});
+        String data = json.toJson(words);
+        System.out.println(data);
+        ObjectFloatMap<?> words2 = json.fromJson(ObjectFloatMap.class, data);
+        for(ObjectFloatMap.Entry<?> pair : words2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+        System.out.println();
+        ObjectFloatMap<GridPoint2> points = new ObjectFloatMap<>(
+                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(666, 666), new GridPoint2(23, 23)},
+                new float[]{42.42f, 23.23f, 666.666f});
+        data = json.toJson(points);
+        System.out.println(data);
+        ObjectFloatMap<?> points2 = json.fromJson(ObjectFloatMap.class, data);
+        for(ObjectFloatMap.Entry<?> pair : points2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+    }
+
+    @Test
+    public void testObjectFloatOrderedMap() {
+        Json json = new Json(JsonWriter.OutputType.json);
+        JsonSupport.registerWith(json);
+        ObjectFloatOrderedMap<String> words = new ObjectFloatOrderedMap<>(new String[]{"foo", "bar", "baz"},
+                new float[]{42.42f, 23.23f, 666.666f});
+        String data = json.toJson(words);
+        System.out.println(data);
+        ObjectFloatOrderedMap<?> words2 = json.fromJson(ObjectFloatOrderedMap.class, data);
+        for(ObjectFloatOrderedMap.Entry<?> pair : words2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+        System.out.println();
+        ObjectFloatOrderedMap<GridPoint2> points = new ObjectFloatOrderedMap<>(
+                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(666, 666), new GridPoint2(23, 23)},
+                new float[]{42.42f, 23.23f, 666.666f});
+        data = json.toJson(points);
+        System.out.println(data);
+        ObjectFloatOrderedMap<?> points2 = json.fromJson(ObjectFloatOrderedMap.class, data);
+        for(ObjectFloatOrderedMap.Entry<?> pair : points2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+    }
 }

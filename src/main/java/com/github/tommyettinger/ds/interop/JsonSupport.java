@@ -388,5 +388,52 @@ public class JsonSupport {
                 return new ObjectIntOrderedMap<>(k, v);
             }
         });
+
+        json.setSerializer(ObjectFloatMap.class, new Json.Serializer<ObjectFloatMap>() {
+            @Override
+            public void write(Json json, ObjectFloatMap object, Class knownType) {
+                if(object == null)
+                {
+                    json.writeValue(null);
+                    return;
+                }
+                json.writeObjectStart();
+                json.writeValue("k", new ObjectList(object.keySet()), null, null);
+                json.writeValue("v", new FloatList(object.values()), null, null);
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public ObjectFloatMap<?> read(Json json, JsonValue jsonData, Class type) {
+                if(jsonData == null || jsonData.isNull()) return null;
+                ObjectList<?> k = json.readValue("k", ObjectList.class, jsonData);
+                FloatList v = json.readValue("v", FloatList.class, jsonData);
+                return new ObjectFloatMap<>(k, v);
+            }
+        });
+
+        json.setSerializer(ObjectFloatOrderedMap.class, new Json.Serializer<ObjectFloatOrderedMap>() {
+            @Override
+            public void write(Json json, ObjectFloatOrderedMap object, Class knownType) {
+                if(object == null)
+                {
+                    json.writeValue(null);
+                    return;
+                }
+                json.writeObjectStart();
+                json.writeValue("k", object.order(), null, null);
+                json.writeValue("v", new FloatList(object.values()), null, null);
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public ObjectFloatOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
+                if(jsonData == null || jsonData.isNull()) return null;
+                ObjectList<?> k = json.readValue("k", ObjectList.class, jsonData);
+                FloatList v = json.readValue("v", FloatList.class, jsonData);
+                return new ObjectFloatOrderedMap<>(k, v);
+            }
+        });
+
     }
 }
