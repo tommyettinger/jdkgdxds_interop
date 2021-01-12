@@ -2,10 +2,13 @@ package com.github.tommyettinger.ds.interop;
 
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.JsonWriter;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.support.util.FloatIterator;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.*;
 
 @SuppressWarnings("rawtypes")
@@ -17,7 +20,8 @@ public class JsonSupport {
      * Registers JDKGDXDS' classes with the given Json object, allowing it to read and write JDKGDXDS types.
      * @param json a libGDX Json object that will have serializers registered for all JDKGDXDS types.
      */
-    public static void registerWith(@Nonnull Json json) {
+    public static void registerWith(@Nonnull Json json, JsonWriter.OutputType outputType) {
+        json.setOutputType(outputType);
         json.setSerializer(ObjectList.class, new Json.Serializer<ObjectList>() {
             @Override
             public void write(Json json, ObjectList object, Class knownType) {
@@ -254,23 +258,25 @@ public class JsonSupport {
         json.setSerializer(ObjectObjectMap.class, new Json.Serializer<ObjectObjectMap>() {
             @Override
             public void write(Json json, ObjectObjectMap object, Class knownType) {
-                if(object == null)
-                {
+                if (object == null) {
                     json.writeValue(null);
                     return;
-                }
+                }                 
                 json.writeObjectStart();
-                json.writeValue("k", new ObjectList(object.keySet()), null, null);
-                json.writeValue("v", new ObjectList(object.values()), null, null);
+                for (Map.Entry<?, ?> e : (Iterable<Map.Entry<?, ?>>) new ObjectObjectMap.Entries<>(object)) {
+                    json.writeValue(outputType.quoteValue(e.getKey()), e.getValue());
+                }
                 json.writeObjectEnd();
             }
 
             @Override
             public ObjectObjectMap<?, ?> read(Json json, JsonValue jsonData, Class type) {
                 if(jsonData == null || jsonData.isNull()) return null;
-                ObjectList<?> k = json.readValue("k", ObjectList.class, jsonData);
-                ObjectList<?> v = json.readValue("v", ObjectList.class, jsonData);
-                return new ObjectObjectMap<>(k, v);
+                ObjectObjectMap<?,?> data = new ObjectObjectMap<>(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.put(json.fromJson(null, value.name), json.readValue(null, value));
+                }
+                return data;
             }
         });
 
