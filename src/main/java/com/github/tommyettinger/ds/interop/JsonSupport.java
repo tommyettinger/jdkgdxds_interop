@@ -20,8 +20,7 @@ public class JsonSupport {
      * Registers JDKGDXDS' classes with the given Json object, allowing it to read and write JDKGDXDS types.
      * @param json a libGDX Json object that will have serializers registered for all JDKGDXDS types.
      */
-    public static void registerWith(@Nonnull Json json, JsonWriter.OutputType outputType) {
-        json.setOutputType(outputType);
+    public static void registerWith(@Nonnull Json json) {
         json.setSerializer(ObjectList.class, new Json.Serializer<ObjectList>() {
             @Override
             public void write(Json json, ObjectList object, Class knownType) {
@@ -261,12 +260,32 @@ public class JsonSupport {
                 if (object == null) {
                     json.writeValue(null);
                     return;
-                }                 
-                json.writeObjectStart();
-                for (Map.Entry<?, ?> e : (Iterable<Map.Entry<?, ?>>) new ObjectObjectMap.Entries<>(object)) {
-                    json.writeValue(outputType.quoteValue(e.getKey()), e.getValue());
                 }
-                json.writeObjectEnd();
+                Writer writer = json.getWriter();
+                try {
+                    writer.write('{');
+                } catch (IOException ignored) {
+                }
+                Iterator<Map.Entry<?, ?>> es = new ObjectObjectMap.Entries<>(object).iterator();
+                while (es.hasNext()) {
+                    Map.Entry<?, ?> e = es.next();
+                    try {
+                        JsonWriter w = json.getWriter();
+                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
+                        json.setWriter(w);
+                        json.writeValue(k);
+                        writer.write(':');
+                        json.writeValue(e.getValue());
+                        if (es.hasNext())
+                            writer.write(',');
+                    } catch (IOException ignored) {
+                    }
+                }
+                try {
+                    writer.write('}');
+                } catch (IOException ignored) {
+                }
+
             }
 
             @Override
