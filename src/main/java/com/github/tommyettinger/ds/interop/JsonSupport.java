@@ -285,18 +285,39 @@ public class JsonSupport {
         json.setSerializer(ObjectLongMap.class, new Json.Serializer<ObjectLongMap>() {
             @Override
             public void write(Json json, ObjectLongMap object, Class knownType) {
-                json.writeObjectStart();
-                json.writeValue("k", new ObjectList(object.keySet()), null, null);
-                json.writeValue("v", new LongList(object.values()), null, null);
-                json.writeObjectEnd();
+                Writer writer = json.getWriter();
+                try {
+                    writer.write('{');
+                } catch (IOException ignored) {
+                }
+                Iterator<ObjectLongMap.Entry<?>> es = new ObjectLongMap.Entries<>(object).iterator();
+                while (es.hasNext()) {
+                    ObjectLongMap.Entry<?> e = es.next();
+                    try {
+                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
+                        json.setWriter(writer);
+                        json.writeValue(k);
+                        writer.write(':');
+                        json.writeValue(e.getValue());
+                        if (es.hasNext())
+                            writer.write(',');
+                    } catch (IOException ignored) {
+                    }
+                }
+                try {
+                    writer.write('}');
+                } catch (IOException ignored) {
+                }
             }
 
             @Override
             public ObjectLongMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if(jsonData == null || jsonData.isNull()) return null;
-                ObjectList<?> k = json.readValue("k", ObjectList.class, jsonData);
-                LongList v = json.readValue("v", LongList.class, jsonData);
-                return new ObjectLongMap<>(k, v);
+                ObjectLongMap<?> data = new ObjectLongMap<>(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.put(json.fromJson(null, value.name), json.readValue(long.class, value));
+                }
+                return data;
             }
         });
 
