@@ -24,11 +24,6 @@ public class JsonSupport {
         json.setSerializer(ObjectList.class, new Json.Serializer<ObjectList>() {
             @Override
             public void write(Json json, ObjectList object, Class knownType) {
-                if(object == null)
-                {
-                    json.writeValue(null);
-                    return;
-                }
                 json.writeArrayStart();
                 for (Object o : object){
                     json.writeValue(o);
@@ -50,11 +45,6 @@ public class JsonSupport {
         json.setSerializer(IntList.class, new Json.Serializer<IntList>() {
             @Override
             public void write(Json json, IntList object, Class knownType) {
-                if(object == null)
-                {
-                    json.writeValue(null);
-                    return;
-                }
                 json.writeArrayStart();
                 PrimitiveIterator.OfInt it = object.iterator();
                 while (it.hasNext()) {
@@ -73,11 +63,6 @@ public class JsonSupport {
         json.setSerializer(LongList.class, new Json.Serializer<LongList>() {
             @Override
             public void write(Json json, LongList object, Class knownType) {
-                if(object == null)
-                {
-                    json.writeValue(null);
-                    return;
-                }
                 json.writeArrayStart();
                 PrimitiveIterator.OfLong it = object.iterator();
                 while (it.hasNext()) {
@@ -96,11 +81,6 @@ public class JsonSupport {
         json.setSerializer(FloatList.class, new Json.Serializer<FloatList>() {
             @Override
             public void write(Json json, FloatList object, Class knownType) {
-                if(object == null)
-                {
-                    json.writeValue(null);
-                    return;
-                }
                 json.writeArrayStart();
                 FloatIterator it = object.iterator();
                 while (it.hasNext()) {
@@ -119,11 +99,6 @@ public class JsonSupport {
         json.setSerializer(ObjectSet.class, new Json.Serializer<ObjectSet>() {
             @Override
             public void write(Json json, ObjectSet object, Class knownType) {
-                if(object == null)
-                {
-                    json.writeValue(null);
-                    return;
-                }
                 json.writeArrayStart();
                 for (Object o : object){
                     json.writeValue(o);
@@ -144,11 +119,6 @@ public class JsonSupport {
         json.setSerializer(ObjectOrderedSet.class, new Json.Serializer<ObjectOrderedSet>() {
             @Override
             public void write(Json json, ObjectOrderedSet object, Class knownType) {
-                if(object == null)
-                {
-                    json.writeValue(null);
-                    return;
-                }
                 json.writeArrayStart();
                 for (Object o : object) {
                     json.writeValue(o);
@@ -169,11 +139,6 @@ public class JsonSupport {
         json.setSerializer(IntSet.class, new Json.Serializer<IntSet>() {
             @Override
             public void write(Json json, IntSet object, Class knownType) {
-                if(object == null)
-                {
-                    json.writeValue(null);
-                    return;
-                }
                 json.writeArrayStart();
                 PrimitiveIterator.OfInt it = object.iterator();
                 while (it.hasNext()) {
@@ -191,11 +156,6 @@ public class JsonSupport {
         json.setSerializer(IntOrderedSet.class, new Json.Serializer<IntOrderedSet>() {
             @Override
             public void write(Json json, IntOrderedSet object, Class knownType) {
-                if(object == null)
-                {
-                    json.writeValue(null);
-                    return;
-                }
                 json.writeArrayStart();
                 PrimitiveIterator.OfInt it = object.iterator();
                 while (it.hasNext()) {
@@ -213,11 +173,6 @@ public class JsonSupport {
         json.setSerializer(LongSet.class, new Json.Serializer<LongSet>() {
             @Override
             public void write(Json json, LongSet object, Class knownType) {
-                if(object == null)
-                {
-                    json.writeValue(null);
-                    return;
-                }
                 json.writeArrayStart();
                 PrimitiveIterator.OfLong it = object.iterator();
                 while (it.hasNext()) {
@@ -235,11 +190,6 @@ public class JsonSupport {
         json.setSerializer(LongOrderedSet.class, new Json.Serializer<LongOrderedSet>() {
             @Override
             public void write(Json json, LongOrderedSet object, Class knownType) {
-                if(object == null)
-                {
-                    json.writeValue(null);
-                    return;
-                }
                 json.writeArrayStart();
                 PrimitiveIterator.OfLong it = object.iterator();
                 while (it.hasNext()) {
@@ -257,10 +207,6 @@ public class JsonSupport {
         json.setSerializer(ObjectObjectMap.class, new Json.Serializer<ObjectObjectMap>() {
             @Override
             public void write(Json json, ObjectObjectMap object, Class knownType) {
-                if (object == null) {
-                    json.writeValue(null);
-                    return;
-                }
                 Writer writer = json.getWriter();
                 try {
                     writer.write('{');
@@ -270,9 +216,8 @@ public class JsonSupport {
                 while (es.hasNext()) {
                     Map.Entry<?, ?> e = es.next();
                     try {
-                        JsonWriter w = json.getWriter();
                         String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
-                        json.setWriter(w);
+                        json.setWriter(writer);
                         json.writeValue(k);
                         writer.write(':');
                         json.writeValue(e.getValue());
@@ -285,7 +230,6 @@ public class JsonSupport {
                     writer.write('}');
                 } catch (IOException ignored) {
                 }
-
             }
 
             @Override
@@ -302,34 +246,45 @@ public class JsonSupport {
         json.setSerializer(ObjectObjectOrderedMap.class, new Json.Serializer<ObjectObjectOrderedMap>() {
             @Override
             public void write(Json json, ObjectObjectOrderedMap object, Class knownType) {
-                if(object == null)
-                {
-                    json.writeValue(null);
-                    return;
+                Writer writer = json.getWriter();
+                try {
+                    writer.write('{');
+                } catch (IOException ignored) {
                 }
-                json.writeObjectStart();
-                json.writeValue("k", object.order(), null, null);
-                json.writeValue("v", new ObjectList(object.values()), null, null);
-                json.writeObjectEnd();
+                Iterator<Map.Entry<?, ?>> es = new ObjectObjectOrderedMap.OrderedMapEntries<>(object).iterator();
+                while (es.hasNext()) {
+                    Map.Entry<?, ?> e = es.next();
+                    try {
+                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
+                        json.setWriter(writer);
+                        json.writeValue(k);
+                        writer.write(':');
+                        json.writeValue(e.getValue());
+                        if (es.hasNext())
+                            writer.write(',');
+                    } catch (IOException ignored) {
+                    }
+                }
+                try {
+                    writer.write('}');
+                } catch (IOException ignored) {
+                }
             }
 
             @Override
             public ObjectObjectOrderedMap<?, ?> read(Json json, JsonValue jsonData, Class type) {
                 if(jsonData == null || jsonData.isNull()) return null;
-                ObjectList<?> k = json.readValue("k", ObjectList.class, jsonData);
-                ObjectList<?> v = json.readValue("v", ObjectList.class, jsonData);
-                return new ObjectObjectOrderedMap<>(k, v);
+                ObjectObjectOrderedMap<?,?> data = new ObjectObjectOrderedMap<>(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.put(json.fromJson(null, value.name), json.readValue(null, value));
+                }
+                return data;
             }
         });
 
         json.setSerializer(ObjectLongMap.class, new Json.Serializer<ObjectLongMap>() {
             @Override
             public void write(Json json, ObjectLongMap object, Class knownType) {
-                if(object == null)
-                {
-                    json.writeValue(null);
-                    return;
-                }
                 json.writeObjectStart();
                 json.writeValue("k", new ObjectList(object.keySet()), null, null);
                 json.writeValue("v", new LongList(object.values()), null, null);
@@ -348,11 +303,6 @@ public class JsonSupport {
         json.setSerializer(ObjectLongOrderedMap.class, new Json.Serializer<ObjectLongOrderedMap>() {
             @Override
             public void write(Json json, ObjectLongOrderedMap object, Class knownType) {
-                if(object == null)
-                {
-                    json.writeValue(null);
-                    return;
-                }
                 json.writeObjectStart();
                 json.writeValue("k", object.order(), null, null);
                 json.writeValue("v", new LongList(object.values()), null, null);
@@ -371,11 +321,6 @@ public class JsonSupport {
         json.setSerializer(ObjectIntMap.class, new Json.Serializer<ObjectIntMap>() {
             @Override
             public void write(Json json, ObjectIntMap object, Class knownType) {
-                if(object == null)
-                {
-                    json.writeValue(null);
-                    return;
-                }
                 json.writeObjectStart();
                 json.writeValue("k", new ObjectList(object.keySet()), null, null);
                 json.writeValue("v", new IntList(object.values()), null, null);
@@ -394,11 +339,6 @@ public class JsonSupport {
         json.setSerializer(ObjectIntOrderedMap.class, new Json.Serializer<ObjectIntOrderedMap>() {
             @Override
             public void write(Json json, ObjectIntOrderedMap object, Class knownType) {
-                if(object == null)
-                {
-                    json.writeValue(null);
-                    return;
-                }
                 json.writeObjectStart();
                 json.writeValue("k", object.order(), null, null);
                 json.writeValue("v", new IntList(object.values()), null, null);
@@ -417,11 +357,6 @@ public class JsonSupport {
         json.setSerializer(ObjectFloatMap.class, new Json.Serializer<ObjectFloatMap>() {
             @Override
             public void write(Json json, ObjectFloatMap object, Class knownType) {
-                if(object == null)
-                {
-                    json.writeValue(null);
-                    return;
-                }
                 json.writeObjectStart();
                 json.writeValue("k", new ObjectList(object.keySet()), null, null);
                 json.writeValue("v", new FloatList(object.values()), null, null);
@@ -440,11 +375,6 @@ public class JsonSupport {
         json.setSerializer(ObjectFloatOrderedMap.class, new Json.Serializer<ObjectFloatOrderedMap>() {
             @Override
             public void write(Json json, ObjectFloatOrderedMap object, Class knownType) {
-                if(object == null)
-                {
-                    json.writeValue(null);
-                    return;
-                }
                 json.writeObjectStart();
                 json.writeValue("k", object.order(), null, null);
                 json.writeValue("v", new FloatList(object.values()), null, null);
