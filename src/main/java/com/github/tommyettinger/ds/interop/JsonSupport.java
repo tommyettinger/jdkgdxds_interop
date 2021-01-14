@@ -441,18 +441,39 @@ public class JsonSupport {
         json.setSerializer(ObjectFloatMap.class, new Json.Serializer<ObjectFloatMap>() {
             @Override
             public void write(Json json, ObjectFloatMap object, Class knownType) {
-                json.writeObjectStart();
-                json.writeValue("k", new ObjectList(object.keySet()), null, null);
-                json.writeValue("v", new FloatList(object.values()), null, null);
-                json.writeObjectEnd();
+                Writer writer = json.getWriter();
+                try {
+                    writer.write('{');
+                } catch (IOException ignored) {
+                }
+                Iterator<ObjectFloatMap.Entry<?>> es = new ObjectFloatMap.Entries<>(object).iterator();
+                while (es.hasNext()) {
+                    ObjectFloatMap.Entry<?> e = es.next();
+                    try {
+                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
+                        json.setWriter(writer);
+                        json.writeValue(k);
+                        writer.write(':');
+                        json.writeValue(e.getValue());
+                        if (es.hasNext())
+                            writer.write(',');
+                    } catch (IOException ignored) {
+                    }
+                }
+                try {
+                    writer.write('}');
+                } catch (IOException ignored) {
+                }
             }
 
             @Override
             public ObjectFloatMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if(jsonData == null || jsonData.isNull()) return null;
-                ObjectList<?> k = json.readValue("k", ObjectList.class, jsonData);
-                FloatList v = json.readValue("v", FloatList.class, jsonData);
-                return new ObjectFloatMap<>(k, v);
+                ObjectFloatMap<?> data = new ObjectFloatMap<>(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.put(json.fromJson(null, value.name), json.readValue(float.class, value));
+                }
+                return data;
             }
         });
 
