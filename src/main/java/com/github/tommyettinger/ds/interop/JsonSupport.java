@@ -20,8 +20,32 @@ public class JsonSupport {
      * Registers JDKGDXDS' classes with the given Json object, allowing it to read and write JDKGDXDS types.
      * @param json a libGDX Json object that will have serializers registered for all JDKGDXDS types.
      */
-    public static void registerWith(@Nonnull Json json) {
-        json.setSerializer(ObjectList.class, new Json.Serializer<ObjectList>() {
+    public static void registerAll(@Nonnull Json json) {
+        registerObjectList(json);
+        registerIntList(json);
+        registerLongList(json);
+        registerFloatList(json);
+        registerObjectSet(json);
+        registerObjectOrderedSet(json);
+        registerIntSet(json);
+        registerIntOrderedSet(json);
+        registerLongSet(json);
+        registerLongOrderedSet(json);
+        registerObjectObjectMap(json);
+        registerObjectObjectOrderedMap(json);
+        registerObjectIntMap(json);
+        registerObjectIntOrderedMap(json);
+        registerObjectLongMap(json);
+        registerObjectLongOrderedMap(json);
+        registerObjectFloatMap(json);
+        registerObjectFloatOrderedMap(json);
+    }
+/**
+ *Registers ObjectList with the given Json object, so ObjectList can be written to and read from JSON.
+ * @param json a libGDX Json object that will have a serializer registered
+*/
+public static void registerObjectList(@Nonnull Json json) {
+    json.setSerializer(ObjectList.class, new Json.Serializer<ObjectList>() {
             @Override
             public void write(Json json, ObjectList object, Class knownType) {
                 json.writeArrayStart();
@@ -42,7 +66,13 @@ public class JsonSupport {
             }
         });
 
-        json.setSerializer(IntList.class, new Json.Serializer<IntList>() {
+}
+/**
+ *Registers IntList with the given Json object, so IntList can be written to and read from JSON.
+ * @param json a libGDX Json object that will have a serializer registered
+*/
+public static void registerIntList(@Nonnull Json json) {
+    json.setSerializer(IntList.class, new Json.Serializer<IntList>() {
             @Override
             public void write(Json json, IntList object, Class knownType) {
                 json.writeArrayStart();
@@ -60,7 +90,13 @@ public class JsonSupport {
             }
         });
 
-        json.setSerializer(LongList.class, new Json.Serializer<LongList>() {
+}
+/**
+ *Registers LongList with the given Json object, so LongList can be written to and read from JSON.
+ * @param json a libGDX Json object that will have a serializer registered
+*/
+public static void registerLongList(@Nonnull Json json) {
+    json.setSerializer(LongList.class, new Json.Serializer<LongList>() {
             @Override
             public void write(Json json, LongList object, Class knownType) {
                 json.writeArrayStart();
@@ -78,7 +114,13 @@ public class JsonSupport {
             }
         });
 
-        json.setSerializer(FloatList.class, new Json.Serializer<FloatList>() {
+}
+/**
+ *Registers FloatList with the given Json object, so FloatList can be written to and read from JSON.
+ * @param json a libGDX Json object that will have a serializer registered
+*/
+public static void registerFloatList(@Nonnull Json json) {
+    json.setSerializer(FloatList.class, new Json.Serializer<FloatList>() {
             @Override
             public void write(Json json, FloatList object, Class knownType) {
                 json.writeArrayStart();
@@ -96,7 +138,13 @@ public class JsonSupport {
             }
         });
 
-        json.setSerializer(ObjectSet.class, new Json.Serializer<ObjectSet>() {
+}
+/**
+ *Registers ObjectSet with the given Json object, so ObjectSet can be written to and read from JSON.
+ * @param json a libGDX Json object that will have a serializer registered
+*/
+public static void registerObjectSet(@Nonnull Json json) {
+    json.setSerializer(ObjectSet.class, new Json.Serializer<ObjectSet>() {
             @Override
             public void write(Json json, ObjectSet object, Class knownType) {
                 json.writeArrayStart();
@@ -116,7 +164,13 @@ public class JsonSupport {
                 return data;
             }
         });
-        json.setSerializer(ObjectOrderedSet.class, new Json.Serializer<ObjectOrderedSet>() {
+}
+/**
+ *Registers ObjectOrderedSet with the given Json object, so ObjectOrderedSet can be written to and read from JSON.
+ * @param json a libGDX Json object that will have a serializer registered
+*/
+public static void registerObjectOrderedSet(@Nonnull Json json) {
+    json.setSerializer(ObjectOrderedSet.class, new Json.Serializer<ObjectOrderedSet>() {
             @Override
             public void write(Json json, ObjectOrderedSet object, Class knownType) {
                 json.writeArrayStart();
@@ -136,7 +190,13 @@ public class JsonSupport {
                 return data;
             }
         });
-        json.setSerializer(IntSet.class, new Json.Serializer<IntSet>() {
+}
+/**
+ *Registers IntSet with the given Json object, so IntSet can be written to and read from JSON.
+ * @param json a libGDX Json object that will have a serializer registered
+*/
+public static void registerIntSet(@Nonnull Json json) {
+    json.setSerializer(IntSet.class, new Json.Serializer<IntSet>() {
             @Override
             public void write(Json json, IntSet object, Class knownType) {
                 json.writeArrayStart();
@@ -153,7 +213,13 @@ public class JsonSupport {
                 return IntSet.with(jsonData.asIntArray());
             }
         });
-        json.setSerializer(IntOrderedSet.class, new Json.Serializer<IntOrderedSet>() {
+}
+/**
+ *Registers IntOrderedSet with the given Json object, so IntOrderedSet can be written to and read from JSON.
+ * @param json a libGDX Json object that will have a serializer registered
+*/
+public static void registerIntOrderedSet(@Nonnull Json json) {
+    json.setSerializer(IntOrderedSet.class, new Json.Serializer<IntOrderedSet>() {
             @Override
             public void write(Json json, IntOrderedSet object, Class knownType) {
                 json.writeArrayStart();
@@ -170,7 +236,13 @@ public class JsonSupport {
                 return IntOrderedSet.with(jsonData.asIntArray());
             }
         });
-        json.setSerializer(LongSet.class, new Json.Serializer<LongSet>() {
+}
+/**
+ *Registers LongSet with the given Json object, so LongSet can be written to and read from JSON.
+ * @param json a libGDX Json object that will have a serializer registered
+*/
+public static void registerLongSet(@Nonnull Json json) {
+    json.setSerializer(LongSet.class, new Json.Serializer<LongSet>() {
             @Override
             public void write(Json json, LongSet object, Class knownType) {
                 json.writeArrayStart();
@@ -187,7 +259,13 @@ public class JsonSupport {
                 return LongSet.with(jsonData.asLongArray());
             }
         });
-        json.setSerializer(LongOrderedSet.class, new Json.Serializer<LongOrderedSet>() {
+}
+/**
+ *Registers LongOrderedSet with the given Json object, so LongOrderedSet can be written to and read from JSON.
+ * @param json a libGDX Json object that will have a serializer registered
+*/
+public static void registerLongOrderedSet(@Nonnull Json json) {
+    json.setSerializer(LongOrderedSet.class, new Json.Serializer<LongOrderedSet>() {
             @Override
             public void write(Json json, LongOrderedSet object, Class knownType) {
                 json.writeArrayStart();
@@ -204,7 +282,13 @@ public class JsonSupport {
                 return LongOrderedSet.with(jsonData.asLongArray());
             }
         });
-        json.setSerializer(ObjectObjectMap.class, new Json.Serializer<ObjectObjectMap>() {
+}
+/**
+ *Registers ObjectObjectMap with the given Json object, so ObjectObjectMap can be written to and read from JSON.
+ * @param json a libGDX Json object that will have a serializer registered
+*/
+public static void registerObjectObjectMap(@Nonnull Json json) {
+    json.setSerializer(ObjectObjectMap.class, new Json.Serializer<ObjectObjectMap>() {
             @Override
             public void write(Json json, ObjectObjectMap object, Class knownType) {
                 Writer writer = json.getWriter();
@@ -243,7 +327,13 @@ public class JsonSupport {
             }
         });
 
-        json.setSerializer(ObjectObjectOrderedMap.class, new Json.Serializer<ObjectObjectOrderedMap>() {
+}
+/**
+ *Registers ObjectObjectOrderedMap with the given Json object, so ObjectObjectOrderedMap can be written to and read from JSON.
+ * @param json a libGDX Json object that will have a serializer registered
+*/
+public static void registerObjectObjectOrderedMap(@Nonnull Json json) {
+    json.setSerializer(ObjectObjectOrderedMap.class, new Json.Serializer<ObjectObjectOrderedMap>() {
             @Override
             public void write(Json json, ObjectObjectOrderedMap object, Class knownType) {
                 Writer writer = json.getWriter();
@@ -282,7 +372,13 @@ public class JsonSupport {
             }
         });
 
-        json.setSerializer(ObjectLongMap.class, new Json.Serializer<ObjectLongMap>() {
+}
+/**
+ *Registers ObjectLongMap with the given Json object, so ObjectLongMap can be written to and read from JSON.
+ * @param json a libGDX Json object that will have a serializer registered
+*/
+public static void registerObjectLongMap(@Nonnull Json json) {
+    json.setSerializer(ObjectLongMap.class, new Json.Serializer<ObjectLongMap>() {
             @Override
             public void write(Json json, ObjectLongMap object, Class knownType) {
                 Writer writer = json.getWriter();
@@ -321,7 +417,13 @@ public class JsonSupport {
             }
         });
 
-        json.setSerializer(ObjectLongOrderedMap.class, new Json.Serializer<ObjectLongOrderedMap>() {
+}
+/**
+ *Registers ObjectLongOrderedMap with the given Json object, so ObjectLongOrderedMap can be written to and read from JSON.
+ * @param json a libGDX Json object that will have a serializer registered
+*/
+public static void registerObjectLongOrderedMap(@Nonnull Json json) {
+    json.setSerializer(ObjectLongOrderedMap.class, new Json.Serializer<ObjectLongOrderedMap>() {
             @Override
             public void write(Json json, ObjectLongOrderedMap object, Class knownType) {
                 Writer writer = json.getWriter();
@@ -360,7 +462,13 @@ public class JsonSupport {
             }
         });
 
-        json.setSerializer(ObjectIntMap.class, new Json.Serializer<ObjectIntMap>() {
+}
+/**
+ *Registers ObjectIntMap with the given Json object, so ObjectIntMap can be written to and read from JSON.
+ * @param json a libGDX Json object that will have a serializer registered
+*/
+public static void registerObjectIntMap(@Nonnull Json json) {
+    json.setSerializer(ObjectIntMap.class, new Json.Serializer<ObjectIntMap>() {
             @Override
             public void write(Json json, ObjectIntMap object, Class knownType) {
                 Writer writer = json.getWriter();
@@ -399,7 +507,13 @@ public class JsonSupport {
             }
         });
 
-        json.setSerializer(ObjectIntOrderedMap.class, new Json.Serializer<ObjectIntOrderedMap>() {
+}
+/**
+ *Registers ObjectIntOrderedMap with the given Json object, so ObjectIntOrderedMap can be written to and read from JSON.
+ * @param json a libGDX Json object that will have a serializer registered
+*/
+public static void registerObjectIntOrderedMap(@Nonnull Json json) {
+    json.setSerializer(ObjectIntOrderedMap.class, new Json.Serializer<ObjectIntOrderedMap>() {
             @Override
             public void write(Json json, ObjectIntOrderedMap object, Class knownType) {
                 Writer writer = json.getWriter();
@@ -438,7 +552,13 @@ public class JsonSupport {
             }
         });
 
-        json.setSerializer(ObjectFloatMap.class, new Json.Serializer<ObjectFloatMap>() {
+}
+/**
+ *Registers ObjectFloatMap with the given Json object, so ObjectFloatMap can be written to and read from JSON.
+ * @param json a libGDX Json object that will have a serializer registered
+*/
+public static void registerObjectFloatMap(@Nonnull Json json) {
+    json.setSerializer(ObjectFloatMap.class, new Json.Serializer<ObjectFloatMap>() {
             @Override
             public void write(Json json, ObjectFloatMap object, Class knownType) {
                 Writer writer = json.getWriter();
@@ -477,7 +597,13 @@ public class JsonSupport {
             }
         });
 
-        json.setSerializer(ObjectFloatOrderedMap.class, new Json.Serializer<ObjectFloatOrderedMap>() {
+}
+/**
+ *Registers ObjectFloatOrderedMap with the given Json object, so ObjectFloatOrderedMap can be written to and read from JSON.
+ * @param json a libGDX Json object that will have a serializer registered
+*/
+public static void registerObjectFloatOrderedMap(@Nonnull Json json) {
+    json.setSerializer(ObjectFloatOrderedMap.class, new Json.Serializer<ObjectFloatOrderedMap>() {
             @Override
             public void write(Json json, ObjectFloatOrderedMap object, Class knownType) {
                 Writer writer = json.getWriter();
