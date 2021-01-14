@@ -324,18 +324,39 @@ public class JsonSupport {
         json.setSerializer(ObjectLongOrderedMap.class, new Json.Serializer<ObjectLongOrderedMap>() {
             @Override
             public void write(Json json, ObjectLongOrderedMap object, Class knownType) {
-                json.writeObjectStart();
-                json.writeValue("k", object.order(), null, null);
-                json.writeValue("v", new LongList(object.values()), null, null);
-                json.writeObjectEnd();
+                Writer writer = json.getWriter();
+                try {
+                    writer.write('{');
+                } catch (IOException ignored) {
+                }
+                Iterator<ObjectLongMap.Entry<?>> es = new ObjectLongOrderedMap.OrderedMapEntries<>(object).iterator();
+                while (es.hasNext()) {
+                    ObjectLongMap.Entry<?> e = es.next();
+                    try {
+                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
+                        json.setWriter(writer);
+                        json.writeValue(k);
+                        writer.write(':');
+                        json.writeValue(e.getValue());
+                        if (es.hasNext())
+                            writer.write(',');
+                    } catch (IOException ignored) {
+                    }
+                }
+                try {
+                    writer.write('}');
+                } catch (IOException ignored) {
+                }
             }
 
             @Override
             public ObjectLongOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if(jsonData == null || jsonData.isNull()) return null;
-                ObjectList<?> k = json.readValue("k", ObjectList.class, jsonData);
-                LongList v = json.readValue("v", LongList.class, jsonData);
-                return new ObjectLongOrderedMap<>(k, v);
+                ObjectLongOrderedMap<?> data = new ObjectLongOrderedMap<>(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.put(json.fromJson(null, value.name), json.readValue(long.class, value));
+                }
+                return data;
             }
         });
 

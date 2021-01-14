@@ -14,7 +14,7 @@ import java.util.PrimitiveIterator;
 public class JsonTest {
     @Test
     public void testObjectList() {
-        Json json = new Json(JsonWriter.OutputType.json);
+        Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerWith(json);
         ObjectList<String> words = ObjectList.with("Peanut", "Butter", "Jelly", "Time");
         String data = json.toJson(words);
@@ -37,7 +37,7 @@ public class JsonTest {
 
     @Test
     public void testIntList() {
-        Json json = new Json(JsonWriter.OutputType.json);
+        Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerWith(json);
         IntList numbers = IntList.with(42, 23, 666, 420);
         String data = json.toJson(numbers);
@@ -53,7 +53,7 @@ public class JsonTest {
 
     @Test
     public void testLongList() {
-        Json json = new Json(JsonWriter.OutputType.json);
+        Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerWith(json);
         LongList numbers = LongList.with(42, 23, 666, 420);
         String data = json.toJson(numbers);
@@ -69,7 +69,7 @@ public class JsonTest {
 
     @Test
     public void testFloatList() {
-        Json json = new Json(JsonWriter.OutputType.json);
+        Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerWith(json);
         FloatList numbers = FloatList.with(42.42f, 23.23f, 666.666f, 420.42f);
         String data = json.toJson(numbers);
@@ -85,7 +85,7 @@ public class JsonTest {
 
     @Test
     public void testObjectSet() {
-        Json json = new Json(JsonWriter.OutputType.json);
+        Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerWith(json);
         ObjectSet<String> words = ObjectSet.with("Peanut", "Butter", "Jelly", "Time");
         String data = json.toJson(words);
@@ -107,7 +107,7 @@ public class JsonTest {
     }
     @Test
     public void testObjectOrderedSet() {
-        Json json = new Json(JsonWriter.OutputType.json);
+        Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerWith(json);
         ObjectOrderedSet<String> words = ObjectOrderedSet.with("Peanut", "Butter", "Jelly", "Time");
         String data = json.toJson(words);
@@ -129,7 +129,7 @@ public class JsonTest {
     }
     @Test
     public void testIntSet() {
-        Json json = new Json(JsonWriter.OutputType.json);
+        Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerWith(json);
         IntSet numbers = IntSet.with(42, 23, 666, 420);
         String data = json.toJson(numbers);
@@ -144,7 +144,7 @@ public class JsonTest {
     }
     @Test
     public void testIntOrderedSet() {
-        Json json = new Json(JsonWriter.OutputType.json);
+        Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerWith(json);
         IntOrderedSet numbers = IntOrderedSet.with(42, 23, 666, 420);
         String data = json.toJson(numbers);
@@ -159,7 +159,7 @@ public class JsonTest {
     }
     @Test
     public void testLongSet() {
-        Json json = new Json(JsonWriter.OutputType.json);
+        Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerWith(json);
         LongSet numbers = LongSet.with(42L, 23L, 666666666666L, 4200000000000000L);
         String data = json.toJson(numbers);
@@ -174,7 +174,7 @@ public class JsonTest {
     }
     @Test
     public void testLongOrderedSet() {
-        Json json = new Json(JsonWriter.OutputType.json);
+        Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerWith(json);
         LongOrderedSet numbers = LongOrderedSet.with(42L, 23L, 666666666666L, 4200000000000000L);
         String data = json.toJson(numbers);
@@ -189,7 +189,7 @@ public class JsonTest {
     }
     @Test
     public void testObjectObjectMap() {
-        Json json = new Json(JsonWriter.OutputType.json);
+        Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerWith(json);
         ObjectObjectMap<String, GridPoint2> words = new ObjectObjectMap<>(new String[]{"foo", "bar", "baz"},
                 new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(666, 666), new GridPoint2(23, 23)});
@@ -219,7 +219,7 @@ public class JsonTest {
 
     @Test
     public void testObjectObjectOrderedMap() {
-        Json json = new Json(JsonWriter.OutputType.json);
+        Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerWith(json);
         ObjectObjectOrderedMap<String, GridPoint2> words = new ObjectObjectOrderedMap<>(new String[]{"foo", "bar", "baz"},
                 new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(666, 666), new GridPoint2(23, 23)});
@@ -249,7 +249,7 @@ public class JsonTest {
 
     @Test
     public void testObjectLongMap() {
-        Json json = new Json(JsonWriter.OutputType.json);
+        Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerWith(json);
         ObjectLongMap<String> words = new ObjectLongMap<>(new String[]{"foo", "bar", "baz"},
                 new long[]{42L, 23L, 666666666666L});
@@ -279,7 +279,7 @@ public class JsonTest {
 
     @Test
     public void testObjectLongOrderedMap() {
-        Json json = new Json(JsonWriter.OutputType.json);
+        Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerWith(json);
         ObjectLongOrderedMap<String> words = new ObjectLongOrderedMap<>(new String[]{"foo", "bar", "baz"},
                 new long[]{42L, 23L, 666666666666L});
@@ -309,7 +309,7 @@ public class JsonTest {
 
     @Test
     public void testObjectIntMap() {
-        Json json = new Json(JsonWriter.OutputType.json);
+        Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerWith(json);
         ObjectIntMap<String> words = new ObjectIntMap<>(new String[]{"foo", "bar", "baz"},
                 new int[]{42, 23, 666});
@@ -339,7 +339,7 @@ public class JsonTest {
 
     @Test
     public void testObjectIntOrderedMap() {
-        Json json = new Json(JsonWriter.OutputType.json);
+        Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerWith(json);
         ObjectIntOrderedMap<String> words = new ObjectIntOrderedMap<>(new String[]{"foo", "bar", "baz"},
                 new int[]{42, 23, 666});
@@ -370,7 +370,7 @@ public class JsonTest {
 
     @Test
     public void testObjectFloatMap() {
-        Json json = new Json(JsonWriter.OutputType.json);
+        Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerWith(json);
         ObjectFloatMap<String> words = new ObjectFloatMap<>(new String[]{"foo", "bar", "baz"},
                 new float[]{42.42f, 23.23f, 666.666f});
@@ -400,7 +400,7 @@ public class JsonTest {
 
     @Test
     public void testObjectFloatOrderedMap() {
-        Json json = new Json(JsonWriter.OutputType.json);
+        Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerWith(json);
         ObjectFloatOrderedMap<String> words = new ObjectFloatOrderedMap<>(new String[]{"foo", "bar", "baz"},
                 new float[]{42.42f, 23.23f, 666.666f});
