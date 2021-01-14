@@ -363,18 +363,39 @@ public class JsonSupport {
         json.setSerializer(ObjectIntMap.class, new Json.Serializer<ObjectIntMap>() {
             @Override
             public void write(Json json, ObjectIntMap object, Class knownType) {
-                json.writeObjectStart();
-                json.writeValue("k", new ObjectList(object.keySet()), null, null);
-                json.writeValue("v", new IntList(object.values()), null, null);
-                json.writeObjectEnd();
+                Writer writer = json.getWriter();
+                try {
+                    writer.write('{');
+                } catch (IOException ignored) {
+                }
+                Iterator<ObjectIntMap.Entry<?>> es = new ObjectIntMap.Entries<>(object).iterator();
+                while (es.hasNext()) {
+                    ObjectIntMap.Entry<?> e = es.next();
+                    try {
+                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
+                        json.setWriter(writer);
+                        json.writeValue(k);
+                        writer.write(':');
+                        json.writeValue(e.getValue());
+                        if (es.hasNext())
+                            writer.write(',');
+                    } catch (IOException ignored) {
+                    }
+                }
+                try {
+                    writer.write('}');
+                } catch (IOException ignored) {
+                }
             }
 
             @Override
             public ObjectIntMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if(jsonData == null || jsonData.isNull()) return null;
-                ObjectList<?> k = json.readValue("k", ObjectList.class, jsonData);
-                IntList v = json.readValue("v", IntList.class, jsonData);
-                return new ObjectIntMap<>(k, v);
+                ObjectIntMap<?> data = new ObjectIntMap<>(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.put(json.fromJson(null, value.name), json.readValue(int.class, value));
+                }
+                return data;
             }
         });
 
