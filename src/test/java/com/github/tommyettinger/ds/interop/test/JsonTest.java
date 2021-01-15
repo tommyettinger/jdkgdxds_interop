@@ -187,6 +187,7 @@ public class JsonTest {
                 System.out.print(", ");
         }
     }
+
     @Test
     public void testObjectObjectMap() {
         Json json = new Json(JsonWriter.OutputType.minimal);
@@ -427,4 +428,32 @@ public class JsonTest {
             System.out.print("; ");
         }
     }
+    @Test
+    public void testIntObjectMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerIntObjectMap(json);
+        IntObjectMap<String> words = new IntObjectMap<>(new int[]{42, 23, 666}, new String[]{"foo", "bar", "baz"});
+        String data = json.toJson(words);
+        System.out.println(data);
+        IntObjectMap<?> words2 = json.fromJson(IntObjectMap.class, data);
+        for(IntObjectMap.Entry<?> pair : words2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+        System.out.println();
+        IntObjectMap<GridPoint2> points = new IntObjectMap<>(new int[]{42, 23, 666},
+                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(666, 666), new GridPoint2(23, 23)});
+        data = json.toJson(points);
+        System.out.println(data);
+        IntObjectMap<?> points2 = json.fromJson(IntObjectMap.class, data);
+        for(IntObjectMap.Entry<?> pair : points2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+    }
+
 }
