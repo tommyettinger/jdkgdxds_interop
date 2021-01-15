@@ -708,4 +708,32 @@ public class JsonSupport {
         });
     }
 
+    /**
+     * Registers IntObjectOrderedMap with the given Json object, so IntObjectOrderedMap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerIntObjectOrderedMap(@Nonnull Json json) {
+        json.setSerializer(IntObjectOrderedMap.class, new Json.Serializer<IntObjectOrderedMap>() {
+            @Override
+            public void write(Json json, IntObjectOrderedMap object, Class knownType) {
+                json.writeObjectStart();
+                for (IntObjectOrderedMap.Entry<?> e : (Iterable<IntObjectOrderedMap.Entry<?>>) new IntObjectOrderedMap.OrderedMapEntries<>(object)) {
+                    json.writeValue(Integer.toString(e.key), e.getValue());
+                }
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public IntObjectOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                IntObjectOrderedMap<?> data = new IntObjectOrderedMap<>(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.put(Integer.parseInt(value.name), json.readValue(null, value));
+                }
+                return data;
+            }
+        });
+    }
+
 }

@@ -428,6 +428,7 @@ public class JsonTest {
             System.out.print("; ");
         }
     }
+
     @Test
     public void testIntObjectMap() {
         Json json = new Json(JsonWriter.OutputType.minimal);
@@ -449,6 +450,35 @@ public class JsonTest {
         System.out.println(data);
         IntObjectMap<?> points2 = json.fromJson(IntObjectMap.class, data);
         for(IntObjectMap.Entry<?> pair : points2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+    }
+
+
+    @Test
+    public void testIntObjectOrderedMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerIntObjectOrderedMap(json);
+        IntObjectOrderedMap<String> words = new IntObjectOrderedMap<>(new int[]{42, 23, 666}, new String[]{"foo", "bar", "baz"});
+        String data = json.toJson(words);
+        System.out.println(data);
+        IntObjectOrderedMap<?> words2 = json.fromJson(IntObjectOrderedMap.class, data);
+        for(IntObjectOrderedMap.Entry<?> pair : words2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+        System.out.println();
+        IntObjectOrderedMap<GridPoint2> points = new IntObjectOrderedMap<>(new int[]{42, 23, 666},
+                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(666, 666), new GridPoint2(23, 23)});
+        data = json.toJson(points);
+        System.out.println(data);
+        IntObjectOrderedMap<?> points2 = json.fromJson(IntObjectOrderedMap.class, data);
+        for(IntObjectOrderedMap.Entry<?> pair : points2) {
             System.out.print(pair.getKey());
             System.out.print("=");
             System.out.print(pair.getValue());
