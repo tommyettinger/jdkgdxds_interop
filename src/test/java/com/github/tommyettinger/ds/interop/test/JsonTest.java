@@ -457,7 +457,6 @@ public class JsonTest {
         }
     }
 
-
     @Test
     public void testIntObjectOrderedMap() {
         Json json = new Json(JsonWriter.OutputType.minimal);
@@ -479,6 +478,23 @@ public class JsonTest {
         System.out.println(data);
         IntObjectOrderedMap<?> points2 = json.fromJson(IntObjectOrderedMap.class, data);
         for(IntObjectOrderedMap.Entry<?> pair : points2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+    }
+
+    @Test
+    public void testIntIntMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerIntIntMap(json);
+        IntIntMap numbers = new IntIntMap(new int[]{42, 23, 666},
+                new int[]{1, 10, 100});
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        IntIntMap points2 = json.fromJson(IntIntMap.class, data);
+        for(IntIntMap.Entry pair : points2) {
             System.out.print(pair.getKey());
             System.out.print("=");
             System.out.print(pair.getValue());
