@@ -519,4 +519,21 @@ public class JsonTest {
         }
     }
 
+    @Test
+    public void testIntLongMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerIntLongMap(json);
+        IntLongMap numbers = new IntLongMap(new int[]{42, 23, 666},
+                new long[]{1L, 10000000000L, -1000000000000000L});
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        IntLongMap points2 = json.fromJson(IntLongMap.class, data);
+        for(IntLongMap.Entry pair : points2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+    }
+
 }

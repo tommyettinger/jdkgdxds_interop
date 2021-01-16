@@ -43,6 +43,8 @@ public class JsonSupport {
         registerIntObjectMap(json);
         registerIntObjectOrderedMap(json);
         registerIntIntMap(json);
+        registerIntIntOrderedMap(json);
+        registerIntLongMap(json);
     }
 
     /**
@@ -794,4 +796,32 @@ public class JsonSupport {
         });
     }
 
+    /**
+     * Registers IntLongMap with the given Json object, so IntLongMap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerIntLongMap(@Nonnull Json json) {
+        json.setSerializer(IntLongMap.class, new Json.Serializer<IntLongMap>() {
+            @Override
+            public void write(Json json, IntLongMap object, Class knownType) {
+                json.writeObjectStart();
+                for (IntLongMap.Entry e : new IntLongMap.Entries(object)) {
+                    json.writeValue(Integer.toString(e.key), e.getValue());
+                }
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public IntLongMap read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                IntLongMap data = new IntLongMap(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.put(Integer.parseInt(value.name), json.readValue(long.class, value));
+                }
+                return data;
+            }
+        });
+    }
+    
 }
