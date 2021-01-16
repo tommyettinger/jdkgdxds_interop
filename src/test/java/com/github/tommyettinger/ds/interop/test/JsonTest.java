@@ -553,4 +553,21 @@ public class JsonTest {
         }
     }
 
+    @Test
+    public void testIntFloatMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerIntFloatMap(json);
+        IntFloatMap numbers = new IntFloatMap(new int[]{42, 23, 666},
+                new float[]{42.42f, 23.23f, 666.666f});
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        IntFloatMap points2 = json.fromJson(IntFloatMap.class, data);
+        for(IntFloatMap.Entry pair : points2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+    }
+
 }

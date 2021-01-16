@@ -46,6 +46,7 @@ public class JsonSupport {
         registerIntIntOrderedMap(json);
         registerIntLongMap(json);
         registerIntLongOrderedMap(json);
+        registerIntFloatMap(json);
     }
 
     /**
@@ -824,6 +825,7 @@ public class JsonSupport {
             }
         });
     }
+    
     /**
      * Registers IntLongOrderedMap with the given Json object, so IntLongOrderedMap can be written to and read from JSON.
      *
@@ -852,5 +854,32 @@ public class JsonSupport {
         });
     }
 
+    /**
+     * Registers IntFloatMap with the given Json object, so IntFloatMap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerIntFloatMap(@Nonnull Json json) {
+        json.setSerializer(IntFloatMap.class, new Json.Serializer<IntFloatMap>() {
+            @Override
+            public void write(Json json, IntFloatMap object, Class knownType) {
+                json.writeObjectStart();
+                for (IntFloatMap.Entry e : new IntFloatMap.Entries(object)) {
+                    json.writeValue(Integer.toString(e.key), e.getValue());
+                }
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public IntFloatMap read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                IntFloatMap data = new IntFloatMap(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.put(Integer.parseInt(value.name), json.readValue(float.class, value));
+                }
+                return data;
+            }
+        });
+    }
 
 }
