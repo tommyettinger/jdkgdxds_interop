@@ -502,4 +502,21 @@ public class JsonTest {
         }
     }
 
+    @Test
+    public void testIntIntOrderedMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerIntIntOrderedMap(json);
+        IntIntOrderedMap numbers = new IntIntOrderedMap(new int[]{42, 23, 666},
+                new int[]{1, 10, 100});
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        IntIntOrderedMap points2 = json.fromJson(IntIntOrderedMap.class, data);
+        for(IntIntOrderedMap.Entry pair : points2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+    }
+
 }
