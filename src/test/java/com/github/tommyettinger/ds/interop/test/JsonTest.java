@@ -588,4 +588,33 @@ public class JsonTest {
         }
     }
 
+    @Test
+    public void testLongObjectMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerLongObjectMap(json);
+        LongObjectMap<String> words = new LongObjectMap<>(new long[]{42L, 23L, 666666666666L},
+                new String[]{"foo", "bar", "baz"});
+        String data = json.toJson(words);
+        System.out.println(data);
+        LongObjectMap<?> words2 = json.fromJson(LongObjectMap.class, data);
+        for(LongObjectMap.Entry<?> pair : words2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+        System.out.println();
+        LongObjectMap<GridPoint2> points = new LongObjectMap<>(new long[]{42L, 23L, 666666666666L},
+                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)});
+        data = json.toJson(points);
+        System.out.println(data);
+        LongObjectMap<?> points2 = json.fromJson(LongObjectMap.class, data);
+        for(LongObjectMap.Entry<?> pair : points2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+    }
+
 }

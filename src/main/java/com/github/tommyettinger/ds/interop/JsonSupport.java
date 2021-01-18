@@ -909,6 +909,33 @@ public class JsonSupport {
             }
         });
     }
+    
+    /**
+     * Registers LongObjectMap with the given Json object, so LongObjectMap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerLongObjectMap(@Nonnull Json json) {
+        json.setSerializer(LongObjectMap.class, new Json.Serializer<LongObjectMap>() {
+            @Override
+            public void write(Json json, LongObjectMap object, Class knownType) {
+                json.writeObjectStart();
+                for (LongObjectMap.Entry<?> e : (Iterable<LongObjectMap.Entry<?>>) new LongObjectMap.Entries<>(object)) {
+                    json.writeValue(Long.toString(e.key), e.getValue());
+                }
+                json.writeObjectEnd();
+            }
 
-
+            @Override
+            public LongObjectMap<?> read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                LongObjectMap<?> data = new LongObjectMap<>(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.put(Long.parseLong(value.name), json.readValue(null, value));
+                }
+                return data;
+            }
+        });
+    }
+    
 }
