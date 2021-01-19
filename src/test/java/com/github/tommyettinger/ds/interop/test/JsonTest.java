@@ -681,5 +681,21 @@ public class JsonTest {
         }
     }
 
+    @Test
+    public void testLongLongMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerLongLongMap(json);
+        LongLongMap numbers = new LongLongMap(new long[]{42L, 23L, 666666666666L},
+                new long[]{1L, 10000000000L, -1000000000000000L});
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        LongLongMap points2 = json.fromJson(LongLongMap.class, data);
+        for(LongLongMap.Entry pair : points2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+    }
 
 }
