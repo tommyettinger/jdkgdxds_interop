@@ -993,5 +993,33 @@ public class JsonSupport {
             }
         });
     }
+
+    /**
+     * Registers LongIntOrderedMap with the given Json object, so LongIntOrderedMap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerLongIntOrderedMap(@Nonnull Json json) {
+        json.setSerializer(LongIntOrderedMap.class, new Json.Serializer<LongIntOrderedMap>() {
+            @Override
+            public void write(Json json, LongIntOrderedMap object, Class knownType) {
+                json.writeObjectStart();
+                for (LongIntOrderedMap.Entry e : new LongIntOrderedMap.OrderedMapEntries(object)) {
+                    json.writeValue(Long.toString(e.key), e.getValue());
+                }
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public LongIntOrderedMap read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                LongIntOrderedMap data = new LongIntOrderedMap(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.put(Long.parseLong(value.name), json.readValue(int.class, value));
+                }
+                return data;
+            }
+        });
+    }
     
 }

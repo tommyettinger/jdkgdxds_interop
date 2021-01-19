@@ -664,5 +664,22 @@ public class JsonTest {
         }
     }
 
+    @Test
+    public void testLongIntOrderedMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerLongIntOrderedMap(json);
+        LongIntOrderedMap numbers = new LongIntOrderedMap(new long[]{42L, 23L, 666666666666L},
+                new int[]{1, 10, 100});
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        LongIntOrderedMap points2 = json.fromJson(LongIntOrderedMap.class, data);
+        for(LongIntOrderedMap.Entry pair : points2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+    }
+
 
 }
