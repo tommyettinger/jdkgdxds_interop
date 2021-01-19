@@ -617,4 +617,34 @@ public class JsonTest {
         }
     }
 
+
+    @Test
+    public void testLongObjectOrderedMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerLongObjectOrderedMap(json);
+        LongObjectOrderedMap<String> words = new LongObjectOrderedMap<>(new long[]{42L, 23L, 666666666666L},
+                new String[]{"foo", "bar", "baz"});
+        String data = json.toJson(words);
+        System.out.println(data);
+        LongObjectOrderedMap<?> words2 = json.fromJson(LongObjectOrderedMap.class, data);
+        for(LongObjectOrderedMap.Entry<?> pair : words2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+        System.out.println();
+        LongObjectOrderedMap<GridPoint2> points = new LongObjectOrderedMap<>(new long[]{42L, 23L, 666666666666L},
+                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)});
+        data = json.toJson(points);
+        System.out.println(data);
+        LongObjectOrderedMap<?> points2 = json.fromJson(LongObjectOrderedMap.class, data);
+        for(LongObjectOrderedMap.Entry<?> pair : points2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+    }
+
 }
