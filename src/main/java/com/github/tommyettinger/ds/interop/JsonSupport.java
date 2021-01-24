@@ -1077,4 +1077,31 @@ public class JsonSupport {
             }
         });
     }
+    /**
+     * Registers LongFloatMap with the given Json object, so LongFloatMap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerLongFloatMap(@Nonnull Json json) {
+        json.setSerializer(LongFloatMap.class, new Json.Serializer<LongFloatMap>() {
+            @Override
+            public void write(Json json, LongFloatMap object, Class knownType) {
+                json.writeObjectStart();
+                for (LongFloatMap.Entry e : new LongFloatMap.Entries(object)) {
+                    json.writeValue(Long.toString(e.key), e.getValue());
+                }
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public LongFloatMap read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                LongFloatMap data = new LongFloatMap(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.put(Long.parseLong(value.name), json.readValue(float.class, value));
+                }
+                return data;
+            }
+        });
+    }
 }

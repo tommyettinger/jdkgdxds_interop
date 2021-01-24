@@ -716,4 +716,21 @@ public class JsonTest {
         }
     }
 
+    @Test
+    public void testLongFloatMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerLongFloatMap(json);
+        LongFloatMap numbers = new LongFloatMap(new long[]{42L, 23L, 666666666666L},
+                new float[]{42.42f, 23.23f, 666.666f});
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        LongFloatMap points2 = json.fromJson(LongFloatMap.class, data);
+        for(LongFloatMap.Entry pair : points2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+    }
+
 }
