@@ -752,11 +752,11 @@ public class JsonTest {
     }
 
     public static class TestNode<E> extends BinaryHeap.Node {
-        private static float counter = -1000000;
 
         public E element;
+
         TestNode(){
-            super(counter += 1.618f);
+            super(0f);
             this.element = null;
         }
         /**
@@ -775,7 +775,7 @@ public class JsonTest {
         JsonSupport.registerBinaryHeap(json);
         ObjectList<TestNode<String>> words = ObjectList.with(
                 new TestNode<>("Time", -1000000000f), new TestNode<>("Butter", 0.125f),
-                new TestNode<>("Jelly", -0.125f), new TestNode<>("Peanut", Float.MAX_VALUE));
+                new TestNode<>("Jelly", -0.125f), new TestNode<>("Peanut", Float.POSITIVE_INFINITY));
         BinaryHeap<TestNode<String>> heap = new BinaryHeap<>(true, words);
         String data = json.toJson(heap);
         System.out.println(data);
@@ -783,6 +783,23 @@ public class JsonTest {
         for(TestNode<String> word : heap2) {
             System.out.print(word.element);
             System.out.print(", ");
+        }
+    }
+    
+    @Test
+    public void testCaseInsensitiveMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerCaseInsensitiveMap(json);
+        CaseInsensitiveMap<GridPoint2> words = new CaseInsensitiveMap<>(new String[]{"foo", "bar", "baz"},
+                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)});
+        String data = json.toJson(words);
+        System.out.println(data);
+        CaseInsensitiveMap<?> words2 = json.fromJson(CaseInsensitiveMap.class, data);
+        for(Map.Entry<CharSequence, ?> pair : words2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
         }
     }
 }

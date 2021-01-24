@@ -1158,23 +1158,50 @@ public class JsonSupport {
             @Override
             public void write(Json json, BinaryHeap object, Class knownType) {
                 json.writeObjectStart();
-                json.writeObjectStart("items");
-                json.writeArrayStart(object.isMaxHeap() ? "max" : "min");
+                json.writeValue("max", object.isMaxHeap());
+                json.writeArrayStart("items");
                 for (Object o : object) {
                     json.writeValue(o, null);
                 }
                 json.writeArrayEnd();
-                json.writeObjectEnd();
                 json.writeObjectEnd();
             }
 
             @Override
             public BinaryHeap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                jsonData = jsonData.child;
-                BinaryHeap<?> data = new BinaryHeap<>(jsonData.size, jsonData.name.equals("max"));
+                BinaryHeap<?> data = new BinaryHeap<>(jsonData.size, jsonData.parent.getBoolean("max"));
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.add(json.readValue(null, value));
+                }
+                return data;
+            }
+        });
+    }
+    /**
+     * Registers CaseInsensitiveMap with the given Json object, so CaseInsensitiveMap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerCaseInsensitiveMap(@Nonnull Json json) {
+        json.setSerializer(CaseInsensitiveMap.class, new Json.Serializer<CaseInsensitiveMap>() {
+            @Override
+            public void write(Json json, CaseInsensitiveMap object, Class knownType) {
+                json.writeObjectStart();
+                Iterator<Map.Entry<CharSequence, ?>> es = new CaseInsensitiveMap.Entries<>(object).iterator();
+                while (es.hasNext()) {
+                    Map.Entry<CharSequence, ?> e = es.next();
+                    json.writeValue(e.getKey().toString(), e.getValue());
+                }
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public CaseInsensitiveMap<?> read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                CaseInsensitiveMap<?> data = new CaseInsensitiveMap<>(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.put(value.name, json.readValue(null, value));
                 }
                 return data;
             }
