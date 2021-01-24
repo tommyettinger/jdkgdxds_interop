@@ -47,6 +47,15 @@ public class JsonSupport {
         registerIntLongMap(json);
         registerIntLongOrderedMap(json);
         registerIntFloatMap(json);
+        registerIntFloatOrderedMap(json);
+        registerLongObjectMap(json);
+        registerLongObjectOrderedMap(json);
+        registerLongIntMap(json);
+        registerLongIntOrderedMap(json);
+        registerLongLongMap(json);
+        registerLongLongOrderedMap(json);
+        registerLongFloatMap(json);
+        registerLongFloatOrderedMap(json);
     }
 
     /**
@@ -825,7 +834,7 @@ public class JsonSupport {
             }
         });
     }
-    
+
     /**
      * Registers IntLongOrderedMap with the given Json object, so IntLongOrderedMap can be written to and read from JSON.
      *
@@ -909,7 +918,7 @@ public class JsonSupport {
             }
         });
     }
-    
+
     /**
      * Registers LongObjectMap with the given Json object, so LongObjectMap can be written to and read from JSON.
      *
@@ -937,7 +946,7 @@ public class JsonSupport {
             }
         });
     }
-    
+
     /**
      * Registers LongObjectOrderedMap with the given Json object, so LongObjectOrderedMap can be written to and read from JSON.
      *
@@ -1077,6 +1086,7 @@ public class JsonSupport {
             }
         });
     }
+
     /**
      * Registers LongFloatMap with the given Json object, so LongFloatMap can be written to and read from JSON.
      *
@@ -1097,6 +1107,34 @@ public class JsonSupport {
             public LongFloatMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 LongFloatMap data = new LongFloatMap(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.put(Long.parseLong(value.name), json.readValue(float.class, value));
+                }
+                return data;
+            }
+        });
+    }
+
+    /**
+     * Registers LongFloatOrderedMap with the given Json object, so LongFloatOrderedMap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerLongFloatOrderedMap(@Nonnull Json json) {
+        json.setSerializer(LongFloatOrderedMap.class, new Json.Serializer<LongFloatOrderedMap>() {
+            @Override
+            public void write(Json json, LongFloatOrderedMap object, Class knownType) {
+                json.writeObjectStart();
+                for (LongFloatOrderedMap.Entry e : new LongFloatOrderedMap.OrderedMapEntries(object)) {
+                    json.writeValue(Long.toString(e.key), e.getValue());
+                }
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public LongFloatOrderedMap read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                LongFloatOrderedMap data = new LongFloatOrderedMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), json.readValue(float.class, value));
                 }

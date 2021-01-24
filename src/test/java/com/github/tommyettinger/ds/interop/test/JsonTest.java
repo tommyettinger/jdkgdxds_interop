@@ -733,4 +733,21 @@ public class JsonTest {
         }
     }
 
+    @Test
+    public void testLongFloatOrderedMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerLongFloatOrderedMap(json);
+        LongFloatOrderedMap numbers = new LongFloatOrderedMap(new long[]{42L, 23L, 666666666666L},
+                new float[]{42.42f, 23.23f, 666.666f});
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        LongFloatOrderedMap points2 = json.fromJson(LongFloatOrderedMap.class, data);
+        for(LongFloatOrderedMap.Entry pair : points2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+    }
+
 }
