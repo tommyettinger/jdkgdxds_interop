@@ -26,12 +26,14 @@ public class JsonSupport {
         registerIntList(json);
         registerLongList(json);
         registerFloatList(json);
+
         registerObjectSet(json);
         registerObjectOrderedSet(json);
         registerIntSet(json);
         registerIntOrderedSet(json);
         registerLongSet(json);
         registerLongOrderedSet(json);
+
         registerObjectObjectMap(json);
         registerObjectObjectOrderedMap(json);
         registerObjectIntMap(json);
@@ -40,6 +42,7 @@ public class JsonSupport {
         registerObjectLongOrderedMap(json);
         registerObjectFloatMap(json);
         registerObjectFloatOrderedMap(json);
+
         registerIntObjectMap(json);
         registerIntObjectOrderedMap(json);
         registerIntIntMap(json);
@@ -48,6 +51,7 @@ public class JsonSupport {
         registerIntLongOrderedMap(json);
         registerIntFloatMap(json);
         registerIntFloatOrderedMap(json);
+
         registerLongObjectMap(json);
         registerLongObjectOrderedMap(json);
         registerLongIntMap(json);
@@ -56,6 +60,8 @@ public class JsonSupport {
         registerLongLongOrderedMap(json);
         registerLongFloatMap(json);
         registerLongFloatOrderedMap(json);
+
+        registerBinaryHeap(json);
     }
 
     /**
@@ -75,16 +81,15 @@ public class JsonSupport {
             }
 
             @Override
-            public ObjectList read(Json json, JsonValue jsonData, Class type) {
+            public ObjectList<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                ObjectList data = new ObjectList<>(jsonData.size);
+                ObjectList<?> data = new ObjectList<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.add(json.readValue(null, value));
                 }
                 return data;
             }
         });
-
     }
 
     /**
@@ -182,9 +187,9 @@ public class JsonSupport {
             }
 
             @Override
-            public ObjectSet read(Json json, JsonValue jsonData, Class type) {
+            public ObjectSet<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                ObjectSet data = new ObjectSet<>(jsonData.size);
+                ObjectSet<?> data = new ObjectSet<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.add(json.readValue(null, value));
                 }
@@ -210,9 +215,9 @@ public class JsonSupport {
             }
 
             @Override
-            public ObjectOrderedSet read(Json json, JsonValue jsonData, Class type) {
+            public ObjectOrderedSet<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                ObjectOrderedSet data = new ObjectOrderedSet<>(jsonData.size);
+                ObjectOrderedSet<?> data = new ObjectOrderedSet<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.add(json.readValue(null, value));
                 }
@@ -1137,6 +1142,39 @@ public class JsonSupport {
                 LongFloatOrderedMap data = new LongFloatOrderedMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), json.readValue(float.class, value));
+                }
+                return data;
+            }
+        });
+    }
+
+    /**
+     * Registers BinaryHeap with the given Json object, so BinaryHeap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerBinaryHeap(@Nonnull Json json) {
+        json.setSerializer(BinaryHeap.class, new Json.Serializer<BinaryHeap>() {
+            @Override
+            public void write(Json json, BinaryHeap object, Class knownType) {
+                json.writeObjectStart();
+                json.writeObjectStart("items");
+                json.writeArrayStart(object.isMaxHeap() ? "max" : "min");
+                for (Object o : object) {
+                    json.writeValue(o, null);
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public BinaryHeap<?> read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                jsonData = jsonData.child;
+                BinaryHeap<?> data = new BinaryHeap<>(jsonData.size, jsonData.name.equals("max"));
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.add(json.readValue(null, value));
                 }
                 return data;
             }

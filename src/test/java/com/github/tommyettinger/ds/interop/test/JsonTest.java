@@ -105,6 +105,7 @@ public class JsonTest {
             System.out.print(", ");
         }
     }
+
     @Test
     public void testObjectOrderedSet() {
         Json json = new Json(JsonWriter.OutputType.minimal);
@@ -750,4 +751,38 @@ public class JsonTest {
         }
     }
 
+    public static class TestNode<E> extends BinaryHeap.Node {
+        private static float counter = -1000000;
+
+        public E element;
+        TestNode(){
+            super(counter += 1.618f);
+            this.element = null;
+        }
+        /**
+         * @param value The initial value for the node. To change the value, use {@link BinaryHeap.Node#add(BinaryHeap.Node, float)} if the node is
+         *              not in the heap, or {@link BinaryHeap.Node#setValue(BinaryHeap.Node, float)} if the node is in the heap.
+         */
+        public TestNode(E element, float value) {
+            super(value);
+            this.element = element;
+        }
+    }
+
+    @Test
+    public void testBinaryHeap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerBinaryHeap(json);
+        ObjectList<TestNode<String>> words = ObjectList.with(
+                new TestNode<>("Time", -1000000000f), new TestNode<>("Butter", 0.125f),
+                new TestNode<>("Jelly", -0.125f), new TestNode<>("Peanut", Float.MAX_VALUE));
+        BinaryHeap<TestNode<String>> heap = new BinaryHeap<>(true, words);
+        String data = json.toJson(heap);
+        System.out.println(data);
+        BinaryHeap<TestNode<String>> heap2 = json.fromJson(BinaryHeap.class, data);
+        for(TestNode<String> word : heap2) {
+            System.out.print(word.element);
+            System.out.print(", ");
+        }
+    }
 }
