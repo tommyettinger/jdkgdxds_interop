@@ -1178,6 +1178,7 @@ public class JsonSupport {
             }
         });
     }
+
     /**
      * Registers CaseInsensitiveMap with the given Json object, so CaseInsensitiveMap can be written to and read from JSON.
      *
@@ -1200,6 +1201,36 @@ public class JsonSupport {
             public CaseInsensitiveMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 CaseInsensitiveMap<?> data = new CaseInsensitiveMap<>(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.put(value.name, json.readValue(null, value));
+                }
+                return data;
+            }
+        });
+    }
+
+    /**
+     * Registers CaseInsensitiveOrderedMap with the given Json object, so CaseInsensitiveOrderedMap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerCaseInsensitiveOrderedMap(@Nonnull Json json) {
+        json.setSerializer(CaseInsensitiveOrderedMap.class, new Json.Serializer<CaseInsensitiveOrderedMap>() {
+            @Override
+            public void write(Json json, CaseInsensitiveOrderedMap object, Class knownType) {
+                json.writeObjectStart();
+                Iterator<Map.Entry<CharSequence, ?>> es = new ObjectObjectOrderedMap.OrderedMapEntries<>(object).iterator();
+                while (es.hasNext()) {
+                    Map.Entry<CharSequence, ?> e = es.next();
+                    json.writeValue(e.getKey().toString(), e.getValue());
+                }
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public CaseInsensitiveOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                CaseInsensitiveOrderedMap<?> data = new CaseInsensitiveOrderedMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(value.name, json.readValue(null, value));
                 }

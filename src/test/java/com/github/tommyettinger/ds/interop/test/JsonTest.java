@@ -751,6 +751,40 @@ public class JsonTest {
         }
     }
 
+    @Test
+    public void testCaseInsensitiveMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerCaseInsensitiveMap(json);
+        CaseInsensitiveMap<GridPoint2> words = new CaseInsensitiveMap<>(new String[]{"foo", "bar", "baz"},
+                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)});
+        String data = json.toJson(words);
+        System.out.println(data);
+        CaseInsensitiveMap<?> words2 = json.fromJson(CaseInsensitiveMap.class, data);
+        for(Map.Entry<CharSequence, ?> pair : words2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+    }
+
+    @Test
+    public void testCaseInsensitiveOrderedMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerCaseInsensitiveOrderedMap(json);
+        CaseInsensitiveOrderedMap<GridPoint2> words = new CaseInsensitiveOrderedMap<>(new String[]{"foo", "bar", "baz"},
+                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)});
+        String data = json.toJson(words);
+        System.out.println(data);
+        CaseInsensitiveOrderedMap<?> words2 = json.fromJson(CaseInsensitiveOrderedMap.class, data);
+        for(Map.Entry<CharSequence, ?> pair : words2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+    }
+
     public static class TestNode<E> extends BinaryHeap.Node {
 
         public E element;
@@ -783,23 +817,6 @@ public class JsonTest {
         for(TestNode<String> word : heap2) {
             System.out.print(word.element);
             System.out.print(", ");
-        }
-    }
-    
-    @Test
-    public void testCaseInsensitiveMap() {
-        Json json = new Json(JsonWriter.OutputType.minimal);
-        JsonSupport.registerCaseInsensitiveMap(json);
-        CaseInsensitiveMap<GridPoint2> words = new CaseInsensitiveMap<>(new String[]{"foo", "bar", "baz"},
-                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)});
-        String data = json.toJson(words);
-        System.out.println(data);
-        CaseInsensitiveMap<?> words2 = json.fromJson(CaseInsensitiveMap.class, data);
-        for(Map.Entry<CharSequence, ?> pair : words2) {
-            System.out.print(pair.getKey());
-            System.out.print("=");
-            System.out.print(pair.getValue());
-            System.out.print("; ");
         }
     }
 }
