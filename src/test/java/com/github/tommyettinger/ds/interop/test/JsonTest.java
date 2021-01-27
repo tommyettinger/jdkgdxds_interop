@@ -752,6 +752,20 @@ public class JsonTest {
     }
 
     @Test
+    public void testCaseInsensitiveSet() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerCaseInsensitiveSet(json);
+        CaseInsensitiveSet words = CaseInsensitiveSet.with("Peanut", "Butter", "Jelly", "Time", "peanut", "butter", "jelly", "TIME");
+        String data = json.toJson(words);
+        System.out.println(data);
+        CaseInsensitiveSet words2 = json.fromJson(CaseInsensitiveSet.class, data);
+        for (Object word : words2) {
+            System.out.print(word);
+            System.out.print(", ");
+        }
+    }
+
+    @Test
     public void testCaseInsensitiveMap() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerCaseInsensitiveMap(json);

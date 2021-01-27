@@ -1180,6 +1180,34 @@ public class JsonSupport {
     }
 
     /**
+     * Registers CaseInsensitiveSet with the given Json object, so CaseInsensitiveSet can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerCaseInsensitiveSet(@Nonnull Json json) {
+        json.setSerializer(CaseInsensitiveSet.class, new Json.Serializer<CaseInsensitiveSet>() {
+            @Override
+            public void write(Json json, CaseInsensitiveSet object, Class knownType) {
+                json.writeArrayStart();
+                for (Object o : object) {
+                    json.writeValue(o);
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public CaseInsensitiveSet read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                CaseInsensitiveSet data = new CaseInsensitiveSet(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.add(json.readValue(null, value));
+                }
+                return data;
+            }
+        });
+    }
+    
+    /**
      * Registers CaseInsensitiveMap with the given Json object, so CaseInsensitiveMap can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
