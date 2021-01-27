@@ -61,6 +61,11 @@ public class JsonSupport {
         registerLongFloatMap(json);
         registerLongFloatOrderedMap(json);
 
+        registerCaseInsensitiveSet(json);
+        registerCaseInsensitiveOrderedSet(json);
+        registerCaseInsensitiveMap(json);
+        registerCaseInsensitiveOrderedMap(json);
+
         registerBinaryHeap(json);
     }
 
@@ -1199,6 +1204,34 @@ public class JsonSupport {
             public CaseInsensitiveSet read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 CaseInsensitiveSet data = new CaseInsensitiveSet(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.add(json.readValue(null, value));
+                }
+                return data;
+            }
+        });
+    }
+
+    /**
+     * Registers CaseInsensitiveOrderedSet with the given Json object, so CaseInsensitiveOrderedSet can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerCaseInsensitiveOrderedSet(@Nonnull Json json) {
+        json.setSerializer(CaseInsensitiveOrderedSet.class, new Json.Serializer<CaseInsensitiveOrderedSet>() {
+            @Override
+            public void write(Json json, CaseInsensitiveOrderedSet object, Class knownType) {
+                json.writeArrayStart();
+                for (Object o : object) {
+                    json.writeValue(o);
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public CaseInsensitiveOrderedSet read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                CaseInsensitiveOrderedSet data = new CaseInsensitiveOrderedSet(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.add(json.readValue(null, value));
                 }
