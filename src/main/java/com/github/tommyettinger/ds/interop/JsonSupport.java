@@ -66,6 +66,8 @@ public class JsonSupport {
         registerCaseInsensitiveMap(json);
         registerCaseInsensitiveOrderedMap(json);
 
+        registerNumberedSet(json);
+
         registerBinaryHeap(json);
     }
 
@@ -1176,6 +1178,35 @@ public class JsonSupport {
             public BinaryHeap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 BinaryHeap<?> data = new BinaryHeap<>(jsonData.size, jsonData.parent.getBoolean("max"));
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.add(json.readValue(null, value));
+                }
+                return data;
+            }
+        });
+    }
+
+    /**
+     * Registers NumberedSet with the given Json object, so NumberedSet can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    
+    public static void registerNumberedSet(@Nonnull Json json) {
+        json.setSerializer(NumberedSet.class, new Json.Serializer<NumberedSet>() {
+            @Override
+            public void write(Json json, NumberedSet object, Class knownType) {
+                json.writeArrayStart();
+                for (Object o : object) {
+                    json.writeValue(o);
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public NumberedSet<?> read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                NumberedSet<?> data = new NumberedSet<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.add(json.readValue(null, value));
                 }
