@@ -5,7 +5,9 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.interop.JsonSupport;
+import com.github.tommyettinger.ds.support.LaserRandom;
 import com.github.tommyettinger.ds.support.util.FloatIterator;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Map;
@@ -873,5 +875,19 @@ public class JsonTest {
             System.out.print(word.element);
             System.out.print(", ");
         }
+    }
+
+    @Test
+    public void testLaserRandom() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerLaserRandom(json);
+        LaserRandom random = new LaserRandom(123456789, 0xFA7BAB1E5L);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        LaserRandom random2 = json.fromJson(LaserRandom.class, data);
+        System.out.println(Long.toString(random2.getStateA(), 36));
+        System.out.println(Long.toString(random2.getStateB() >>> 1, 36));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 }

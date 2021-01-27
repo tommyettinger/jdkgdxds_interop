@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.github.tommyettinger.ds.*;
+import com.github.tommyettinger.ds.support.LaserRandom;
 import com.github.tommyettinger.ds.support.util.FloatIterator;
 
 import javax.annotation.Nonnull;
@@ -69,6 +70,8 @@ public class JsonSupport {
         registerNumberedSet(json);
 
         registerBinaryHeap(json);
+
+        registerLaserRandom(json);
     }
 
     /**
@@ -1327,6 +1330,30 @@ public class JsonSupport {
                     data.put(value.name, json.readValue(null, value));
                 }
                 return data;
+            }
+        });
+    }
+
+    /**
+     * Registers LaserRandom with the given Json object, so LaserRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerLaserRandom(@Nonnull Json json) {
+        json.setSerializer(LaserRandom.class, new Json.Serializer<LaserRandom>() {
+            @Override
+            public void write(Json json, LaserRandom object, Class knownType) {
+                json.writeValue("`" + Long.toString(object.getStateA(), 36) + "~" + Long.toString(object.getStateB() >>> 1, 36) + "`");
+            }
+
+            @Override
+            public LaserRandom read(Json json, JsonValue jsonData, Class type) {
+                String s;
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 5) return null;
+                final int tilde = s.indexOf('~', 1);
+                final long stateA = Long.parseLong(s.substring(1, tilde), 36);
+                final long stateB = Long.parseLong(s.substring(tilde + 1, s.indexOf('`', tilde)), 36) << 1;
+                return new LaserRandom(stateA, stateB);
             }
         });
     }
