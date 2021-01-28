@@ -1,7 +1,9 @@
 package com.github.tommyettinger.ds.interop;
 
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ArrayMap;
+import com.badlogic.gdx.utils.*;
+import com.github.tommyettinger.ds.FloatList;
+import com.github.tommyettinger.ds.IntList;
+import com.github.tommyettinger.ds.LongList;
 import com.github.tommyettinger.ds.ObjectList;
 
 import java.util.Collection;
@@ -35,6 +37,33 @@ public class Conversion {
         for(T t : from)
             array.add(t);
         return array;
+    }
+
+    /**
+     * Can be used to convert from a libGDX IntArray to a jdkgdxds IntList.
+     * @param from a libGDX IntArray
+     * @return a new IntList holding the items of {@code from}
+     */
+    public static IntList toIntList(IntArray from){
+        return new IntList(from.items, 0, from.size);
+    }
+
+    /**
+     * Can be used to convert from a libGDX LongArray to a jdkgdxds LongList.
+     * @param from a libGDX LongArray
+     * @return a new LongList holding the items of {@code from}
+     */
+    public static LongList toLongList(LongArray from){
+        return new LongList(from.items, 0, from.size);
+    }
+
+    /**
+     * Can be used to convert from a libGDX FloatArray to a jdkgdxds FloatList.
+     * @param from a libGDX FloatArray
+     * @return a new FloatList holding the items of {@code from}
+     */
+    public static FloatList toFloatList(FloatArray from){
+        return new FloatList(from.items, 0, from.size);
     }
 
     /**
