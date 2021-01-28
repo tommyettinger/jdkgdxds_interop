@@ -1,9 +1,11 @@
 package com.github.tommyettinger.ds.interop;
 
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ArrayMap;
 import com.github.tommyettinger.ds.ObjectList;
 
 import java.util.Collection;
+import java.util.Map;
 
 public class Conversion {
 
@@ -33,5 +35,21 @@ public class Conversion {
         for(T t : from)
             array.add(t);
         return array;
+    }
+
+    /**
+     * Can be used to convert from any JDK Map to a new libGDX ArrayMap with the same key and value types.
+     * Note that jdkgdxds does not have a direct equivalent to libGDX's ArrayMap, because ArrayMap is only the "right
+     * choice" in some extremely narrow situations, and is only barely used inside libGDX (and only in its 3D code).
+     * @param from a Map from the JDK, jdkgdxds, or some other library
+     * @param <K> the key type
+     * @param <V> the value type
+     * @return a new ArrayMap holding the keys and values of {@code from} (this does not give a Class to the ArrayMap constructor)
+     */
+    public static <K, V> ArrayMap<K, V> toArrayMap(Map<K, V> from) {
+        ArrayMap<K, V> arrayMap = new ArrayMap<>(true, from.size());
+        for(Map.Entry<K, V> e : from.entrySet())
+            arrayMap.put(e.getKey(), e.getValue());
+        return arrayMap;
     }
 }
