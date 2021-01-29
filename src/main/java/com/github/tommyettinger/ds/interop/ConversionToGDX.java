@@ -2,10 +2,12 @@ package com.github.tommyettinger.ds.interop;
 
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.IntSet;
+import com.badlogic.gdx.utils.ObjectSet;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.support.util.FloatIterator;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.PrimitiveIterator;
 
@@ -85,6 +87,21 @@ public class ConversionToGDX {
         for(Map.Entry<K, V> e : from.entrySet())
             arrayMap.put(e.getKey(), e.getValue());
         return arrayMap;
+    }
+
+    /**
+     * Can be used to convert from any JDK Collection, such as a jdkgdxds ObjectSet or ObjectList, or
+     * a JDK ArrayList, to a new libGDX {@link ObjectSet}, using only the unique items in {@code from}.
+     * @param from anything that implements the JDK Collection interface
+     * @return a new libGDX ObjectSet holding the unique items in {@code from}
+     */
+    public static <T> ObjectSet<T> toObjectSet(Collection<T> from) {
+        ObjectSet<T> set = new ObjectSet<>(from.size());
+        Iterator<T> it = from.iterator();
+        while (it.hasNext()) {
+            set.add(it.next());
+        }
+        return set;
     }
 
     /**

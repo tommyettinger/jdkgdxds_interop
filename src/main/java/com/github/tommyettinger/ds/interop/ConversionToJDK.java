@@ -3,6 +3,7 @@ package com.github.tommyettinger.ds.interop;
 import com.badlogic.gdx.utils.*;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.IntSet;
+import com.github.tommyettinger.ds.ObjectSet;
 import com.github.tommyettinger.ds.support.util.FloatIterator;
 
 import java.util.Collection;
@@ -58,6 +59,21 @@ public class ConversionToJDK {
     }
 
     /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.ObjectSet}
+     * to a new jdkgdxds {@link ObjectSet}.
+     * @param from a libGDX ObjectSet
+     * @return a new jdkgdxds ObjectSet holding the unique items in {@code from}
+     */
+    public static <T> ObjectSet<T> toObjectSet(com.badlogic.gdx.utils.ObjectSet<T> from) {
+        ObjectSet<T> set = new ObjectSet<>(from.size);
+        com.badlogic.gdx.utils.ObjectSet.ObjectSetIterator<T> it = from.iterator();
+        while (it.hasNext) {
+            set.add(it.next());
+        }
+        return set;
+    }
+
+    /**
      * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.IntSet}
      * to a new jdkgdxds {@link IntSet}.
      * @param from a libGDX IntSet
@@ -86,4 +102,5 @@ public class ConversionToJDK {
         }
         return set;
     }
+
 }
