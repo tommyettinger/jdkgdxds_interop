@@ -4,17 +4,13 @@ import com.badlogic.gdx.utils.*;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.IntSet;
 import com.github.tommyettinger.ds.ObjectSet;
-import com.github.tommyettinger.ds.support.util.FloatIterator;
-
-import java.util.Collection;
-import java.util.Map;
-import java.util.PrimitiveIterator;
 
 /**
- * Arguably misleadingly-named, this class converts to the JDK-interface-compatible data structures in jdkgdxds.
- * Not all of the interfaces used by jdkgdxds are present in the JDK, so it isn't always a perfect fit. If you primarily
- * use jdkgdxds data structures, then most of the APIs should be very similar to JDK data structures when they aren't
- * identical. There are all sorts of extensions jdkgdxds does, such as for the ordered data structures.
+ * Converts libGDX data structures to the JDK-interface-compatible data structures in jdkgdxds. This is arguably
+ * misleadingly-named, because not all of the interfaces used by jdkgdxds are present in the JDK, and this isn't always
+ * a perfect fit. If you primarily use jdkgdxds data structures, then most of the APIs should be very similar to JDK
+ * data structures, when they aren't identical. There are all sorts of extensions jdkgdxds does, such as for the ordered
+ * data structures.
  */
 public class ConversionToJDK {
 
@@ -86,6 +82,16 @@ public class ConversionToJDK {
             set.add(it.next());
         }
         return set;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.IntArray}
+     * to a new jdkgdxds {@link IntSet}.
+     * @param from a libGDX IntArray
+     * @return a new jdkgdxds IntSet holding the unique items in {@code from}
+     */
+    public static IntSet toIntSet(com.badlogic.gdx.utils.IntArray from) {
+        return new IntSet(from.items, 0, from.size);
     }
 
     /**

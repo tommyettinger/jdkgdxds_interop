@@ -11,6 +11,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.PrimitiveIterator;
 
+/**
+ * Converts from arbitrary data structures that implement JDK interfaces to libGDX data structures (which typically
+ * implement {@link Iterable} at most). You can send JDK classes like {@link java.util.ArrayList} to methods in this to
+ * convert to {@link Array} or {@link ObjectSet}, just as you can send jdkgdxds classes like {@link ObjectList}.
+ */
 public class ConversionToGDX {
 
     /**
