@@ -71,4 +71,19 @@ public class ConversionToJDK {
         }
         return set;
     }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.IntSet}
+     * to a new jdkgdxds {@link IntList}.
+     * @param from a libGDX IntSet
+     * @return a new jdkgdxds IntList holding the items in {@code from}
+     */
+    public static IntList toIntList(com.badlogic.gdx.utils.IntSet from) {
+        IntList set = new IntList(from.size);
+        com.badlogic.gdx.utils.IntSet.IntSetIterator it = from.iterator();
+        while (it.hasNext) {
+            set.add(it.next());
+        }
+        return set;
+    }
 }
