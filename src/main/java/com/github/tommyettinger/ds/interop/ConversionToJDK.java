@@ -37,6 +37,21 @@ public class ConversionToJDK {
     }
 
     /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.IntSet}
+     * to a new jdkgdxds {@link IntList}.
+     * @param from a libGDX IntSet
+     * @return a new jdkgdxds IntList holding the items in {@code from}
+     */
+    public static IntList toIntList(com.badlogic.gdx.utils.IntSet from) {
+        IntList set = new IntList(from.size);
+        com.badlogic.gdx.utils.IntSet.IntSetIterator it = from.iterator();
+        while (it.hasNext) {
+            set.add(it.next());
+        }
+        return set;
+    }
+
+    /**
      * Can be used to convert from a libGDX LongArray to a jdkgdxds LongList.
      * @param from a libGDX LongArray
      * @return a new LongList holding the items of {@code from}
@@ -111,17 +126,31 @@ public class ConversionToJDK {
 
     /**
      * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.IntSet}
-     * to a new jdkgdxds {@link IntList}.
+     * to a new jdkgdxds {@link IntOrderedSet}. Because a libGDX IntSet is not
+     * meaningfully ordered, the initial order of the IntOrderedSet this returns is
+     * probably not going to match the insertion order for the IntSet. You can sort
+     * an {@link IntOrderedSet} with {@link IntOrderedSet#sort()}.
      * @param from a libGDX IntSet
-     * @return a new jdkgdxds IntList holding the items in {@code from}
+     * @return a new jdkgdxds IntSet holding the unique items in {@code from}
      */
-    public static IntList toIntList(com.badlogic.gdx.utils.IntSet from) {
-        IntList set = new IntList(from.size);
+    public static IntOrderedSet toIntOrderedSet(com.badlogic.gdx.utils.IntSet from) {
+        IntOrderedSet set = new IntOrderedSet(from.size);
         com.badlogic.gdx.utils.IntSet.IntSetIterator it = from.iterator();
         while (it.hasNext) {
             set.add(it.next());
         }
         return set;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.IntArray}
+     * to a new jdkgdxds {@link IntOrderedSet}. This will maintain the order of the
+     * items in the IntArray.
+     * @param from a libGDX IntArray
+     * @return a new jdkgdxds IntOrderedSet holding the unique items in {@code from}
+     */
+    public static IntOrderedSet toIntOrderedSet(com.badlogic.gdx.utils.IntArray from) {
+        return new IntOrderedSet(from.items, 0, from.size);
     }
 
 }
