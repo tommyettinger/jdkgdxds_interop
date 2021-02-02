@@ -110,6 +110,21 @@ public class ConversionToGDX {
     }
 
     /**
+     * Can be used to convert from any JDK Collection, such as a jdkgdxds ObjectOrderedSet or ObjectList, or
+     * a JDK ArrayList, to a new libGDX {@link OrderedSet}, using only the unique items in {@code from}.
+     * @param from anything that implements the JDK Collection interface
+     * @return a new libGDX OrderedSet holding the unique items in {@code from}
+     */
+    public static <T> OrderedSet<T> toOrderedSet(Collection<T> from) {
+        OrderedSet<T> set = new OrderedSet<>(from.size());
+        Iterator<T> it = from.iterator();
+        while (it.hasNext()) {
+            set.add(it.next());
+        }
+        return set;
+    }
+
+    /**
      * Can be used to convert from any int-based PrimitiveCollection, such as an {@link IntList},
      * {@link com.github.tommyettinger.ds.IntSet}, or {@link com.github.tommyettinger.ds.IntIntMap.Keys},
      * to a new libGDX IntSet, using only the unique items in {@code from}.

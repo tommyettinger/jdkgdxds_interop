@@ -70,6 +70,21 @@ public class ConversionToJDK {
     }
 
     /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.OrderedSet}
+     * to a new jdkgdxds {@link ObjectOrderedSet}.
+     * @param from a libGDX OrderedSet
+     * @return a new jdkgdxds ObjectOrderedSet holding the unique items in {@code from}
+     */
+    public static <T> ObjectOrderedSet<T> toObjectOrderedSet(com.badlogic.gdx.utils.OrderedSet<T> from) {
+        ObjectOrderedSet<T> set = new ObjectOrderedSet<>(from.size);
+        OrderedSet.OrderedSetIterator<T> it = from.iterator();
+        while (it.hasNext) {
+            set.add(it.next());
+        }
+        return set;
+    }
+
+    /**
      * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.IntSet}
      * to a new jdkgdxds {@link IntSet}.
      * @param from a libGDX IntSet
