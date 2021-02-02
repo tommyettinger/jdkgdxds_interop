@@ -28,6 +28,19 @@ public class ConversionToJDK {
     }
 
     /**
+     * Can be used to convert from a libGDX ObjectSet or OrderedSet to a jdkgdxds ObjectList of the same element type.
+     * @param from an ObjectSet or OrderedSet from libGDX
+     * @param <T> the element type for {@code from} and the result
+     * @return a new ObjectList of type T holding the unique items of {@code from}
+     */
+    public static <T> ObjectList<T> toObjectList(com.badlogic.gdx.utils.ObjectSet<T> from) {
+        ObjectList<T> list = new ObjectList<>(from.size);
+        for(T t : from)
+            list.add(t);
+        return list;
+    }
+
+    /**
      * Can be used to convert from a libGDX IntArray to a jdkgdxds IntList.
      * @param from a libGDX IntArray
      * @return a new IntList holding the items of {@code from}
@@ -80,6 +93,21 @@ public class ConversionToJDK {
         com.badlogic.gdx.utils.ObjectSet.ObjectSetIterator<T> it = from.iterator();
         while (it.hasNext) {
             set.add(it.next());
+        }
+        return set;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.Array}
+     * to a new jdkgdxds {@link ObjectOrderedSet}. This will maintain the order of the
+     * items in the Array.
+     * @param from a libGDX Array
+     * @return a new jdkgdxds ObjectOrderedSet holding the unique items in {@code from}
+     */
+    public static <T> ObjectOrderedSet<T> toObjectOrderedSet(com.badlogic.gdx.utils.Array<T> from) {
+        ObjectOrderedSet<T> set = new ObjectOrderedSet<>(from.size);
+        for (T t : from) {
+            set.add(t);
         }
         return set;
     }
