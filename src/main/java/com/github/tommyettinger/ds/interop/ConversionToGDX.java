@@ -140,4 +140,19 @@ public class ConversionToGDX {
         return set;
     }
 
+    /**
+     * Can be used to convert from any JDK Map, such as a {@link java.util.HashMap}, {@link ObjectObjectMap},
+     * or {@link CaseInsensitiveOrderedMap}, to a libGDX ObjectMap.
+     * @param from any Map that has a usable {@link Map#keySet()} method
+     * @param <K> the type of keys; the same in {@code from} and the returned ObjectMap
+     * @param <V> the type of values; the same in {@code from} and the returned ObjectMap
+     * @return a new ObjectMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K, V> ObjectMap<K, V> toObjectMap(Map<K, V> from){
+        ObjectMap<K, V> map = new ObjectMap<>(from.size());
+        for(K k : from.keySet()) {
+            map.put(k, from.get(k));
+        }
+        return map;
+    }
 }

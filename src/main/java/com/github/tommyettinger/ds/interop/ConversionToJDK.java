@@ -82,6 +82,21 @@ public class ConversionToJDK {
         return new FloatList(from.items, 0, from.size);
     }
 
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.Array}
+     * to a new jdkgdxds {@link ObjectSet}. This will not necessarily maintain the order of the
+     * items in the Array.
+     * @param from a libGDX Array
+     * @return a new jdkgdxds ObjectSet holding the unique items in {@code from}
+     */
+    public static <T> ObjectSet<T> toObjectSet(com.badlogic.gdx.utils.Array<T> from) {
+        ObjectSet<T> set = new ObjectSet<>(from.size);
+        for (T t : from) {
+            set.add(t);
+        }
+        return set;
+    }
     /**
      * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.ObjectSet}
      * to a new jdkgdxds {@link ObjectSet}.
@@ -181,4 +196,18 @@ public class ConversionToJDK {
         return new IntOrderedSet(from.items, 0, from.size);
     }
 
+    /**
+     * Can be used to convert from a libGDX ObjectMap to a new jdkgdxds {@link ObjectObjectMap}
+     * @param from a libGDX ObjectMap
+     * @param <K> the type of keys; the same in {@code from} and the returned ObjectObjectMap
+     * @param <V> the type of values; the same in {@code from} and the returned ObjectObjectMap
+     * @return a new ObjectObjectMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K, V> ObjectObjectMap<K, V> toObjectMap(ObjectMap<K, V> from){
+        ObjectObjectMap<K, V> map = new ObjectObjectMap<>(from.size);
+        for(K k : from.keys()) {
+            map.put(k, from.get(k));
+        }
+        return map;
+    }
 }
