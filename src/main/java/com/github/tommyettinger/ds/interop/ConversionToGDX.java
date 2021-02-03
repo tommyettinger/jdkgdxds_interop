@@ -155,4 +155,21 @@ public class ConversionToGDX {
         }
         return map;
     }
+    /**
+     * Can be used to convert from any JDK Map, such as a {@link java.util.LinkedHashMap},
+     * {@link ObjectObjectOrderedMap}, or {@link CaseInsensitiveMap}, to a libGDX OrderedMap.
+     * If {@code from} maintains the order of its keys, then the returned OrderedMap will have
+     * the same order.
+     * @param from any Map that has a usable {@link Map#keySet()} method
+     * @param <K> the type of keys; the same in {@code from} and the returned OrderedMap
+     * @param <V> the type of values; the same in {@code from} and the returned OrderedMap
+     * @return a new OrderedMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K, V> OrderedMap<K, V> toOrderedMap(Map<K, V> from){
+        OrderedMap<K, V> map = new OrderedMap<>(from.size());
+        for(K k : from.keySet()) {
+            map.put(k, from.get(k));
+        }
+        return map;
+    }
 }
