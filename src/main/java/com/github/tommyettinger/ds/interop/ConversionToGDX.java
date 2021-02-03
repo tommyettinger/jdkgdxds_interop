@@ -2,6 +2,7 @@ package com.github.tommyettinger.ds.interop;
 
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.IntSet;
+import com.badlogic.gdx.utils.ObjectIntMap;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.support.util.FloatIterator;
@@ -155,6 +156,7 @@ public class ConversionToGDX {
         }
         return map;
     }
+
     /**
      * Can be used to convert from any JDK Map, such as a {@link java.util.LinkedHashMap},
      * {@link ObjectObjectOrderedMap}, or {@link CaseInsensitiveMap}, to a libGDX OrderedMap.
@@ -167,6 +169,21 @@ public class ConversionToGDX {
      */
     public static <K, V> OrderedMap<K, V> toOrderedMap(Map<K, V> from){
         OrderedMap<K, V> map = new OrderedMap<>(from.size());
+        for(K k : from.keySet()) {
+            map.put(k, from.get(k));
+        }
+        return map;
+    }
+
+    /**
+     * Can be used to convert from a jdkgdxds {@link com.github.tommyettinger.ds.ObjectIntMap} or
+     * {@link ObjectIntOrderedMap} to a libGDX ObjectIntMap.
+     * @param from a jdkgdxds ObjectIntMap or ObjectIntOrderedMap
+     * @param <K> the type of keys; the same in {@code from} and the returned ObjectIntMap
+     * @return a new libGDX ObjectIntMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K> ObjectIntMap<K> toObjectIntMap(com.github.tommyettinger.ds.ObjectIntMap<K> from){
+        ObjectIntMap<K> map = new ObjectIntMap<>(from.size());
         for(K k : from.keySet()) {
             map.put(k, from.get(k));
         }

@@ -3,6 +3,7 @@ package com.github.tommyettinger.ds.interop;
 import com.badlogic.gdx.utils.*;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.IntSet;
+import com.github.tommyettinger.ds.ObjectIntMap;
 import com.github.tommyettinger.ds.ObjectSet;
 
 /**
@@ -227,4 +228,20 @@ public class ConversionToJDK {
         }
         return map;
     }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.ObjectIntMap} to a
+     * jdkgdxds ObjectIntMap.
+     * @param from a libGDX ObjectIntMap
+     * @param <K> the type of keys; the same in {@code from} and the returned ObjectIntMap
+     * @return a new jdkgdxds ObjectIntMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K> ObjectIntMap<K> toObjectIntMap(com.badlogic.gdx.utils.ObjectIntMap<K> from){
+        ObjectIntMap<K> map = new ObjectIntMap<>(from.size);
+        for(K k : from.keys()) {
+            map.put(k, from.get(k, 0));
+        }
+        return map;
+    }
+
 }
