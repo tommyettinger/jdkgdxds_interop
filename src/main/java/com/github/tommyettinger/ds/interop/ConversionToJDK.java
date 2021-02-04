@@ -3,8 +3,11 @@ package com.github.tommyettinger.ds.interop;
 import com.badlogic.gdx.utils.*;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.IntSet;
+import com.github.tommyettinger.ds.ObjectFloatMap;
 import com.github.tommyettinger.ds.ObjectIntMap;
 import com.github.tommyettinger.ds.ObjectSet;
+import com.github.tommyettinger.ds.support.sort.FloatComparator;
+import com.github.tommyettinger.ds.support.sort.IntComparator;
 
 /**
  * Converts libGDX data structures to the JDK-interface-compatible data structures in jdkgdxds. This is arguably
@@ -238,6 +241,55 @@ public class ConversionToJDK {
      */
     public static <K> ObjectIntMap<K> toObjectIntMap(com.badlogic.gdx.utils.ObjectIntMap<K> from){
         ObjectIntMap<K> map = new ObjectIntMap<>(from.size);
+        for(K k : from.keys()) {
+            map.put(k, from.get(k, 0));
+        }
+        return map;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.ObjectIntMap} to a
+     * jdkgdxds ObjectIntOrderedMap. Because the given libGDX ObjectIntMap does not maintain order,
+     * the initial ordering of the returned ObjectIntOrderedMap is undefined, but it can be sorted
+     * with {@link ObjectIntOrderedMap#sort()} or {@link ObjectIntOrderedMap#sortByValue(IntComparator)}.
+     * @param from a libGDX ObjectIntMap
+     * @param <K> the type of keys; the same in {@code from} and the returned ObjectIntOrderedMap
+     * @return a new jdkgdxds ObjectIntOrderedMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K> ObjectIntOrderedMap<K> toObjectIntOrderedMap(com.badlogic.gdx.utils.ObjectIntMap<K> from){
+        ObjectIntOrderedMap<K> map = new ObjectIntOrderedMap<>(from.size);
+        for(K k : from.keys()) {
+            map.put(k, from.get(k, 0));
+        }
+        return map;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.ObjectFloatMap} to a
+     * jdkgdxds ObjectFloatMap.
+     * @param from a libGDX ObjectFloatMap
+     * @param <K> the type of keys; the same in {@code from} and the returned ObjectFloatMap
+     * @return a new jdkgdxds ObjectFloatMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K> ObjectFloatMap<K> toObjectFloatMap(com.badlogic.gdx.utils.ObjectFloatMap<K> from){
+        ObjectFloatMap<K> map = new ObjectFloatMap<>(from.size);
+        for(K k : from.keys()) {
+            map.put(k, from.get(k, 0));
+        }
+        return map;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.ObjectFloatMap} to a
+     * jdkgdxds ObjectFloatOrderedMap. Because the given libGDX ObjectFloatMap does not maintain order,
+     * the initial ordering of the returned ObjectFloatOrderedMap is undefined, but it can be sorted
+     * with {@link ObjectFloatOrderedMap#sort()} or {@link ObjectFloatOrderedMap#sortByValue(FloatComparator)}.
+     * @param from a libGDX ObjectFloatMap
+     * @param <K> the type of keys; the same in {@code from} and the returned ObjectFloatOrderedMap
+     * @return a new jdkgdxds ObjectFloatOrderedMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K> ObjectFloatOrderedMap<K> toObjectFloatOrderedMap(com.badlogic.gdx.utils.ObjectFloatMap<K> from){
+        ObjectFloatOrderedMap<K> map = new ObjectFloatOrderedMap<>(from.size);
         for(K k : from.keys()) {
             map.put(k, from.get(k, 0));
         }

@@ -2,6 +2,7 @@ package com.github.tommyettinger.ds.interop;
 
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.IntSet;
+import com.badlogic.gdx.utils.ObjectFloatMap;
 import com.badlogic.gdx.utils.ObjectIntMap;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.github.tommyettinger.ds.*;
@@ -189,4 +190,20 @@ public class ConversionToGDX {
         }
         return map;
     }
+
+    /**
+     * Can be used to convert from a jdkgdxds {@link com.github.tommyettinger.ds.ObjectFloatMap} or
+     * {@link ObjectFloatOrderedMap} to a libGDX ObjectFloatMap.
+     * @param from a jdkgdxds ObjectFloatMap or ObjectFloatOrderedMap
+     * @param <K> the type of keys; the same in {@code from} and the returned ObjectFloatMap
+     * @return a new libGDX ObjectFloatMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K> ObjectFloatMap<K> toObjectFloatMap(com.github.tommyettinger.ds.ObjectFloatMap<K> from){
+        ObjectFloatMap<K> map = new ObjectFloatMap<>(from.size());
+        for(K k : from.keySet()) {
+            map.put(k, from.get(k));
+        }
+        return map;
+    }
+
 }
