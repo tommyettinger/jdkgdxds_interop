@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.IntSet;
 import com.badlogic.gdx.utils.ObjectFloatMap;
 import com.badlogic.gdx.utils.ObjectIntMap;
+import com.badlogic.gdx.utils.ObjectLongMap;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.support.util.FloatIterator;
@@ -200,6 +201,21 @@ public class ConversionToGDX {
      */
     public static <K> ObjectFloatMap<K> toObjectFloatMap(com.github.tommyettinger.ds.ObjectFloatMap<K> from){
         ObjectFloatMap<K> map = new ObjectFloatMap<>(from.size());
+        for(K k : from.keySet()) {
+            map.put(k, from.get(k));
+        }
+        return map;
+    }
+
+    /**
+     * Can be used to convert from a jdkgdxds {@link com.github.tommyettinger.ds.ObjectLongMap} or
+     * {@link ObjectLongOrderedMap} to a libGDX ObjectLongMap.
+     * @param from a jdkgdxds ObjectLongMap or ObjectLongOrderedMap
+     * @param <K> the type of keys; the same in {@code from} and the returned ObjectLongMap
+     * @return a new libGDX ObjectLongMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K> ObjectLongMap<K> toObjectLongMap(com.github.tommyettinger.ds.ObjectLongMap<K> from){
+        ObjectLongMap<K> map = new ObjectLongMap<>(from.size());
         for(K k : from.keySet()) {
             map.put(k, from.get(k));
         }
