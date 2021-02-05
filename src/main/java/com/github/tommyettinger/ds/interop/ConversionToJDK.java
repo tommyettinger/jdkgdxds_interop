@@ -2,6 +2,7 @@ package com.github.tommyettinger.ds.interop;
 
 import com.badlogic.gdx.utils.*;
 import com.github.tommyettinger.ds.*;
+import com.github.tommyettinger.ds.IntIntMap;
 import com.github.tommyettinger.ds.IntSet;
 import com.github.tommyettinger.ds.ObjectFloatMap;
 import com.github.tommyettinger.ds.ObjectIntMap;
@@ -364,6 +365,40 @@ public class ConversionToJDK {
         while (it.hasNext){
             int k = it.next();
             map.put(k, from.get(k));
+        }
+        return map;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.IntIntMap} to a
+     * jdkgdxds IntIntMap.
+     * @param from a libGDX IntIntMap
+     * @return a new jdkgdxds IntIntMap holding all of the key-value pairs in {@code from}
+     */
+    public static IntIntMap toIntIntMap(com.badlogic.gdx.utils.IntIntMap from){
+        IntIntMap map = new IntIntMap(from.size);
+        com.badlogic.gdx.utils.IntIntMap.Keys it = from.keys();
+        while (it.hasNext){
+            int k = it.next();
+            map.put(k, from.get(k, 0));
+        }
+        return map;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.IntIntMap} to a
+     * jdkgdxds IntIntOrderedMap. Because the given libGDX IntIntMap does not maintain order,
+     * the initial ordering of the returned IntIntOrderedMap is undefined, but it can be sorted
+     * with {@link IntIntOrderedMap#sort()} or {@link IntIntOrderedMap#sortByValue(IntComparator)}.
+     * @param from a libGDX IntIntMap
+     * @return a new jdkgdxds IntIntOrderedMap holding all of the key-value pairs in {@code from}
+     */
+    public static IntIntOrderedMap toIntIntOrderedMap(com.badlogic.gdx.utils.IntIntMap from){
+        IntIntOrderedMap map = new IntIntOrderedMap(from.size);
+        com.badlogic.gdx.utils.IntIntMap.Keys it = from.keys();
+        while (it.hasNext){
+            int k = it.next();
+            map.put(k, from.get(k, 0));
         }
         return map;
     }

@@ -1,6 +1,7 @@
 package com.github.tommyettinger.ds.interop;
 
 import com.badlogic.gdx.utils.*;
+import com.badlogic.gdx.utils.IntIntMap;
 import com.badlogic.gdx.utils.IntSet;
 import com.badlogic.gdx.utils.ObjectFloatMap;
 import com.badlogic.gdx.utils.ObjectIntMap;
@@ -231,6 +232,23 @@ public class ConversionToGDX {
      */
     public static <V> IntMap<V> toIntMap(com.github.tommyettinger.ds.IntObjectMap<V> from){
         IntMap<V> map = new IntMap<>(from.size());
+        PrimitiveIterator.OfInt it = from.keySet().iterator();
+        while (it.hasNext()) {
+            int k = it.nextInt();
+            map.put(k, from.get(k));
+        }
+        return map;
+    }
+
+
+    /**
+     * Can be used to convert from a jdkgdxds {@link com.github.tommyettinger.ds.IntIntMap} or
+     * {@link IntIntOrderedMap} to a libGDX IntIntMap.
+     * @param from a jdkgdxds IntIntMap or IntIntOrderedMap
+     * @return a new libGDX IntIntMap holding all of the key-value pairs in {@code from}
+     */
+    public static IntIntMap toIntIntMap(com.github.tommyettinger.ds.IntIntMap from){
+        IntIntMap map = new IntIntMap(from.size());
         PrimitiveIterator.OfInt it = from.keySet().iterator();
         while (it.hasNext()) {
             int k = it.nextInt();
