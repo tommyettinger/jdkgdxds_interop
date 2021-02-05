@@ -11,6 +11,8 @@ import com.github.tommyettinger.ds.support.sort.FloatComparator;
 import com.github.tommyettinger.ds.support.sort.IntComparator;
 import com.github.tommyettinger.ds.support.sort.LongComparator;
 
+import java.util.Comparator;
+
 /**
  * Converts libGDX data structures to the JDK-interface-compatible data structures in jdkgdxds. This is arguably
  * misleadingly-named, because not all of the interfaces used by jdkgdxds are present in the JDK, and this isn't always
@@ -267,6 +269,38 @@ public class ConversionToJDK {
     }
 
     /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.ObjectLongMap} to a
+     * jdkgdxds ObjectLongMap.
+     * @param from a libGDX ObjectLongMap
+     * @param <K> the type of keys; the same in {@code from} and the returned ObjectLongMap
+     * @return a new jdkgdxds ObjectLongMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K> ObjectLongMap<K> toObjectLongMap(com.badlogic.gdx.utils.ObjectLongMap<K> from){
+        ObjectLongMap<K> map = new ObjectLongMap<>(from.size);
+        for(K k : from.keys()) {
+            map.put(k, from.get(k, 0));
+        }
+        return map;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.ObjectLongMap} to a
+     * jdkgdxds ObjectLongOrderedMap. Because the given libGDX ObjectLongMap does not maintain order,
+     * the initial ordering of the returned ObjectLongOrderedMap is undefined, but it can be sorted
+     * with {@link ObjectLongOrderedMap#sort()} or {@link ObjectLongOrderedMap#sortByValue(LongComparator)}.
+     * @param from a libGDX ObjectLongMap
+     * @param <K> the type of keys; the same in {@code from} and the returned ObjectLongOrderedMap
+     * @return a new jdkgdxds ObjectLongOrderedMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K> ObjectLongOrderedMap<K> toObjectLongOrderedMap(com.badlogic.gdx.utils.ObjectLongMap<K> from){
+        ObjectLongOrderedMap<K> map = new ObjectLongOrderedMap<>(from.size);
+        for(K k : from.keys()) {
+            map.put(k, from.get(k, 0));
+        }
+        return map;
+    }
+
+    /**
      * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.ObjectFloatMap} to a
      * jdkgdxds ObjectFloatMap.
      * @param from a libGDX ObjectFloatMap
@@ -299,33 +333,37 @@ public class ConversionToJDK {
     }
 
     /**
-     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.ObjectLongMap} to a
-     * jdkgdxds ObjectLongMap.
-     * @param from a libGDX ObjectLongMap
-     * @param <K> the type of keys; the same in {@code from} and the returned ObjectLongMap
-     * @return a new jdkgdxds ObjectLongMap holding all of the key-value pairs in {@code from}
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.IntMap} to a
+     * jdkgdxds IntObjectMap.
+     * @param from a libGDX IntMap
+     * @param <V> the type of values; the same in {@code from} and the returned IntObjectMap
+     * @return a new jdkgdxds IntObjectMap holding all of the key-value pairs in {@code from}
      */
-    public static <K> ObjectLongMap<K> toObjectLongMap(com.badlogic.gdx.utils.ObjectLongMap<K> from){
-        ObjectLongMap<K> map = new ObjectLongMap<>(from.size);
-        for(K k : from.keys()) {
-            map.put(k, from.get(k, 0));
+    public static <V> IntObjectMap<V> toIntObjectMap(com.badlogic.gdx.utils.IntMap<V> from){
+        IntObjectMap<V> map = new IntObjectMap<>(from.size);
+        IntMap.Keys it = from.keys();
+        while (it.hasNext){
+            int k = it.next();
+            map.put(k, from.get(k));
         }
         return map;
     }
 
     /**
-     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.ObjectLongMap} to a
-     * jdkgdxds ObjectLongOrderedMap. Because the given libGDX ObjectLongMap does not maintain order,
-     * the initial ordering of the returned ObjectLongOrderedMap is undefined, but it can be sorted
-     * with {@link ObjectLongOrderedMap#sort()} or {@link ObjectLongOrderedMap#sortByValue(LongComparator)}.
-     * @param from a libGDX ObjectLongMap
-     * @param <K> the type of keys; the same in {@code from} and the returned ObjectLongOrderedMap
-     * @return a new jdkgdxds ObjectLongOrderedMap holding all of the key-value pairs in {@code from}
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.IntMap} to a
+     * jdkgdxds IntObjectOrderedMap. Because the given libGDX IntMap does not maintain order,
+     * the initial ordering of the returned IntObjectOrderedMap is undefined, but it can be sorted
+     * with {@link IntObjectOrderedMap#sort()} or {@link IntObjectOrderedMap#sortByValue(Comparator)}.
+     * @param from a libGDX IntMap
+     * @param <V> the type of values; the same in {@code from} and the returned IntObjectOrderedMap
+     * @return a new jdkgdxds IntObjectOrderedMap holding all of the key-value pairs in {@code from}
      */
-    public static <K> ObjectLongOrderedMap<K> toObjectLongOrderedMap(com.badlogic.gdx.utils.ObjectLongMap<K> from){
-        ObjectLongOrderedMap<K> map = new ObjectLongOrderedMap<>(from.size);
-        for(K k : from.keys()) {
-            map.put(k, from.get(k, 0));
+    public static <V> IntObjectOrderedMap<V> toIntObjectOrderedMap(com.badlogic.gdx.utils.IntMap<V> from){
+        IntObjectOrderedMap<V> map = new IntObjectOrderedMap<>(from.size);
+        IntMap.Keys it = from.keys();
+        while (it.hasNext){
+            int k = it.next();
+            map.put(k, from.get(k));
         }
         return map;
     }

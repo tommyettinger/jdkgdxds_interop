@@ -193,6 +193,21 @@ public class ConversionToGDX {
     }
 
     /**
+     * Can be used to convert from a jdkgdxds {@link com.github.tommyettinger.ds.ObjectLongMap} or
+     * {@link ObjectLongOrderedMap} to a libGDX ObjectLongMap.
+     * @param from a jdkgdxds ObjectLongMap or ObjectLongOrderedMap
+     * @param <K> the type of keys; the same in {@code from} and the returned ObjectLongMap
+     * @return a new libGDX ObjectLongMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K> ObjectLongMap<K> toObjectLongMap(com.github.tommyettinger.ds.ObjectLongMap<K> from){
+        ObjectLongMap<K> map = new ObjectLongMap<>(from.size());
+        for(K k : from.keySet()) {
+            map.put(k, from.get(k));
+        }
+        return map;
+    }
+
+    /**
      * Can be used to convert from a jdkgdxds {@link com.github.tommyettinger.ds.ObjectFloatMap} or
      * {@link ObjectFloatOrderedMap} to a libGDX ObjectFloatMap.
      * @param from a jdkgdxds ObjectFloatMap or ObjectFloatOrderedMap
@@ -208,15 +223,17 @@ public class ConversionToGDX {
     }
 
     /**
-     * Can be used to convert from a jdkgdxds {@link com.github.tommyettinger.ds.ObjectLongMap} or
-     * {@link ObjectLongOrderedMap} to a libGDX ObjectLongMap.
-     * @param from a jdkgdxds ObjectLongMap or ObjectLongOrderedMap
-     * @param <K> the type of keys; the same in {@code from} and the returned ObjectLongMap
-     * @return a new libGDX ObjectLongMap holding all of the key-value pairs in {@code from}
+     * Can be used to convert from a jdkgdxds {@link com.github.tommyettinger.ds.IntObjectMap} or
+     * {@link IntObjectOrderedMap} to a libGDX IntMap.
+     * @param from a jdkgdxds IntObjectMap or IntObjectOrderedMap
+     * @param <V> the type of values; the same in {@code from} and the returned IntMap
+     * @return a new libGDX IntMap holding all of the key-value pairs in {@code from}
      */
-    public static <K> ObjectLongMap<K> toObjectLongMap(com.github.tommyettinger.ds.ObjectLongMap<K> from){
-        ObjectLongMap<K> map = new ObjectLongMap<>(from.size());
-        for(K k : from.keySet()) {
+    public static <V> IntMap<V> toIntMap(com.github.tommyettinger.ds.IntObjectMap<V> from){
+        IntMap<V> map = new IntMap<>(from.size());
+        PrimitiveIterator.OfInt it = from.keySet().iterator();
+        while (it.hasNext()) {
+            int k = it.nextInt();
             map.put(k, from.get(k));
         }
         return map;
