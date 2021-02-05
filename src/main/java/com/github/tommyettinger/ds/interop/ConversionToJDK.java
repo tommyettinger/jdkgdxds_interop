@@ -2,6 +2,7 @@ package com.github.tommyettinger.ds.interop;
 
 import com.badlogic.gdx.utils.*;
 import com.github.tommyettinger.ds.*;
+import com.github.tommyettinger.ds.IntFloatMap;
 import com.github.tommyettinger.ds.IntIntMap;
 import com.github.tommyettinger.ds.IntSet;
 import com.github.tommyettinger.ds.ObjectFloatMap;
@@ -396,6 +397,40 @@ public class ConversionToJDK {
     public static IntIntOrderedMap toIntIntOrderedMap(com.badlogic.gdx.utils.IntIntMap from){
         IntIntOrderedMap map = new IntIntOrderedMap(from.size);
         com.badlogic.gdx.utils.IntIntMap.Keys it = from.keys();
+        while (it.hasNext){
+            int k = it.next();
+            map.put(k, from.get(k, 0));
+        }
+        return map;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.IntFloatMap} to a
+     * jdkgdxds IntFloatMap.
+     * @param from a libGDX IntFloatMap
+     * @return a new jdkgdxds IntFloatMap holding all of the key-value pairs in {@code from}
+     */
+    public static IntFloatMap toIntFloatMap(com.badlogic.gdx.utils.IntFloatMap from){
+        IntFloatMap map = new IntFloatMap(from.size);
+        com.badlogic.gdx.utils.IntFloatMap.Keys it = from.keys();
+        while (it.hasNext){
+            int k = it.next();
+            map.put(k, from.get(k, 0));
+        }
+        return map;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.IntFloatMap} to a
+     * jdkgdxds IntFloatOrderedMap. Because the given libGDX IntFloatMap does not maintain order,
+     * the initial ordering of the returned IntFloatOrderedMap is undefined, but it can be sorted
+     * with {@link IntFloatOrderedMap#sort()} or {@link IntFloatOrderedMap#sortByValue(FloatComparator)}.
+     * @param from a libGDX IntFloatMap
+     * @return a new jdkgdxds IntFloatOrderedMap holding all of the key-value pairs in {@code from}
+     */
+    public static IntFloatOrderedMap toIntFloatOrderedMap(com.badlogic.gdx.utils.IntFloatMap from){
+        IntFloatOrderedMap map = new IntFloatOrderedMap(from.size);
+        com.badlogic.gdx.utils.IntFloatMap.Keys it = from.keys();
         while (it.hasNext){
             int k = it.next();
             map.put(k, from.get(k, 0));
