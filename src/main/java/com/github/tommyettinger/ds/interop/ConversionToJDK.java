@@ -474,4 +474,37 @@ public class ConversionToJDK {
         return map;
     }
 
+    /**
+     * Can be used to convert from a libGDX IdentityMap, ObjectMap, or OrderedMap to a new
+     * jdkgdxds {@link IdentityObjectMap}.
+     * @param from a libGDX IdentityMap, ObjectMap, or OrderedMap
+     * @param <K> the type of keys; the same in {@code from} and the returned IdentityObjectMap
+     * @param <V> the type of values; the same in {@code from} and the returned IdentityObjectMap
+     * @return a new IdentityObjectMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K, V> IdentityObjectMap<K, V> toIdentityObjectMap(ObjectMap<K, V> from){
+        IdentityObjectMap<K, V> map = new IdentityObjectMap<>(from.size);
+        for(K k : from.keys()) {
+            map.put(k, from.get(k));
+        }
+        return map;
+    }
+
+    /**
+     * Can be used to convert from a libGDX IdentityMap, ObjectMap, or OrderedMap to a new jdkgdxds
+     * {@link IdentityObjectOrderedMap}. If {@code from} is an OrderedMap, then this will maintain
+     * its order in the returned IdentityObjectOrderedMap.
+     * @param from a libGDX IdentityMap, ObjectMap, or OrderedMap
+     * @param <K> the type of keys; the same in {@code from} and the returned IdentityObjectOrderedMap
+     * @param <V> the type of values; the same in {@code from} and the returned IdentityObjectOrderedMap
+     * @return a new IdentityObjectOrderedMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K, V> IdentityObjectOrderedMap<K, V> toIdentityObjectOrderedMap(ObjectMap<K, V> from){
+        IdentityObjectOrderedMap<K, V> map = new IdentityObjectOrderedMap<>(from.size);
+        for(K k : from.keys()) {
+            map.put(k, from.get(k));
+        }
+        return map;
+    }
+
 }

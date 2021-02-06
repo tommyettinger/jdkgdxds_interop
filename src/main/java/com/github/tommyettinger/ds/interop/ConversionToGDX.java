@@ -290,4 +290,21 @@ public class ConversionToGDX {
         return map;
     }
 
+    /**
+     * Can be used to convert from any JDK Map, such as a {@link java.util.HashMap}, {@link ObjectObjectMap},
+     * or {@link CaseInsensitiveOrderedMap}, to a libGDX IdentityMap. In almost all cases, IdentityMap is more
+     * permissive about allowing duplicate keys, so converting to an IdentityMap should be lossless.
+     * @param from any Map that has a usable {@link Map#keySet()} method
+     * @param <K> the type of keys; the same in {@code from} and the returned IdentityMap
+     * @param <V> the type of values; the same in {@code from} and the returned IdentityMap
+     * @return a new IdentityMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K, V> IdentityMap<K, V> toIdentityMap(Map<K, V> from){
+        IdentityMap<K, V> map = new IdentityMap<>(from.size());
+        for(K k : from.keySet()) {
+            map.put(k, from.get(k));
+        }
+        return map;
+    }
+
 }
