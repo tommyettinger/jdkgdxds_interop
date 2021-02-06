@@ -273,4 +273,21 @@ public class ConversionToGDX {
         return map;
     }
 
+    /**
+     * Can be used to convert from a jdkgdxds {@link com.github.tommyettinger.ds.LongObjectMap} or
+     * {@link LongObjectOrderedMap} to a libGDX IntMap.
+     * @param from a jdkgdxds LongObjectMap or LongObjectOrderedMap
+     * @param <V> the type of values; the same in {@code from} and the returned IntMap
+     * @return a new libGDX IntMap holding all of the key-value pairs in {@code from}
+     */
+    public static <V> LongMap<V> toLongMap(com.github.tommyettinger.ds.LongObjectMap<V> from){
+        LongMap<V> map = new LongMap<>(from.size());
+        PrimitiveIterator.OfLong it = from.keySet().iterator();
+        while (it.hasNext()) {
+            long k = it.nextLong();
+            map.put(k, from.get(k));
+        }
+        return map;
+    }
+
 }

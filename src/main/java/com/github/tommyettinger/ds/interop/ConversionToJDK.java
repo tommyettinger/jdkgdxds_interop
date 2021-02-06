@@ -438,4 +438,40 @@ public class ConversionToJDK {
         return map;
     }
 
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.LongMap} to a
+     * jdkgdxds LongObjectMap.
+     * @param from a libGDX LongMap
+     * @param <V> the type of values; the same in {@code from} and the returned LongObjectMap
+     * @return a new jdkgdxds LongObjectMap holding all of the key-value pairs in {@code from}
+     */
+    public static <V> LongObjectMap<V> toLongObjectMap(com.badlogic.gdx.utils.LongMap<V> from){
+        LongObjectMap<V> map = new LongObjectMap<>(from.size);
+        LongMap.Keys it = from.keys();
+        while (it.hasNext){
+            long k = it.next();
+            map.put(k, from.get(k));
+        }
+        return map;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.LongMap} to a
+     * jdkgdxds LongObjectOrderedMap. Because the given libGDX LongMap does not maintain order,
+     * the initial ordering of the returned LongObjectOrderedMap is undefined, but it can be sorted
+     * with {@link LongObjectOrderedMap#sort()} or {@link LongObjectOrderedMap#sortByValue(Comparator)}.
+     * @param from a libGDX LongMap
+     * @param <V> the type of values; the same in {@code from} and the returned LongObjectOrderedMap
+     * @return a new jdkgdxds LongObjectOrderedMap holding all of the key-value pairs in {@code from}
+     */
+    public static <V> LongObjectOrderedMap<V> toLongObjectOrderedMap(com.badlogic.gdx.utils.LongMap<V> from){
+        LongObjectOrderedMap<V> map = new LongObjectOrderedMap<>(from.size);
+        LongMap.Keys it = from.keys();
+        while (it.hasNext){
+            long k = it.next();
+            map.put(k, from.get(k));
+        }
+        return map;
+    }
+
 }
