@@ -92,7 +92,6 @@ public class ConversionToJDK {
         return new FloatList(from.items, 0, from.size);
     }
 
-
     /**
      * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.Array}
      * to a new jdkgdxds {@link ObjectSet}. This will not necessarily maintain the order of the
@@ -107,6 +106,7 @@ public class ConversionToJDK {
         }
         return set;
     }
+
     /**
      * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.ObjectSet}
      * to a new jdkgdxds {@link ObjectSet}.
@@ -204,6 +204,42 @@ public class ConversionToJDK {
      */
     public static IntOrderedSet toIntOrderedSet(com.badlogic.gdx.utils.IntArray from) {
         return new IntOrderedSet(from.items, 0, from.size);
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.ObjectSet}
+     * (or more typically, a libGDX {@link OrderedSet}) to a new jdkgdxds {@link NumberedSet}.
+     * This will maintain the order in an OrderedSet argument, and because it returns a
+     * NumberedSet, the order can be looked up bidirectionally with
+     * {@link NumberedSet#indexOf(Object)}. If given an ordinary ObjectSet, it will not maintain
+     * any kind of order with the given set.
+     * @param from a libGDX ObjectSet or OrderedSet
+     * @return a new jdkgdxds NumberedSet holding the unique items in {@code from}
+     */
+    public static <T> NumberedSet<T> toNumberedSet(com.badlogic.gdx.utils.ObjectSet<T> from) {
+        NumberedSet<T> set = new NumberedSet<>(from.size);
+        com.badlogic.gdx.utils.ObjectSet.ObjectSetIterator<T> it = from.iterator();
+        while (it.hasNext) {
+            set.add(it.next());
+        }
+        return set;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.Array} to a new
+     * jdkgdxds {@link NumberedSet}, keeping only unique items in the Array. This will
+     * maintain the order in the Array argument, and because it returns a NumberedSet, the order
+     * can be looked up bidirectionally with {@link NumberedSet#indexOf(Object)}.
+     * @param from a libGDX Array
+     * @return a new jdkgdxds NumberedSet holding the unique items in {@code from}
+     */
+    public static <T> NumberedSet<T> toNumberedSet(Array<T> from) {
+        NumberedSet<T> set = new NumberedSet<>(from.size);
+        Array.ArrayIterator<T> it = from.iterator();
+        while (it.hasNext()) {
+            set.add(it.next());
+        }
+        return set;
     }
 
     /**
