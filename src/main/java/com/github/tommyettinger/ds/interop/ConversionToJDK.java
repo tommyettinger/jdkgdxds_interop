@@ -243,7 +243,8 @@ public class ConversionToJDK {
     }
 
     /**
-     * Can be used to convert from a libGDX ObjectMap to a new jdkgdxds {@link ObjectObjectMap}.
+     * Can be used to convert from a libGDX ObjectMap (or OrderedMap) to a new jdkgdxds
+     * {@link ObjectObjectMap}.
      * @param from a libGDX ObjectMap (or OrderedMap)
      * @param <K> the type of keys; the same in {@code from} and the returned ObjectObjectMap
      * @param <V> the type of values; the same in {@code from} and the returned ObjectObjectMap
@@ -267,6 +268,38 @@ public class ConversionToJDK {
      * @return a new ObjectObjectOrderedMap holding all of the key-value pairs in {@code from}
      */
     public static <K, V> ObjectObjectOrderedMap<K, V> toObjectObjectOrderedMap(ObjectMap<K, V> from){
+        ObjectObjectOrderedMap<K, V> map = new ObjectObjectOrderedMap<>(from.size);
+        for(K k : from.keys()) {
+            map.put(k, from.get(k));
+        }
+        return map;
+    }
+
+    /**
+     * Can be used to convert from a libGDX ArrayMap to a new jdkgdxds {@link ObjectObjectMap}.
+     * @param from a libGDX ArrayMap
+     * @param <K> the type of keys; the same in {@code from} and the returned ObjectObjectMap
+     * @param <V> the type of values; the same in {@code from} and the returned ObjectObjectMap
+     * @return a new ObjectObjectMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K, V> ObjectObjectMap<K, V> toObjectObjectMap(ArrayMap<K, V> from){
+        ObjectObjectMap<K, V> map = new ObjectObjectMap<>(from.size);
+        for(K k : from.keys()) {
+            map.put(k, from.get(k));
+        }
+        return map;
+    }
+
+    /**
+     * Can be used to convert from a libGDX ArrayMap to a new jdkgdxds
+     * {@link ObjectObjectOrderedMap}. This will maintain the ArrayMap's order in the
+     * returned ObjectObjectOrderedMap.
+     * @param from a libGDX ArrayMap
+     * @param <K> the type of keys; the same in {@code from} and the returned ObjectObjectOrderedMap
+     * @param <V> the type of values; the same in {@code from} and the returned ObjectObjectOrderedMap
+     * @return a new ObjectObjectOrderedMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K, V> ObjectObjectOrderedMap<K, V> toObjectObjectOrderedMap(ArrayMap<K, V> from){
         ObjectObjectOrderedMap<K, V> map = new ObjectObjectOrderedMap<>(from.size);
         for(K k : from.keys()) {
             map.put(k, from.get(k));
