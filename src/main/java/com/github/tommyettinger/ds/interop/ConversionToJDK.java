@@ -110,7 +110,7 @@ public class ConversionToJDK {
     /**
      * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.ObjectSet}
      * to a new jdkgdxds {@link ObjectSet}.
-     * @param from a libGDX ObjectSet
+     * @param from a libGDX ObjectSet or OrderedSet
      * @return a new jdkgdxds ObjectSet holding the unique items in {@code from}
      */
     public static <T> ObjectSet<T> toObjectSet(com.badlogic.gdx.utils.ObjectSet<T> from) {
@@ -138,14 +138,75 @@ public class ConversionToJDK {
     }
 
     /**
-     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.OrderedSet}
-     * to a new jdkgdxds {@link ObjectOrderedSet}.
-     * @param from a libGDX OrderedSet
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.ObjectSet} or
+     * {@link com.badlogic.gdx.utils.OrderedSet} to a new jdkgdxds {@link ObjectOrderedSet}.
+     * @param from a libGDX ObjectSet or OrderedSet
      * @return a new jdkgdxds ObjectOrderedSet holding the unique items in {@code from}
      */
-    public static <T> ObjectOrderedSet<T> toObjectOrderedSet(com.badlogic.gdx.utils.OrderedSet<T> from) {
+    public static <T> ObjectOrderedSet<T> toObjectOrderedSet(com.badlogic.gdx.utils.ObjectSet<T> from) {
         ObjectOrderedSet<T> set = new ObjectOrderedSet<>(from.size);
-        OrderedSet.OrderedSetIterator<T> it = from.iterator();
+        com.badlogic.gdx.utils.ObjectSet.ObjectSetIterator<T> it = from.iterator();
+        while (it.hasNext) {
+            set.add(it.next());
+        }
+        return set;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.Array}
+     * to a new jdkgdxds {@link CaseInsensitiveSet}. This will not necessarily maintain the order of the
+     * items in the Array.
+     * @param from a libGDX Array
+     * @return a new jdkgdxds CaseInsensitiveSet holding the unique items (case-insensitive) in {@code from}
+     */
+    public static <T extends CharSequence> CaseInsensitiveSet toCaseInsensitiveSet(com.badlogic.gdx.utils.Array<T> from) {
+        CaseInsensitiveSet set = new CaseInsensitiveSet(from.size);
+        for (T t : from) {
+            set.add(t);
+        }
+        return set;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.ObjectSet} or
+     * {@link com.badlogic.gdx.utils.OrderedSet} to a new jdkgdxds {@link CaseInsensitiveSet}.
+     * @param from a libGDX ObjectSet or OrderedSet
+     * @return a new jdkgdxds CaseInsensitiveSet holding the unique items (case-insensitive) in {@code from}
+     */
+    public static <T extends CharSequence> CaseInsensitiveSet toCaseInsensitiveSet(com.badlogic.gdx.utils.ObjectSet<T> from) {
+        CaseInsensitiveSet set = new CaseInsensitiveSet(from.size);
+        com.badlogic.gdx.utils.ObjectSet.ObjectSetIterator<T> it = from.iterator();
+        while (it.hasNext) {
+            set.add(it.next());
+        }
+        return set;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.Array}
+     * to a new jdkgdxds {@link CaseInsensitiveSet}. This will maintain the order of the
+     * items in the Array.
+     * @param from a libGDX Array
+     * @return a new jdkgdxds CaseInsensitiveSet holding the unique items (case-insensitive) in {@code from}
+     */
+    public static <T extends CharSequence> CaseInsensitiveOrderedSet toCaseInsensitiveOrderedSet(com.badlogic.gdx.utils.Array<T> from) {
+        CaseInsensitiveOrderedSet set = new CaseInsensitiveOrderedSet(from.size);
+        for (T t : from) {
+            set.add(t);
+        }
+        return set;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.ObjectSet} or
+     * {@link com.badlogic.gdx.utils.OrderedSet} to a new jdkgdxds {@link ObjectOrderedSet}.
+     * If from is an OrderedSet, this will maintain its order.
+     * @param from a libGDX ObjectSet or OrderedSet
+     * @return a new jdkgdxds ObjectOrderedSet holding the unique items (case-insensitive) in {@code from}
+     */
+    public static <T extends CharSequence> CaseInsensitiveOrderedSet toCaseInsensitiveOrderedSet(com.badlogic.gdx.utils.ObjectSet<T> from) {
+        CaseInsensitiveOrderedSet set = new CaseInsensitiveOrderedSet(from.size);
+        com.badlogic.gdx.utils.ObjectSet.ObjectSetIterator<T> it = from.iterator();
         while (it.hasNext) {
             set.add(it.next());
         }
