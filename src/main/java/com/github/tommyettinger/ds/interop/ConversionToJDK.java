@@ -308,6 +308,39 @@ public class ConversionToJDK {
     }
 
     /**
+     * Can be used to convert from a libGDX ObjectMap (or OrderedMap) to a new jdkgdxds
+     * {@link CaseInsensitiveMap}.
+     * @param from a libGDX ObjectMap (or OrderedMap)
+     * @param <K> the type of keys; must extend CharSequence, so this could be String, StringBuilder, etc.
+     * @param <V> the type of values; the same in {@code from} and the returned CaseInsensitiveMap
+     * @return a new CaseInsensitiveMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K extends CharSequence, V> CaseInsensitiveMap<V> toCaseInsensitiveMap(ObjectMap<K, V> from){
+        CaseInsensitiveMap<V> map = new CaseInsensitiveMap<>(from.size);
+        for(K k : from.keys()) {
+            map.put(k, from.get(k));
+        }
+        return map;
+    }
+
+    /**
+     * Can be used to convert from a libGDX ObjectMap (or OrderedMap) to a new jdkgdxds
+     * {@link CaseInsensitiveOrderedMap}. If {@code from} is an OrderedMap, then this will maintain
+     * its order in the returned CaseInsensitiveOrderedMap.
+     * @param from a libGDX ObjectMap (or OrderedMap)
+     * @param <K> the type of keys; must extend CharSequence, so this could be String, StringBuilder, etc.
+     * @param <V> the type of values; the same in {@code from} and the returned CaseInsensitiveOrderedMap
+     * @return a new CaseInsensitiveOrderedMap holding all of the key-value pairs in {@code from}
+     */
+    public static <K extends CharSequence, V> CaseInsensitiveOrderedMap<V> toCaseInsensitiveOrderedMap(ObjectMap<K, V> from){
+        CaseInsensitiveOrderedMap<V> map = new CaseInsensitiveOrderedMap<>(from.size);
+        for(K k : from.keys()) {
+            map.put(k, from.get(k));
+        }
+        return map;
+    }
+
+    /**
      * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.ObjectIntMap} to a
      * jdkgdxds ObjectIntMap.
      * @param from a libGDX ObjectIntMap
