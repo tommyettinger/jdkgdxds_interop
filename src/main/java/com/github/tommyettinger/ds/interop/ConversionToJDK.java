@@ -84,6 +84,19 @@ public class ConversionToJDK {
     }
 
     /**
+     * Can be used to convert from a libGDX LongArray to a jdkgdxds LongList.
+     * @param from a libGDX LongArray
+     * @return a new LongList holding the items of {@code from}
+     */
+    public static LongList toLongList(LongQueue from){
+        LongList list = new LongList(from.size);
+        for (int i = 0; i < from.size; i++) {
+            list.add(from.get(i));
+        }
+        return list;
+    }
+
+    /**
      * Can be used to convert from a libGDX FloatArray to a jdkgdxds FloatList.
      * @param from a libGDX FloatArray
      * @return a new FloatList holding the items of {@code from}

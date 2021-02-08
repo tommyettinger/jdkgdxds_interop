@@ -69,6 +69,21 @@ public class ConversionToGDX {
     }
 
     /**
+     * Can be used to convert from any jdkgdxds long-based collection (such as {@link LongList},
+     * {@link LongSet}, or {@link LongObjectMap.Keys}) to a libGDX LongQueue.
+     * @param from a primitive-long-backed data structure from jdkgdxds
+     * @return a new LongQueue holding the items of {@code from}
+     */
+    public static LongQueue toLongQueue(PrimitiveCollection.OfLong from) {
+        LongQueue queue = new LongQueue(from.size());
+        PrimitiveIterator.OfLong it = from.iterator();
+        while (it.hasNext()){
+            queue.addLast(it.nextLong());
+        }
+        return queue;
+    }
+
+    /**
      * Can be used to convert from any jdkgdxds float-based collection (such as {@link FloatList}
      * or {@link com.github.tommyettinger.ds.ObjectFloatMap.Values}) to a libGDX FloatArray.
      * @param from a primitive-float-backed data structure from jdkgdxds
