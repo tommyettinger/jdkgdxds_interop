@@ -15,11 +15,10 @@ apply plugin: 'com.bmuschko.nexus'
 apply plugin: 'io.codearte.nexus-staging'
 apply from: 'publish.gradle'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+compileJava.sourceCompatibility = 1.8
 
 def projectName = 'jdkgdxds_interop'
-version '0.0.5-SNAPSHOT'
+version '0.0.6-SNAPSHOT'
 group 'com.github.tommyettinger'
 
 //api "com.github.tommyettinger:jdkgdxds_interop:0.0.5-SNAPSHOT"
@@ -37,6 +36,9 @@ if (JavaVersion.current().isJava8Compatible()) {
             options.tags('apiNote:a:"API Note"', 'implSpec:a:"Implementation Requirements"', 'implNote:a:"Implementation Note"')
         }
     }
+}
+if (JavaVersion.current().isJava9Compatible()) {
+    compileJava.targetCompatibility = 8
 }
 
 javadoc.options.source("15")
@@ -59,7 +61,7 @@ repositories {
 
 dependencies {
     api "com.google.code.findbugs:jsr305:3.0.2"
-	api "com.github.tommyettinger:jdkgdxds:0.0.5"
+	api "com.github.tommyettinger:jdkgdxds:0.0.6"
 	api "com.badlogicgames.gdx:gdx:1.9.13"
     testImplementation "junit:junit:4.13.1"
 }

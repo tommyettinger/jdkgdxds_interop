@@ -16,8 +16,6 @@
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.CaseInsensitiveMap" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.CaseInsensitiveOrderedMap" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.FloatList" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.HolderOrderedSet" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.HolderSet" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IdentityObjectMap" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IdentityObjectOrderedMap" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntFloatMap" />
