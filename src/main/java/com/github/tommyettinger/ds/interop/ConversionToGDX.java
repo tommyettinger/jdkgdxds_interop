@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.ObjectIntMap;
 import com.badlogic.gdx.utils.ObjectLongMap;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.github.tommyettinger.ds.*;
-import com.github.tommyettinger.ds.support.util.FloatIterator;
+import com.github.tommyettinger.ds.support.util.*;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -98,6 +98,68 @@ public class ConversionToGDX {
         return array;
     }
 
+    /**
+     * Can be used to convert from any jdkgdxds byte-based collection (such as {@link ByteList})
+     * to a libGDX ByteArray.
+     * @param from a primitive-float-backed data structure from jdkgdxds
+     * @return a new ByteArray holding the items of {@code from}
+     */
+    public static ByteArray toByteArray(PrimitiveCollection.OfByte from) {
+        ByteArray array = new ByteArray(from.size());
+        ByteIterator it = from.iterator();
+        while (it.hasNext()){
+            array.add(it.nextByte());
+        }
+        return array;
+    }
+
+    /**
+     * Can be used to convert from any jdkgdxds char-based collection (such as {@link CharList})
+     * to a libGDX CharArray.
+     * @param from a primitive-float-backed data structure from jdkgdxds
+     * @return a new CharArray holding the items of {@code from}
+     */
+    public static CharArray toCharArray(PrimitiveCollection.OfChar from) {
+        CharArray array = new CharArray(from.size());
+        CharIterator it = from.iterator();
+        while (it.hasNext()){
+            array.add(it.nextChar());
+        }
+        return array;
+    }
+
+    /**
+     * Can be used to convert from any jdkgdxds short-based collection (such as {@link ShortList})
+     * to a libGDX ShortArray.
+     * @param from a primitive-float-backed data structure from jdkgdxds
+     * @return a new ShortArray holding the items of {@code from}
+     */
+    public static ShortArray toShortArray(PrimitiveCollection.OfShort from) {
+        ShortArray array = new ShortArray(from.size());
+        ShortIterator it = from.iterator();
+        while (it.hasNext()){
+            array.add(it.nextShort());
+        }
+        return array;
+    }
+
+    /**
+     * Can be used to convert from any jdkgdxds boolean-based collection (such as {@link BooleanList})
+     * to a libGDX BooleanArray.
+     * @param from a primitive-float-backed data structure from jdkgdxds
+     * @return a new BooleanArray holding the items of {@code from}
+     */
+    public static BooleanArray toBooleanArray(PrimitiveCollection.OfBoolean from) {
+        BooleanArray array = new BooleanArray(from.size());
+        BooleanIterator it = from.iterator();
+        while (it.hasNext()){
+            array.add(it.nextBoolean());
+        }
+        return array;
+    }
+
+    // there is no DoubleArray in libGDX... for some reason.
+    
     /**
      * Can be used to convert from any JDK Map to a new libGDX ArrayMap with the same key and value types.
      * Note that jdkgdxds does not have a direct equivalent to libGDX's ArrayMap, because ArrayMap is only the "right
