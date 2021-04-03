@@ -106,6 +106,42 @@ public class ConversionToJDK {
     }
 
     /**
+     * Can be used to convert from a libGDX ByteArray to a jdkgdxds ByteList.
+     * @param from a libGDX ByteArray
+     * @return a new ByteList holding the items of {@code from}
+     */
+    public static ByteList toByteList(ByteArray from){
+        return new ByteList(from.items, 0, from.size);
+    }
+
+    /**
+     * Can be used to convert from a libGDX CharArray to a jdkgdxds CharList.
+     * @param from a libGDX CharArray
+     * @return a new CharList holding the items of {@code from}
+     */
+    public static CharList toCharList(CharArray from){
+        return new CharList(from.items, 0, from.size);
+    }
+
+    /**
+     * Can be used to convert from a libGDX ShortArray to a jdkgdxds ShortList.
+     * @param from a libGDX ShortArray
+     * @return a new ShortList holding the items of {@code from}
+     */
+    public static ShortList toShortList(ShortArray from){
+        return new ShortList(from.items, 0, from.size);
+    }
+
+    /**
+     * Can be used to convert from a libGDX BooleanArray to a jdkgdxds BooleanList.
+     * @param from a libGDX BooleanArray
+     * @return a new BooleanList holding the items of {@code from}
+     */
+    public static BooleanList toBooleanList(BooleanArray from){
+        return new BooleanList(from.items, 0, from.size);
+    }
+
+    /**
      * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.Array}
      * to a new jdkgdxds {@link ObjectSet}. This will not necessarily maintain the order of the
      * items in the Array.
