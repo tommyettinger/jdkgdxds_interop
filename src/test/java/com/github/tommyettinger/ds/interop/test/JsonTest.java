@@ -221,7 +221,7 @@ public class JsonTest {
         IntSet numbers2 = json.fromJson(IntSet.class, data);
         PrimitiveIterator.OfInt it = numbers2.iterator();
         while (it.hasNext()){
-            System.out.print(it.next());
+            System.out.print(it.nextInt());
             if(it.hasNext())
                 System.out.print(", ");
         }
@@ -237,7 +237,7 @@ public class JsonTest {
         IntOrderedSet numbers2 = json.fromJson(IntOrderedSet.class, data);
         PrimitiveIterator.OfInt it = numbers2.iterator();
         while (it.hasNext()){
-            System.out.print(it.next());
+            System.out.print(it.nextInt());
             if(it.hasNext())
                 System.out.print(", ");
         }
@@ -253,7 +253,7 @@ public class JsonTest {
         LongSet numbers2 = json.fromJson(LongSet.class, data);
         PrimitiveIterator.OfLong it = numbers2.iterator();
         while (it.hasNext()){
-            System.out.print(it.next());
+            System.out.print(it.nextLong());
             if(it.hasNext())
                 System.out.print(", ");
         }
@@ -269,7 +269,7 @@ public class JsonTest {
         LongOrderedSet numbers2 = json.fromJson(LongOrderedSet.class, data);
         PrimitiveIterator.OfLong it = numbers2.iterator();
         while (it.hasNext()){
-            System.out.print(it.next());
+            System.out.print(it.nextLong());
             if(it.hasNext())
                 System.out.print(", ");
         }

@@ -377,7 +377,7 @@ public class JsonSupport {
                 json.writeArrayStart();
                 PrimitiveIterator.OfInt it = object.iterator();
                 while (it.hasNext()) {
-                    json.writeValue(it.next());
+                    json.writeValue(it.nextInt());
                 }
                 json.writeArrayEnd();
             }
@@ -402,7 +402,7 @@ public class JsonSupport {
                 json.writeArrayStart();
                 PrimitiveIterator.OfInt it = object.iterator();
                 while (it.hasNext()) {
-                    json.writeValue(it.next());
+                    json.writeValue(it.nextInt());
                 }
                 json.writeArrayEnd();
             }
@@ -427,7 +427,7 @@ public class JsonSupport {
                 json.writeArrayStart();
                 PrimitiveIterator.OfLong it = object.iterator();
                 while (it.hasNext()) {
-                    json.writeValue(it.next());
+                    json.writeValue(it.nextLong());
                 }
                 json.writeArrayEnd();
             }
@@ -452,7 +452,7 @@ public class JsonSupport {
                 json.writeArrayStart();
                 PrimitiveIterator.OfLong it = object.iterator();
                 while (it.hasNext()) {
-                    json.writeValue(it.next());
+                    json.writeValue(it.nextLong());
                 }
                 json.writeArrayEnd();
             }
