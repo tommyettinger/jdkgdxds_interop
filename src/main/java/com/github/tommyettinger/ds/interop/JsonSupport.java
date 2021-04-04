@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.support.LaserRandom;
-import com.github.tommyettinger.ds.support.util.FloatIterator;
+import com.github.tommyettinger.ds.support.util.*;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
@@ -27,6 +27,11 @@ public class JsonSupport {
         registerIntList(json);
         registerLongList(json);
         registerFloatList(json);
+        registerByteList(json);
+        registerShortList(json);
+        registerCharList(json);
+        registerDoubleList(json);
+        registerBooleanList(json);
 
         registerObjectSet(json);
         registerObjectOrderedSet(json);
@@ -114,7 +119,7 @@ public class JsonSupport {
                 json.writeArrayStart();
                 PrimitiveIterator.OfInt it = object.iterator();
                 while (it.hasNext()) {
-                    json.writeValue(it.next());
+                    json.writeValue(it.nextInt());
                 }
                 json.writeArrayEnd();
             }
@@ -140,7 +145,7 @@ public class JsonSupport {
                 json.writeArrayStart();
                 PrimitiveIterator.OfLong it = object.iterator();
                 while (it.hasNext()) {
-                    json.writeValue(it.next());
+                    json.writeValue(it.nextLong());
                 }
                 json.writeArrayEnd();
             }
@@ -166,7 +171,7 @@ public class JsonSupport {
                 json.writeArrayStart();
                 FloatIterator it = object.iterator();
                 while (it.hasNext()) {
-                    json.writeValue(it.next());
+                    json.writeValue(it.nextFloat());
                 }
                 json.writeArrayEnd();
             }
@@ -177,7 +182,131 @@ public class JsonSupport {
                 return FloatList.with(jsonData.asFloatArray());
             }
         });
+    }
 
+    /**
+     * Registers ByteList with the given Json object, so ByteList can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerByteList(@Nonnull Json json) {
+        json.setSerializer(ByteList.class, new Json.Serializer<ByteList>() {
+            @Override
+            public void write(Json json, ByteList object, Class knownType) {
+                json.writeArrayStart();
+                ByteIterator it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextByte());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public ByteList read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return ByteList.with(jsonData.asByteArray());
+            }
+        });
+    }
+
+    /**
+     * Registers ShortList with the given Json object, so ShortList can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerShortList(@Nonnull Json json) {
+        json.setSerializer(ShortList.class, new Json.Serializer<ShortList>() {
+            @Override
+            public void write(Json json, ShortList object, Class knownType) {
+                json.writeArrayStart();
+                ShortIterator it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextShort());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public ShortList read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return ShortList.with(jsonData.asShortArray());
+            }
+        });
+    }
+
+    /**
+     * Registers CharList with the given Json object, so CharList can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerCharList(@Nonnull Json json) {
+        json.setSerializer(CharList.class, new Json.Serializer<CharList>() {
+            @Override
+            public void write(Json json, CharList object, Class knownType) {
+                json.writeArrayStart();
+                CharIterator it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextChar());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public CharList read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return CharList.with(jsonData.asCharArray());
+            }
+        });
+    }
+
+    /**
+     * Registers DoubleList with the given Json object, so DoubleList can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerDoubleList(@Nonnull Json json) {
+        json.setSerializer(DoubleList.class, new Json.Serializer<DoubleList>() {
+            @Override
+            public void write(Json json, DoubleList object, Class knownType) {
+                json.writeArrayStart();
+                PrimitiveIterator.OfDouble it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextDouble());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public DoubleList read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return DoubleList.with(jsonData.asDoubleArray());
+            }
+        });
+    }
+
+    /**
+     * Registers BooleanList with the given Json object, so BooleanList can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerBooleanList(@Nonnull Json json) {
+        json.setSerializer(BooleanList.class, new Json.Serializer<BooleanList>() {
+            @Override
+            public void write(Json json, BooleanList object, Class knownType) {
+                json.writeArrayStart();
+                BooleanIterator it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextBoolean());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public BooleanList read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return BooleanList.with(jsonData.asBooleanArray());
+            }
+        });
     }
 
     /**
