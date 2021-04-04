@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.JsonWriter;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.interop.JsonSupport;
 import com.github.tommyettinger.ds.support.LaserRandom;
-import com.github.tommyettinger.ds.support.util.FloatIterator;
+import com.github.tommyettinger.ds.support.util.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -47,7 +47,7 @@ public class JsonTest {
         IntList numbers2 = json.fromJson(IntList.class, data);
         PrimitiveIterator.OfInt it = numbers2.iterator();
         while (it.hasNext()){
-            System.out.print(it.next());
+            System.out.print(it.nextInt());
             if(it.hasNext())
                 System.out.print(", ");
         }
@@ -63,7 +63,7 @@ public class JsonTest {
         LongList numbers2 = json.fromJson(LongList.class, data);
         PrimitiveIterator.OfLong it = numbers2.iterator();
         while (it.hasNext()){
-            System.out.print(it.next());
+            System.out.print(it.nextLong());
             if(it.hasNext())
                 System.out.print(", ");
         }
@@ -79,7 +79,87 @@ public class JsonTest {
         FloatList numbers2 = json.fromJson(FloatList.class, data);
         FloatIterator it = numbers2.iterator();
         while (it.hasNext()){
-            System.out.print(it.next());
+            System.out.print(it.nextFloat());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+    }
+
+    @Test
+    public void testByteList() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerByteList(json);
+        ByteList numbers = ByteList.with((byte) 42, (byte) 23, (byte) -66, (byte) -20);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        ByteList numbers2 = json.fromJson(ByteList.class, data);
+        ByteIterator it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextByte());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+    }
+
+    @Test
+    public void testShortList() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerShortList(json);
+        ShortList numbers = ShortList.with((short) 42, (short) 23, (short) 666, (short) 420);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        ShortList numbers2 = json.fromJson(ShortList.class, data);
+        ShortIterator it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextShort());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+    }
+
+    @Test
+    public void testCharList() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerCharList(json);
+        CharList numbers = CharList.with('a', 'b', 'y', 'z');
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        CharList numbers2 = json.fromJson(CharList.class, data);
+        CharIterator it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextChar());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+    }
+
+    @Test
+    public void testDoubleList() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerDoubleList(json);
+        DoubleList numbers = DoubleList.with(42.42, 23.23, 666.666, 420.42);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        DoubleList numbers2 = json.fromJson(DoubleList.class, data);
+        PrimitiveIterator.OfDouble it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextDouble());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+    }
+
+    @Test
+    public void testBooleanList() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerBooleanList(json);
+        BooleanList values = BooleanList.with(true, false, false, true);
+        String data = json.toJson(values);
+        System.out.println(data);
+        BooleanList numbers2 = json.fromJson(BooleanList.class, data);
+        BooleanIterator it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextBoolean());
             if(it.hasNext())
                 System.out.print(", ");
         }
