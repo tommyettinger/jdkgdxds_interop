@@ -11,10 +11,11 @@ data so that all platforms can both read and write it.
 The new [jdkgdxds](https://github.com/tommyettinger/jdkgdxds) library takes the JDK interfaces like `Map` and `List`,
 applies them to data structures closely derived from the libGDX ones, and then keeps going to extend the data structure
 coverage to things like insertion-ordered long-to-float maps and case-insensitive sets of CharSequence items. It does
-not have a way to serialize to JSON out of the box.
+not have a way to serialize to JSON out-of-the-box, though things that can serialize the JDK interfaces can at least
+write and read the all-Object types like `ObjectList`, `ObjectObjectMap` and `ObjectOrderedSet`.
 
 ## So what do we have here?
-Here's jdkgdxds-interop, for conversions both ways between jdkgdxds and libGDX data structures, and also to write the
+Here's jdkgdxds_interop, for conversions both ways between jdkgdxds and libGDX data structures, and also to write the
 jdkgdxds data structures using libGDX's Json. This consists of just three classes, all in the
 `com.github.tommyettinger.ds.interop` package. `ConversionToGDX` has methods that take any class that implements one of
 the JDK or one of jdkgdxds' interfaces, like `Collection` or `PrimitiveCollection.OfLong`, and converts it to a narrower
@@ -36,3 +37,5 @@ and the GWT inherits in your .gwt.xml file:
 ```xml
      <inherits name="jdkgdxds_interop" />
 ```
+
+I hope that's all you need! It's a small-ish simple library!
