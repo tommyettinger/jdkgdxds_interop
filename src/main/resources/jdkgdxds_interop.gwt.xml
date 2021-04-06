@@ -13,8 +13,12 @@
 	
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.support.LaserRandom" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.BinaryHeap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.BooleanList" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ByteList" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.CaseInsensitiveMap" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.CaseInsensitiveOrderedMap" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.CharList" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.DoubleList" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.FloatList" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IdentityObjectMap" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IdentityObjectOrderedMap" />
@@ -52,5 +56,6 @@
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectObjectOrderedMap" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectOrderedSet" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectSet" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ShortList" />
     <source path="com/github/tommyettinger/ds/interop" />
 </module>

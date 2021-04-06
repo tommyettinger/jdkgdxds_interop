@@ -2,7 +2,6 @@ package com.github.tommyettinger.ds.interop;
 
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.JsonWriter;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.support.LaserRandom;
 import com.github.tommyettinger.ds.support.util.*;
@@ -10,7 +9,9 @@ import com.github.tommyettinger.ds.support.util.*;
 import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.*;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.PrimitiveIterator;
 
 @SuppressWarnings("rawtypes")
 public class JsonSupport {
@@ -1289,6 +1290,8 @@ public class JsonSupport {
 
     /**
      * Registers BinaryHeap with the given Json object, so BinaryHeap can be written to and read from JSON.
+     * It may be problematic to register a custom serializer for the Node items of the BinaryHeap, so it's
+     * recommended that you don't; the output is more verbose with the default serialization, but it works.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
