@@ -12,6 +12,8 @@
     <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
 	
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.support.LaserRandom" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.support.DistinctRandom" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.support.TricycleRandom" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.BinaryHeap" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.BooleanList" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ByteList" />

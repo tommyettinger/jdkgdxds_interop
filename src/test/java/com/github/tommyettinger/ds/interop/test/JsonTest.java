@@ -5,7 +5,9 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.interop.JsonSupport;
+import com.github.tommyettinger.ds.support.DistinctRandom;
 import com.github.tommyettinger.ds.support.LaserRandom;
+import com.github.tommyettinger.ds.support.TricycleRandom;
 import com.github.tommyettinger.ds.support.util.*;
 import org.junit.Assert;
 import org.junit.Test;
@@ -968,6 +970,34 @@ public class JsonTest {
         LaserRandom random2 = json.fromJson(LaserRandom.class, data);
         System.out.println(Long.toString(random2.getStateA(), 36));
         System.out.println(Long.toString(random2.getStateB() >>> 1, 36));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
+    public void testTricycleRandom() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerTricycleRandom(json);
+        TricycleRandom random = new TricycleRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        TricycleRandom random2 = json.fromJson(TricycleRandom.class, data);
+        System.out.println(Long.toString(random2.getStateA(), 36));
+        System.out.println(Long.toString(random2.getStateB(), 36));
+        System.out.println(Long.toString(random2.getStateC(), 36));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
+    public void testDistinctRandom() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerDistinctRandom(json);
+        DistinctRandom random = new DistinctRandom(123456789);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        DistinctRandom random2 = json.fromJson(DistinctRandom.class, data);
+        System.out.println(Long.toString(random2.getSelectedState(0), 36));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 }

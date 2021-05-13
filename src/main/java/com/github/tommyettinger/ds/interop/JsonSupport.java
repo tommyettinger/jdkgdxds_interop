@@ -3,7 +3,9 @@ package com.github.tommyettinger.ds.interop;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.github.tommyettinger.ds.*;
+import com.github.tommyettinger.ds.support.DistinctRandom;
 import com.github.tommyettinger.ds.support.LaserRandom;
+import com.github.tommyettinger.ds.support.TricycleRandom;
 import com.github.tommyettinger.ds.support.util.*;
 
 import javax.annotation.Nonnull;
@@ -78,6 +80,8 @@ public class JsonSupport {
         registerBinaryHeap(json);
 
         registerLaserRandom(json);
+        registerDistinctRandom(json);
+        registerTricycleRandom(json);
     }
 
     /**
@@ -1489,4 +1493,54 @@ public class JsonSupport {
             }
         });
     }
+
+    /**
+     * Registers DistinctRandom with the given Json object, so DistinctRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerDistinctRandom(@Nonnull Json json) {
+        json.setSerializer(DistinctRandom.class, new Json.Serializer<DistinctRandom>() {
+            @Override
+            public void write(Json json, DistinctRandom object, Class knownType) {
+                json.writeValue("`" + Long.toString(object.getSelectedState(0), 36) + "`");
+            }
+
+            @Override
+            public DistinctRandom read(Json json, JsonValue jsonData, Class type) {
+                String s;
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 3) return null;
+                final int tick = s.indexOf('`', 1);
+                final long state = Long.parseLong(s.substring(1, tick), 36);
+                return new DistinctRandom(state);
+            }
+        });
+    }
+
+
+    /**
+     * Registers TricycleRandom with the given Json object, so TricycleRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerTricycleRandom(@Nonnull Json json) {
+        json.setSerializer(TricycleRandom.class, new Json.Serializer<TricycleRandom>() {
+            @Override
+            public void write(Json json, TricycleRandom object, Class knownType) {
+                json.writeValue("`" + Long.toString(object.getStateA(), 36) + "~" + Long.toString(object.getStateB(), 36) + "~" + Long.toString(object.getStateC(), 36) + "`");
+            }
+
+            @Override
+            public TricycleRandom read(Json json, JsonValue jsonData, Class type) {
+                String s;
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 5) return null;
+                int tilde = s.indexOf('~', 1);
+                final long stateA = Long.parseLong(s.substring(1, tilde), 36);
+                final long stateB = Long.parseLong(s.substring(tilde + 1, tilde = s.indexOf('~', tilde + 1)), 36);
+                final long stateC = Long.parseLong(s.substring(tilde + 1, s.indexOf('`', tilde)), 36);
+                return new TricycleRandom(stateA, stateB, stateC);
+            }
+        });
+    }
+
 }

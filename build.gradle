@@ -1,27 +1,26 @@
 buildscript {
     repositories {
+        mavenLocal()
         mavenCentral()
-        maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
-        jcenter()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        gradlePluginPortal()
     }
     dependencies {
-        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
-        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.0"
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.14.2'
     }
 }
 
 apply plugin: 'java-library'
-apply plugin: 'com.bmuschko.nexus'
-apply plugin: 'io.codearte.nexus-staging'
-apply from: 'publish.gradle'
+apply plugin: 'com.vanniktech.maven.publish'
 
-compileJava.sourceCompatibility = 1.8
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 def projectName = 'jdkgdxds_interop'
-version '0.1.0.1'
+version "$VERSION_NAME"
 group 'com.github.tommyettinger'
 
-//api "com.github.tommyettinger:jdkgdxds_interop:0.1.0.1"
+//api "com.github.tommyettinger:jdkgdxds_interop:0.1.2"
 
 [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
 
@@ -37,14 +36,10 @@ if (JavaVersion.current().isJava8Compatible()) {
         }
     }
 }
-if (JavaVersion.current().isJava9Compatible()) {
-    compileJava.targetCompatibility = 8
-}
-
-javadoc.options.source("15")
+javadoc.options.source("16")
 javadoc.destinationDir = file("docs/apidocs")
 
-sourceSets.test.resources.srcDirs += [ file('src/test/resources').path ]
+sourceSets.test.resources.srcDirs = [ file('src/test/resources').path ]
 
 jar {
     archiveBaseName.set(projectName)
@@ -53,14 +48,22 @@ jar {
     }
 }
 
+if(JavaVersion.current().isJava9Compatible()) {
+    allprojects {
+        tasks.withType(JavaCompile) {
+            options.release.set(8)
+        }
+    }
+}
+
 repositories {
+    mavenLocal()
     mavenCentral()
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-	api "com.github.tommyettinger:jdkgdxds:0.1.0"
-	api "com.badlogicgames.gdx:gdx:1.9.13"
+	api "com.github.tommyettinger:jdkgdxds:0.1.2"
+	api "com.badlogicgames.gdx:gdx:1.10.0"
     testImplementation "junit:junit:4.13.1"
 }

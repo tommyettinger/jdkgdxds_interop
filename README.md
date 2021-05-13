@@ -27,11 +27,11 @@ using any of its other methods).
 ## How do I get it?
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api`, is: 
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:0.1.0.1"
+implementation "com.github.tommyettinger:jdkgdxds_interop:0.1.2"
 ```
 If you use GWT, then it also needs this in the GWT module:
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:0.1.0.1:sources"
+implementation "com.github.tommyettinger:jdkgdxds_interop:0.1.2:sources"
 ```
 and the GWT inherits in your .gwt.xml file:
 ```xml
