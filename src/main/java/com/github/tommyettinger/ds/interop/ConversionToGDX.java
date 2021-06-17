@@ -380,10 +380,10 @@ public class ConversionToGDX {
      * @return a new Queue of type T holding the items of {@code from} (this does not give a Class to the Queue constructor)
      */
     public static <T> Queue<T> toQueue(Collection<? extends T> from) {
-        Queue<T> array = new Queue<>(from.size());
+        Queue<T> queue = new Queue<>(from.size());
         for(T t : from)
-            array.addLast(t);
-        return array;
+            queue.addLast(t);
+        return queue;
     }
 
     /**
