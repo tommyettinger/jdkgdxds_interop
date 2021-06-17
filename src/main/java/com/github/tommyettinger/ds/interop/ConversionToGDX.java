@@ -388,7 +388,7 @@ public class ConversionToGDX {
 
     /**
      * Can be used to convert from any jdkgdxds long-based collection (such as {@link LongList},
-     * {@link LongSet}, or {@link LongObjectMap.Keys}) to a libGDX LongQueue.
+     * {@link LongSet}, or especially a {@link LongDeque}) to a libGDX LongQueue.
      * @param from a primitive-long-backed data structure from jdkgdxds
      * @return a new LongQueue holding the items of {@code from}
      */

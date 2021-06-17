@@ -98,8 +98,8 @@ public class ConversionToJDK {
     }
 
     /**
-     * Can be used to convert from a libGDX LongArray to a jdkgdxds LongList.
-     * @param from a libGDX LongArray
+     * Can be used to convert from a libGDX LongQueue to a jdkgdxds LongList.
+     * @param from a libGDX LongQueue
      * @return a new LongList holding the items of {@code from}
      */
     public static LongList toLongList(LongQueue from){
@@ -816,6 +816,32 @@ public class ConversionToJDK {
         ObjectDeque<T> deque = new ObjectDeque<>(from.size);
         for(T t : from)
             deque.add(t);
+        return deque;
+    }
+
+    /**
+     * Can be used to convert from a libGDX LongQueue to a jdkgdxds LongDeque.
+     * @param from a libGDX LongQueue
+     * @return a new LongDeque holding the items of {@code from}
+     */
+    public static LongDeque toLongDeque(LongQueue from){
+        LongDeque deque = new LongDeque(from.size);
+        for (int i = 0; i < from.size; i++) {
+            deque.add(from.get(i));
+        }
+        return deque;
+    }
+
+    /**
+     * Can be used to convert from a libGDX LongArray to a jdkgdxds LongDeque.
+     * @param from a libGDX LongArray
+     * @return a new LongDeque holding the items of {@code from}
+     */
+    public static LongDeque toLongDeque(LongArray from){
+        LongDeque deque = new LongDeque(from.size);
+        for (int i = 0; i < from.size; i++) {
+            deque.add(from.get(i));
+        }
         return deque;
     }
 
