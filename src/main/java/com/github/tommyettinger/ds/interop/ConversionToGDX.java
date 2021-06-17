@@ -69,21 +69,6 @@ public class ConversionToGDX {
     }
 
     /**
-     * Can be used to convert from any jdkgdxds long-based collection (such as {@link LongList},
-     * {@link LongSet}, or {@link LongObjectMap.Keys}) to a libGDX LongQueue.
-     * @param from a primitive-long-backed data structure from jdkgdxds
-     * @return a new LongQueue holding the items of {@code from}
-     */
-    public static LongQueue toLongQueue(PrimitiveCollection.OfLong from) {
-        LongQueue queue = new LongQueue(from.size());
-        PrimitiveIterator.OfLong it = from.iterator();
-        while (it.hasNext()){
-            queue.addLast(it.nextLong());
-        }
-        return queue;
-    }
-
-    /**
      * Can be used to convert from any jdkgdxds float-based collection (such as {@link FloatList}
      * or {@link com.github.tommyettinger.ds.ObjectFloatMap.Values}) to a libGDX FloatArray.
      * @param from a primitive-float-backed data structure from jdkgdxds
@@ -384,4 +369,35 @@ public class ConversionToGDX {
         return map;
     }
 
+    /**
+     * Can be used to convert from any Collection to a new libGDX Queue of the same element type.
+     * This can take an {@link ObjectList}, {@link com.github.tommyettinger.ds.ObjectSet},
+     * {@link NumberedSet}, or any JDK Collection, to name a few.
+     * <br>
+     * Note that Queue in libGDX corresponds to ObjectDeque in jdkgdxds.
+     * @param from a Collection from the JDK, jdkgdxds, or some other library
+     * @param <T> the element type for {@code from} and the result
+     * @return a new Queue of type T holding the items of {@code from} (this does not give a Class to the Queue constructor)
+     */
+    public static <T> Queue<T> toQueue(Collection<? extends T> from) {
+        Queue<T> array = new Queue<>(from.size());
+        for(T t : from)
+            array.addLast(t);
+        return array;
+    }
+
+    /**
+     * Can be used to convert from any jdkgdxds long-based collection (such as {@link LongList},
+     * {@link LongSet}, or {@link LongObjectMap.Keys}) to a libGDX LongQueue.
+     * @param from a primitive-long-backed data structure from jdkgdxds
+     * @return a new LongQueue holding the items of {@code from}
+     */
+    public static LongQueue toLongQueue(PrimitiveCollection.OfLong from) {
+        LongQueue queue = new LongQueue(from.size());
+        PrimitiveIterator.OfLong it = from.iterator();
+        while (it.hasNext()){
+            queue.addLast(it.nextLong());
+        }
+        return queue;
+    }
 }
