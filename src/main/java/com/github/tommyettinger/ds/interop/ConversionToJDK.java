@@ -845,4 +845,30 @@ public class ConversionToJDK {
         return deque;
     }
 
+    /**
+     * Can be used to convert from a libGDX IntArray to a jdkgdxds IntDeque.
+     * @param from a libGDX IntArray
+     * @return a new IntDeque holding the items of {@code from}
+     */
+    public static IntDeque toIntDeque(IntArray from){
+        IntDeque deque = new IntDeque(from.size);
+        for (int i = 0; i < from.size; i++) {
+            deque.add(from.get(i));
+        }
+        return deque;
+    }
+
+    /**
+     * Can be used to convert from a libGDX IntSet to a jdkgdxds IntDeque.
+     * @param from a libGDX IntSet
+     * @return a new IntDeque holding the items of {@code from}
+     */
+    public static IntDeque toIntDeque(com.badlogic.gdx.utils.IntSet from){
+        IntDeque deque = new IntDeque(from.size);
+        com.badlogic.gdx.utils.IntSet.IntSetIterator it = from.iterator();
+        while (it.hasNext) {
+            deque.add(it.next());
+        }
+        return deque;
+    }
 }
