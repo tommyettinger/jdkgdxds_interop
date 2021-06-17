@@ -14,6 +14,7 @@ import com.github.tommyettinger.ds.support.sort.IntComparator;
 import com.github.tommyettinger.ds.support.sort.LongComparator;
 
 import java.util.Comparator;
+import java.util.Iterator;
 
 /**
  * Converts libGDX data structures to the JDK-interface-compatible data structures in jdkgdxds. This is arguably
@@ -31,6 +32,19 @@ public class ConversionToJDK {
      * @return a new ObjectList of type T holding the items of {@code from}
      */
     public static <T> ObjectList<T> toObjectList(Array<T> from) {
+        ObjectList<T> list = new ObjectList<>(from.size);
+        for(T t : from)
+            list.add(t);
+        return list;
+    }
+
+    /**
+     * Can be used to convert from a libGDX Queue to a jdkgdxds ObjectList of the same element type.
+     * @param from a Queue from libGDX
+     * @param <T> the element type for {@code from} and the result
+     * @return a new ObjectList of type T holding the items of {@code from}
+     */
+    public static <T> ObjectList<T> toObjectList(Queue<T> from) {
         ObjectList<T> list = new ObjectList<>(from.size);
         for(T t : from)
             list.add(t);
@@ -157,6 +171,21 @@ public class ConversionToJDK {
     }
 
     /**
+     * Can be used to convert from a libGDX {@link Queue}
+     * to a new jdkgdxds {@link ObjectSet}. This will not necessarily maintain the order of the
+     * items in the Queue.
+     * @param from a libGDX Queue
+     * @return a new jdkgdxds ObjectSet holding the unique items in {@code from}
+     */
+    public static <T> ObjectSet<T> toObjectSet(Queue<T> from) {
+        ObjectSet<T> set = new ObjectSet<>(from.size);
+        for (T t : from) {
+            set.add(t);
+        }
+        return set;
+    }
+
+    /**
      * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.ObjectSet}
      * to a new jdkgdxds {@link ObjectSet}.
      * @param from a libGDX ObjectSet or OrderedSet
@@ -179,6 +208,21 @@ public class ConversionToJDK {
      * @return a new jdkgdxds ObjectOrderedSet holding the unique items in {@code from}
      */
     public static <T> ObjectOrderedSet<T> toObjectOrderedSet(com.badlogic.gdx.utils.Array<T> from) {
+        ObjectOrderedSet<T> set = new ObjectOrderedSet<>(from.size);
+        for (T t : from) {
+            set.add(t);
+        }
+        return set;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link Queue}
+     * to a new jdkgdxds {@link ObjectOrderedSet}. This will maintain the order of the
+     * items in the Queue.
+     * @param from a libGDX Queue
+     * @return a new jdkgdxds ObjectOrderedSet holding the unique items in {@code from}
+     */
+    public static <T> ObjectOrderedSet<T> toObjectOrderedSet(Queue<T> from) {
         ObjectOrderedSet<T> set = new ObjectOrderedSet<>(from.size);
         for (T t : from) {
             set.add(t);
@@ -346,6 +390,23 @@ public class ConversionToJDK {
     public static <T> NumberedSet<T> toNumberedSet(Array<T> from) {
         NumberedSet<T> set = new NumberedSet<>(from.size);
         Array.ArrayIterator<T> it = from.iterator();
+        while (it.hasNext()) {
+            set.add(it.next());
+        }
+        return set;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link Queue} to a new
+     * jdkgdxds {@link NumberedSet}, keeping only unique items in the Queue. This will
+     * maintain the order in the Queue argument, and because it returns a NumberedSet, the order
+     * can be looked up bidirectionally with {@link NumberedSet#indexOf(Object)}.
+     * @param from a libGDX Queue
+     * @return a new jdkgdxds NumberedSet holding the unique items in {@code from}
+     */
+    public static <T> NumberedSet<T> toNumberedSet(Queue<T> from) {
+        NumberedSet<T> set = new NumberedSet<>(from.size);
+        Iterator<T> it = from.iterator();
         while (it.hasNext()) {
             set.add(it.next());
         }
