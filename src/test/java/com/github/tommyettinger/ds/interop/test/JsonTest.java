@@ -1000,4 +1000,26 @@ public class JsonTest {
         System.out.println(Long.toString(random2.getSelectedState(0), 36));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
+    @Test
+    public void testObjectDeque() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerObjectDeque(json);
+        ObjectDeque<String> words = ObjectDeque.with("Peanut", "Butter", "Jelly", "Time");
+        String data = json.toJson(words);
+        System.out.println(data);
+        ObjectDeque<?> words2 = json.fromJson(ObjectDeque.class, data);
+        for(Object word : words2) {
+            System.out.print(word);
+            System.out.print(", ");
+        }
+        System.out.println();
+        ObjectDeque<GridPoint2> points = ObjectDeque.with(new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666));
+        data = json.toJson(points);
+        System.out.println(data);
+        ObjectDeque<?> points2 = json.fromJson(ObjectDeque.class, data);
+        for(Object point : points2) {
+            System.out.print(point);
+            System.out.print(", ");
+        }
+    }
 }

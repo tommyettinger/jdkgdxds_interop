@@ -36,6 +36,8 @@ public class JsonSupport {
         registerDoubleList(json);
         registerBooleanList(json);
 
+        registerObjectDeque(json);
+
         registerObjectSet(json);
         registerObjectOrderedSet(json);
         registerIntSet(json);
@@ -1543,4 +1545,31 @@ public class JsonSupport {
         });
     }
 
+    /**
+     * Registers ObjectDeque with the given Json object, so ObjectDeque can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerObjectDeque(@Nonnull Json json) {
+        json.setSerializer(ObjectDeque.class, new Json.Serializer<ObjectDeque>() {
+            @Override
+            public void write(Json json, ObjectDeque object, Class knownType) {
+                json.writeArrayStart();
+                for (Object o : object) {
+                    json.writeValue(o);
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public ObjectDeque<?> read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                ObjectDeque<?> data = new ObjectDeque<>(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.add(json.readValue(null, value));
+                }
+                return data;
+            }
+        });
+    }
 }
