@@ -871,4 +871,55 @@ public class ConversionToJDK {
         }
         return deque;
     }
+
+    /**
+     * Can be used to convert from a libGDX ByteArray to a jdkgdxds ByteDeque.
+     * @param from a libGDX ByteArray
+     * @return a new ByteDeque holding the items of {@code from}
+     */
+    public static ByteDeque toByteDeque(ByteArray from){
+        ByteDeque deque = new ByteDeque(from.size);
+        for (int i = 0; i < from.size; i++) {
+            deque.add(from.get(i));
+        }
+        return deque;
+    }
+    /**
+     * Can be used to convert from a libGDX ShortArray to a jdkgdxds ShortDeque.
+     * @param from a libGDX ShortArray
+     * @return a new ShortDeque holding the items of {@code from}
+     */
+    public static ShortDeque toShortDeque(ShortArray from){
+        ShortDeque deque = new ShortDeque(from.size);
+        for (int i = 0; i < from.size; i++) {
+            deque.add(from.get(i));
+        }
+        return deque;
+    }
+
+    /**
+     * Can be used to convert from a libGDX CharArray to a jdkgdxds CharDeque.
+     * @param from a libGDX CharArray
+     * @return a new CharDeque holding the items of {@code from}
+     */
+    public static CharDeque toCharDeque(CharArray from){
+        CharDeque deque = new CharDeque(from.size);
+        for (int i = 0; i < from.size; i++) {
+            deque.add(from.get(i));
+        }
+        return deque;
+    }
+
+    /**
+     * Can be used to convert from a libGDX FloatArray to a jdkgdxds FloatDeque.
+     * @param from a libGDX FloatArray
+     * @return a new FloatDeque holding the items of {@code from}
+     */
+    public static FloatDeque toFloatDeque(FloatArray from){
+        FloatDeque deque = new FloatDeque(from.size);
+        for (int i = 0; i < from.size; i++) {
+            deque.add(from.get(i));
+        }
+        return deque;
+    }
 }
