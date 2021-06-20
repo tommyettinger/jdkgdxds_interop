@@ -37,6 +37,7 @@ public class JsonSupport {
         registerBooleanList(json);
 
         registerObjectDeque(json);
+        registerLongDeque(json);
 
         registerObjectSet(json);
         registerObjectOrderedSet(json);
@@ -163,7 +164,6 @@ public class JsonSupport {
                 return LongList.with(jsonData.asLongArray());
             }
         });
-
     }
 
     /**
@@ -1569,6 +1569,31 @@ public class JsonSupport {
                     data.add(json.readValue(null, value));
                 }
                 return data;
+            }
+        });
+    }
+
+    /**
+     * Registers LongList with the given Json object, so LongList can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerLongDeque(@Nonnull Json json) {
+        json.setSerializer(LongDeque.class, new Json.Serializer<LongDeque>() {
+            @Override
+            public void write(Json json, LongDeque object, Class knownType) {
+                json.writeArrayStart();
+                PrimitiveIterator.OfLong it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextLong());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public LongDeque read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return LongDeque.with(jsonData.asLongArray());
             }
         });
     }

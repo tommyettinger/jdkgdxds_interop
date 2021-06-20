@@ -1021,5 +1021,23 @@ public class JsonTest {
             System.out.print(point);
             System.out.print(", ");
         }
+        System.out.println();
+    }
+
+    @Test
+    public void testLongDeque() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerLongDeque(json);
+        LongDeque numbers = LongDeque.with(42, 23, 666, 420);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        LongDeque numbers2 = json.fromJson(LongDeque.class, data);
+        PrimitiveIterator.OfLong it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextLong());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+        System.out.println();
     }
 }
