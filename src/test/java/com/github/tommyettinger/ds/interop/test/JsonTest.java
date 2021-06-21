@@ -1042,6 +1042,23 @@ public class JsonTest {
     }
 
     @Test
+    public void testByteDeque() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerByteDeque(json);
+        ByteDeque numbers = ByteDeque.with((byte)42, (byte)23, (byte)-66, (byte)-20);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        ByteDeque numbers2 = json.fromJson(ByteDeque.class, data);
+        ByteIterator it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextByte());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+        System.out.println();
+    }
+
+    @Test
     public void testFloatDeque() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerFloatDeque(json);
