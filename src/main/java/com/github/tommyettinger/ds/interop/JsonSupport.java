@@ -1597,4 +1597,29 @@ public class JsonSupport {
             }
         });
     }
+
+    /**
+     * Registers DoubleList with the given Json object, so DoubleList can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerDoubleDeque(@Nonnull Json json) {
+        json.setSerializer(DoubleDeque.class, new Json.Serializer<DoubleDeque>() {
+            @Override
+            public void write(Json json, DoubleDeque object, Class knownType) {
+                json.writeArrayStart();
+                PrimitiveIterator.OfDouble it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextDouble());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public DoubleDeque read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return DoubleDeque.with(jsonData.asDoubleArray());
+            }
+        });
+    }
 }

@@ -1040,4 +1040,21 @@ public class JsonTest {
         }
         System.out.println();
     }
+
+    @Test
+    public void testDoubleDeque() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerDoubleDeque(json);
+        DoubleDeque numbers = DoubleDeque.with(42.42, 23.23, 666.666, 420.42);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        DoubleDeque numbers2 = json.fromJson(DoubleDeque.class, data);
+        PrimitiveIterator.OfDouble it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextDouble());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+        System.out.println();
+    }
 }
