@@ -1574,7 +1574,7 @@ public class JsonSupport {
     }
 
     /**
-     * Registers LongList with the given Json object, so LongList can be written to and read from JSON.
+     * Registers LongDeque with the given Json object, so LongDeque can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
@@ -1599,7 +1599,32 @@ public class JsonSupport {
     }
 
     /**
-     * Registers DoubleList with the given Json object, so DoubleList can be written to and read from JSON.
+     * Registers FloatDeque with the given Json object, so FloatDeque can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerFloatDeque(@Nonnull Json json) {
+        json.setSerializer(FloatDeque.class, new Json.Serializer<FloatDeque>() {
+            @Override
+            public void write(Json json, FloatDeque object, Class knownType) {
+                json.writeArrayStart();
+                FloatIterator it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextFloat());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public FloatDeque read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return FloatDeque.with(jsonData.asFloatArray());
+            }
+        });
+    }
+
+    /**
+     * Registers DoubleDeque with the given Json object, so DoubleDeque can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */

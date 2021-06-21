@@ -1042,6 +1042,23 @@ public class JsonTest {
     }
 
     @Test
+    public void testFloatDeque() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerFloatDeque(json);
+        FloatDeque numbers = FloatDeque.with(42.42f, 23.23f, 666.666f, 420.42f);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        FloatDeque numbers2 = json.fromJson(FloatDeque.class, data);
+        FloatIterator it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextFloat());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+        System.out.println();
+    }
+
+    @Test
     public void testDoubleDeque() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerDoubleDeque(json);
