@@ -38,6 +38,12 @@ public class JsonSupport {
 
         registerObjectDeque(json);
         registerLongDeque(json);
+        registerIntDeque(json);
+        registerShortDeque(json);
+        registerByteDeque(json);
+        registerDoubleDeque(json);
+        registerFloatDeque(json);
+        registerCharDeque(json);
 
         registerObjectSet(json);
         registerObjectOrderedSet(json);
@@ -1644,6 +1650,31 @@ public class JsonSupport {
             public CharDeque read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 return CharDeque.with(jsonData.asCharArray());
+            }
+        });
+    }
+
+    /**
+     * Registers ShortDeque with the given Json object, so ShortDeque can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerShortDeque(@Nonnull Json json) {
+        json.setSerializer(ShortDeque.class, new Json.Serializer<ShortDeque>() {
+            @Override
+            public void write(Json json, ShortDeque object, Class knownType) {
+                json.writeArrayStart();
+                ShortIterator it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextShort());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public ShortDeque read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return ShortDeque.with(jsonData.asShortArray());
             }
         });
     }

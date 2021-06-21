@@ -1076,6 +1076,23 @@ public class JsonTest {
     }
 
     @Test
+    public void testShortDeque() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerShortDeque(json);
+        ShortDeque numbers = ShortDeque.with((short) 42, (short) 23, (short) -666, (short) -420);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        ShortDeque numbers2 = json.fromJson(ShortDeque.class, data);
+        ShortIterator it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextShort());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+        System.out.println();
+    }
+
+    @Test
     public void testByteDeque() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerByteDeque(json);
