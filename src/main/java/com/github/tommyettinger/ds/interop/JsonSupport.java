@@ -1599,6 +1599,31 @@ public class JsonSupport {
     }
 
     /**
+     * Registers IntDeque with the given Json object, so IntDeque can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerIntDeque(@Nonnull Json json) {
+        json.setSerializer(IntDeque.class, new Json.Serializer<IntDeque>() {
+            @Override
+            public void write(Json json, IntDeque object, Class knownType) {
+                json.writeArrayStart();
+                PrimitiveIterator.OfInt it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextInt());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public IntDeque read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return IntDeque.with(jsonData.asIntArray());
+            }
+        });
+    }
+
+    /**
      * Registers ByteDeque with the given Json object, so ByteDeque can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered

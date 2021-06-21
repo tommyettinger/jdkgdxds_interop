@@ -1042,6 +1042,23 @@ public class JsonTest {
     }
 
     @Test
+    public void testIntDeque() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerIntDeque(json);
+        IntDeque numbers = IntDeque.with(42, 23, 666, 420);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        IntDeque numbers2 = json.fromJson(IntDeque.class, data);
+        PrimitiveIterator.OfInt it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextInt());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+        System.out.println();
+    }
+
+    @Test
     public void testByteDeque() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerByteDeque(json);
