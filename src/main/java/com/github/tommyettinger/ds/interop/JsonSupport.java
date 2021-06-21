@@ -1624,6 +1624,31 @@ public class JsonSupport {
     }
 
     /**
+     * Registers CharDeque with the given Json object, so CharDeque can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerCharDeque(@Nonnull Json json) {
+        json.setSerializer(CharDeque.class, new Json.Serializer<CharDeque>() {
+            @Override
+            public void write(Json json, CharDeque object, Class knownType) {
+                json.writeArrayStart();
+                CharIterator it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextChar());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public CharDeque read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return CharDeque.with(jsonData.asCharArray());
+            }
+        });
+    }
+
+    /**
      * Registers ByteDeque with the given Json object, so ByteDeque can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered

@@ -1059,6 +1059,23 @@ public class JsonTest {
     }
 
     @Test
+    public void testCharDeque() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerCharDeque(json);
+        CharDeque numbers = CharDeque.with("foobar".toCharArray());
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        CharDeque numbers2 = json.fromJson(CharDeque.class, data);
+        CharIterator it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextChar());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+        System.out.println();
+    }
+
+    @Test
     public void testByteDeque() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerByteDeque(json);
