@@ -15,9 +15,10 @@ import java.io.Writer;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.PrimitiveIterator;
+import java.util.concurrent.atomic.AtomicLong;
 
 @SuppressWarnings("rawtypes")
-public class JsonSupport {
+public final class JsonSupport {
     private JsonSupport() {
     }
 
@@ -88,6 +89,8 @@ public class JsonSupport {
         registerNumberedSet(json);
 
         registerBinaryHeap(json);
+
+        registerAtomicLong(json);
 
         registerLaserRandom(json);
         registerDistinctRandom(json);
@@ -1476,6 +1479,34 @@ public class JsonSupport {
                     data.put(value.name, json.readValue(null, value));
                 }
                 return data;
+            }
+        });
+    }
+
+    /**
+     * Registers AtomicLong with the given Json object, so AtomicLong can be written to and read from JSON.
+     * This primarily matters if you intend to read and/or write {@link java.util.Random} objects or their subclasses
+     * without registering a custom serializer for them. Although the EnhancedRandom implementations in jdkgdxds have
+     * custom serializers here already, and don't need this method to be called, other classes that extend Random are
+     * likely to need this if you ever run on Java 16 or higher.
+     * <br>
+     * Surprisingly, this method is compatible with GWT, even though most concurrent code doesn't work there.
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerAtomicLong(@Nonnull Json json) {
+        json.setSerializer(AtomicLong.class, new Json.Serializer<AtomicLong>() {
+            @Override
+            public void write(Json json, AtomicLong object, Class knownType) {
+                json.writeValue("`" + Long.toString(object.get(), 36) + "`");
+            }
+
+            @Override
+            public AtomicLong read(Json json, JsonValue jsonData, Class type) {
+                String s;
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 3) return null;
+                final int tick = s.indexOf('`', 1);
+                final long state = Long.parseLong(s.substring(1, tick), 36);
+                return new AtomicLong(state);
             }
         });
     }

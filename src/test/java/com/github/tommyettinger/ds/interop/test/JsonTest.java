@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import java.util.Map;
 import java.util.PrimitiveIterator;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class JsonTest {
     @Test
@@ -1005,6 +1006,15 @@ public class JsonTest {
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
+    @Test
+    public void testAtomicLong() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        FourWheelRandom random = new FourWheelRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L);
+        AtomicLong al = new AtomicLong(Long.parseLong("json", 36));
+        JsonSupport.registerAtomicLong(json);
+        System.out.println(json.toJson(random));
+        System.out.println(json.toJson(al));
+    }
     @Test
     public void testDistinctRandom() {
         Json json = new Json(JsonWriter.OutputType.minimal);
