@@ -20,20 +20,27 @@ jdkgdxds data structures using libGDX's Json. This consists of just three classe
 `com.github.tommyettinger.ds.interop` package. `ConversionToGDX` has methods that take any class that implements one of
 the JDK or one of jdkgdxds' interfaces, like `Collection` or `PrimitiveCollection.OfLong`, and converts it to a narrower
 libGDX data structure. `ConversionToJDK` has methods that take a specific libGDX class, typically, and convert it to a
-similar jdkgdxds data structure. `JsonSupport` is the probably star of the show, and allows registering serializers on a
-`Json` object so it can read and write jdkgdxds types (potentially all at once, using `registerAll()`, or one at a time
-using any of its other methods).
+similar jdkgdxds data structure. `JsonSupport` is probably the star of the show, and allows registering serializers on a
+`Json` object, so it can read and write jdkgdxds types. This registration could be all at once, using `registerAll()`,
+or one at a time using any of its other methods. The Json serialization also uses an especially-concise format to store
+each of the `EnhancedRandom` implementations in jdkgdxds. These four classes (`DistinctRandom`, `LaserRandom`,
+`TricycleRandom`, and `FourWheelRandom`) are sometimes serializable without jdkgdxds-interop, but work regardless of JDK
+version if you do use this library. If you have your own class that extends `java.util.Random`, then you probably want
+to register `AtomicLong` (which JsonSupport can do) or to write your own serializer.
 
 ## How do I get it?
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api`, is: 
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:0.1.2"
+implementation "com.github.tommyettinger:jdkgdxds_interop:0.1.4"
 ```
-If you use GWT, then it also needs this in the GWT module:
+It's not unlikely that you might need `api` instead of `implementation`, especially if you are writing a library, or a
+module that needs to be used from another section.
+
+If you use GWT (libGDX's HTML target), then you also need this in your `html/build.gradle` file:
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:0.1.2:sources"
+implementation "com.github.tommyettinger:jdkgdxds_interop:0.1.4:sources"
 ```
-and the GWT inherits in your .gwt.xml file:
+You also need the GWT `inherits` in your `GdxDefinition.gwt.xml` file:
 ```xml
      <inherits name="jdkgdxds_interop" />
 ```
