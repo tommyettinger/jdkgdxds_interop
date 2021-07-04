@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.support.DistinctRandom;
+import com.github.tommyettinger.ds.support.FourWheelRandom;
 import com.github.tommyettinger.ds.support.LaserRandom;
 import com.github.tommyettinger.ds.support.TricycleRandom;
 import com.github.tommyettinger.ds.support.util.*;
@@ -91,6 +92,7 @@ public class JsonSupport {
         registerLaserRandom(json);
         registerDistinctRandom(json);
         registerTricycleRandom(json);
+        registerFourWheelRandom(json);
     }
 
     /**
@@ -1525,7 +1527,6 @@ public class JsonSupport {
         });
     }
 
-
     /**
      * Registers TricycleRandom with the given Json object, so TricycleRandom can be written to and read from JSON.
      *
@@ -1541,12 +1542,38 @@ public class JsonSupport {
             @Override
             public TricycleRandom read(Json json, JsonValue jsonData, Class type) {
                 String s;
-                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 5) return null;
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 7) return null;
                 int tilde = s.indexOf('~', 1);
                 final long stateA = Long.parseLong(s.substring(1, tilde), 36);
                 final long stateB = Long.parseLong(s.substring(tilde + 1, tilde = s.indexOf('~', tilde + 1)), 36);
                 final long stateC = Long.parseLong(s.substring(tilde + 1, s.indexOf('`', tilde)), 36);
                 return new TricycleRandom(stateA, stateB, stateC);
+            }
+        });
+    }
+
+    /**
+     * Registers FourWheelRandom with the given Json object, so FourWheelRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerFourWheelRandom(@Nonnull Json json) {
+        json.setSerializer(FourWheelRandom.class, new Json.Serializer<FourWheelRandom>() {
+            @Override
+            public void write(Json json, FourWheelRandom object, Class knownType) {
+                json.writeValue("`" + Long.toString(object.getStateA(), 36) + "~" + Long.toString(object.getStateB(), 36) + "~" + Long.toString(object.getStateC(), 36) + "~" + Long.toString(object.getStateD(), 36) + "`");
+            }
+
+            @Override
+            public FourWheelRandom read(Json json, JsonValue jsonData, Class type) {
+                String s;
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 9) return null;
+                int tilde = s.indexOf('~', 1);
+                final long stateA = Long.parseLong(s.substring(1, tilde), 36);
+                final long stateB = Long.parseLong(s.substring(tilde + 1, tilde = s.indexOf('~', tilde + 1)), 36);
+                final long stateC = Long.parseLong(s.substring(tilde + 1, tilde = s.indexOf('~', tilde + 1)), 36);
+                final long stateD = Long.parseLong(s.substring(tilde + 1, s.indexOf('`', tilde)), 36);
+                return new FourWheelRandom(stateA, stateB, stateC, stateD);
             }
         });
     }
