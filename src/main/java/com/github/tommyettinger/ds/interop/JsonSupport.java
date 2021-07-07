@@ -1,12 +1,12 @@
 package com.github.tommyettinger.ds.interop;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.github.tommyettinger.ds.*;
-import com.github.tommyettinger.ds.support.DistinctRandom;
-import com.github.tommyettinger.ds.support.FourWheelRandom;
-import com.github.tommyettinger.ds.support.LaserRandom;
-import com.github.tommyettinger.ds.support.TricycleRandom;
+import com.github.tommyettinger.ds.support.*;
 import com.github.tommyettinger.ds.support.util.*;
 
 import javax.annotation.Nonnull;
@@ -92,10 +92,7 @@ public final class JsonSupport {
 
         registerAtomicLong(json);
 
-        registerLaserRandom(json);
-        registerDistinctRandom(json);
-        registerTricycleRandom(json);
-        registerFourWheelRandom(json);
+        registerEnhancedRandom(json);
     }
 
     /**
@@ -1511,24 +1508,85 @@ public final class JsonSupport {
         });
     }
 
+
+    /**
+     * Registers FourWheelRandom with the given Json object, so FourWheelRandom can be written to and read from JSON.
+     * This is (currently) different from the registration for this class in jdkgdxds-interop, because this needs to be
+     * in a format that can be read into an EnhancedRandom value by using a type tag stored in the serialized JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerFourWheelRandom(@Nonnull Json json) {
+        json.addClassTag("#FoWR", FourWheelRandom.class);
+        json.setSerializer(FourWheelRandom.class, new Json.Serializer<FourWheelRandom>() {
+            @Override
+            public void write(Json json, FourWheelRandom object, Class knownType) {
+                json.writeValue("#FoWR`" + Long.toString(object.getStateA(), 36) + "~" + Long.toString(object.getStateB(), 36) + "~" + Long.toString(object.getStateC(), 36) + "~" + Long.toString(object.getStateD(), 36) + "`");
+            }
+
+            @Override
+            public FourWheelRandom read(Json json, JsonValue jsonData, Class type) {
+                String s;
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 14) return null;
+                int tilde = s.indexOf('~', 6);
+                final long stateA = Long.parseLong(s.substring(6, tilde), 36);
+                final long stateB = Long.parseLong(s.substring(tilde + 1, tilde = s.indexOf('~', tilde + 1)), 36);
+                final long stateC = Long.parseLong(s.substring(tilde + 1, tilde = s.indexOf('~', tilde + 1)), 36);
+                final long stateD = Long.parseLong(s.substring(tilde + 1, s.indexOf('`', tilde)), 36);
+                return new FourWheelRandom(stateA, stateB, stateC, stateD);
+            }
+        });
+    }
+
+    /**
+     * Registers TricycleRandom with the given Json object, so TricycleRandom can be written to and read from JSON.
+     * This is (currently) different from the registration for this class in jdkgdxds-interop, because this needs to be
+     * in a format that can be read into an EnhancedRandom value by using a type tag stored in the serialized JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerTricycleRandom(@Nonnull Json json) {
+        json.addClassTag("#TriR", TricycleRandom.class);
+        json.setSerializer(TricycleRandom.class, new Json.Serializer<TricycleRandom>() {
+            @Override
+            public void write(Json json, TricycleRandom object, Class knownType) {
+                json.writeValue("#TriR`" + Long.toString(object.getStateA(), 36) + "~" + Long.toString(object.getStateB(), 36) + "~" + Long.toString(object.getStateC(), 36) + "`");
+            }
+
+            @Override
+            public TricycleRandom read(Json json, JsonValue jsonData, Class type) {
+                String s;
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 12) return null;
+                int tilde = s.indexOf('~', 6);
+                final long stateA = Long.parseLong(s.substring(6, tilde), 36);
+                final long stateB = Long.parseLong(s.substring(tilde + 1, tilde = s.indexOf('~', tilde + 1)), 36);
+                final long stateC = Long.parseLong(s.substring(tilde + 1, s.indexOf('`', tilde)), 36);
+                return new TricycleRandom(stateA, stateB, stateC);
+            }
+        });
+    }
+
     /**
      * Registers LaserRandom with the given Json object, so LaserRandom can be written to and read from JSON.
+     * This is (currently) different from the registration for this class in jdkgdxds-interop, because this needs to be
+     * in a format that can be read into an EnhancedRandom value by using a type tag stored in the serialized JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerLaserRandom(@Nonnull Json json) {
+        json.addClassTag("#LasR", LaserRandom.class);
         json.setSerializer(LaserRandom.class, new Json.Serializer<LaserRandom>() {
             @Override
             public void write(Json json, LaserRandom object, Class knownType) {
-                json.writeValue("`" + Long.toString(object.getStateA(), 36) + "~" + Long.toString(object.getStateB() >>> 1, 36) + "`");
+                json.writeValue("#LasR`" + Long.toString(object.getStateA(), 36) + "~" + Long.toString(object.getStateB() >>> 1, 36) + "`");
             }
 
             @Override
             public LaserRandom read(Json json, JsonValue jsonData, Class type) {
                 String s;
-                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 5) return null;
-                final int tilde = s.indexOf('~', 1);
-                final long stateA = Long.parseLong(s.substring(1, tilde), 36);
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 10) return null;
+                final int tilde = s.indexOf('~', 6);
+                final long stateA = Long.parseLong(s.substring(6, tilde), 36);
                 final long stateB = Long.parseLong(s.substring(tilde + 1, s.indexOf('`', tilde)), 36) << 1;
                 return new LaserRandom(stateA, stateB);
             }
@@ -1541,70 +1599,66 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerDistinctRandom(@Nonnull Json json) {
+        json.addClassTag("#DisR", DistinctRandom.class);
         json.setSerializer(DistinctRandom.class, new Json.Serializer<DistinctRandom>() {
             @Override
             public void write(Json json, DistinctRandom object, Class knownType) {
-                json.writeValue("`" + Long.toString(object.getSelectedState(0), 36) + "`");
+                json.writeValue("#DisR`" + Long.toString(object.getSelectedState(0), 36) + "`");
             }
 
             @Override
             public DistinctRandom read(Json json, JsonValue jsonData, Class type) {
                 String s;
-                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 3) return null;
-                final int tick = s.indexOf('`', 1);
-                final long state = Long.parseLong(s.substring(1, tick), 36);
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 8) return null;
+                final int tick = s.indexOf('`', 6);
+                final long state = Long.parseLong(s.substring(6, tick), 36);
                 return new DistinctRandom(state);
             }
         });
     }
 
     /**
-     * Registers TricycleRandom with the given Json object, so TricycleRandom can be written to and read from JSON.
+     * Registers GapShuffler with the given Json object, so GapShuffler can be written to and read from JSON.
+     * This registers serialization/deserialization for ObjectList as well, since GapShuffler requires it.
+     * You should either register the EnhancedRandom you use with this (which is {@link TricycleRandom} if unspecified),
+     * use {@link JsonSupport#registerAtomicLong(Json)} (if you don't know what type the random number generator uses),
+     * or just call {@link #registerAll(Json)}.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerTricycleRandom(@Nonnull Json json) {
-        json.setSerializer(TricycleRandom.class, new Json.Serializer<TricycleRandom>() {
+    public static void registerEnhancedRandom(@Nonnull Json json) {
+        JsonSupport.registerAtomicLong(json);
+        registerDistinctRandom(json);
+        registerLaserRandom(json);
+        registerTricycleRandom(json);
+        registerFourWheelRandom(json);
+        json.setSerializer(EnhancedRandom.class, new Json.Serializer<EnhancedRandom>() {
             @Override
-            public void write(Json json, TricycleRandom object, Class knownType) {
-                json.writeValue("`" + Long.toString(object.getStateA(), 36) + "~" + Long.toString(object.getStateB(), 36) + "~" + Long.toString(object.getStateC(), 36) + "`");
+            public void write(Json json, EnhancedRandom object, Class knownType) {
+                json.writeArrayStart();
+                Class impl = object.getClass();
+                String tag = json.getTag(impl);
+                if(tag == null) tag = impl.getName();
+                json.writeValue(tag);
+                json.writeValue(object);
+                json.writeArrayEnd();
             }
 
             @Override
-            public TricycleRandom read(Json json, JsonValue jsonData, Class type) {
-                String s;
-                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 7) return null;
-                int tilde = s.indexOf('~', 1);
-                final long stateA = Long.parseLong(s.substring(1, tilde), 36);
-                final long stateB = Long.parseLong(s.substring(tilde + 1, tilde = s.indexOf('~', tilde + 1)), 36);
-                final long stateC = Long.parseLong(s.substring(tilde + 1, s.indexOf('`', tilde)), 36);
-                return new TricycleRandom(stateA, stateB, stateC);
-            }
-        });
-    }
-
-    /**
-     * Registers FourWheelRandom with the given Json object, so FourWheelRandom can be written to and read from JSON.
-     *
-     * @param json a libGDX Json object that will have a serializer registered
-     */
-    public static void registerFourWheelRandom(@Nonnull Json json) {
-        json.setSerializer(FourWheelRandom.class, new Json.Serializer<FourWheelRandom>() {
-            @Override
-            public void write(Json json, FourWheelRandom object, Class knownType) {
-                json.writeValue("`" + Long.toString(object.getStateA(), 36) + "~" + Long.toString(object.getStateB(), 36) + "~" + Long.toString(object.getStateC(), 36) + "~" + Long.toString(object.getStateD(), 36) + "`");
-            }
-
-            @Override
-            public FourWheelRandom read(Json json, JsonValue jsonData, Class type) {
-                String s;
-                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 9) return null;
-                int tilde = s.indexOf('~', 1);
-                final long stateA = Long.parseLong(s.substring(1, tilde), 36);
-                final long stateB = Long.parseLong(s.substring(tilde + 1, tilde = s.indexOf('~', tilde + 1)), 36);
-                final long stateC = Long.parseLong(s.substring(tilde + 1, tilde = s.indexOf('~', tilde + 1)), 36);
-                final long stateD = Long.parseLong(s.substring(tilde + 1, s.indexOf('`', tilde)), 36);
-                return new FourWheelRandom(stateA, stateB, stateC, stateD);
+            public EnhancedRandom read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                try {
+                    String tag = jsonData.asString().substring(0, 5);
+                    Class<?> impl = json.getClass(tag);
+                    if(impl == null) impl = ClassReflection.forName(tag);
+                    return (EnhancedRandom) json.readValue(impl, jsonData);
+                } catch (ReflectionException | ClassCastException e) {
+                    if(Gdx.app != null)
+                        Gdx.app.error("squidstore", "Error reading an EnhancedRandom value from " + jsonData);
+                    else
+                        System.out.println("[squidstore] Error reading an EnhancedRandom value from " + jsonData);
+                    return null;
+                }
             }
         });
     }
