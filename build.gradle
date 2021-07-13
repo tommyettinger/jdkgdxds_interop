@@ -6,7 +6,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.16.0'
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.17.0'
     }
 }
 
@@ -20,7 +20,7 @@ def projectName = 'jdkgdxds_interop'
 version "$VERSION_NAME"
 group 'com.github.tommyettinger'
 
-//api "com.github.tommyettinger:jdkgdxds_interop:0.1.4"
+//api "com.github.tommyettinger:jdkgdxds_interop:0.1.4.2"
 
 [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
 

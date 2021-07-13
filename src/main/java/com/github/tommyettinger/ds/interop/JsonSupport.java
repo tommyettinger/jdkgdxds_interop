@@ -588,7 +588,7 @@ public final class JsonSupport {
                         String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
                         json.setWriter(writer);
                         writer.name(k);
-                        json.writeValue(e.getValue(), knownType);
+                        json.writeValue(e.getValue());
                     } catch (IOException ignored) {
                     }
                 }
@@ -632,7 +632,7 @@ public final class JsonSupport {
                         String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
                         json.setWriter(writer);
                         writer.name(k);
-                        json.writeValue(e.getValue(), knownType);
+                        json.writeValue(e.getValue());
                     } catch (IOException ignored) {
                     }
                 }
@@ -676,7 +676,7 @@ public final class JsonSupport {
                         String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
                         json.setWriter(writer);
                         writer.name(k);
-                        json.writeValue(e.getValue(), knownType);
+                        json.writeValue(e.getValue());
                     } catch (IOException ignored) {
                     }
                 }
@@ -720,7 +720,7 @@ public final class JsonSupport {
                         String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
                         json.setWriter(writer);
                         writer.name(k);
-                        json.writeValue(e.getValue(), knownType);
+                        json.writeValue(e.getValue());
                     } catch (IOException ignored) {
                     }
                 }
@@ -764,7 +764,7 @@ public final class JsonSupport {
                         String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
                         json.setWriter(writer);
                         writer.name(k);
-                        json.writeValue(e.getValue(), knownType);
+                        json.writeValue(e.getValue());
                     } catch (IOException ignored) {
                     }
                 }
@@ -808,7 +808,7 @@ public final class JsonSupport {
                         String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
                         json.setWriter(writer);
                         writer.name(k);
-                        json.writeValue(e.getValue(), knownType);
+                        json.writeValue(e.getValue());
                     } catch (IOException ignored) {
                     }
                 }
