@@ -3,6 +3,7 @@ package com.github.tommyettinger.ds.interop;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.github.tommyettinger.ds.*;
@@ -489,9 +490,9 @@ public final class JsonSupport {
         json.setSerializer(ObjectObjectMap.class, new Json.Serializer<ObjectObjectMap>() {
             @Override
             public void write(Json json, ObjectObjectMap object, Class knownType) {
-                Writer writer = json.getWriter();
+                JsonWriter writer = json.getWriter();
                 try {
-                    writer.write('{');
+                    writer.object();
                 } catch (IOException ignored) {
                 }
                 Iterator<Map.Entry<?, ?>> es = new ObjectObjectMap.Entries<>(object).iterator();
@@ -500,16 +501,13 @@ public final class JsonSupport {
                     try {
                         String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
                         json.setWriter(writer);
-                        json.writeValue(k);
-                        writer.write(':');
-                        json.writeValue(e.getValue());
-                        if (es.hasNext())
-                            writer.write(',');
+                        writer.name(k);
+                        json.writeValue(e.getValue(), knownType);
                     } catch (IOException ignored) {
                     }
                 }
                 try {
-                    writer.write('}');
+                    writer.pop();
                 } catch (IOException ignored) {
                 }
             }
