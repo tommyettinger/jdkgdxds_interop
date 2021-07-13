@@ -2,17 +2,16 @@ package com.github.tommyettinger.ds.interop.test;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.interop.JsonSupport;
-import com.github.tommyettinger.ds.support.DistinctRandom;
-import com.github.tommyettinger.ds.support.FourWheelRandom;
-import com.github.tommyettinger.ds.support.LaserRandom;
-import com.github.tommyettinger.ds.support.TricycleRandom;
+import com.github.tommyettinger.ds.support.*;
 import com.github.tommyettinger.ds.support.util.*;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.PrimitiveIterator;
 import java.util.concurrent.atomic.AtomicLong;
@@ -1169,4 +1168,77 @@ public class JsonTest {
         }
         System.out.println();
     }
+
+    public static class Composite {
+        public EnhancedRandom random;
+        public ObjectObjectMap<String, String> mapping;
+
+        public Composite(){
+            this(new LaserRandom(), new ObjectObjectMap<>());
+        }
+        public Composite(EnhancedRandom random, ObjectObjectMap<String, String> mapping) {
+            this.random = random;
+            this.mapping = mapping;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Composite composite = (Composite) o;
+
+            if (random != null ? !random.equals(composite.random) : composite.random != null) return false;
+            return mapping != null ? mapping.equals(composite.mapping) : composite.mapping == null;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = random != null ? random.hashCode() : 0;
+            result = 31 * result + (mapping != null ? mapping.hashCode() : 0);
+            return result;
+        }
+    }
+
+    public static void registerComposite(@Nonnull Json json) {
+        JsonSupport.registerObjectObjectMap(json);
+        JsonSupport.registerEnhancedRandom(json);
+        json.setSerializer(Composite.class, new Json.Serializer<Composite>() {
+            @Override
+            public void write(Json json, Composite object, Class knownType) {
+                json.writeArrayStart();
+                json.writeValue(object.random, EnhancedRandom.class);
+                json.writeValue(object.mapping, ObjectObjectMap.class);
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public Composite read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue current = jsonData.child;
+                EnhancedRandom random = json.readValue(EnhancedRandom.class, current);
+                current = current.next;
+                ObjectObjectMap<String, String> mapping = json.readValue(ObjectObjectMap.class, current);
+                return new Composite(random, mapping);
+            }
+        });
+    }
+    @Test
+    public void testComposite() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        registerComposite(json);
+        ObjectObjectMap<String, String> mapping = ObjectObjectMap.with("peanut", "0", "butter", "1", "jelly", "2", "time", "3");
+        FourWheelRandom random = new FourWheelRandom(123);
+        Composite composite = new Composite(random, mapping);
+        String data = json.toJson(composite);
+        System.out.println(data);
+        Composite composite2 = json.fromJson(Composite.class, data);
+        System.out.println(composite.mapping.toString());
+        System.out.println(composite.random.nextInt());
+        System.out.println(composite2.mapping.toString());
+        System.out.println(composite2.random.nextInt());
+        System.out.println();
+    }
+
+
 }
