@@ -533,9 +533,9 @@ public final class JsonSupport {
         json.setSerializer(ObjectObjectOrderedMap.class, new Json.Serializer<ObjectObjectOrderedMap>() {
             @Override
             public void write(Json json, ObjectObjectOrderedMap object, Class knownType) {
-                Writer writer = json.getWriter();
+                JsonWriter writer = json.getWriter();
                 try {
-                    writer.write('{');
+                    writer.object();
                 } catch (IOException ignored) {
                 }
                 Iterator<Map.Entry<?, ?>> es = new ObjectObjectOrderedMap.OrderedMapEntries<>(object).iterator();
@@ -544,16 +544,13 @@ public final class JsonSupport {
                     try {
                         String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
                         json.setWriter(writer);
-                        json.writeValue(k);
-                        writer.write(':');
-                        json.writeValue(e.getValue());
-                        if (es.hasNext())
-                            writer.write(',');
+                        writer.name(k);
+                        json.writeValue(e.getValue(), knownType);
                     } catch (IOException ignored) {
                     }
                 }
                 try {
-                    writer.write('}');
+                    writer.pop();
                 } catch (IOException ignored) {
                 }
             }
@@ -580,9 +577,9 @@ public final class JsonSupport {
         json.setSerializer(ObjectLongMap.class, new Json.Serializer<ObjectLongMap>() {
             @Override
             public void write(Json json, ObjectLongMap object, Class knownType) {
-                Writer writer = json.getWriter();
+                JsonWriter writer = json.getWriter();
                 try {
-                    writer.write('{');
+                    writer.object();
                 } catch (IOException ignored) {
                 }
                 Iterator<ObjectLongMap.Entry<?>> es = new ObjectLongMap.Entries<>(object).iterator();
@@ -591,16 +588,13 @@ public final class JsonSupport {
                     try {
                         String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
                         json.setWriter(writer);
-                        json.writeValue(k);
-                        writer.write(':');
-                        json.writeValue(e.getValue());
-                        if (es.hasNext())
-                            writer.write(',');
+                        writer.name(k);
+                        json.writeValue(e.getValue(), knownType);
                     } catch (IOException ignored) {
                     }
                 }
                 try {
-                    writer.write('}');
+                    writer.pop();
                 } catch (IOException ignored) {
                 }
             }
@@ -627,9 +621,9 @@ public final class JsonSupport {
         json.setSerializer(ObjectLongOrderedMap.class, new Json.Serializer<ObjectLongOrderedMap>() {
             @Override
             public void write(Json json, ObjectLongOrderedMap object, Class knownType) {
-                Writer writer = json.getWriter();
+                JsonWriter writer = json.getWriter();
                 try {
-                    writer.write('{');
+                    writer.object();
                 } catch (IOException ignored) {
                 }
                 Iterator<ObjectLongMap.Entry<?>> es = new ObjectLongOrderedMap.OrderedMapEntries<>(object).iterator();
@@ -638,16 +632,13 @@ public final class JsonSupport {
                     try {
                         String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
                         json.setWriter(writer);
-                        json.writeValue(k);
-                        writer.write(':');
-                        json.writeValue(e.getValue());
-                        if (es.hasNext())
-                            writer.write(',');
+                        writer.name(k);
+                        json.writeValue(e.getValue(), knownType);
                     } catch (IOException ignored) {
                     }
                 }
                 try {
-                    writer.write('}');
+                    writer.pop();
                 } catch (IOException ignored) {
                 }
             }
@@ -674,7 +665,7 @@ public final class JsonSupport {
         json.setSerializer(ObjectIntMap.class, new Json.Serializer<ObjectIntMap>() {
             @Override
             public void write(Json json, ObjectIntMap object, Class knownType) {
-                Writer writer = json.getWriter();
+                JsonWriter writer = json.getWriter();
                 try {
                     writer.write('{');
                 } catch (IOException ignored) {
@@ -721,7 +712,7 @@ public final class JsonSupport {
         json.setSerializer(ObjectIntOrderedMap.class, new Json.Serializer<ObjectIntOrderedMap>() {
             @Override
             public void write(Json json, ObjectIntOrderedMap object, Class knownType) {
-                Writer writer = json.getWriter();
+                JsonWriter writer = json.getWriter();
                 try {
                     writer.write('{');
                 } catch (IOException ignored) {
@@ -768,7 +759,7 @@ public final class JsonSupport {
         json.setSerializer(ObjectFloatMap.class, new Json.Serializer<ObjectFloatMap>() {
             @Override
             public void write(Json json, ObjectFloatMap object, Class knownType) {
-                Writer writer = json.getWriter();
+                JsonWriter writer = json.getWriter();
                 try {
                     writer.write('{');
                 } catch (IOException ignored) {
@@ -815,7 +806,7 @@ public final class JsonSupport {
         json.setSerializer(ObjectFloatOrderedMap.class, new Json.Serializer<ObjectFloatOrderedMap>() {
             @Override
             public void write(Json json, ObjectFloatOrderedMap object, Class knownType) {
-                Writer writer = json.getWriter();
+                JsonWriter writer = json.getWriter();
                 try {
                     writer.write('{');
                 } catch (IOException ignored) {
