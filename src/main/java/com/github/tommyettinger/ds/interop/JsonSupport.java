@@ -12,7 +12,6 @@ import com.github.tommyettinger.ds.support.util.*;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.PrimitiveIterator;
