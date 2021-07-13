@@ -667,7 +667,7 @@ public final class JsonSupport {
             public void write(Json json, ObjectIntMap object, Class knownType) {
                 JsonWriter writer = json.getWriter();
                 try {
-                    writer.write('{');
+                    writer.object();
                 } catch (IOException ignored) {
                 }
                 Iterator<ObjectIntMap.Entry<?>> es = new ObjectIntMap.Entries<>(object).iterator();
@@ -676,16 +676,13 @@ public final class JsonSupport {
                     try {
                         String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
                         json.setWriter(writer);
-                        json.writeValue(k);
-                        writer.write(':');
-                        json.writeValue(e.getValue());
-                        if (es.hasNext())
-                            writer.write(',');
+                        writer.name(k);
+                        json.writeValue(e.getValue(), knownType);
                     } catch (IOException ignored) {
                     }
                 }
                 try {
-                    writer.write('}');
+                    writer.pop();
                 } catch (IOException ignored) {
                 }
             }
@@ -714,7 +711,7 @@ public final class JsonSupport {
             public void write(Json json, ObjectIntOrderedMap object, Class knownType) {
                 JsonWriter writer = json.getWriter();
                 try {
-                    writer.write('{');
+                    writer.object();
                 } catch (IOException ignored) {
                 }
                 Iterator<ObjectIntMap.Entry<?>> es = new ObjectIntOrderedMap.OrderedMapEntries<>(object).iterator();
@@ -723,16 +720,13 @@ public final class JsonSupport {
                     try {
                         String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
                         json.setWriter(writer);
-                        json.writeValue(k);
-                        writer.write(':');
-                        json.writeValue(e.getValue());
-                        if (es.hasNext())
-                            writer.write(',');
+                        writer.name(k);
+                        json.writeValue(e.getValue(), knownType);
                     } catch (IOException ignored) {
                     }
                 }
                 try {
-                    writer.write('}');
+                    writer.pop();
                 } catch (IOException ignored) {
                 }
             }
@@ -761,7 +755,7 @@ public final class JsonSupport {
             public void write(Json json, ObjectFloatMap object, Class knownType) {
                 JsonWriter writer = json.getWriter();
                 try {
-                    writer.write('{');
+                    writer.object();
                 } catch (IOException ignored) {
                 }
                 Iterator<ObjectFloatMap.Entry<?>> es = new ObjectFloatMap.Entries<>(object).iterator();
@@ -770,16 +764,13 @@ public final class JsonSupport {
                     try {
                         String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
                         json.setWriter(writer);
-                        json.writeValue(k);
-                        writer.write(':');
-                        json.writeValue(e.getValue());
-                        if (es.hasNext())
-                            writer.write(',');
+                        writer.name(k);
+                        json.writeValue(e.getValue(), knownType);
                     } catch (IOException ignored) {
                     }
                 }
                 try {
-                    writer.write('}');
+                    writer.pop();
                 } catch (IOException ignored) {
                 }
             }
@@ -808,7 +799,7 @@ public final class JsonSupport {
             public void write(Json json, ObjectFloatOrderedMap object, Class knownType) {
                 JsonWriter writer = json.getWriter();
                 try {
-                    writer.write('{');
+                    writer.object();
                 } catch (IOException ignored) {
                 }
                 Iterator<ObjectFloatMap.Entry<?>> es = new ObjectFloatOrderedMap.OrderedMapEntries<>(object).iterator();
@@ -817,16 +808,13 @@ public final class JsonSupport {
                     try {
                         String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
                         json.setWriter(writer);
-                        json.writeValue(k);
-                        writer.write(':');
-                        json.writeValue(e.getValue());
-                        if (es.hasNext())
-                            writer.write(',');
+                        writer.name(k);
+                        json.writeValue(e.getValue(), knownType);
                     } catch (IOException ignored) {
                     }
                 }
                 try {
-                    writer.write('}');
+                    writer.pop();
                 } catch (IOException ignored) {
                 }
             }
