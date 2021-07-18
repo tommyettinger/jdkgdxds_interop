@@ -22,25 +22,27 @@ the JDK or one of jdkgdxds' interfaces, like `Collection` or `PrimitiveCollectio
 libGDX data structure. `ConversionToJDK` has methods that take a specific libGDX class, typically, and convert it to a
 similar jdkgdxds data structure. `JsonSupport` is probably the star of the show, and allows registering serializers on a
 `Json` object, so it can read and write jdkgdxds types. This registration could be all at once, using `registerAll()`,
-or one at a time using any of its other methods. The Json serialization also uses an especially-concise format to store
-each of the `EnhancedRandom` implementations in jdkgdxds. These four classes (`DistinctRandom`, `LaserRandom`,
-`TricycleRandom`, and `FourWheelRandom`) are sometimes serializable without jdkgdxds-interop, but work regardless of JDK
-version if you do use this library. Better still, you can register `EnhancedRandom` for serialization, so places that
-have an `EnhancedRandom` but don't specify an implementation can still store one (which includes its implementing class)
-and read an `EnhancedRandom` back. If you have your own class that extends `java.util.Random`, then you probably want
-to register `AtomicLong` (which JsonSupport can do) or to write your own serializer.
+or one at a time using any of its other methods.
+
+The Json serialization also uses an especially-concise format to store each of the `EnhancedRandom` implementations in
+jdkgdxds. These four classes (`DistinctRandom`, `LaserRandom`, `TricycleRandom`, and `FourWheelRandom`) are sometimes
+serializable without jdkgdxds-interop, but work regardless of JDK version if you do use this library. Better still, you
+can register `EnhancedRandom` for serialization, so places that have an `EnhancedRandom` but don't specify an
+implementation can still store one (which includes its implementing class) and read an `EnhancedRandom` back. If you
+have your own class that extends `java.util.Random`, then you probably want to register `AtomicLong` (which `Random`
+uses internally, and which `JsonSupport` can do) or write your own serializer.
 
 ## How do I get it?
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api`, is: 
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:0.1.4.2"
+implementation "com.github.tommyettinger:jdkgdxds_interop:0.1.4.3"
 ```
 It's not unlikely that you might need `api` instead of `implementation`, especially if you are writing a library, or a
 module that needs to be used from another section.
 
 If you use GWT (libGDX's HTML target), then you also need this in your `html/build.gradle` file:
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:0.1.4.2:sources"
+implementation "com.github.tommyettinger:jdkgdxds_interop:0.1.4.3:sources"
 ```
 You also need the GWT `inherits` in your `GdxDefinition.gwt.xml` file:
 ```xml

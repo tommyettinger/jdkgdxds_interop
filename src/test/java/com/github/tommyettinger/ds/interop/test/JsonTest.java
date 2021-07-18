@@ -1,6 +1,7 @@
 package com.github.tommyettinger.ds.interop.test;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
@@ -1026,6 +1027,21 @@ public class JsonTest {
         System.out.println(Long.toString(random2.getSelectedState(0), 36));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
+
+    @Test
+    public void testRandomXS128() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerRandomXS128(json);
+        RandomXS128 random = new RandomXS128(123456789, 0xFA7BAB1E5L);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        RandomXS128 random2 = json.fromJson(RandomXS128.class, data);
+        System.out.println(Long.toString(random2.getState(0), 36));
+        System.out.println(Long.toString(random2.getState(1), 36));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
     @Test
     public void testObjectDeque() {
         Json json = new Json(JsonWriter.OutputType.minimal);

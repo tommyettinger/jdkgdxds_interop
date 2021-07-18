@@ -1,6 +1,7 @@
 package com.github.tommyettinger.ds.interop;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
@@ -90,9 +91,10 @@ public final class JsonSupport {
 
         registerBinaryHeap(json);
 
-        registerAtomicLong(json);
-
+        // registers several others
         registerEnhancedRandom(json);
+
+        registerRandomXS128(json);
     }
 
     /**
@@ -1594,11 +1596,13 @@ public final class JsonSupport {
     }
 
     /**
-     * Registers GapShuffler with the given Json object, so GapShuffler can be written to and read from JSON.
-     * This registers serialization/deserialization for ObjectList as well, since GapShuffler requires it.
-     * You should either register the EnhancedRandom you use with this (which is {@link TricycleRandom} if unspecified),
-     * use {@link JsonSupport#registerAtomicLong(Json)} (if you don't know what type the random number generator uses),
-     * or just call {@link #registerAll(Json)}.
+     * Registers EnhancedRandom with the given Json object, so EnhancedRandom can be written to and read from JSON.
+     * This also registers {@link DistinctRandom}, {@link LaserRandom}, {@link TricycleRandom}, and
+     * {@link FourWheelRandom}, plus {@link AtomicLong} because some subclasses of {@link java.util.Random} need it.
+     * Interfaces aren't usually serializable like this, but because each of the EnhancedRandom serializers uses a
+     * specific format shared with what this uses, and that format identifies which class is used, it works here.
+     * Well, it works as long as the EnhancedRandom implementation you are serializing or deserializing was itself
+     * registered with this. You don't have to worry about that for any of the jdkgdxds EnhancedRandom types.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
@@ -1629,15 +1633,39 @@ public final class JsonSupport {
                     if(impl == null) impl = ClassReflection.forName(tag);
                     return (EnhancedRandom) json.readValue(impl, jsonData);
                 } catch (ReflectionException | ClassCastException e) {
-                    if(Gdx.app != null)
-                        Gdx.app.error("squidstore", "Error reading an EnhancedRandom value from " + jsonData);
-                    else
-                        System.out.println("[squidstore] Error reading an EnhancedRandom value from " + jsonData);
+                    e.printStackTrace();
                     return null;
                 }
             }
         });
     }
+    /**
+     * Registers RandomXS128 with the given Json object, so RandomXS128 can be written to and read from JSON.
+     * Note that RandomXS128 is not a jdkgdxds EnhancedRandom, and so registering this won't allow you to read
+     * RandomXS128 objects from EnhancedRandom fields. This serializer is here to reduce the hassle when you do want to
+     * serialize a RandomXS128, because on Java 16 and higher, RandomXS128 would need some extra steps for Json to be
+     * able to read some fields from it.
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerRandomXS128(@Nonnull Json json) {
+        json.setSerializer(RandomXS128.class, new Json.Serializer<RandomXS128>() {
+            @Override
+            public void write(Json json, RandomXS128 object, Class knownType) {
+                json.writeValue("`" + Long.toString(object.getState(0), 36) + "~" + Long.toString(object.getState(1), 36) + "`");
+            }
+
+            @Override
+            public RandomXS128 read(Json json, JsonValue jsonData, Class type) {
+                String s;
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 5) return null;
+                final int tilde = s.indexOf('~', 1);
+                final long stateA = Long.parseLong(s.substring(1, tilde), 36);
+                final long stateB = Long.parseLong(s.substring(tilde + 1, s.indexOf('`', tilde)), 36);
+                return new RandomXS128(stateA, stateB);
+            }
+        });
+    }
+
 
     /**
      * Registers ObjectDeque with the given Json object, so ObjectDeque can be written to and read from JSON.
