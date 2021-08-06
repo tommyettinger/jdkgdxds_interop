@@ -1,6 +1,5 @@
 package com.github.tommyettinger.ds.interop;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
