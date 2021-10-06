@@ -1007,6 +1007,22 @@ public class JsonTest {
     }
 
     @Test
+    public void testStrangerRandom() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerStrangerRandom(json);
+        StrangerRandom random = new StrangerRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        StrangerRandom random2 = json.fromJson(StrangerRandom.class, data);
+        System.out.println(Long.toString(random2.getStateA(), 36));
+        System.out.println(Long.toString(random2.getStateB(), 36));
+        System.out.println(Long.toString(random2.getStateC(), 36));
+        System.out.println(Long.toString(random2.getStateD(), 36));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
     public void testXoshiro256StarStarRandom() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerXoshiro256StarStarRandom(json);
