@@ -1516,6 +1516,35 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers Xoshiro256StarStarRandom with the given Json object, so Xoshiro256StarStarRandom can be written to and read from JSON.
+     * This is (currently) different from the registration for this class in jdkgdxds-interop, because this needs to be
+     * in a format that can be read into an EnhancedRandom value by using a type tag stored in the serialized JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerXoshiro256StarStarRandom(@Nonnull Json json) {
+        json.addClassTag("#XSSR", Xoshiro256StarStarRandom.class);
+        json.setSerializer(Xoshiro256StarStarRandom.class, new Json.Serializer<Xoshiro256StarStarRandom>() {
+            @Override
+            public void write(Json json, Xoshiro256StarStarRandom object, Class knownType) {
+                json.writeValue("#XSSR`" + Long.toString(object.getStateA(), 36) + "~" + Long.toString(object.getStateB(), 36) + "~" + Long.toString(object.getStateC(), 36) + "~" + Long.toString(object.getStateD(), 36) + "`");
+            }
+
+            @Override
+            public Xoshiro256StarStarRandom read(Json json, JsonValue jsonData, Class type) {
+                String s;
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 14) return null;
+                int tilde = s.indexOf('~', 6);
+                final long stateA = Long.parseLong(s.substring(6, tilde), 36);
+                final long stateB = Long.parseLong(s.substring(tilde + 1, tilde = s.indexOf('~', tilde + 1)), 36);
+                final long stateC = Long.parseLong(s.substring(tilde + 1, tilde = s.indexOf('~', tilde + 1)), 36);
+                final long stateD = Long.parseLong(s.substring(tilde + 1, s.indexOf('`', tilde)), 36);
+                return new Xoshiro256StarStarRandom(stateA, stateB, stateC, stateD);
+            }
+        });
+    }
+
+    /**
      * Registers TricycleRandom with the given Json object, so TricycleRandom can be written to and read from JSON.
      * This is (currently) different from the registration for this class in jdkgdxds-interop, because this needs to be
      * in a format that can be read into an EnhancedRandom value by using a type tag stored in the serialized JSON.
@@ -1611,6 +1640,7 @@ public final class JsonSupport {
         registerLaserRandom(json);
         registerTricycleRandom(json);
         registerFourWheelRandom(json);
+        registerXoshiro256StarStarRandom(json);
         json.setSerializer(EnhancedRandom.class, new Json.Serializer<EnhancedRandom>() {
             @Override
             public void write(Json json, EnhancedRandom object, Class knownType) {
