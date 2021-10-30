@@ -22,6 +22,9 @@ public final class JsonSupport {
     private JsonSupport() {
     }
 
+    @Nonnull
+    private static Base BASE = Base.BASE36;
+
     /**
      * Registers JDKGDXDS' classes with the given Json object, allowing it to read and write JDKGDXDS types.
      *
@@ -96,6 +99,28 @@ public final class JsonSupport {
         registerRandomXS128(json);
 
         registerBase(json);
+    }
+
+
+    /**
+     * Gets the numeral system, also called radix or base, used by some methods here to encode numbers.
+     * If it hasn't been changed, the default this uses is {@link Base#BASE36}, because it is fairly compact.
+     * @return the Base system this uses, which is always non-null.
+     */
+    public Base getNumeralBase() {
+        return BASE;
+    }
+    /**
+     * Sets the numeral system, also called radix or base, used by some methods here to encode numbers.
+     * This is most likely to be used with {@link Base#scrambledBase(EnhancedRandom)} to obfuscate specific numbers,
+     * typically random seeds, put into readable JSON files. The methods this affects are all related to registering
+     * {@link EnhancedRandom} and its implementations, {@link RandomXS128}, and {@link AtomicLong}. If this hasn't been
+     * called, the default this uses is {@link Base#BASE36}, because it is fairly compact.
+     * @param base a non-null Base system
+     */
+    public static void setNumeralBase(Base base){
+        if(base != null)
+            BASE = base;
     }
 
     /**
@@ -1473,7 +1498,7 @@ public final class JsonSupport {
         json.setSerializer(AtomicLong.class, new Json.Serializer<AtomicLong>() {
             @Override
             public void write(Json json, AtomicLong object, Class knownType) {
-                json.writeValue("`" + Long.toString(object.get(), 36) + "`");
+                json.writeValue("`" + Base.BASE36.signed(object.get()) + "`");
             }
 
             @Override
@@ -1481,7 +1506,7 @@ public final class JsonSupport {
                 String s;
                 if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 3) return null;
                 final int tick = s.indexOf('`', 1);
-                final long state = Long.parseLong(s.substring(1, tick), 36);
+                final long state = Base.BASE36.readLong(s, 1, tick);
                 return new AtomicLong(state);
             }
         });
@@ -1500,18 +1525,18 @@ public final class JsonSupport {
         json.setSerializer(FourWheelRandom.class, new Json.Serializer<FourWheelRandom>() {
             @Override
             public void write(Json json, FourWheelRandom object, Class knownType) {
-                json.writeValue("#FoWR`" + Long.toString(object.getStateA(), 36) + "~" + Long.toString(object.getStateB(), 36) + "~" + Long.toString(object.getStateC(), 36) + "~" + Long.toString(object.getStateD(), 36) + "`");
+                json.writeValue("#FoWR`" + BASE.signed(object.getStateA()) + "/" + BASE.signed(object.getStateB()) + "/" + BASE.signed(object.getStateC()) + "/" + BASE.signed(object.getStateD()) + "`");
             }
 
             @Override
             public FourWheelRandom read(Json json, JsonValue jsonData, Class type) {
                 String s;
                 if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 14) return null;
-                int tilde = s.indexOf('~', 6);
-                final long stateA = Long.parseLong(s.substring(6, tilde), 36);
-                final long stateB = Long.parseLong(s.substring(tilde + 1, tilde = s.indexOf('~', tilde + 1)), 36);
-                final long stateC = Long.parseLong(s.substring(tilde + 1, tilde = s.indexOf('~', tilde + 1)), 36);
-                final long stateD = Long.parseLong(s.substring(tilde + 1, s.indexOf('`', tilde)), 36);
+                int slash = s.indexOf('/', 6);
+                final long stateA = BASE.readLong(s, 6, slash);
+                final long stateB = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
+                final long stateC = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
+                final long stateD = BASE.readLong(s, slash + 1, s.indexOf('`', slash));
                 return new FourWheelRandom(stateA, stateB, stateC, stateD);
             }
         });
@@ -1529,18 +1554,18 @@ public final class JsonSupport {
         json.setSerializer(StrangerRandom.class, new Json.Serializer<StrangerRandom>() {
             @Override
             public void write(Json json, StrangerRandom object, Class knownType) {
-                json.writeValue("#StrR`" + Long.toString(object.getStateA(), 36) + "~" + Long.toString(object.getStateB(), 36) + "~" + Long.toString(object.getStateC(), 36) + "~" + Long.toString(object.getStateD(), 36) + "`");
+                json.writeValue("#StrR`" + BASE.signed(object.getStateA()) + "/" + BASE.signed(object.getStateB()) + "/" + BASE.signed(object.getStateC()) + "/" + BASE.signed(object.getStateD()) + "`");
             }
 
             @Override
             public StrangerRandom read(Json json, JsonValue jsonData, Class type) {
                 String s;
                 if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 14) return null;
-                int tilde = s.indexOf('~', 6);
-                final long stateA = Long.parseLong(s.substring(6, tilde), 36);
-                final long stateB = Long.parseLong(s.substring(tilde + 1, tilde = s.indexOf('~', tilde + 1)), 36);
-                final long stateC = Long.parseLong(s.substring(tilde + 1, tilde = s.indexOf('~', tilde + 1)), 36);
-                final long stateD = Long.parseLong(s.substring(tilde + 1, s.indexOf('`', tilde)), 36);
+                int slash = s.indexOf('/', 6);
+                final long stateA = BASE.readLong(s, 6, slash);
+                final long stateB = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
+                final long stateC = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
+                final long stateD = BASE.readLong(s, slash + 1, s.indexOf('`', slash));
                 return new StrangerRandom(stateA, stateB, stateC, stateD);
             }
         });
@@ -1558,18 +1583,18 @@ public final class JsonSupport {
         json.setSerializer(Xoshiro256StarStarRandom.class, new Json.Serializer<Xoshiro256StarStarRandom>() {
             @Override
             public void write(Json json, Xoshiro256StarStarRandom object, Class knownType) {
-                json.writeValue("#XSSR`" + Long.toString(object.getStateA(), 36) + "~" + Long.toString(object.getStateB(), 36) + "~" + Long.toString(object.getStateC(), 36) + "~" + Long.toString(object.getStateD(), 36) + "`");
+                json.writeValue("#XSSR`" + BASE.signed(object.getStateA()) + "/" + BASE.signed(object.getStateB()) + "/" + BASE.signed(object.getStateC()) + "/" + BASE.signed(object.getStateD()) + "`");
             }
 
             @Override
             public Xoshiro256StarStarRandom read(Json json, JsonValue jsonData, Class type) {
                 String s;
                 if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 14) return null;
-                int tilde = s.indexOf('~', 6);
-                final long stateA = Long.parseLong(s.substring(6, tilde), 36);
-                final long stateB = Long.parseLong(s.substring(tilde + 1, tilde = s.indexOf('~', tilde + 1)), 36);
-                final long stateC = Long.parseLong(s.substring(tilde + 1, tilde = s.indexOf('~', tilde + 1)), 36);
-                final long stateD = Long.parseLong(s.substring(tilde + 1, s.indexOf('`', tilde)), 36);
+                int slash = s.indexOf('/', 6);
+                final long stateA = BASE.readLong(s, 6, slash);
+                final long stateB = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
+                final long stateC = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
+                final long stateD = BASE.readLong(s, slash + 1, s.indexOf('`', slash));
                 return new Xoshiro256StarStarRandom(stateA, stateB, stateC, stateD);
             }
         });
@@ -1587,17 +1612,17 @@ public final class JsonSupport {
         json.setSerializer(TricycleRandom.class, new Json.Serializer<TricycleRandom>() {
             @Override
             public void write(Json json, TricycleRandom object, Class knownType) {
-                json.writeValue("#TriR`" + Long.toString(object.getStateA(), 36) + "~" + Long.toString(object.getStateB(), 36) + "~" + Long.toString(object.getStateC(), 36) + "`");
+                json.writeValue("#TriR`" + BASE.signed(object.getStateA()) + "/" + BASE.signed(object.getStateB()) + "/" + BASE.signed(object.getStateC()) + "`");
             }
 
             @Override
             public TricycleRandom read(Json json, JsonValue jsonData, Class type) {
                 String s;
                 if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 12) return null;
-                int tilde = s.indexOf('~', 6);
-                final long stateA = Long.parseLong(s.substring(6, tilde), 36);
-                final long stateB = Long.parseLong(s.substring(tilde + 1, tilde = s.indexOf('~', tilde + 1)), 36);
-                final long stateC = Long.parseLong(s.substring(tilde + 1, s.indexOf('`', tilde)), 36);
+                int slash = s.indexOf('/', 6);
+                final long stateA = BASE.readLong(s, 6, slash);
+                final long stateB = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
+                final long stateC = BASE.readLong(s, slash + 1, s.indexOf('`', slash));
                 return new TricycleRandom(stateA, stateB, stateC);
             }
         });
@@ -1615,16 +1640,16 @@ public final class JsonSupport {
         json.setSerializer(LaserRandom.class, new Json.Serializer<LaserRandom>() {
             @Override
             public void write(Json json, LaserRandom object, Class knownType) {
-                json.writeValue("#LasR`" + Long.toString(object.getStateA(), 36) + "~" + Long.toString(object.getStateB() >>> 1, 36) + "`");
+                json.writeValue("#LasR`" + BASE.signed(object.getStateA()) + "/" + BASE.signed(object.getStateB() >>> 1) + "`");
             }
 
             @Override
             public LaserRandom read(Json json, JsonValue jsonData, Class type) {
                 String s;
                 if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 10) return null;
-                final int tilde = s.indexOf('~', 6);
-                final long stateA = Long.parseLong(s.substring(6, tilde), 36);
-                final long stateB = Long.parseLong(s.substring(tilde + 1, s.indexOf('`', tilde)), 36) << 1;
+                final int slash = s.indexOf('/', 6);
+                final long stateA = BASE.readLong(s, 6, slash);
+                final long stateB = BASE.readLong(s, slash + 1, s.indexOf('`', slash)) << 1;
                 return new LaserRandom(stateA, stateB);
             }
         });
@@ -1640,7 +1665,7 @@ public final class JsonSupport {
         json.setSerializer(DistinctRandom.class, new Json.Serializer<DistinctRandom>() {
             @Override
             public void write(Json json, DistinctRandom object, Class knownType) {
-                json.writeValue("#DisR`" + Long.toString(object.getSelectedState(0), 36) + "`");
+                json.writeValue("#DisR`" + BASE.signed(object.getSelectedState(0)) + "`");
             }
 
             @Override
@@ -1648,7 +1673,7 @@ public final class JsonSupport {
                 String s;
                 if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 8) return null;
                 final int tick = s.indexOf('`', 6);
-                final long state = Long.parseLong(s.substring(6, tick), 36);
+                final long state = BASE.readLong(s, 6, tick);
                 return new DistinctRandom(state);
             }
         });
@@ -1714,16 +1739,16 @@ public final class JsonSupport {
         json.setSerializer(RandomXS128.class, new Json.Serializer<RandomXS128>() {
             @Override
             public void write(Json json, RandomXS128 object, Class knownType) {
-                json.writeValue("`" + Long.toString(object.getState(0), 36) + "~" + Long.toString(object.getState(1), 36) + "`");
+                json.writeValue("`" + BASE.signed(object.getState(0)) + "/" + BASE.signed(object.getState(1)) + "`");
             }
 
             @Override
             public RandomXS128 read(Json json, JsonValue jsonData, Class type) {
                 String s;
                 if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 5) return null;
-                final int tilde = s.indexOf('~', 1);
-                final long stateA = Long.parseLong(s.substring(1, tilde), 36);
-                final long stateB = Long.parseLong(s.substring(tilde + 1, s.indexOf('`', tilde)), 36);
+                final int slash = s.indexOf('/', 1);
+                final long stateA = BASE.readLong(s, 1, slash);
+                final long stateB = BASE.readLong(s, slash + 1, s.indexOf('`', slash));
                 return new RandomXS128(stateA, stateB);
             }
         });
