@@ -971,8 +971,8 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         LaserRandom random2 = json.fromJson(LaserRandom.class, data);
-        System.out.println(Long.toString(random2.getStateA(), 36));
-        System.out.println(Long.toString(random2.getStateB() >>> 1, 36));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB() >>> 1));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -986,9 +986,9 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         TricycleRandom random2 = json.fromJson(TricycleRandom.class, data);
-        System.out.println(Long.toString(random2.getStateA(), 36));
-        System.out.println(Long.toString(random2.getStateB(), 36));
-        System.out.println(Long.toString(random2.getStateC(), 36));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateC()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1002,10 +1002,10 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         FourWheelRandom random2 = json.fromJson(FourWheelRandom.class, data);
-        System.out.println(Long.toString(random2.getStateA(), 36));
-        System.out.println(Long.toString(random2.getStateB(), 36));
-        System.out.println(Long.toString(random2.getStateC(), 36));
-        System.out.println(Long.toString(random2.getStateD(), 36));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateD()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1019,10 +1019,10 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         StrangerRandom random2 = json.fromJson(StrangerRandom.class, data);
-        System.out.println(Long.toString(random2.getStateA(), 36));
-        System.out.println(Long.toString(random2.getStateB(), 36));
-        System.out.println(Long.toString(random2.getStateC(), 36));
-        System.out.println(Long.toString(random2.getStateD(), 36));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateD()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1036,10 +1036,10 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         Xoshiro256StarStarRandom random2 = json.fromJson(Xoshiro256StarStarRandom.class, data);
-        System.out.println(Long.toString(random2.getStateA(), 36));
-        System.out.println(Long.toString(random2.getStateB(), 36));
-        System.out.println(Long.toString(random2.getStateC(), 36));
-        System.out.println(Long.toString(random2.getStateD(), 36));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateD()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1063,7 +1063,7 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         DistinctRandom random2 = json.fromJson(DistinctRandom.class, data);
-        System.out.println(Long.toString(random2.getSelectedState(0), 36));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getSelectedState(0)));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1077,8 +1077,8 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         RandomXS128 random2 = json.fromJson(RandomXS128.class, data);
-        System.out.println(Long.toString(random2.getState(0), 36));
-        System.out.println(Long.toString(random2.getState(1), 36));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getState(1)));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 

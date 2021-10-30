@@ -107,7 +107,7 @@ public final class JsonSupport {
      * If it hasn't been changed, the default this uses is {@link Base#BASE36}, because it is fairly compact.
      * @return the Base system this uses, which is always non-null.
      */
-    public Base getNumeralBase() {
+    public static Base getNumeralBase() {
         return BASE;
     }
     /**
