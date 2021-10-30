@@ -64,8 +64,8 @@ repositories {
 }
 
 dependencies {
-//    api "com.github.tommyettinger:jdkgdxds:0.2.0"
-    api "com.github.tommyettinger:jdkgdxds:11d29f2e1f"
+    api "com.github.tommyettinger:jdkgdxds:$jdkgdxdsVersion"
+//    api "com.github.tommyettinger:jdkgdxds:11d29f2e1f"
     api "com.badlogicgames.gdx:gdx:1.10.0"
     testImplementation "junit:junit:4.13.2"
 }

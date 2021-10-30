@@ -25,12 +25,12 @@ similar jdkgdxds data structure. `JsonSupport` is probably the star of the show,
 or one at a time using any of its other methods.
 
 The Json serialization also uses an especially-concise format to store each of the `EnhancedRandom` implementations in
-jdkgdxds. These four classes (`DistinctRandom`, `LaserRandom`, `TricycleRandom`, and `FourWheelRandom`) are sometimes
-serializable without jdkgdxds-interop, but work regardless of JDK version if you do use this library. Better still, you
-can register `EnhancedRandom` for serialization, so places that have an `EnhancedRandom` but don't specify an
-implementation can still store one (which includes its implementing class) and read an `EnhancedRandom` back. If you
-have your own class that extends `java.util.Random`, then you probably want to register `AtomicLong` (which `Random`
-uses internally, and which `JsonSupport` can do) or write your own serializer.
+jdkgdxds. These classes (`DistinctRandom`, `LaserRandom`, `TricycleRandom`, `FourWheelRandom`, `StrangerRandom`,
+and `Xoshiro256StarStarRandom`) are sometimes serializable without jdkgdxds-interop, but work regardless of JDK version
+if you do use this library. Better still, you can register `EnhancedRandom` for serialization, so places that have an
+`EnhancedRandom` but don't specify an implementation can still store one (which includes its implementing class) and
+read an `EnhancedRandom` back. If you have your own class that extends `java.util.Random`, then you probably want to
+register `AtomicLong` (which `Random` uses internally, and which `JsonSupport` can do) or write your own serializer.
 
 ## How do I get it?
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api`, is: 
