@@ -6,7 +6,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.17.0'
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
     }
 }
 
@@ -36,7 +36,7 @@ if (JavaVersion.current().isJava8Compatible()) {
         }
     }
 }
-javadoc.options.source("16")
+javadoc.options.source("17")
 javadoc.destinationDir = file("docs/apidocs")
 
 sourceSets.test.resources.srcDirs = [ file('src/test/resources').path ]

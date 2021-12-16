@@ -1195,7 +1195,7 @@ public class JsonTest {
     public void testFloatDeque() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerFloatDeque(json);
-        FloatDeque numbers = FloatDeque.with(42.42f, 23.23f, 666.666f, 420.42f);
+        FloatDeque numbers = FloatDeque.with(42.42f, 23.23f, 666.666f, 420.42f, 4.7683716e-7f);
         String data = json.toJson(numbers);
         System.out.println(data);
         FloatDeque numbers2 = json.fromJson(FloatDeque.class, data);
