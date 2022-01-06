@@ -1044,6 +1044,23 @@ public class JsonTest {
     }
 
     @Test
+    public void testTrimRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerTrimRandom(json);
+        TrimRandom random = new TrimRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        TrimRandom random2 = json.fromJson(TrimRandom.class, data);
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateD()));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
     public void testAtomicLong() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
         Json json = new Json(JsonWriter.OutputType.minimal);

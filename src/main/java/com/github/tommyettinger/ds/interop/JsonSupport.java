@@ -1716,6 +1716,7 @@ public final class JsonSupport {
         registerFourWheelRandom(json);
         registerXoshiro256StarStarRandom(json);
         registerStrangerRandom(json);
+        registerTrimRandom(json);
         json.setSerializer(EnhancedRandom.class, new Json.Serializer<EnhancedRandom>() {
             @Override
             public void write(Json json, EnhancedRandom object, Class knownType) {
