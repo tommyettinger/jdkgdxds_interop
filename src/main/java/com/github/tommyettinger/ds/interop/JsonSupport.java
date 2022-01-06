@@ -1512,11 +1512,8 @@ public final class JsonSupport {
         });
     }
 
-
     /**
      * Registers FourWheelRandom with the given Json object, so FourWheelRandom can be written to and read from JSON.
-     * This is (currently) different from the registration for this class in jdkgdxds-interop, because this needs to be
-     * in a format that can be read into an EnhancedRandom value by using a type tag stored in the serialized JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
@@ -1543,9 +1540,34 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers TrimRandom with the given Json object, so TrimRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerTrimRandom(@Nonnull Json json) {
+        json.addClassTag("#TrmR", TrimRandom.class);
+        json.setSerializer(TrimRandom.class, new Json.Serializer<TrimRandom>() {
+            @Override
+            public void write(Json json, TrimRandom object, Class knownType) {
+                json.writeValue("#TrmR`" + BASE.signed(object.getStateA()) + "/" + BASE.signed(object.getStateB()) + "/" + BASE.signed(object.getStateC()) + "/" + BASE.signed(object.getStateD()) + "`");
+            }
+
+            @Override
+            public TrimRandom read(Json json, JsonValue jsonData, Class type) {
+                String s;
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 14) return null;
+                int slash = s.indexOf('/', 6);
+                final long stateA = BASE.readLong(s, 6, slash);
+                final long stateB = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
+                final long stateC = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
+                final long stateD = BASE.readLong(s, slash + 1, s.indexOf('`', slash));
+                return new TrimRandom(stateA, stateB, stateC, stateD);
+            }
+        });
+    }
+
+    /**
      * Registers StrangerRandom with the given Json object, so StrangerRandom can be written to and read from JSON.
-     * This is (currently) different from the registration for this class in jdkgdxds-interop, because this needs to be
-     * in a format that can be read into an EnhancedRandom value by using a type tag stored in the serialized JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
@@ -1573,8 +1595,6 @@ public final class JsonSupport {
 
     /**
      * Registers Xoshiro256StarStarRandom with the given Json object, so Xoshiro256StarStarRandom can be written to and read from JSON.
-     * This is (currently) different from the registration for this class in jdkgdxds-interop, because this needs to be
-     * in a format that can be read into an EnhancedRandom value by using a type tag stored in the serialized JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
@@ -1602,8 +1622,6 @@ public final class JsonSupport {
 
     /**
      * Registers TricycleRandom with the given Json object, so TricycleRandom can be written to and read from JSON.
-     * This is (currently) different from the registration for this class in jdkgdxds-interop, because this needs to be
-     * in a format that can be read into an EnhancedRandom value by using a type tag stored in the serialized JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
@@ -1630,8 +1648,6 @@ public final class JsonSupport {
 
     /**
      * Registers LaserRandom with the given Json object, so LaserRandom can be written to and read from JSON.
-     * This is (currently) different from the registration for this class in jdkgdxds-interop, because this needs to be
-     * in a format that can be read into an EnhancedRandom value by using a type tag stored in the serialized JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
