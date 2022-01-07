@@ -1744,6 +1744,33 @@ public final class JsonSupport {
             }
         });
     }
+
+    /**
+     * Registers WrapperRandom with the given Json object, so WrapperRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerWrapperRandom(@Nonnull Json json) {
+        json.addClassTag("^Wrap", WrapperRandom.class);
+        registerEnhancedRandom(json);
+        json.setSerializer(WrapperRandom.class, new Json.Serializer<WrapperRandom>() {
+            @Override
+            public void write(Json json, WrapperRandom object, Class knownType) {
+                json.writeObjectStart();
+                json.writeValue("rng", object.rng, EnhancedRandom.class);
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public WrapperRandom read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull() || !jsonData.isObject()) return null;
+                EnhancedRandom er = json.readValue("rng", EnhancedRandom.class, jsonData);
+                return new WrapperRandom(er);
+            }
+        });
+    }
+
+
     /**
      * Registers RandomXS128 with the given Json object, so RandomXS128 can be written to and read from JSON.
      * Note that RandomXS128 is not a jdkgdxds EnhancedRandom, and so registering this won't allow you to read
