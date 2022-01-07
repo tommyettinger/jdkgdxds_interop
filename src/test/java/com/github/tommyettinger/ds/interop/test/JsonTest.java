@@ -1085,6 +1085,20 @@ public class JsonTest {
     }
 
     @Test
+    public void testWrappedRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerWrapperRandom(json);
+        WrapperRandom random = new WrapperRandom(new FourWheelRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L));
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        WrapperRandom random2 = json.fromJson(WrapperRandom.class, data);
+        System.out.println(random2.rng);
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
     public void testRandomXS128() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
         Json json = new Json(JsonWriter.OutputType.minimal);
