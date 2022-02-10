@@ -964,6 +964,7 @@ public class JsonTest {
     @Test
     public void testLaserRandom() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerLaserRandom(json);
         LaserRandom random = new LaserRandom(123456789, 0xFA7BAB1E5L);
@@ -979,6 +980,7 @@ public class JsonTest {
     @Test
     public void testTricycleRandom() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerTricycleRandom(json);
         TricycleRandom random = new TricycleRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L);
@@ -995,6 +997,7 @@ public class JsonTest {
     @Test
     public void testFourWheelRandom() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerFourWheelRandom(json);
         FourWheelRandom random = new FourWheelRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L);
@@ -1012,6 +1015,7 @@ public class JsonTest {
     @Test
     public void testStrangerRandom() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerStrangerRandom(json);
         StrangerRandom random = new StrangerRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L);
@@ -1029,6 +1033,7 @@ public class JsonTest {
     @Test
     public void testXoshiro256StarStarRandom() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerXoshiro256StarStarRandom(json);
         Xoshiro256StarStarRandom random = new Xoshiro256StarStarRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L);
@@ -1046,6 +1051,7 @@ public class JsonTest {
     @Test
     public void testTrimRandom() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerTrimRandom(json);
         TrimRandom random = new TrimRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L);
@@ -1063,6 +1069,7 @@ public class JsonTest {
     @Test
     public void testAtomicLong() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
         FourWheelRandom random = new FourWheelRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L);
         AtomicLong al = new AtomicLong(Base.BASE36.readLong("json"));
@@ -1073,6 +1080,7 @@ public class JsonTest {
     @Test
     public void testDistinctRandom() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerDistinctRandom(json);
         DistinctRandom random = new DistinctRandom(123456789);
@@ -1087,6 +1095,7 @@ public class JsonTest {
     @Test
     public void testWrappedRandom() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerWrapperRandom(json);
         WrapperRandom random = new WrapperRandom(new FourWheelRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L));
@@ -1101,6 +1110,7 @@ public class JsonTest {
     @Test
     public void testRandomXS128() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerRandomXS128(json);
         RandomXS128 random = new RandomXS128(123456789, 0xFA7BAB1E5L);

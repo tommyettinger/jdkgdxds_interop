@@ -23,7 +23,7 @@ public final class JsonSupport {
     }
 
     @Nonnull
-    private static Base BASE = Base.BASE36;
+    private static Base BASE = Base.BASE16;
 
     /**
      * Registers JDKGDXDS' classes with the given Json object, allowing it to read and write JDKGDXDS types.
@@ -1518,19 +1518,19 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerFourWheelRandom(@Nonnull Json json) {
-        json.addClassTag("#FoWR", FourWheelRandom.class);
+        json.addClassTag("FoWR", FourWheelRandom.class);
         json.setSerializer(FourWheelRandom.class, new Json.Serializer<FourWheelRandom>() {
             @Override
             public void write(Json json, FourWheelRandom object, Class knownType) {
-                json.writeValue("#FoWR`" + BASE.signed(object.getStateA()) + "/" + BASE.signed(object.getStateB()) + "/" + BASE.signed(object.getStateC()) + "/" + BASE.signed(object.getStateD()) + "`");
+                json.writeValue("FoWR`" + BASE.signed(object.getStateA()) + "/" + BASE.signed(object.getStateB()) + "/" + BASE.signed(object.getStateC()) + "/" + BASE.signed(object.getStateD()) + "`");
             }
 
             @Override
             public FourWheelRandom read(Json json, JsonValue jsonData, Class type) {
                 String s;
-                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 14) return null;
-                int slash = s.indexOf('/', 6);
-                final long stateA = BASE.readLong(s, 6, slash);
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 14 - 1) return null;
+                int slash = s.indexOf('/', 5);
+                final long stateA = BASE.readLong(s, 5, slash);
                 final long stateB = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
                 final long stateC = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
                 final long stateD = BASE.readLong(s, slash + 1, s.indexOf('`', slash));
@@ -1545,19 +1545,19 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerTrimRandom(@Nonnull Json json) {
-        json.addClassTag("#TrmR", TrimRandom.class);
+        json.addClassTag("TrmR", TrimRandom.class);
         json.setSerializer(TrimRandom.class, new Json.Serializer<TrimRandom>() {
             @Override
             public void write(Json json, TrimRandom object, Class knownType) {
-                json.writeValue("#TrmR`" + BASE.signed(object.getStateA()) + "/" + BASE.signed(object.getStateB()) + "/" + BASE.signed(object.getStateC()) + "/" + BASE.signed(object.getStateD()) + "`");
+                json.writeValue("TrmR`" + BASE.signed(object.getStateA()) + "/" + BASE.signed(object.getStateB()) + "/" + BASE.signed(object.getStateC()) + "/" + BASE.signed(object.getStateD()) + "`");
             }
 
             @Override
             public TrimRandom read(Json json, JsonValue jsonData, Class type) {
                 String s;
-                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 14) return null;
-                int slash = s.indexOf('/', 6);
-                final long stateA = BASE.readLong(s, 6, slash);
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 14 - 1) return null;
+                int slash = s.indexOf('/', 5);
+                final long stateA = BASE.readLong(s, 5, slash);
                 final long stateB = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
                 final long stateC = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
                 final long stateD = BASE.readLong(s, slash + 1, s.indexOf('`', slash));
@@ -1572,19 +1572,19 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerStrangerRandom(@Nonnull Json json) {
-        json.addClassTag("#StrR", StrangerRandom.class);
+        json.addClassTag("StrR", StrangerRandom.class);
         json.setSerializer(StrangerRandom.class, new Json.Serializer<StrangerRandom>() {
             @Override
             public void write(Json json, StrangerRandom object, Class knownType) {
-                json.writeValue("#StrR`" + BASE.signed(object.getStateA()) + "/" + BASE.signed(object.getStateB()) + "/" + BASE.signed(object.getStateC()) + "/" + BASE.signed(object.getStateD()) + "`");
+                json.writeValue("StrR`" + BASE.signed(object.getStateA()) + "/" + BASE.signed(object.getStateB()) + "/" + BASE.signed(object.getStateC()) + "/" + BASE.signed(object.getStateD()) + "`");
             }
 
             @Override
             public StrangerRandom read(Json json, JsonValue jsonData, Class type) {
                 String s;
-                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 14) return null;
-                int slash = s.indexOf('/', 6);
-                final long stateA = BASE.readLong(s, 6, slash);
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 14 - 1) return null;
+                int slash = s.indexOf('/', 5);
+                final long stateA = BASE.readLong(s, 5, slash);
                 final long stateB = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
                 final long stateC = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
                 final long stateD = BASE.readLong(s, slash + 1, s.indexOf('`', slash));
@@ -1599,19 +1599,19 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerXoshiro256StarStarRandom(@Nonnull Json json) {
-        json.addClassTag("#XSSR", Xoshiro256StarStarRandom.class);
+        json.addClassTag("XSSR", Xoshiro256StarStarRandom.class);
         json.setSerializer(Xoshiro256StarStarRandom.class, new Json.Serializer<Xoshiro256StarStarRandom>() {
             @Override
             public void write(Json json, Xoshiro256StarStarRandom object, Class knownType) {
-                json.writeValue("#XSSR`" + BASE.signed(object.getStateA()) + "/" + BASE.signed(object.getStateB()) + "/" + BASE.signed(object.getStateC()) + "/" + BASE.signed(object.getStateD()) + "`");
+                json.writeValue("XSSR`" + BASE.signed(object.getStateA()) + "/" + BASE.signed(object.getStateB()) + "/" + BASE.signed(object.getStateC()) + "/" + BASE.signed(object.getStateD()) + "`");
             }
 
             @Override
             public Xoshiro256StarStarRandom read(Json json, JsonValue jsonData, Class type) {
                 String s;
-                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 14) return null;
-                int slash = s.indexOf('/', 6);
-                final long stateA = BASE.readLong(s, 6, slash);
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 14 - 1) return null;
+                int slash = s.indexOf('/', 5);
+                final long stateA = BASE.readLong(s, 5, slash);
                 final long stateB = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
                 final long stateC = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
                 final long stateD = BASE.readLong(s, slash + 1, s.indexOf('`', slash));
@@ -1626,19 +1626,19 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerTricycleRandom(@Nonnull Json json) {
-        json.addClassTag("#TriR", TricycleRandom.class);
+        json.addClassTag("TriR", TricycleRandom.class);
         json.setSerializer(TricycleRandom.class, new Json.Serializer<TricycleRandom>() {
             @Override
             public void write(Json json, TricycleRandom object, Class knownType) {
-                json.writeValue("#TriR`" + BASE.signed(object.getStateA()) + "/" + BASE.signed(object.getStateB()) + "/" + BASE.signed(object.getStateC()) + "`");
+                json.writeValue("TriR`" + BASE.signed(object.getStateA()) + "/" + BASE.signed(object.getStateB()) + "/" + BASE.signed(object.getStateC()) + "`");
             }
 
             @Override
             public TricycleRandom read(Json json, JsonValue jsonData, Class type) {
                 String s;
-                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 12) return null;
-                int slash = s.indexOf('/', 6);
-                final long stateA = BASE.readLong(s, 6, slash);
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 12 - 1) return null;
+                int slash = s.indexOf('/', 5);
+                final long stateA = BASE.readLong(s, 5, slash);
                 final long stateB = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
                 final long stateC = BASE.readLong(s, slash + 1, s.indexOf('`', slash));
                 return new TricycleRandom(stateA, stateB, stateC);
@@ -1652,19 +1652,19 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerLaserRandom(@Nonnull Json json) {
-        json.addClassTag("#LasR", LaserRandom.class);
+        json.addClassTag("LasR", LaserRandom.class);
         json.setSerializer(LaserRandom.class, new Json.Serializer<LaserRandom>() {
             @Override
             public void write(Json json, LaserRandom object, Class knownType) {
-                json.writeValue("#LasR`" + BASE.signed(object.getStateA()) + "/" + BASE.signed(object.getStateB() >>> 1) + "`");
+                json.writeValue("LasR`" + BASE.signed(object.getStateA()) + "/" + BASE.signed(object.getStateB() >>> 1) + "`");
             }
 
             @Override
             public LaserRandom read(Json json, JsonValue jsonData, Class type) {
                 String s;
-                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 10) return null;
-                final int slash = s.indexOf('/', 6);
-                final long stateA = BASE.readLong(s, 6, slash);
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 10 - 1) return null;
+                final int slash = s.indexOf('/', 5);
+                final long stateA = BASE.readLong(s, 5, slash);
                 final long stateB = BASE.readLong(s, slash + 1, s.indexOf('`', slash)) << 1;
                 return new LaserRandom(stateA, stateB);
             }
@@ -1677,19 +1677,19 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerDistinctRandom(@Nonnull Json json) {
-        json.addClassTag("#DisR", DistinctRandom.class);
+        json.addClassTag("DisR", DistinctRandom.class);
         json.setSerializer(DistinctRandom.class, new Json.Serializer<DistinctRandom>() {
             @Override
             public void write(Json json, DistinctRandom object, Class knownType) {
-                json.writeValue("#DisR`" + BASE.signed(object.getSelectedState(0)) + "`");
+                json.writeValue("DisR`" + BASE.signed(object.getSelectedState(0)) + "`");
             }
 
             @Override
             public DistinctRandom read(Json json, JsonValue jsonData, Class type) {
                 String s;
-                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 8) return null;
-                final int tick = s.indexOf('`', 6);
-                final long state = BASE.readLong(s, 6, tick);
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 8 - 1) return null;
+                final int tick = s.indexOf('`', 5);
+                final long state = BASE.readLong(s, 5, tick);
                 return new DistinctRandom(state);
             }
         });
@@ -1733,7 +1733,7 @@ public final class JsonSupport {
             public EnhancedRandom read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 try {
-                    String tag = jsonData.asString().substring(0, 5);
+                    String tag = jsonData.asString().substring(0, 4);
                     Class<?> impl = json.getClass(tag);
                     if(impl == null) impl = ClassReflection.forName(tag);
                     return (EnhancedRandom) json.readValue(impl, jsonData);
