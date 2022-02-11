@@ -978,6 +978,22 @@ public class JsonTest {
     }
 
     @Test
+    public void testMizuchiRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerMizuchiRandom(json);
+        MizuchiRandom random = new MizuchiRandom(123456789, 0xFA7BAB1E5L);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        MizuchiRandom random2 = json.fromJson(MizuchiRandom.class, data);
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
     public void testTricycleRandom() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
         //JsonSupport.setNumeralBase(Base.BASE16);
