@@ -973,7 +973,7 @@ public class JsonTest {
         System.out.println(data);
         LaserRandom random2 = json.fromJson(LaserRandom.class, data);
         System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
-        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB() >>> 1));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
