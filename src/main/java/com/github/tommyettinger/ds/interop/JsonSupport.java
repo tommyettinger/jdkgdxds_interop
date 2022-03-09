@@ -93,12 +93,14 @@ public final class JsonSupport {
 
         registerBinaryHeap(json);
 
+        registerBase(json);
+
         // registers several others
         registerEnhancedRandom(json);
 
         registerRandomXS128(json);
 
-        registerBase(json);
+        registerClass(json);
     }
 
 
@@ -2048,6 +2050,40 @@ public final class JsonSupport {
                 return Base.deserializeFromString(jsonData.asString());
             }
         });
+    }
+
+    /**
+     * Registers the JDK Class type with the given Json object, so Class values can be written to and read from JSON.
+     * This can be useful for code that needs to use Class values as keys or as values. Class keys can be used with an
+     * {@link IdentityObjectMap} slightly more efficiently than an {@link ObjectObjectMap}.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerClass(@Nonnull Json json) {
+        json.setSerializer(Class.class, new Json.Serializer<Class>() {
+            @Override
+            public void write(Json json, Class object, Class knownType) {
+                if(object == null)
+                {
+                    json.writeValue(null);
+                    return;
+                }
+                json.writeValue(object.getName());
+            }
+
+            @Override
+            public Class<?> read(Json json, JsonValue jsonData, Class type) {
+                if(jsonData != null && !jsonData.isNull())
+                {
+                    try {
+                        return ClassReflection.forName(jsonData.asString());
+                    } catch (ReflectionException ignored) {
+                    }
+                }
+                return null;
+            }
+        });
+
     }
 
 }
