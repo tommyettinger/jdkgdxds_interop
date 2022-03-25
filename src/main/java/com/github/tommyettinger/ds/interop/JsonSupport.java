@@ -1569,6 +1569,33 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers ChopRandom with the given Json object, so ChopRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerChopRandom(@Nonnull Json json) {
+        json.addClassTag("ChpR", ChopRandom.class);
+        json.setSerializer(ChopRandom.class, new Json.Serializer<ChopRandom>() {
+            @Override
+            public void write(Json json, ChopRandom object, Class knownType) {
+                json.writeValue("ChpR`" + BASE.unsigned(object.getStateA()) + "/" + BASE.unsigned(object.getStateB()) + "/" + BASE.unsigned(object.getStateC()) + "/" + BASE.unsigned(object.getStateD()) + "`");
+            }
+
+            @Override
+            public ChopRandom read(Json json, JsonValue jsonData, Class type) {
+                String s;
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 13) return null;
+                int slash = s.indexOf('/', 5);
+                final int stateA = BASE.readInt(s, 5, slash);
+                final int stateB = BASE.readInt(s, slash + 1, slash = s.indexOf('/', slash + 1));
+                final int stateC = BASE.readInt(s, slash + 1, slash = s.indexOf('/', slash + 1));
+                final int stateD = BASE.readInt(s, slash + 1, s.indexOf('`', slash));
+                return new ChopRandom(stateA, stateB, stateC, stateD);
+            }
+        });
+    }
+
+    /**
      * Registers StrangerRandom with the given Json object, so StrangerRandom can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
