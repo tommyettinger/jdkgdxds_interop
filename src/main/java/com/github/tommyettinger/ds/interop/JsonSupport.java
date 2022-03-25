@@ -1578,7 +1578,7 @@ public final class JsonSupport {
         json.setSerializer(ChopRandom.class, new Json.Serializer<ChopRandom>() {
             @Override
             public void write(Json json, ChopRandom object, Class knownType) {
-                json.writeValue("ChpR`" + BASE.unsigned(object.getStateA()) + "/" + BASE.unsigned(object.getStateB()) + "/" + BASE.unsigned(object.getStateC()) + "/" + BASE.unsigned(object.getStateD()) + "`");
+                json.writeValue("ChpR`" + BASE.unsigned((int) object.getStateA()) + "/" + BASE.unsigned((int) object.getStateB()) + "/" + BASE.unsigned((int) object.getStateC()) + "/" + BASE.unsigned((int) object.getStateD()) + "`");
             }
 
             @Override
@@ -1671,6 +1671,32 @@ public final class JsonSupport {
                 final long stateB = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
                 final long stateC = BASE.readLong(s, slash + 1, s.indexOf('`', slash));
                 return new TricycleRandom(stateA, stateB, stateC);
+            }
+        });
+    }
+
+    /**
+     * Registers RomuTrioRandom with the given Json object, so RomuTrioRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerRomuTrioRandom(@Nonnull Json json) {
+        json.addClassTag("RTrR", RomuTrioRandom.class);
+        json.setSerializer(RomuTrioRandom.class, new Json.Serializer<RomuTrioRandom>() {
+            @Override
+            public void write(Json json, RomuTrioRandom object, Class knownType) {
+                json.writeValue("RTrR`" + BASE.unsigned(object.getStateA()) + "/" + BASE.unsigned(object.getStateB()) + "/" + BASE.unsigned(object.getStateC()) + "`");
+            }
+
+            @Override
+            public RomuTrioRandom read(Json json, JsonValue jsonData, Class type) {
+                String s;
+                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 11) return null;
+                int slash = s.indexOf('/', 5);
+                final long stateA = BASE.readLong(s, 5, slash);
+                final long stateB = BASE.readLong(s, slash + 1, slash = s.indexOf('/', slash + 1));
+                final long stateC = BASE.readLong(s, slash + 1, s.indexOf('`', slash));
+                return new RomuTrioRandom(stateA, stateB, stateC);
             }
         });
     }
@@ -1772,6 +1798,8 @@ public final class JsonSupport {
         registerStrangerRandom(json);
         registerTrimRandom(json);
         registerMizuchiRandom(json);
+        registerRomuTrioRandom(json);
+        registerChopRandom(json);
         json.setSerializer(EnhancedRandom.class, new Json.Serializer<EnhancedRandom>() {
             @Override
             public void write(Json json, EnhancedRandom object, Class knownType) {
