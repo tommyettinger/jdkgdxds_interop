@@ -497,4 +497,54 @@ public class GdxJsonTest {
             System.out.print("; ");
         }
     }
+
+    @Test
+    public void testQueue() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        Queue<String> words = new Queue<>(4);
+        words.addLast("Peanut");
+        words.addLast("Butter");
+        words.addLast("Jelly");
+        words.addLast("Time");
+        String data = json.toJson(words, Queue.class, String.class);
+        System.out.println(data);
+        Queue<?> words2 = json.fromJson(Queue.class, data);
+        for(Object word : words2) {
+            System.out.print(word);
+            System.out.print(", ");
+        }
+        System.out.println();
+        Queue<GridPoint2> points = new Queue<>(3);
+        points.addLast(new GridPoint2(42, 42));
+        points.addLast(new GridPoint2(23, 23));
+        points.addLast(new GridPoint2(666, 666));
+        data = json.toJson(points, Queue.class, GridPoint2.class);
+        System.out.println(data);
+        Queue<?> points2 = json.fromJson(Queue.class, data);
+        for(Object point : points2) {
+            System.out.print(point);
+            System.out.print(", ");
+        }
+        System.out.println();
+    }
+
+    @Test
+    public void testLongQueue() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        LongQueue numbers = new LongQueue(4);
+        numbers.addLast(42);
+        numbers.addLast(23);
+        numbers.addLast(666);
+        numbers.addLast(420);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        LongQueue numbers2 = json.fromJson(LongQueue.class, data);
+        System.out.print(numbers2.get(0));
+        for (int i = 1; i < numbers2.size; i++) {
+            System.out.print(", ");
+            System.out.print(numbers2.get(i));
+        }
+        System.out.println();
+    }
+
 }
