@@ -170,4 +170,100 @@ public class GdxJsonTest {
         }
     }
 
+        @Test
+    public void testObjectMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        ObjectMap<String, GridPoint2> words = new ObjectMap<>(3);
+        words.put("foo", new GridPoint2(42, 42));
+        words.put("bar", new GridPoint2(23, 23));
+        words.put("baz", new GridPoint2(666, 666));
+        String data = json.toJson(words);
+        System.out.println(data);
+        ObjectMap<?, ?> words2 = json.fromJson(ObjectMap.class, data);
+        for(ObjectMap.Entry<?, ?> pair : words2) {
+            System.out.print(pair.key);
+            System.out.print("=");
+            System.out.print(pair.value);
+            System.out.print("; ");
+        }
+        System.out.println();
+        ObjectMap<GridPoint2, String> points = new ObjectMap<>(3);
+        points.put(new GridPoint2(42, 42), "foo");
+        points.put(new GridPoint2(23, 23), "bar");
+        points.put(new GridPoint2(666, 666), "baz");
+        data = json.toJson(points);
+        System.out.println(data);
+        ObjectMap<?, ?> points2 = json.fromJson(ObjectMap.class, data);
+        for(ObjectMap.Entry<?, ?> pair : points2) {
+            System.out.print(pair.key);
+            System.out.print("=");
+            System.out.print(pair.value);
+            System.out.print("; ");
+        }
+    }
+
+    @Test
+    public void testOrderedMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        OrderedMap<String, GridPoint2> words = new OrderedMap<>(3);
+        words.put("foo", new GridPoint2(42, 42));
+        words.put("bar", new GridPoint2(23, 23));
+        words.put("baz", new GridPoint2(666, 666));
+        String data = json.toJson(words);
+        System.out.println(data);
+        OrderedMap<?, ?> words2 = json.fromJson(OrderedMap.class, data);
+        for(OrderedMap.Entry<?, ?> pair : words2) {
+            System.out.print(pair.key);
+            System.out.print("=");
+            System.out.print(pair.value);
+            System.out.print("; ");
+        }
+        System.out.println();
+        OrderedMap<GridPoint2, String> points = new OrderedMap<>(3);
+        points.put(new GridPoint2(42, 42), "foo");
+        points.put(new GridPoint2(23, 23), "bar");
+        points.put(new GridPoint2(666, 666), "baz");
+        data = json.toJson(points);
+        System.out.println(data);
+        OrderedMap<?, ?> points2 = json.fromJson(OrderedMap.class, data);
+        for(OrderedMap.Entry<?, ?> pair : points2) {
+            System.out.print(pair.key);
+            System.out.print("=");
+            System.out.print(pair.value);
+            System.out.print("; ");
+        }
+    }
+
+    @Test
+    public void testObjectLongMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        ObjectLongMap<String> words = new ObjectLongMap<>(3);
+        words.put("foo", 42L);
+        words.put("bar", 23L);
+        words.put("baz", 666666666666666L);
+        String data = json.toJson(words);
+        System.out.println(data);
+        ObjectLongMap<?> words2 = json.fromJson(ObjectLongMap.class, data);
+        for(ObjectLongMap.Entry<?> pair : words2) {
+            System.out.print(pair.key);
+            System.out.print("=");
+            System.out.print(pair.value);
+            System.out.print("; ");
+        }
+        System.out.println();
+        ObjectLongMap<GridPoint2> points = new ObjectLongMap<>(3);
+        points.put(new GridPoint2(42, 42), 42);
+        points.put(new GridPoint2(23, 23), 23);
+        points.put(new GridPoint2(666, 666), 666666666666666L);
+        data = json.toJson(points);
+        System.out.println(data);
+        ObjectLongMap<?> points2 = json.fromJson(ObjectLongMap.class, data);
+        for(ObjectLongMap.Entry<?> pair : words2) {
+            System.out.print(pair.key);
+            System.out.print("=");
+            System.out.print(pair.value);
+            System.out.print("; ");
+        }
+    }
+
 }
