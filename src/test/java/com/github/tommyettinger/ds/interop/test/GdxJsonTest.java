@@ -394,4 +394,55 @@ public class GdxJsonTest {
         }
     }
 
+    @Test
+    public void testIntMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        IntMap<String> words = new IntMap<>(3);
+        words.put(42 , "foo");
+        words.put(23 , "bar");
+        words.put(666, "baz");
+
+        String data = json.toJson(words);
+        System.out.println(data);
+        IntMap<?> words2 = json.fromJson(IntMap.class, data);
+        for(IntMap.Entry<?> pair : words2) {
+            System.out.print(pair.key);
+            System.out.print("=");
+            System.out.print(pair.value);
+            System.out.print("; ");
+        }
+        System.out.println();
+        IntMap<GridPoint2> points = new IntMap<>(3);
+        points.put(42 , new GridPoint2(42, 42));
+        points.put(23 , new GridPoint2(23, 23));
+        points.put(666, new GridPoint2(666, 666));
+        data = json.toJson(points);
+        System.out.println(data);
+        IntMap<?> points2 = json.fromJson(IntMap.class, data);
+        for(IntMap.Entry<?> pair : points2) {
+            System.out.print(pair.key);
+            System.out.print("=");
+            System.out.print(pair.value);
+            System.out.print("; ");
+        }
+    }
+
+    @Test
+    public void testIntIntMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        IntIntMap words = new IntIntMap(3);
+        words.put(42 , 4242);
+        words.put(23 , 2323);
+        words.put(666, 666666);
+
+        String data = json.toJson(words);
+        System.out.println(data);
+        IntIntMap words2 = json.fromJson(IntIntMap.class, data);
+        for(IntIntMap.Entry pair : words2) {
+            System.out.print(pair.key);
+            System.out.print("=");
+            System.out.print(pair.value);
+            System.out.print("; ");
+        }
+    }
 }
