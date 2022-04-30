@@ -445,4 +445,56 @@ public class GdxJsonTest {
             System.out.print("; ");
         }
     }
+
+    @Test
+    public void testIntFloatMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        IntFloatMap words = new IntFloatMap(3);
+        words.put(42 , 42.42f);
+        words.put(23 , 23.23f);
+        words.put(666, 666.666f);
+
+        String data = json.toJson(words);
+        System.out.println(data);
+        IntFloatMap words2 = json.fromJson(IntFloatMap.class, data);
+        for(IntFloatMap.Entry pair : words2) {
+            System.out.print(pair.key);
+            System.out.print("=");
+            System.out.print(pair.value);
+            System.out.print("; ");
+        }
+    }
+
+    @Test
+    public void testLongMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        LongMap<String> words = new LongMap<>(3);
+        words.put(42L, "foo");
+        words.put(23L, "bar");
+        words.put(66666666666666L, "baz");
+
+        String data = json.toJson(words, LongMap.class, String.class);
+        System.out.println(data);
+        LongMap<?> words2 = json.fromJson(LongMap.class, data);
+        for(LongMap.Entry<?> pair : words2) {
+            System.out.print(pair.key);
+            System.out.print("=");
+            System.out.print(pair.value);
+            System.out.print("; ");
+        }
+        System.out.println();
+        LongMap<GridPoint2> points = new LongMap<>(3);
+        points.put(42 , new GridPoint2(42, 42));
+        points.put(23 , new GridPoint2(23, 23));
+        points.put(666, new GridPoint2(666, 666));
+        data = json.toJson(points, LongMap.class, GridPoint2.class);
+        System.out.println(data);
+        LongMap<?> points2 = json.fromJson(LongMap.class, data);
+        for(LongMap.Entry<?> pair : points2) {
+            System.out.print(pair.key);
+            System.out.print("=");
+            System.out.print(pair.value);
+            System.out.print("; ");
+        }
+    }
 }
