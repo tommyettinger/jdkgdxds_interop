@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class GdxJsonTest {
     @Test
-    public void testObjectList() {
+    public void testArray() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         Array<String> words = Array.with("Peanut", "Butter", "Jelly", "Time");
         String data = json.toJson(words, Array.class, String.class);
@@ -110,4 +110,64 @@ public class GdxJsonTest {
             System.out.print(numbers2.get(i));
         }
     }
+
+    @Test
+    public void testObjectSet() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        ObjectSet<String> words = ObjectSet.with("Peanut", "Butter", "Jelly", "Time");
+        String data = json.toJson(words, ObjectSet.class, String.class);
+        System.out.println(data);
+        ObjectSet<?> words2 = json.fromJson(ObjectSet.class, data);
+        for(Object word : words2) {
+            System.out.print(word);
+            System.out.print(", ");
+        }
+        System.out.println();
+        ObjectSet<GridPoint2> points = ObjectSet.with(new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666));
+        data = json.toJson(points, ObjectSet.class, GridPoint2.class);
+        System.out.println(data);
+        ObjectSet<?> points2 = json.fromJson(ObjectSet.class, data);
+        for(Object point : points2) {
+            System.out.print(point);
+            System.out.print(", ");
+        }
+    }
+
+    @Test
+    public void testOrderedSet() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        OrderedSet<String> words = OrderedSet.with("Peanut", "Butter", "Jelly", "Time");
+        String data = json.toJson(words, OrderedSet.class, String.class);
+        System.out.println(data);
+        OrderedSet<?> words2 = json.fromJson(OrderedSet.class, data);
+        for(Object word : words2) {
+            System.out.print(word);
+            System.out.print(", ");
+        }
+        System.out.println();
+        OrderedSet<GridPoint2> points = OrderedSet.with(new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666));
+        data = json.toJson(points, OrderedSet.class, GridPoint2.class);
+        System.out.println(data);
+        OrderedSet<?> points2 = json.fromJson(OrderedSet.class, data);
+        for(Object point : points2) {
+            System.out.print(point);
+            System.out.print(", ");
+        }
+    }
+
+    @Test
+    public void testIntSet() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        IntSet numbers = IntSet.with(42, 23, 666, 420);
+        String data = json.toJson(numbers, IntSet.class);
+        System.out.println(data);
+        IntSet numbers2 = json.fromJson(IntSet.class, data);
+        IntSet.IntSetIterator it = numbers2.iterator();
+        while (it.hasNext){
+            System.out.print(it.next());
+            if(it.hasNext)
+                System.out.print(", ");
+        }
+    }
+
 }
