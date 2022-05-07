@@ -2,6 +2,7 @@ package com.github.tommyettinger.ds.interop.test;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.RandomXS128;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
@@ -13,8 +14,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import javax.annotation.Nonnull;
-import java.util.Map;
-import java.util.PrimitiveIterator;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class JsonTest {
@@ -1388,5 +1388,25 @@ public class JsonTest {
         System.out.println();
     }
 
+    @Test
+    public void testDeep() {
+        ObjectList<ObjectList<ObjectObjectMap<Vector2, String>>> deep = new ObjectList<>(8), after;
+        ObjectObjectMap<Vector2, String> hm0 = new ObjectObjectMap<>(1);
+        ObjectObjectMap<Vector2, String> hm1 = ObjectObjectMap.with(new Vector2(1, 2), "1 2");
+        ObjectObjectMap<Vector2, String> hm2 = ObjectObjectMap.with(new Vector2(3, 4), "3 4", new Vector2(5, 6), "5 6");
+        ObjectObjectMap<Vector2, String> hm3 = ObjectObjectMap.with(new Vector2(7, 8), "7 8", new Vector2(9, 0), "9 0");
+        deep.add(ObjectList.with(hm0, hm1));
+        deep.add(ObjectList.with(hm2, hm3));
+        deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+        Json json = new Json(JsonWriter.OutputType.javascript);
+        JsonSupport.registerObjectList(json);
+        JsonSupport.registerObjectObjectMap(json);
+        json.setTypeName(null);
+        String data = json.toJson(deep);
+        System.out.println(data);
+        after = json.fromJson(ObjectList.class, data);
+        System.out.println(after);
+    }
 
 }

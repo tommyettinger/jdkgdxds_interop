@@ -1,8 +1,14 @@
 package com.github.tommyettinger.ds.interop.test;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.*;
+import com.github.tommyettinger.ds.ObjectObjectMap;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class GdxJsonTest {
     @Test
@@ -545,6 +551,25 @@ public class GdxJsonTest {
             System.out.print(numbers2.get(i));
         }
         System.out.println();
+    }
+
+    @Test
+    public void testDeep() {
+        ArrayList<ArrayList<HashMap<Vector2, String>>> deep = new ArrayList<>(8), after;
+        HashMap<Vector2, String> hm0 = new HashMap<>(1);
+        HashMap<Vector2, String> hm1 = new HashMap<>(ObjectObjectMap.with(new Vector2(1, 2), "1 2"));
+        HashMap<Vector2, String> hm2 = new HashMap<>(ObjectObjectMap.with(new Vector2(3, 4), "3 4", new Vector2(5, 6), "5 6"));
+        HashMap<Vector2, String> hm3 = new HashMap<>(ObjectObjectMap.with(new Vector2(7, 8), "7 8", new Vector2(9, 0), "9 0"));
+        deep.add(new ArrayList<>(Arrays.asList(hm0, hm1)));
+        deep.add(new ArrayList<>(Arrays.asList(hm2, hm3)));
+        deep.add(new ArrayList<>(Arrays.asList(hm0, hm1, hm2, hm3)));
+
+        Json json = new Json(JsonWriter.OutputType.javascript);
+        json.setTypeName(null);
+        String data = json.toJson(deep);
+        System.out.println(data);
+        after = json.fromJson(ArrayList.class, data);
+        System.out.println(after);
     }
 
 }
