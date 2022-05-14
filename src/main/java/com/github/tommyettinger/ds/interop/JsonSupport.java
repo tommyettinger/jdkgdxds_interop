@@ -6,8 +6,9 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
+import com.github.tommyettinger.digital.Base;
 import com.github.tommyettinger.ds.*;
-import com.github.tommyettinger.ds.support.*;
+import com.github.tommyettinger.random.*;
 import com.github.tommyettinger.ds.support.util.*;
 
 import javax.annotation.Nonnull;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.PrimitiveIterator;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 
 @SuppressWarnings("rawtypes")
@@ -114,7 +116,7 @@ public final class JsonSupport {
     }
     /**
      * Sets the numeral system, also called radix or base, used by some methods here to encode numbers.
-     * This is most likely to be used with {@link Base#scrambledBase(EnhancedRandom)} to obfuscate specific numbers,
+     * This is most likely to be used with {@link Base#scrambledBase(Random)} to obfuscate specific numbers,
      * typically random seeds, put into readable JSON files. The methods this affects are all related to registering
      * {@link EnhancedRandom} and its implementations, {@link RandomXS128}, and {@link AtomicLong}. If this hasn't been
      * called, the default this uses is {@link Base#BASE36}, because it is fairly compact.
@@ -1827,32 +1829,6 @@ public final class JsonSupport {
             }
         });
     }
-
-    /**
-     * Registers WrapperRandom with the given Json object, so WrapperRandom can be written to and read from JSON.
-     *
-     * @param json a libGDX Json object that will have a serializer registered
-     */
-    public static void registerWrapperRandom(@Nonnull Json json) {
-        json.addClassTag("Wrap", WrapperRandom.class);
-        registerEnhancedRandom(json);
-        json.setSerializer(WrapperRandom.class, new Json.Serializer<WrapperRandom>() {
-            @Override
-            public void write(Json json, WrapperRandom object, Class knownType) {
-                json.writeObjectStart();
-                json.writeValue("rng", object.rng, EnhancedRandom.class);
-                json.writeObjectEnd();
-            }
-
-            @Override
-            public WrapperRandom read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull() || !jsonData.isObject()) return null;
-                EnhancedRandom er = json.readValue("rng", EnhancedRandom.class, jsonData);
-                return new WrapperRandom(er);
-            }
-        });
-    }
-
 
     /**
      * Registers RandomXS128 with the given Json object, so RandomXS128 can be written to and read from JSON.

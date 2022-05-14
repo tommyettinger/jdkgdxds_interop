@@ -8,7 +8,8 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.interop.JsonSupport;
-import com.github.tommyettinger.ds.support.*;
+import com.github.tommyettinger.random.*;
+import com.github.tommyettinger.digital.Base;
 import com.github.tommyettinger.ds.support.util.*;
 import org.junit.Assert;
 import org.junit.Test;
@@ -1140,21 +1141,6 @@ public class JsonTest {
         System.out.println(data);
         DistinctRandom random2 = json.fromJson(DistinctRandom.class, data);
         System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getSelectedState(0)));
-        Assert.assertEquals(random.nextLong(), random2.nextLong());
-    }
-
-    @Test
-    public void testWrappedRandom() {
-        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
-        //JsonSupport.setNumeralBase(Base.BASE16);
-        Json json = new Json(JsonWriter.OutputType.minimal);
-        JsonSupport.registerWrapperRandom(json);
-        WrapperRandom random = new WrapperRandom(new FourWheelRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L));
-        random.nextLong();
-        String data = json.toJson(random);
-        System.out.println(data);
-        WrapperRandom random2 = json.fromJson(WrapperRandom.class, data);
-        System.out.println(random2.rng);
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
