@@ -8,9 +8,78 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.github.tommyettinger.digital.Base;
 import com.github.tommyettinger.digital.Hasher;
-import com.github.tommyettinger.ds.*;
-import com.github.tommyettinger.random.*;
-import com.github.tommyettinger.ds.support.util.*;
+import com.github.tommyettinger.ds.BinaryHeap;
+import com.github.tommyettinger.ds.BooleanDeque;
+import com.github.tommyettinger.ds.BooleanList;
+import com.github.tommyettinger.ds.ByteDeque;
+import com.github.tommyettinger.ds.ByteList;
+import com.github.tommyettinger.ds.CaseInsensitiveMap;
+import com.github.tommyettinger.ds.CaseInsensitiveOrderedMap;
+import com.github.tommyettinger.ds.CaseInsensitiveOrderedSet;
+import com.github.tommyettinger.ds.CaseInsensitiveSet;
+import com.github.tommyettinger.ds.CharDeque;
+import com.github.tommyettinger.ds.CharList;
+import com.github.tommyettinger.ds.DoubleDeque;
+import com.github.tommyettinger.ds.DoubleList;
+import com.github.tommyettinger.ds.FloatDeque;
+import com.github.tommyettinger.ds.FloatList;
+import com.github.tommyettinger.ds.IdentityObjectMap;
+import com.github.tommyettinger.ds.IntDeque;
+import com.github.tommyettinger.ds.IntFloatMap;
+import com.github.tommyettinger.ds.IntFloatOrderedMap;
+import com.github.tommyettinger.ds.IntIntMap;
+import com.github.tommyettinger.ds.IntIntOrderedMap;
+import com.github.tommyettinger.ds.IntList;
+import com.github.tommyettinger.ds.IntLongMap;
+import com.github.tommyettinger.ds.IntLongOrderedMap;
+import com.github.tommyettinger.ds.IntObjectMap;
+import com.github.tommyettinger.ds.IntObjectOrderedMap;
+import com.github.tommyettinger.ds.IntOrderedSet;
+import com.github.tommyettinger.ds.IntSet;
+import com.github.tommyettinger.ds.LongDeque;
+import com.github.tommyettinger.ds.LongFloatMap;
+import com.github.tommyettinger.ds.LongFloatOrderedMap;
+import com.github.tommyettinger.ds.LongIntMap;
+import com.github.tommyettinger.ds.LongIntOrderedMap;
+import com.github.tommyettinger.ds.LongList;
+import com.github.tommyettinger.ds.LongLongMap;
+import com.github.tommyettinger.ds.LongLongOrderedMap;
+import com.github.tommyettinger.ds.LongObjectMap;
+import com.github.tommyettinger.ds.LongObjectOrderedMap;
+import com.github.tommyettinger.ds.LongOrderedSet;
+import com.github.tommyettinger.ds.LongSet;
+import com.github.tommyettinger.ds.NumberedSet;
+import com.github.tommyettinger.ds.ObjectDeque;
+import com.github.tommyettinger.ds.ObjectFloatMap;
+import com.github.tommyettinger.ds.ObjectFloatOrderedMap;
+import com.github.tommyettinger.ds.ObjectIntMap;
+import com.github.tommyettinger.ds.ObjectIntOrderedMap;
+import com.github.tommyettinger.ds.ObjectList;
+import com.github.tommyettinger.ds.ObjectLongMap;
+import com.github.tommyettinger.ds.ObjectLongOrderedMap;
+import com.github.tommyettinger.ds.ObjectObjectMap;
+import com.github.tommyettinger.ds.ObjectObjectOrderedMap;
+import com.github.tommyettinger.ds.ObjectOrderedSet;
+import com.github.tommyettinger.ds.ObjectSet;
+import com.github.tommyettinger.ds.ShortDeque;
+import com.github.tommyettinger.ds.ShortList;
+import com.github.tommyettinger.ds.support.util.BooleanIterator;
+import com.github.tommyettinger.ds.support.util.ByteIterator;
+import com.github.tommyettinger.ds.support.util.CharIterator;
+import com.github.tommyettinger.ds.support.util.FloatIterator;
+import com.github.tommyettinger.ds.support.util.ShortIterator;
+import com.github.tommyettinger.random.ChopRandom;
+import com.github.tommyettinger.random.Deserializer;
+import com.github.tommyettinger.random.DistinctRandom;
+import com.github.tommyettinger.random.EnhancedRandom;
+import com.github.tommyettinger.random.FourWheelRandom;
+import com.github.tommyettinger.random.LaserRandom;
+import com.github.tommyettinger.random.MizuchiRandom;
+import com.github.tommyettinger.random.RomuTrioRandom;
+import com.github.tommyettinger.random.StrangerRandom;
+import com.github.tommyettinger.random.TricycleRandom;
+import com.github.tommyettinger.random.TrimRandom;
+import com.github.tommyettinger.random.Xoshiro256StarStarRandom;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
@@ -52,6 +121,7 @@ public final class JsonSupport {
         registerDoubleDeque(json);
         registerFloatDeque(json);
         registerCharDeque(json);
+        registerBooleanDeque(json);
 
         registerObjectSet(json);
         registerObjectOrderedSet(json);
@@ -2009,6 +2079,31 @@ public final class JsonSupport {
             public DoubleDeque read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 return DoubleDeque.with(jsonData.asDoubleArray());
+            }
+        });
+    }
+
+    /**
+     * Registers BooleanDeque with the given Json object, so BooleanDeque can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerBooleanDeque(@Nonnull Json json) {
+        json.setSerializer(BooleanDeque.class, new Json.Serializer<BooleanDeque>() {
+            @Override
+            public void write(Json json, BooleanDeque object, Class knownType) {
+                json.writeArrayStart();
+                BooleanIterator it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextBoolean());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public BooleanDeque read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return BooleanDeque.with(jsonData.asBooleanArray());
             }
         });
     }
