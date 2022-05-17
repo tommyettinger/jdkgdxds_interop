@@ -1303,6 +1303,22 @@ public class JsonTest {
         System.out.println();
     }
 
+    @Test
+    public void testBooleanDeque() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerBooleanDeque(json);
+        BooleanDeque values = BooleanDeque.with(true, false, false, true);
+        String data = json.toJson(values);
+        System.out.println(data);
+        BooleanDeque numbers2 = json.fromJson(BooleanDeque.class, data);
+        BooleanIterator it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextBoolean());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+    }
+
     public static class Composite {
         public EnhancedRandom random;
         public ObjectObjectMap<String, String> mapping;
