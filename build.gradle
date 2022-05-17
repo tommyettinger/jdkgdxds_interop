@@ -20,7 +20,7 @@ def projectName = 'jdkgdxds_interop'
 version "$VERSION_NAME"
 group 'com.github.tommyettinger'
 
-//api "com.github.tommyettinger:jdkgdxds_interop:0.2.7.0"
+//api "com.github.tommyettinger:jdkgdxds_interop:1.0.1.0"
 
 [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
 
@@ -64,8 +64,9 @@ repositories {
 }
 
 dependencies {
+    api "com.github.tommyettinger:digital:$digitalVersion"
+    api "com.github.tommyettinger:juniper:$juniperVersion"
     api "com.github.tommyettinger:jdkgdxds:$jdkgdxdsVersion"
-//    api "com.github.tommyettinger:jdkgdxds:11d29f2e1f"
-    api "com.badlogicgames.gdx:gdx:1.10.0"
+    api "com.badlogicgames.gdx:gdx:1.11.0"
     testImplementation "junit:junit:4.13.2"
 }
