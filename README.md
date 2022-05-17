@@ -37,18 +37,21 @@ includes its implementing class) and read an `EnhancedRandom` back. If you have 
 ## How do I get it?
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api`, is: 
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:0.2.8.0"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.1.0"
 ```
 It's not unlikely that you might need `api` instead of `implementation`, especially if you are writing a library, or a
 module that needs to be used from another section.
 
 If you use GWT (libGDX's HTML target), then you also need this in your `html/build.gradle` file:
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:0.2.8.0:sources"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.1.0:sources"
 ```
 You also need the GWT `inherits` in your `GdxDefinition.gwt.xml` file:
 ```xml
      <inherits name="jdkgdxds_interop" />
 ```
+
+You still need to follow any instructions for jdkgdxds itself and libGDX, including at least 3 more `inherits` lines in
+the .gwt.xml file if you use GWT (see jdkgdxds' README.md).
 
 I hope that's all you need! It's a small-ish simple library!
