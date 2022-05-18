@@ -1401,14 +1401,19 @@ public class JsonTest {
         deep.add(ObjectList.with(hm2, hm3));
         deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
 
-        Json json = new Json(JsonWriter.OutputType.javascript);
+        Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerObjectList(json);
         JsonSupport.registerObjectObjectMap(json);
-        json.setTypeName(null);
+        json.addClassTag("str", String.class);
+        json.setTypeName("=");
         String data = json.toJson(deep);
         System.out.println(data);
-        after = json.fromJson(ObjectList.class, data);
+        after = json.fromJson(ObjectList.class, ObjectObjectMap.class, data);
         System.out.println(after);
+        System.out.println(after.getClass());
+        System.out.println(after.first().getClass());
+        System.out.println(after.first().first().getClass());
+        System.out.println(after.first().first().values().iterator().next().getClass());
     }
 
 }

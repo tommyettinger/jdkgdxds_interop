@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
+import com.badlogic.gdx.utils.SerializationException;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.github.tommyettinger.digital.Base;
@@ -205,20 +206,24 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerObjectList(@Nonnull Json json) {
+        json.addClassTag("oL", ObjectList.class);
         json.setSerializer(ObjectList.class, new Json.Serializer<ObjectList>() {
             @Override
             public void write(Json json, ObjectList object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(ObjectList.class, null);
+                json.writeArrayStart("items");
                 for (Object o : object) {
                     json.writeValue(o);
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public ObjectList<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                ObjectList<?> data = new ObjectList<>(jsonData.size);
+//                System.out.println(jsonData.size);
+                ObjectList data = new ObjectList<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.add(json.readValue(null, value));
                 }
@@ -590,22 +595,23 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerObjectObjectMap(@Nonnull Json json) {
+        json.addClassTag("ooM", ObjectObjectMap.class);
         json.setSerializer(ObjectObjectMap.class, new Json.Serializer<ObjectObjectMap>() {
             @Override
             public void write(Json json, ObjectObjectMap object, Class knownType) {
                 JsonWriter writer = json.getWriter();
                 try {
-                    writer.object();
-                } catch (IOException ignored) {
+                    json.writeObjectStart(ObjectObjectMap.class, null);
+                } catch (SerializationException ignored) {
                 }
                 Iterator<Map.Entry<?, ?>> es = new ObjectObjectMap.Entries<>(object).iterator();
                 while (es.hasNext()) {
                     Map.Entry<?, ?> e = es.next();
                     try {
-                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
+                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey(), (Class) null);
                         json.setWriter(writer);
                         writer.name(k);
-                        json.writeValue(e.getValue(), knownType);
+                        json.writeValue(e.getValue(), null);
                     } catch (IOException ignored) {
                     }
                 }
