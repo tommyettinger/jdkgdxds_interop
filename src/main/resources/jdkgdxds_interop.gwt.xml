@@ -8,6 +8,8 @@
      <inherits name="jdkgdxds_interop" />
   -->
 <module>
+    <inherits name="digital" />
+    <inherits name="juniper" />
     <inherits name="jdkgdxds" />
     <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
 	
@@ -42,8 +44,6 @@
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.DoubleList" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.FloatDeque" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.FloatList" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IdentityObjectMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IdentityObjectOrderedMap" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntDeque" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntFloatMap" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntFloatOrderedMap" />
