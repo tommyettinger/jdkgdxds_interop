@@ -1,7 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--This is only here temporarily, until libGDX adds ObjectLongMap to its gdx.gwt.xml file and releases.-->
 <module rename-to="com.badlogic.gdx.utils">
-    <source path="utils">
-        <include name="ObjectLongMap.java"/> <!--Somebody forgot this, I guess.-->
+    <source path="">
+        <include name="utils/Align.java"/>
+        <include name="utils/Array.java"/> <!-- Emulated: Reflection -->
+        <include name="utils/ArrayMap.java"/> <!-- Emulated: Reflection -->
+        <include name="utils/AtomicQueue.java"/>
+        <include name="utils/Base64Coder.java"/>
+        <include name="utils/BaseJsonReader.java"/>
+        <include name="utils/BinaryHeap.java"/>
+        <include name="utils/Bits.java"/>
+        <include name="utils/BooleanArray.java"/>
+        <include name="utils/BufferUtils.java"/> <!-- Emulated -->
+        <include name="utils/ByteArray.java"/>
+        <include name="utils/CharArray.java"/>
+        <include name="utils/Clipboard.java"/>
+        <include name="utils/Collections.java"/>
+        <include name="utils/ComparableTimSort.java"/>
+        <include name="utils/DataInput.java"/>
+        <include name="utils/DataOutput.java"/>
+        <include name="utils/DelayedRemovalArray.java"/>
+        <include name="utils/Disposable.java"/>
+        <include name="utils/FloatArray.java"/>
+        <include name="utils/FlushablePool.java"/>
+        <exclude name="utils/GdxBuild.java"/> <!-- Reason: Natives -->
+        <exclude name="utils/GdxNativesLoader.java"/> <!-- Reason: Natives -->
+        <include name="utils/GdxRuntimeException.java"/>
+        <include name="utils/I18NBundle.java"/>
+        <include name="utils/IdentityMap.java"/>
+        <include name="utils/IntArray.java"/>
+        <include name="utils/IntFloatMap.java"/>
+        <include name="utils/IntIntMap.java"/>
+        <include name="utils/IntMap.java"/>
+        <include name="utils/IntSet.java"/>
+        <include name="utils/Json.java"/>
+        <include name="utils/JsonReader.java"/>
+        <include name="utils/JsonValue.java"/>
+        <include name="utils/JsonWriter.java"/>
+        <include name="utils/LittleEndianInputStream.java"/>
+        <include name="utils/Logger.java"/>
+        <include name="utils/LongArray.java"/>
+        <include name="utils/LongMap.java"/>
+        <include name="utils/LongQueue.java"/>
+        <include name="utils/NumberUtils.java"/> <!-- Emulated -->
+        <include name="utils/ObjectFloatMap.java"/>
+        <include name="utils/ObjectIntMap.java"/>
+        <include name="utils/ObjectLongMap.java"/>
+        <include name="utils/ObjectMap.java"/>
+        <include name="utils/ObjectSet.java"/>
+        <include name="utils/OrderedMap.java"/>
+        <include name="utils/OrderedSet.java"/>
+        <include name="utils/PausableThread.java"/>
+        <include name="utils/PerformanceCounter.java"/>
+        <include name="utils/PerformanceCounters.java"/>
+        <include name="utils/Pool.java"/>
+        <include name="utils/PooledLinkedList.java"/>
+        <include name="utils/Pools.java"/>
+        <include name="utils/Predicate.java"/>
+        <include name="utils/PropertiesUtils.java"/>
+        <include name="utils/Queue.java"/>
+        <include name="utils/QuadTreeFloat.java"/>
+        <include name="utils/QuickSelect.java"/>
+        <include name="utils/ReflectionPool.java"/>
+        <include name="utils/Scaling.java"/>
+        <include name="utils/ScreenUtils.java"/>
+        <include name="utils/Select.java"/>
+        <include name="utils/SerializationException.java"/> <!-- Emulated: Reflection -->
+        <exclude name="utils/SharedLibraryLoader.java"/> <!-- Reason: Natives -->
+        <include name="utils/ShortArray.java"/>
+        <include name="utils/SnapshotArray.java"/>
+        <include name="utils/Sort.java"/>
+        <include name="utils/SortedIntList.java"/>
+        <include name="utils/StreamUtils.java"/>
+        <include name="utils/StringBuilder.java"/>
+        <include name="utils/TextFormatter.java"/> <!-- Emulated: MessageFormat -->
+        <include name="utils/Timer.java"/> <!-- Emulated: Threading -->
+        <include name="utils/TimeUtils.java"/> <!-- Emulated: nanoTime() -->
+        <include name="utils/TimSort.java"/>
+        <include name="utils/UBJsonReader.java"/>
+        <include name="utils/UBJsonWriter.java"/>
+        <include name="utils/XmlReader.java"/>
+        <include name="utils/XmlWriter.java"/>
+
+        <!-- utils/async -->
+        <include name="utils/async/AsyncExecutor.java"/> <!-- Emulated: Threading -->
+        <include name="utils/async/AsyncResult.java"/> <!-- Emulated: Threading -->
+        <include name="utils/async/AsyncTask.java"/> <!-- Emulated: Threading -->
+        <include name="utils/async/ThreadUtils.java"/> <!-- Emulated: Threading -->
+
+        <!-- utils/compression -->
+        <include name="utils/compression/CRC.java"/>
+        <include name="utils/compression/ICodeProgress.java"/>
+        <include name="utils/compression/Lzma.java"/>
+
+        <!-- utils/compression/lz -->
+        <include name="utils/compression/lz/BinTree.java"/>
+        <include name="utils/compression/lz/InWindow.java"/>
+        <include name="utils/compression/lz/OutWindow.java"/>
+
+        <!-- utils/compression/lzma -->
+        <include name="utils/compression/lzma/Base.java"/>
+        <include name="utils/compression/lzma/Decoder.java"/>
+        <include name="utils/compression/lzma/Encoder.java"/>
+
+        <!-- utils/compression/rangecoder -->
+        <include name="utils/compression/rangecoder/BitTreeDecoder.java"/>
+        <include name="utils/compression/rangecoder/BitTreeEncoder.java"/>
+        <include name="utils/compression/rangecoder/Decoder.java"/>
+        <include name="utils/compression/rangecoder/Encoder.java"/>
+
+        <!-- utils/reflect -->
+        <include name="utils/reflect/ArrayReflection.java"/> <!-- Emulated -->
+        <include name="utils/reflect/ClassReflection.java"/> <!-- Emulated -->
+        <include name="utils/reflect/Constructor.java"/> <!-- Emulated -->
+        <include name="utils/reflect/Field.java"/> <!-- Emulated -->
+        <include name="utils/reflect/Method.java"/>	 <!-- Emulated -->
+        <include name="utils/reflect/ReflectionException.java"/>
+
+        <!-- utils/viewport -->
+        <include name="utils/viewport/**/*.java"/>
     </source>
+
+    <define-configuration-property name="gdx.files.classpath" is-multi-valued="true" />
+    <extend-configuration-property name="gdx.files.classpath" value="com/badlogic/gdx/utils/lsans-15.fnt" />
+    <extend-configuration-property name="gdx.files.classpath" value="com/badlogic/gdx/utils/lsans-15.png" />
     <extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.utils.ObjectLongMap" />
 </module>
