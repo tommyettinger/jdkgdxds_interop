@@ -44,7 +44,7 @@ be handy to obfuscate numbers if you pass a scrambled base (as `Base` can genera
 ## How do I get it?
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api`, is: 
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.3.0"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.3.1"
 ```
 It's not unlikely that you might need `api` instead of `implementation`, especially if you are writing a library, or a
 module that needs to be used from another section.
@@ -54,7 +54,7 @@ If you use GWT (libGDX's HTML target), then you also need this in your `html/bui
 implementation "com.github.tommyettinger:digital:0.0.3:sources"
 implementation "com.github.tommyettinger:juniper:0.0.2:sources"
 implementation "com.github.tommyettinger:jdkgdxds:1.0.3:sources"
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.3.0:sources"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.3.1:sources"
 ```
 You also need the GWT `inherits` in your `GdxDefinition.gwt.xml` file:
 ```xml
