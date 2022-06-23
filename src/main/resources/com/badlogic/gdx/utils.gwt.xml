@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="com.badlogic.gdx.utils">
+    <source path="utils">
+        <include name="ObjectLongMap.java"/> <!--Somebody forgot this, I guess.-->
+    </source>
+    <extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.utils.ObjectLongMap" />
+</module>
