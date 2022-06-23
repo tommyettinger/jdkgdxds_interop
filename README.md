@@ -25,29 +25,44 @@ similar jdkgdxds data structure. `JsonSupport` is probably the star of the show,
 or one at a time using any of its other methods.
 
 The Json serialization also uses an especially-concise format to store each of the `EnhancedRandom` implementations in
-juniper. These classes (`DistinctRandom`, `LaserRandom`, `TricycleRandom`, `FourWheelRandom`, `StrangerRandom`,
-`TrimRandom`, `MizuchiRandom`, `RomuTrioRandom`, and `Xoshiro256StarStarRandom`) are sometimes serializable without
-jdkgdxds-interop, but work regardless of JDK version if you do use this library. Better still, you can register
-`EnhancedRandom` for serialization, so places that have an `EnhancedRandom` but don't specify an implementation can
-still store one (which includes its implementing class) and read an `EnhancedRandom` back. If you have your own class
-that extends `java.util.Random`, then you probably want to register `AtomicLong` (which `Random` uses internally, and
-which `JsonSupport` can do) or write your own serializer. The `RandomXS128` class in libGDX can also be registered.
+[juniper](https://github.com/tommyettinger/juniper). Even though juniper is not a direct dependency of jdkgdxds, it used
+to be part of that library, and its use is recommended with any of the randomized methods in jdkgdxds, so it still makes
+sense to have here. These classes (`DistinctRandom`, `LaserRandom`, `TricycleRandom`, `FourWheelRandom`, `ChopRandom`,
+`StrangerRandom`, `TrimRandom`, `MizuchiRandom`, `RomuTrioRandom`, and `Xoshiro256StarStarRandom`) are sometimes
+serializable without jdkgdxds-interop, but work regardless of JDK version if you do use this library. Better still, you
+can register `EnhancedRandom` for serialization, so places that have an `EnhancedRandom` but don't specify an
+implementation can still store one (which includes its implementing class) and read an `EnhancedRandom` back. If you
+have your own class that extends `java.util.Random`, then you probably want to register `AtomicLong` (which `Random`
+uses internally, and which `JsonSupport` can do) or write your own serializer. The `RandomXS128` class in libGDX can
+also be registered.
+
+The [digital](https://github.com/tommyettinger/digital) library is a direct dependency of jdkgdxds, and it has a
+`Hasher` class that can be registered, as well as a `Base` class. `Base` is especially important here because you can
+configure the numeral base that numbers are printed it by specifying one to `JsonSupport.setNumeralBase(Base)`; this can
+be handy to obfuscate numbers if you pass a scrambled base (as `Base` can generate).
 
 ## How do I get it?
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api`, is: 
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.2.0"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.3.0"
 ```
 It's not unlikely that you might need `api` instead of `implementation`, especially if you are writing a library, or a
 module that needs to be used from another section.
 
 If you use GWT (libGDX's HTML target), then you also need this in your `html/build.gradle` file:
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.2.0:sources"
+implementation "com.github.tommyettinger:digital:0.0.3:sources"
+implementation "com.github.tommyettinger:juniper:0.0.2:sources"
+implementation "com.github.tommyettinger:jdkgdxds:1.0.3:sources"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.3.0:sources"
 ```
 You also need the GWT `inherits` in your `GdxDefinition.gwt.xml` file:
 ```xml
-     <inherits name="jdkgdxds_interop" />
+    <inherits name="digital" />
+    <inherits name="juniper" />
+    <inherits name="jdkgdxds" />
+    <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
+    <inherits name="jdkgdxds_interop" />
 ```
 
 You still need to follow any instructions for jdkgdxds itself and libGDX, including at least 3 more `inherits` lines in
