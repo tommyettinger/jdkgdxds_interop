@@ -16,6 +16,7 @@
 	<extend-configuration-property name="gdx.reflect.include" value="java.lang.Class" />
 	<extend-configuration-property name="gdx.reflect.include" value="java.util.concurrent.atomic.AtomicLong" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.math.RandomXS128" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.utils.ObjectLongMap" /> <!--libGDX forgot this one.-->
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.digital.Base" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.digital.Hasher" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.random.EnhancedRandom" />

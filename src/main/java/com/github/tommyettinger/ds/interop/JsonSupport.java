@@ -223,7 +223,7 @@ public final class JsonSupport {
             public ObjectList<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
 //                System.out.println(jsonData.size);
-                ObjectList data = new ObjectList<>(jsonData.size);
+                ObjectList<Object> data = new ObjectList<Object>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.add(json.readValue(null, value));
                 }
@@ -604,7 +604,7 @@ public final class JsonSupport {
                     json.writeObjectStart(ObjectObjectMap.class, null);
                 } catch (SerializationException ignored) {
                 }
-                Iterator<Map.Entry<?, ?>> es = new ObjectObjectMap.Entries<>(object).iterator();
+                Iterator<Map.Entry<Object, Object>> es = new ObjectObjectMap.Entries<Object, Object>(object).iterator();
                 while (es.hasNext()) {
                     Map.Entry<?, ?> e = es.next();
                     try {
@@ -647,7 +647,7 @@ public final class JsonSupport {
                     writer.object();
                 } catch (IOException ignored) {
                 }
-                Iterator<Map.Entry<?, ?>> es = new ObjectObjectOrderedMap.OrderedMapEntries<>(object).iterator();
+                Iterator<Map.Entry<Object, Object>> es = new ObjectObjectOrderedMap.OrderedMapEntries<Object, Object>(object).iterator();
                 while (es.hasNext()) {
                     Map.Entry<?, ?> e = es.next();
                     try {
@@ -691,7 +691,7 @@ public final class JsonSupport {
                     writer.object();
                 } catch (IOException ignored) {
                 }
-                Iterator<ObjectLongMap.Entry<?>> es = new ObjectLongMap.Entries<>(object).iterator();
+                Iterator<ObjectLongMap.Entry<Object>> es = new ObjectLongMap.Entries<Object>(object).iterator();
                 while (es.hasNext()) {
                     ObjectLongMap.Entry<?> e = es.next();
                     try {
@@ -735,7 +735,7 @@ public final class JsonSupport {
                     writer.object();
                 } catch (IOException ignored) {
                 }
-                Iterator<ObjectLongMap.Entry<?>> es = new ObjectLongOrderedMap.OrderedMapEntries<>(object).iterator();
+                Iterator<ObjectLongMap.Entry<Object>> es = new ObjectLongOrderedMap.OrderedMapEntries<Object>(object).iterator();
                 while (es.hasNext()) {
                     ObjectLongMap.Entry<?> e = es.next();
                     try {
@@ -779,7 +779,7 @@ public final class JsonSupport {
                     writer.object();
                 } catch (IOException ignored) {
                 }
-                Iterator<ObjectIntMap.Entry<?>> es = new ObjectIntMap.Entries<>(object).iterator();
+                Iterator<ObjectIntMap.Entry<Object>> es = new ObjectIntMap.Entries<Object>(object).iterator();
                 while (es.hasNext()) {
                     ObjectIntMap.Entry<?> e = es.next();
                     try {
@@ -823,7 +823,7 @@ public final class JsonSupport {
                     writer.object();
                 } catch (IOException ignored) {
                 }
-                Iterator<ObjectIntMap.Entry<?>> es = new ObjectIntOrderedMap.OrderedMapEntries<>(object).iterator();
+                Iterator<ObjectIntMap.Entry<Object>> es = new ObjectIntOrderedMap.OrderedMapEntries<Object>(object).iterator();
                 while (es.hasNext()) {
                     ObjectIntMap.Entry<?> e = es.next();
                     try {
@@ -867,7 +867,7 @@ public final class JsonSupport {
                     writer.object();
                 } catch (IOException ignored) {
                 }
-                Iterator<ObjectFloatMap.Entry<?>> es = new ObjectFloatMap.Entries<>(object).iterator();
+                Iterator<ObjectFloatMap.Entry<Object>> es = new ObjectFloatMap.Entries<Object>(object).iterator();
                 while (es.hasNext()) {
                     ObjectFloatMap.Entry<?> e = es.next();
                     try {
@@ -911,7 +911,7 @@ public final class JsonSupport {
                     writer.object();
                 } catch (IOException ignored) {
                 }
-                Iterator<ObjectFloatMap.Entry<?>> es = new ObjectFloatOrderedMap.OrderedMapEntries<>(object).iterator();
+                Iterator<ObjectFloatMap.Entry<Object>> es = new ObjectFloatOrderedMap.OrderedMapEntries<Object>(object).iterator();
                 while (es.hasNext()) {
                     ObjectFloatMap.Entry<?> e = es.next();
                     try {
@@ -950,7 +950,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, IntObjectMap object, Class knownType) {
                 json.writeObjectStart();
-                for (IntObjectMap.Entry<?> e : (Iterable<IntObjectMap.Entry<?>>) new IntObjectMap.Entries<>(object)) {
+                for (IntObjectMap.Entry<Object> e : new IntObjectMap.Entries<Object>(object)) {
                     json.writeValue(Integer.toString(e.key), e.getValue());
                 }
                 json.writeObjectEnd();
@@ -978,7 +978,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, IntObjectOrderedMap object, Class knownType) {
                 json.writeObjectStart();
-                for (IntObjectOrderedMap.Entry<?> e : (Iterable<IntObjectOrderedMap.Entry<?>>) new IntObjectOrderedMap.OrderedMapEntries<>(object)) {
+                for (IntObjectOrderedMap.Entry<Object> e : new IntObjectOrderedMap.OrderedMapEntries<Object>(object)) {
                     json.writeValue(Integer.toString(e.key), e.getValue());
                 }
                 json.writeObjectEnd();
@@ -1157,7 +1157,7 @@ public final class JsonSupport {
                 if (jsonData == null || jsonData.isNull()) return null;
                 IntFloatOrderedMap data = new IntFloatOrderedMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.put(Integer.parseInt(value.name), json.readValue(long.class, value));
+                    data.put(Integer.parseInt(value.name), json.readValue(float.class, value));
                 }
                 return data;
             }
@@ -1174,7 +1174,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, LongObjectMap object, Class knownType) {
                 json.writeObjectStart();
-                for (LongObjectMap.Entry<?> e : (Iterable<LongObjectMap.Entry<?>>) new LongObjectMap.Entries<>(object)) {
+                for (LongObjectMap.Entry<?> e : new LongObjectMap.Entries<Object>(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue());
                 }
                 json.writeObjectEnd();
@@ -1202,7 +1202,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, LongObjectOrderedMap object, Class knownType) {
                 json.writeObjectStart();
-                for (LongObjectOrderedMap.Entry<?> e : (Iterable<LongObjectOrderedMap.Entry<?>>) new LongObjectOrderedMap.OrderedMapEntries<>(object)) {
+                for (LongObjectOrderedMap.Entry<Object> e : new LongObjectOrderedMap.OrderedMapEntries<Object>(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue());
                 }
                 json.writeObjectEnd();
@@ -1516,7 +1516,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, CaseInsensitiveMap object, Class knownType) {
                 json.writeObjectStart();
-                Iterator<Map.Entry<CharSequence, ?>> es = new CaseInsensitiveMap.Entries<>(object).iterator();
+                Iterator<Map.Entry<CharSequence, Object>> es = new CaseInsensitiveMap.Entries<CharSequence, Object>(object).iterator();
                 while (es.hasNext()) {
                     Map.Entry<CharSequence, ?> e = es.next();
                     json.writeValue(e.getKey().toString(), e.getValue());
@@ -1546,7 +1546,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, CaseInsensitiveOrderedMap object, Class knownType) {
                 json.writeObjectStart();
-                Iterator<Map.Entry<CharSequence, ?>> es = new ObjectObjectOrderedMap.OrderedMapEntries<>(object).iterator();
+                Iterator<Map.Entry<CharSequence, Object>> es = new ObjectObjectOrderedMap.OrderedMapEntries<CharSequence, Object>(object).iterator();
                 while (es.hasNext()) {
                     Map.Entry<CharSequence, ?> e = es.next();
                     json.writeValue(e.getKey().toString(), e.getValue());
