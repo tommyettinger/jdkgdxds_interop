@@ -69,18 +69,7 @@ import com.github.tommyettinger.ds.support.util.ByteIterator;
 import com.github.tommyettinger.ds.support.util.CharIterator;
 import com.github.tommyettinger.ds.support.util.FloatIterator;
 import com.github.tommyettinger.ds.support.util.ShortIterator;
-import com.github.tommyettinger.random.ChopRandom;
-import com.github.tommyettinger.random.Deserializer;
-import com.github.tommyettinger.random.DistinctRandom;
-import com.github.tommyettinger.random.EnhancedRandom;
-import com.github.tommyettinger.random.FourWheelRandom;
-import com.github.tommyettinger.random.LaserRandom;
-import com.github.tommyettinger.random.MizuchiRandom;
-import com.github.tommyettinger.random.RomuTrioRandom;
-import com.github.tommyettinger.random.StrangerRandom;
-import com.github.tommyettinger.random.TricycleRandom;
-import com.github.tommyettinger.random.TrimRandom;
-import com.github.tommyettinger.random.Xoshiro256StarStarRandom;
+import com.github.tommyettinger.random.*;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
@@ -1639,6 +1628,28 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers WhiskerRandom with the given Json object, so WhiskerRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerWhiskerRandom(@Nonnull Json json) {
+        json.addClassTag("TrmR", WhiskerRandom.class);
+        json.setSerializer(WhiskerRandom.class, new Json.Serializer<WhiskerRandom>() {
+            @Override
+            public void write(Json json, WhiskerRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public WhiskerRandom read(Json json, JsonValue jsonData, Class type) {
+                WhiskerRandom r = new WhiskerRandom(1L, 1L, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers ChopRandom with the given Json object, so ChopRandom can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -1654,6 +1665,28 @@ public final class JsonSupport {
             @Override
             public ChopRandom read(Json json, JsonValue jsonData, Class type) {
                 ChopRandom r = new ChopRandom(1, 1, 1, 1);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers Xoshiro128PlusPlusRandom with the given Json object, so Xoshiro128PlusPlusRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerXoshiro128PlusPlusRandom(@Nonnull Json json) {
+        json.addClassTag("XPPR", Xoshiro128PlusPlusRandom.class);
+        json.setSerializer(Xoshiro128PlusPlusRandom.class, new Json.Serializer<Xoshiro128PlusPlusRandom>() {
+            @Override
+            public void write(Json json, Xoshiro128PlusPlusRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Xoshiro128PlusPlusRandom read(Json json, JsonValue jsonData, Class type) {
+                Xoshiro128PlusPlusRandom r = new Xoshiro128PlusPlusRandom(1, 1, 1, 1);
                 r.stringDeserialize(jsonData.asString(), BASE);
                 return r;
             }
@@ -1817,7 +1850,8 @@ public final class JsonSupport {
     /**
      * Registers EnhancedRandom with the given Json object, so EnhancedRandom can be written to and read from JSON.
      * This also registers {@link DistinctRandom}, {@link LaserRandom}, {@link TricycleRandom}, {@link FourWheelRandom},
-     * {@link Xoshiro256StarStarRandom}, {@link StrangerRandom}, {@link TrimRandom}, and {@link MizuchiRandom}, plus
+     * {@link Xoshiro256StarStarRandom}, {@link StrangerRandom}, {@link TrimRandom}, {@link WhiskerRandom},
+     * {@link RomuTrioRandom}, {@link ChopRandom}, {@link Xoshiro128PlusPlusRandom}, and {@link MizuchiRandom}, plus
      * {@link AtomicLong} because some subclasses of {@link java.util.Random} need it.
      * <br>
      * Interfaces aren't usually serializable like this, but because each of the EnhancedRandom serializers uses a
@@ -1836,9 +1870,11 @@ public final class JsonSupport {
         registerXoshiro256StarStarRandom(json);
         registerStrangerRandom(json);
         registerTrimRandom(json);
+        registerWhiskerRandom(json);
         registerMizuchiRandom(json);
         registerRomuTrioRandom(json);
         registerChopRandom(json);
+        registerXoshiro128PlusPlusRandom(json);
         json.setSerializer(EnhancedRandom.class, new Json.Serializer<EnhancedRandom>() {
             @Override
             public void write(Json json, EnhancedRandom object, Class knownType) {
