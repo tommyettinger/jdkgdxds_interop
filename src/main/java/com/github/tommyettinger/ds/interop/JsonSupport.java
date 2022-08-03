@@ -70,6 +70,10 @@ import com.github.tommyettinger.ds.support.util.CharIterator;
 import com.github.tommyettinger.ds.support.util.FloatIterator;
 import com.github.tommyettinger.ds.support.util.ShortIterator;
 import com.github.tommyettinger.random.*;
+import com.github.tommyettinger.random.distribution.BernoulliDistribution;
+import com.github.tommyettinger.random.distribution.BetaDistribution;
+import com.github.tommyettinger.random.distribution.BetaPrimeDistribution;
+import com.github.tommyettinger.random.distribution.Distribution;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
@@ -161,6 +165,9 @@ public final class JsonSupport {
 
         // registers several others
         registerEnhancedRandom(json);
+
+        // registers several others
+        registerDistribution(json);
 
         registerRandomXS128(json);
 
@@ -1854,10 +1861,8 @@ public final class JsonSupport {
      * {@link RomuTrioRandom}, {@link ChopRandom}, {@link Xoshiro128PlusPlusRandom}, and {@link MizuchiRandom}, plus
      * {@link AtomicLong} because some subclasses of {@link java.util.Random} need it.
      * <br>
-     * Interfaces aren't usually serializable like this, but because each of the EnhancedRandom serializers uses a
+     * Abstract classes aren't usually serializable like this, but because each of the EnhancedRandom serializers uses a
      * specific format shared with what this uses, and that format identifies which class is used, it works here.
-     * Well, it works as long as the EnhancedRandom implementation you are serializing or deserializing was itself
-     * registered with this. You don't have to worry about that for any of the jdkgdxds EnhancedRandom types.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
@@ -1921,6 +1926,103 @@ public final class JsonSupport {
         });
     }
 
+    /**
+     * Registers BernoulliDistribution with the given Json object, so BernoulliDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerBernoulliDistribution(@Nonnull Json json) {
+        json.addClassTag("Bernoulli", BernoulliDistribution.class);
+        json.setSerializer(BernoulliDistribution.class, new Json.Serializer<BernoulliDistribution>() {
+            @Override
+            public void write(Json json, BernoulliDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public BernoulliDistribution read(Json json, JsonValue jsonData, Class type) {
+                BernoulliDistribution r = new BernoulliDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers BetaDistribution with the given Json object, so BetaDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerBetaDistribution(@Nonnull Json json) {
+        json.addClassTag("Beta", BetaDistribution.class);
+        json.setSerializer(BetaDistribution.class, new Json.Serializer<BetaDistribution>() {
+            @Override
+            public void write(Json json, BetaDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public BetaDistribution read(Json json, JsonValue jsonData, Class type) {
+                BetaDistribution r = new BetaDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers BetaPrimeDistribution with the given Json object, so BetaPrimeDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerBetaPrimeDistribution(@Nonnull Json json) {
+        json.addClassTag("BetaPrime", BetaPrimeDistribution.class);
+        json.setSerializer(BetaPrimeDistribution.class, new Json.Serializer<BetaPrimeDistribution>() {
+            @Override
+            public void write(Json json, BetaPrimeDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public BetaPrimeDistribution read(Json json, JsonValue jsonData, Class type) {
+                BetaPrimeDistribution r = new BetaPrimeDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers Distribution with the given Json object, so Distribution can be written to and read from JSON.
+     * This also registers all currently-known Distribution subclasses.
+     * <br>
+     * Abstract classes aren't usually serializable like this, but because each of the Distribution serializers uses a
+     * specific format shared with what this uses, and that format identifies which class is used, it works here.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerDistribution(@Nonnull Json json) {
+        registerBernoulliDistribution(json);
+        registerBetaDistribution(json);
+        registerBetaPrimeDistribution(json);
+        json.setSerializer(Distribution.class, new Json.Serializer<Distribution>() {
+            @Override
+            public void write(Json json, Distribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Distribution read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                try {
+                    return Deserializer.deserializeDistribution(jsonData.asString(), BASE);
+                } catch (RuntimeException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        });
+    }
 
     /**
      * Registers ObjectDeque with the given Json object, so ObjectDeque can be written to and read from JSON.
