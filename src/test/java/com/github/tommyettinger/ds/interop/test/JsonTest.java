@@ -1101,6 +1101,24 @@ public class JsonTest {
     }
 
     @Test
+    public void testWhiskerRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerWhiskerRandom(json);
+        WhiskerRandom random = new WhiskerRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        WhiskerRandom random2 = json.fromJson(WhiskerRandom.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateD()));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
     public void testChopRandom() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
 //        JsonSupport.setNumeralBase(Base.BASE16);
@@ -1111,6 +1129,24 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         ChopRandom random2 = json.fromJson(ChopRandom.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateD()));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
+    public void testXoshiro128PlusPlusRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+//        JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerXoshiro128PlusPlusRandom(json);
+        Xoshiro128PlusPlusRandom random = new Xoshiro128PlusPlusRandom(123456789, 0xBAB1E5, 0xB0BAFE77, 0x12341234);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        Xoshiro128PlusPlusRandom random2 = json.fromJson(Xoshiro128PlusPlusRandom.class, data);
         System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateA()));
         System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateB()));
         System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateC()));
