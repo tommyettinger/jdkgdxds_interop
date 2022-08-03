@@ -11,6 +11,9 @@ import com.github.tommyettinger.ds.interop.JsonSupport;
 import com.github.tommyettinger.random.*;
 import com.github.tommyettinger.digital.Base;
 import com.github.tommyettinger.ds.support.util.*;
+import com.github.tommyettinger.random.distribution.BernoulliDistribution;
+import com.github.tommyettinger.random.distribution.Distribution;
+import com.github.tommyettinger.random.distribution.WeibullDistribution;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -1165,6 +1168,7 @@ public class JsonTest {
         System.out.println(json.toJson(random));
         System.out.println(json.toJson(al));
     }
+
     @Test
     public void testDistinctRandom() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
@@ -1194,6 +1198,36 @@ public class JsonTest {
         System.out.println(JsonSupport.getNumeralBase().signed(random2.getState(0)));
         System.out.println(JsonSupport.getNumeralBase().signed(random2.getState(1)));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
+    public void testBernoulliDistribution() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerBernoulliDistribution(json);
+        BernoulliDistribution dist = new BernoulliDistribution(new DistinctRandom(123456789), 0.5);
+        dist.nextDouble();
+        String data = json.toJson(dist);
+        System.out.println(data);
+        BernoulliDistribution dist2 = json.fromJson(BernoulliDistribution.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
+    }
+
+    @Test
+    public void testDistribution() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerDistribution(json);
+        Distribution dist = new BernoulliDistribution(new DistinctRandom(123456789), 0.5);
+        dist.nextDouble();
+        String data = json.toJson(dist, Distribution.class);
+        System.out.println(data);
+        Distribution dist2 = json.fromJson(Distribution.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
     @Test
