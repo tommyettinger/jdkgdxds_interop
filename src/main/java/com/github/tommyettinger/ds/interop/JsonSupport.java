@@ -2210,6 +2210,314 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers GammaDistribution with the given Json object, so GammaDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerGammaDistribution(@Nonnull Json json) {
+        json.addClassTag("Gamma", GammaDistribution.class);
+        json.setSerializer(GammaDistribution.class, new Json.Serializer<GammaDistribution>() {
+            @Override
+            public void write(Json json, GammaDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public GammaDistribution read(Json json, JsonValue jsonData, Class type) {
+                GammaDistribution r = new GammaDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers GeometricDistribution with the given Json object, so GeometricDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerGeometricDistribution(@Nonnull Json json) {
+        json.addClassTag("Geometric", GeometricDistribution.class);
+        json.setSerializer(GeometricDistribution.class, new Json.Serializer<GeometricDistribution>() {
+            @Override
+            public void write(Json json, GeometricDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public GeometricDistribution read(Json json, JsonValue jsonData, Class type) {
+                GeometricDistribution r = new GeometricDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers KumaraswamyDistribution with the given Json object, so KumaraswamyDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerKumaraswamyDistribution(@Nonnull Json json) {
+        json.addClassTag("Kumaraswamy", KumaraswamyDistribution.class);
+        json.setSerializer(KumaraswamyDistribution.class, new Json.Serializer<KumaraswamyDistribution>() {
+            @Override
+            public void write(Json json, KumaraswamyDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public KumaraswamyDistribution read(Json json, JsonValue jsonData, Class type) {
+                KumaraswamyDistribution r = new KumaraswamyDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers LaplaceDistribution with the given Json object, so LaplaceDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerLaplaceDistribution(@Nonnull Json json) {
+        json.addClassTag("Laplace", LaplaceDistribution.class);
+        json.setSerializer(LaplaceDistribution.class, new Json.Serializer<LaplaceDistribution>() {
+            @Override
+            public void write(Json json, LaplaceDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public LaplaceDistribution read(Json json, JsonValue jsonData, Class type) {
+                LaplaceDistribution r = new LaplaceDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers LogisticDistribution with the given Json object, so LogisticDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerLogisticDistribution(@Nonnull Json json) {
+        json.addClassTag("Logistic", LogisticDistribution.class);
+        json.setSerializer(LogisticDistribution.class, new Json.Serializer<LogisticDistribution>() {
+            @Override
+            public void write(Json json, LogisticDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public LogisticDistribution read(Json json, JsonValue jsonData, Class type) {
+                LogisticDistribution r = new LogisticDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers LognormalDistribution with the given Json object, so LognormalDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerLognormalDistribution(@Nonnull Json json) {
+        json.addClassTag("Lognormal", LognormalDistribution.class);
+        json.setSerializer(LognormalDistribution.class, new Json.Serializer<LognormalDistribution>() {
+            @Override
+            public void write(Json json, LognormalDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public LognormalDistribution read(Json json, JsonValue jsonData, Class type) {
+                LognormalDistribution r = new LognormalDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers NormalDistribution with the given Json object, so NormalDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerNormalDistribution(@Nonnull Json json) {
+        json.addClassTag("Normal", NormalDistribution.class);
+        json.setSerializer(NormalDistribution.class, new Json.Serializer<NormalDistribution>() {
+            @Override
+            public void write(Json json, NormalDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public NormalDistribution read(Json json, JsonValue jsonData, Class type) {
+                NormalDistribution r = new NormalDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers ParetoDistribution with the given Json object, so ParetoDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerParetoDistribution(@Nonnull Json json) {
+        json.addClassTag("Pareto", ParetoDistribution.class);
+        json.setSerializer(ParetoDistribution.class, new Json.Serializer<ParetoDistribution>() {
+            @Override
+            public void write(Json json, ParetoDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public ParetoDistribution read(Json json, JsonValue jsonData, Class type) {
+                ParetoDistribution r = new ParetoDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers PoissonDistribution with the given Json object, so PoissonDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerPoissonDistribution(@Nonnull Json json) {
+        json.addClassTag("Poisson", PoissonDistribution.class);
+        json.setSerializer(PoissonDistribution.class, new Json.Serializer<PoissonDistribution>() {
+            @Override
+            public void write(Json json, PoissonDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public PoissonDistribution read(Json json, JsonValue jsonData, Class type) {
+                PoissonDistribution r = new PoissonDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers PowerDistribution with the given Json object, so PowerDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerPowerDistribution(@Nonnull Json json) {
+        json.addClassTag("Power", PowerDistribution.class);
+        json.setSerializer(PowerDistribution.class, new Json.Serializer<PowerDistribution>() {
+            @Override
+            public void write(Json json, PowerDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public PowerDistribution read(Json json, JsonValue jsonData, Class type) {
+                PowerDistribution r = new PowerDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers RayleighDistribution with the given Json object, so RayleighDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerRayleighDistribution(@Nonnull Json json) {
+        json.addClassTag("Rayleigh", RayleighDistribution.class);
+        json.setSerializer(RayleighDistribution.class, new Json.Serializer<RayleighDistribution>() {
+            @Override
+            public void write(Json json, RayleighDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public RayleighDistribution read(Json json, JsonValue jsonData, Class type) {
+                RayleighDistribution r = new RayleighDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers StudentsTDistribution with the given Json object, so StudentsTDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerStudentsTDistribution(@Nonnull Json json) {
+        json.addClassTag("StudentsT", StudentsTDistribution.class);
+        json.setSerializer(StudentsTDistribution.class, new Json.Serializer<StudentsTDistribution>() {
+            @Override
+            public void write(Json json, StudentsTDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public StudentsTDistribution read(Json json, JsonValue jsonData, Class type) {
+                StudentsTDistribution r = new StudentsTDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers TriangularDistribution with the given Json object, so TriangularDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerTriangularDistribution(@Nonnull Json json) {
+        json.addClassTag("Triangular", TriangularDistribution.class);
+        json.setSerializer(TriangularDistribution.class, new Json.Serializer<TriangularDistribution>() {
+            @Override
+            public void write(Json json, TriangularDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public TriangularDistribution read(Json json, JsonValue jsonData, Class type) {
+                TriangularDistribution r = new TriangularDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers WeibullDistribution with the given Json object, so WeibullDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerWeibullDistribution(@Nonnull Json json) {
+        json.addClassTag("Weibull", WeibullDistribution.class);
+        json.setSerializer(WeibullDistribution.class, new Json.Serializer<WeibullDistribution>() {
+            @Override
+            public void write(Json json, WeibullDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public WeibullDistribution read(Json json, JsonValue jsonData, Class type) {
+                WeibullDistribution r = new WeibullDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers Distribution with the given Json object, so Distribution can be written to and read from JSON.
      * This also registers all currently-known Distribution subclasses.
      * <br>
@@ -2233,7 +2541,21 @@ public final class JsonSupport {
         registerExponentialDistribution(json);
         registerFisherSnedecorDistribution(json);
         registerFisherTippettDistribution(json);
-        
+        registerGammaDistribution(json);
+        registerGeometricDistribution(json);
+        registerKumaraswamyDistribution(json);
+        registerLaplaceDistribution(json);
+        registerLogisticDistribution(json);
+        registerLognormalDistribution(json);
+        registerNormalDistribution(json);
+        registerParetoDistribution(json);
+        registerPoissonDistribution(json);
+        registerPowerDistribution(json);
+        registerRayleighDistribution(json);
+        registerStudentsTDistribution(json);
+        registerTriangularDistribution(json);
+        registerWeibullDistribution(json);
+
         json.setSerializer(Distribution.class, new Json.Serializer<Distribution>() {
             @Override
             public void write(Json json, Distribution object, Class knownType) {
