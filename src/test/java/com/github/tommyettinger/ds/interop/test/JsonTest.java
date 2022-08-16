@@ -1184,6 +1184,23 @@ public class JsonTest {
     }
 
     @Test
+    public void testDistributedRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistributedRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerDistributedRandom(json);
+        DistributedRandom random = new DistributedRandom(
+                new KumaraswamyDistribution(new WhiskerRandom(123456789), 2.0, 2.5),
+                DistributedRandom.ReductionMode.FRACTION);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        DistributedRandom random2 = json.fromJson(DistributedRandom.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getSelectedState(0)));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
     public void testRandomXS128() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
         //JsonSupport.setNumeralBase(Base.BASE16);
@@ -1455,6 +1472,21 @@ public class JsonTest {
     }
 
     @Test
+    public void testLogCauchyDistribution() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerLogCauchyDistribution(json);
+        LogCauchyDistribution dist = new LogCauchyDistribution(new DistinctRandom(123456789), 0.0, 0.625);
+        dist.nextDouble();
+        String data = json.toJson(dist);
+        System.out.println(data);
+        LogCauchyDistribution dist2 = json.fromJson(LogCauchyDistribution.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
+    }
+
+    @Test
     public void testLogisticDistribution() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
         //JsonSupport.setNumeralBase(Base.BASE16);
@@ -1470,16 +1502,16 @@ public class JsonTest {
     }
 
     @Test
-    public void testLognormalDistribution() {
+    public void testLogNormalDistribution() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
         //JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
-        JsonSupport.registerLognormalDistribution(json);
-        LognormalDistribution dist = new LognormalDistribution(new DistinctRandom(123456789), 0.0, 1.0);
+        JsonSupport.registerLogNormalDistribution(json);
+        LogNormalDistribution dist = new LogNormalDistribution(new DistinctRandom(123456789), 0.0, 1.0);
         dist.nextDouble();
         String data = json.toJson(dist);
         System.out.println(data);
-        LognormalDistribution dist2 = json.fromJson(LognormalDistribution.class, data);
+        LogNormalDistribution dist2 = json.fromJson(LogNormalDistribution.class, data);
         System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
@@ -1600,6 +1632,21 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         WeibullDistribution dist2 = json.fromJson(WeibullDistribution.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
+    }
+
+    @Test
+    public void testZipfianDistribution() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerZipfianDistribution(json);
+        ZipfianDistribution dist = new ZipfianDistribution(new DistinctRandom(123456789), 16, 0.625);
+        dist.nextDouble();
+        String data = json.toJson(dist);
+        System.out.println(data);
+        ZipfianDistribution dist2 = json.fromJson(ZipfianDistribution.class, data);
         System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }

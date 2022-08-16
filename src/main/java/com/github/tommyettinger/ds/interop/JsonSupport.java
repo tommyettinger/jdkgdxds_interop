@@ -160,11 +160,8 @@ public final class JsonSupport {
         registerBase(json);
         registerHasher(json);
 
-        // registers several others
-        registerEnhancedRandom(json);
-
-        // registers several others
-        registerDistribution(json);
+        // registers many others
+        registerDistributedRandom(json);
 
         registerRandomXS128(json);
 
@@ -1850,13 +1847,36 @@ public final class JsonSupport {
             }
         });
     }
+    /**
+     * Registers DistributedRandom with the given Json object, so DistributedRandom can be written to and read from JSON.
+     * This also registers all other EnhancedRandom types and all Distribution types.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerDistributedRandom(@Nonnull Json json) {
+        JsonSupport.registerEnhancedRandom(json);
+        JsonSupport.registerDistribution(json);
+        json.setSerializer(DistributedRandom.class, new Json.Serializer<DistributedRandom>() {
+            @Override
+            public void write(Json json, DistributedRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public DistributedRandom read(Json json, JsonValue jsonData, Class type) {
+                return new DistributedRandom().stringDeserialize(jsonData.asString(), BASE);
+            }
+        });
+    }
 
     /**
      * Registers EnhancedRandom with the given Json object, so EnhancedRandom can be written to and read from JSON.
      * This also registers {@link DistinctRandom}, {@link LaserRandom}, {@link TricycleRandom}, {@link FourWheelRandom},
      * {@link Xoshiro256StarStarRandom}, {@link StrangerRandom}, {@link TrimRandom}, {@link WhiskerRandom},
      * {@link RomuTrioRandom}, {@link ChopRandom}, {@link Xoshiro128PlusPlusRandom}, and {@link MizuchiRandom}, plus
-     * {@link AtomicLong} because some subclasses of {@link java.util.Random} need it.
+     * {@link AtomicLong} because some subclasses of {@link java.util.Random} need it. This does not register
+     * {@link DistributedRandom}, but {@link #registerDistributedRandom(Json)} calls this method instead (and also calls
+     * {@link #registerDistribution(Json)}).
      * <br>
      * Abstract classes aren't usually serializable like this, but because each of the EnhancedRandom serializers uses a
      * specific format shared with what this uses, and that format identifies which class is used, it works here.
