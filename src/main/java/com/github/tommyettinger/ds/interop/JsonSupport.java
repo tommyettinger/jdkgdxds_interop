@@ -2298,6 +2298,28 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers LogCauchyDistribution with the given Json object, so LogCauchyDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerLogCauchyDistribution(@Nonnull Json json) {
+        json.addClassTag("LogCauchy", LogCauchyDistribution.class);
+        json.setSerializer(LogCauchyDistribution.class, new Json.Serializer<LogCauchyDistribution>() {
+            @Override
+            public void write(Json json, LogCauchyDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public LogCauchyDistribution read(Json json, JsonValue jsonData, Class type) {
+                LogCauchyDistribution r = new LogCauchyDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers LogisticDistribution with the given Json object, so LogisticDistribution can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -2320,21 +2342,21 @@ public final class JsonSupport {
     }
 
     /**
-     * Registers LognormalDistribution with the given Json object, so LognormalDistribution can be written to and read from JSON.
+     * Registers LogNormalDistribution with the given Json object, so LogNormalDistribution can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLognormalDistribution(@Nonnull Json json) {
-        json.addClassTag("Lognormal", LognormalDistribution.class);
-        json.setSerializer(LognormalDistribution.class, new Json.Serializer<LognormalDistribution>() {
+    public static void registerLogNormalDistribution(@Nonnull Json json) {
+        json.addClassTag("LogNormal", LogNormalDistribution.class);
+        json.setSerializer(LogNormalDistribution.class, new Json.Serializer<LogNormalDistribution>() {
             @Override
-            public void write(Json json, LognormalDistribution object, Class knownType) {
+            public void write(Json json, LogNormalDistribution object, Class knownType) {
                 json.writeValue(object.stringSerialize(BASE));
             }
 
             @Override
-            public LognormalDistribution read(Json json, JsonValue jsonData, Class type) {
-                LognormalDistribution r = new LognormalDistribution();
+            public LogNormalDistribution read(Json json, JsonValue jsonData, Class type) {
+                LogNormalDistribution r = new LogNormalDistribution();
                 r.stringDeserialize(jsonData.asString(), BASE);
                 return r;
             }
@@ -2518,6 +2540,28 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers ZipfianDistribution with the given Json object, so ZipfianDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerZipfianDistribution(@Nonnull Json json) {
+        json.addClassTag("Zipfian", ZipfianDistribution.class);
+        json.setSerializer(ZipfianDistribution.class, new Json.Serializer<ZipfianDistribution>() {
+            @Override
+            public void write(Json json, ZipfianDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public ZipfianDistribution read(Json json, JsonValue jsonData, Class type) {
+                ZipfianDistribution r = new ZipfianDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers Distribution with the given Json object, so Distribution can be written to and read from JSON.
      * This also registers all currently-known Distribution subclasses.
      * <br>
@@ -2545,8 +2589,9 @@ public final class JsonSupport {
         registerGeometricDistribution(json);
         registerKumaraswamyDistribution(json);
         registerLaplaceDistribution(json);
+        registerLogCauchyDistribution(json);
         registerLogisticDistribution(json);
-        registerLognormalDistribution(json);
+        registerLogNormalDistribution(json);
         registerNormalDistribution(json);
         registerParetoDistribution(json);
         registerPoissonDistribution(json);
@@ -2555,6 +2600,7 @@ public final class JsonSupport {
         registerStudentsTDistribution(json);
         registerTriangularDistribution(json);
         registerWeibullDistribution(json);
+        registerZipfianDistribution(json);
 
         json.setSerializer(Distribution.class, new Json.Serializer<Distribution>() {
             @Override
