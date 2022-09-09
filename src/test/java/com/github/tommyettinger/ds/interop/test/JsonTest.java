@@ -1517,6 +1517,21 @@ public class JsonTest {
     }
 
     @Test
+    public void testLumpDistribution() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerLumpDistribution(json);
+        LumpDistribution dist = new LumpDistribution(new DistinctRandom(123456789), 0.0, 0.25);
+        dist.nextDouble();
+        String data = json.toJson(dist);
+        System.out.println(data);
+        LumpDistribution dist2 = json.fromJson(LumpDistribution.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
+    }
+
+    @Test
     public void testNormalDistribution() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
         //JsonSupport.setNumeralBase(Base.BASE16);
