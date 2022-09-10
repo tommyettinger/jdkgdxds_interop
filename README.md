@@ -47,23 +47,23 @@ allowing any implementation to be fit into that variable.
 
 The [digital](https://github.com/tommyettinger/digital) library is a direct dependency of jdkgdxds, and it has a
 `Hasher` class that can be registered, as well as a `Base` class. `Base` is especially important here because you can
-configure the numeral base that numbers are printed it by specifying one to `JsonSupport.setNumeralBase(Base)`; this can
-be handy to obfuscate numbers if you pass a scrambled base (as `Base` can generate).
+configure the numeral base that numbers are printed in by specifying one to `JsonSupport.setNumeralBase(Base)`; this can
+be handy to weakly obfuscate numbers if you pass a scrambled base (as `Base` can generate).
 
 ## How do I get it?
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api`, is: 
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.3.2"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.4.0"
 ```
 It's not unlikely that you might need `api` instead of `implementation`, especially if you are writing a library, or a
 module that needs to be used from another section.
 
 If you use GWT (libGDX's HTML target), then you also need this in your `html/build.gradle` file:
 ```groovy
-implementation "com.github.tommyettinger:digital:0.0.4:sources"
-implementation "com.github.tommyettinger:juniper:0.1.0:sources"
-implementation "com.github.tommyettinger:jdkgdxds:1.0.3:sources"
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.3.2:sources"
+implementation "com.github.tommyettinger:digital:0.1.2:sources"
+implementation "com.github.tommyettinger:juniper:0.1.4:sources"
+implementation "com.github.tommyettinger:jdkgdxds:1.0.4:sources"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.4.0:sources"
 ```
 You also need the GWT `inherits` in your `GdxDefinition.gwt.xml` file:
 ```xml
