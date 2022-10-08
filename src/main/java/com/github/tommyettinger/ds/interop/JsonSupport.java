@@ -1839,6 +1839,28 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers VanDerCorputQuasiRandom with the given Json object, so VanDerCorputQuasiRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerVanDerCorputQuasiRandom(@Nonnull Json json) {
+        json.addClassTag("VCQR", VanDerCorputQuasiRandom.class);
+        json.setSerializer(VanDerCorputQuasiRandom.class, new Json.Serializer<VanDerCorputQuasiRandom>() {
+            @Override
+            public void write(Json json, VanDerCorputQuasiRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public VanDerCorputQuasiRandom read(Json json, JsonValue jsonData, Class type) {
+                VanDerCorputQuasiRandom r = new VanDerCorputQuasiRandom(1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers DistributedRandom with the given Json object, so DistributedRandom can be written to and read from JSON.
      * This also registers all other EnhancedRandom types and all Distribution types.
      *
@@ -1890,6 +1912,7 @@ public final class JsonSupport {
         registerXoshiro128PlusPlusRandom(json);
         registerPasarRandom(json);
         registerGoldenQuasiRandom(json);
+        registerVanDerCorputQuasiRandom(json);
         json.setSerializer(EnhancedRandom.class, new Json.Serializer<EnhancedRandom>() {
             @Override
             public void write(Json json, EnhancedRandom object, Class knownType) {
@@ -1932,6 +1955,28 @@ public final class JsonSupport {
                 final long stateA = BASE.readLong(s, 1, slash);
                 final long stateB = BASE.readLong(s, slash + 1, s.indexOf('`', slash));
                 return new RandomXS128(stateA, stateB);
+            }
+        });
+    }
+
+    /**
+     * Registers ArcsineDistribution with the given Json object, so ArcsineDistribution can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerArcsineDistribution(@Nonnull Json json) {
+        json.addClassTag("Arcsine", ArcsineDistribution.class);
+        json.setSerializer(ArcsineDistribution.class, new Json.Serializer<ArcsineDistribution>() {
+            @Override
+            public void write(Json json, ArcsineDistribution object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public ArcsineDistribution read(Json json, JsonValue jsonData, Class type) {
+                ArcsineDistribution r = new ArcsineDistribution();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
             }
         });
     }
@@ -2606,6 +2651,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerDistribution(@Nonnull Json json) {
+        registerArcsineDistribution(json);
         registerBernoulliDistribution(json);
         registerBetaDistribution(json);
         registerBetaPrimeDistribution(json);
