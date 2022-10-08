@@ -60,8 +60,8 @@ module that needs to be used from another section.
 
 If you use GWT (libGDX's HTML target), then you also need this in your `html/build.gradle` file:
 ```groovy
-implementation "com.github.tommyettinger:digital:0.1.2:sources"
-implementation "com.github.tommyettinger:juniper:0.1.4:sources"
+implementation "com.github.tommyettinger:digital:0.1.4:sources"
+implementation "com.github.tommyettinger:juniper:0.1.6:sources"
 implementation "com.github.tommyettinger:jdkgdxds:1.0.4:sources"
 implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.4.0:sources"
 ```

@@ -1580,7 +1580,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerWhiskerRandom(@Nonnull Json json) {
-        json.addClassTag("TrmR", WhiskerRandom.class);
+        json.addClassTag("WhiR", WhiskerRandom.class);
         json.setSerializer(WhiskerRandom.class, new Json.Serializer<WhiskerRandom>() {
             @Override
             public void write(Json json, WhiskerRandom object, Class knownType) {
@@ -1590,6 +1590,28 @@ public final class JsonSupport {
             @Override
             public WhiskerRandom read(Json json, JsonValue jsonData, Class type) {
                 WhiskerRandom r = new WhiskerRandom(1L, 1L, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers PasarRandom with the given Json object, so PasarRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerPasarRandom(@Nonnull Json json) {
+        json.addClassTag("PasR", PasarRandom.class);
+        json.setSerializer(PasarRandom.class, new Json.Serializer<PasarRandom>() {
+            @Override
+            public void write(Json json, PasarRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public PasarRandom read(Json json, JsonValue jsonData, Class type) {
+                PasarRandom r = new PasarRandom(1L, 1L, 1L, 1L, 1L);
                 r.stringDeserialize(jsonData.asString(), BASE);
                 return r;
             }
@@ -1793,6 +1815,29 @@ public final class JsonSupport {
             }
         });
     }
+
+    /**
+     * Registers GoldenQuasiRandom with the given Json object, so GoldenQuasiRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerGoldenQuasiRandom(@Nonnull Json json) {
+        json.addClassTag("GoQR", GoldenQuasiRandom.class);
+        json.setSerializer(GoldenQuasiRandom.class, new Json.Serializer<GoldenQuasiRandom>() {
+            @Override
+            public void write(Json json, GoldenQuasiRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public GoldenQuasiRandom read(Json json, JsonValue jsonData, Class type) {
+                GoldenQuasiRandom r = new GoldenQuasiRandom(1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
     /**
      * Registers DistributedRandom with the given Json object, so DistributedRandom can be written to and read from JSON.
      * This also registers all other EnhancedRandom types and all Distribution types.
@@ -1843,6 +1888,8 @@ public final class JsonSupport {
         registerRomuTrioRandom(json);
         registerChopRandom(json);
         registerXoshiro128PlusPlusRandom(json);
+        registerPasarRandom(json);
+        registerGoldenQuasiRandom(json);
         json.setSerializer(EnhancedRandom.class, new Json.Serializer<EnhancedRandom>() {
             @Override
             public void write(Json json, EnhancedRandom object, Class knownType) {
