@@ -28,8 +28,9 @@ The Json serialization also uses an especially-concise format to store each of t
 [juniper](https://github.com/tommyettinger/juniper). Even though juniper is not a direct dependency of jdkgdxds, it used
 to be part of that library, and its use is recommended with any of the randomized methods in jdkgdxds, so it still makes
 sense to have here. These classes (`DistinctRandom`, `LaserRandom`, `TricycleRandom`, `FourWheelRandom`, `ChopRandom`,
-`WhiskerRandom`, `StrangerRandom`, `TrimRandom`, `MizuchiRandom`, `RomuTrioRandom`, `Xoshiro256StarStarRandom`, and
-`Xoshiro128PlusPlusRandom`, ) are sometimes serializable without jdkgdxds-interop, but work regardless of JDK version if
+`WhiskerRandom`, `StrangerRandom`, `TrimRandom`, `MizuchiRandom`, `RomuTrioRandom`, `PasarRandom`, `GoldenQuasiRandom`,
+`VanDerCorputQuasiRandom`, `Xoshiro256StarStarRandom`, and `Xoshiro128PlusPlusRandom`, ) are sometimes serializable
+without jdkgdxds-interop, but work regardless of JDK version if
 you do use this library. Better still, you can register `EnhancedRandom` for serialization, so places that have an
 `EnhancedRandom` but don't specify an implementation can still store one (which includes its implementing class) and
 read an `EnhancedRandom` back. If you have your own class that extends `java.util.Random`, which is admittedly unlikely,
@@ -37,7 +38,9 @@ you should probably write your own serializer modeled after the serializer for t
 Java 17 and higher block libGDX's `Json` class from accessing the state of `java.util.Random`, which also prevents any
 serialization of subclasses unless they use custom serialization. This also means that `java.util.Random` can't be
 serialized or deserialized by libGDX `Json` on JDK 17 or higher, even with a custom serializer, unless some special
-additional work happens (and even that might not work on future JDKs).
+additional work happens (and even that might not work on future JDKs). `digital`'s `AlternateRandom` class matches the
+API of `Random` exactly, so it doesn't allow anything to be serialized either on JDK 17 -- use juniper's `PasarRandom`
+instead, since it uses the same algorithm.
 
 Starting with juniper 0.1.0, it now contains quite a few statistical distributions, each of which stores some parameter
 or parameters and an EnhancedRandom to generate numbers. These can all be registered individually or as a group by
@@ -53,7 +56,7 @@ be handy to weakly obfuscate numbers if you pass a scrambled base (as `Base` can
 ## How do I get it?
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api`, is: 
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.4.0"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.4.1"
 ```
 It's not unlikely that you might need `api` instead of `implementation`, especially if you are writing a library, or a
 module that needs to be used from another section.
@@ -63,7 +66,7 @@ If you use GWT (libGDX's HTML target), then you also need this in your `html/bui
 implementation "com.github.tommyettinger:digital:0.1.4:sources"
 implementation "com.github.tommyettinger:juniper:0.1.6:sources"
 implementation "com.github.tommyettinger:jdkgdxds:1.0.4:sources"
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.4.0:sources"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.4.1:sources"
 ```
 You also need the GWT `inherits` in your `GdxDefinition.gwt.xml` file:
 ```xml
