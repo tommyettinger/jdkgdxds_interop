@@ -1119,6 +1119,25 @@ public class JsonTest {
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
+
+    @Test
+    public void testPasarRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerPasarRandom(json);
+        PasarRandom random = new PasarRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L, -1L);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        PasarRandom random2 = json.fromJson(PasarRandom.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateD()));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
     @Test
     public void testChopRandom() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
@@ -1184,6 +1203,36 @@ public class JsonTest {
     }
 
     @Test
+    public void testGoldenQuasiRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new GoldenQuasiRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerGoldenQuasiRandom(json);
+        GoldenQuasiRandom random = new GoldenQuasiRandom(123456789);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        GoldenQuasiRandom random2 = json.fromJson(GoldenQuasiRandom.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getSelectedState(0)));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
+    public void testVanDerCorputQuasiRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new VanDerCorputQuasiRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerVanDerCorputQuasiRandom(json);
+        VanDerCorputQuasiRandom random = new VanDerCorputQuasiRandom(123456789);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        VanDerCorputQuasiRandom random2 = json.fromJson(VanDerCorputQuasiRandom.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getSelectedState(0)));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
     public void testDistributedRandom() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistributedRandom()));
         //JsonSupport.setNumeralBase(Base.BASE16);
@@ -1214,6 +1263,21 @@ public class JsonTest {
         System.out.println(JsonSupport.getNumeralBase().signed(random2.getState(0)));
         System.out.println(JsonSupport.getNumeralBase().signed(random2.getState(1)));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
+    public void testArcsineDistribution() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerArcsineDistribution(json);
+        ArcsineDistribution dist = new ArcsineDistribution(new DistinctRandom(123456789), 0.0, 1.0);
+        dist.nextDouble();
+        String data = json.toJson(dist);
+        System.out.println(data);
+        ArcsineDistribution dist2 = json.fromJson(ArcsineDistribution.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
     @Test
