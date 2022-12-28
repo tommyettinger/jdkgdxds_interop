@@ -1504,6 +1504,37 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers OffsetBitSet with the given Json object, so OffsetBitSet can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerOffsetBitSet(@Nonnull Json json) {
+        json.setSerializer(OffsetBitSet.class, new Json.Serializer<OffsetBitSet>() {
+            @Override
+            public void write(Json json, OffsetBitSet object, Class knownType) {
+                int off = object.getOffset();
+                json.writeObjectStart();
+                json.writeValue("offset", off);
+                json.writeArrayStart("values");
+                PrimitiveIterator.OfInt it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextInt());
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public OffsetBitSet read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                OffsetBitSet obs = new OffsetBitSet(jsonData.getChild("offset").asInt());
+                obs.addAll(jsonData.getChild("values").asIntArray());
+                return obs;
+            }
+        });
+    }
+
+    /**
      * Registers AtomicLong with the given Json object, so AtomicLong can be written to and read from JSON.
      * This primarily matters if you intend to read and/or write {@link java.util.Random} objects or their subclasses
      * without registering a custom serializer for them. Although the EnhancedRandom implementations in jdkgdxds have
