@@ -67,6 +67,7 @@ public final class JsonSupport {
         registerIntOrderedSet(json);
         registerLongSet(json);
         registerLongOrderedSet(json);
+        registerOffsetBitSet(json);
 
         registerObjectObjectMap(json);
         registerObjectObjectOrderedMap(json);
@@ -109,6 +110,8 @@ public final class JsonSupport {
 
         // registers many others
         registerDistributedRandom(json);
+
+        registerAlternateRandom(json);
 
         registerRandomXS128(json);
 
@@ -1527,8 +1530,8 @@ public final class JsonSupport {
             @Override
             public OffsetBitSet read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                OffsetBitSet obs = new OffsetBitSet(jsonData.getChild("offset").asInt());
-                obs.addAll(jsonData.getChild("values").asIntArray());
+                OffsetBitSet obs = new OffsetBitSet(jsonData.get("offset").asInt());
+                obs.addAll(jsonData.get("values").asIntArray());
                 return obs;
             }
         });

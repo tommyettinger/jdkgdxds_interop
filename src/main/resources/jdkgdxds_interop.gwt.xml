@@ -17,19 +17,11 @@
 	<extend-configuration-property name="gdx.reflect.include" value="java.lang.Class" />
 	<extend-configuration-property name="gdx.reflect.include" value="java.util.concurrent.atomic.AtomicLong" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.math.RandomXS128" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.digital.AlternateRandom" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.digital.Base" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.digital.Hasher" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.random.EnhancedRandom" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.random.ChopRandom" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.random.DistinctRandom" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.random.FourWheelRandom" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.random.LaserRandom" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.random.MizuchiRandom" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.random.RomuTrioRandom" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.random.StrangerRandom" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.random.TricycleRandom" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.random.TrimRandom" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.random.Xoshiro256StarStarRandom" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.random" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.random.distribution" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.BinaryHeap" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.BooleanDeque" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.BooleanList" />
@@ -82,6 +74,7 @@
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectObjectOrderedMap" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectOrderedSet" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectSet" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.OffsetBitSet" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ShortDeque" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ShortList" />
 	<source path="com/github/tommyettinger/ds/interop" />

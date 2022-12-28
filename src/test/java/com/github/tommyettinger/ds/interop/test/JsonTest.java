@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
+import com.github.tommyettinger.digital.AlternateRandom;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.interop.JsonSupport;
 import com.github.tommyettinger.random.*;
@@ -961,6 +962,37 @@ public class JsonTest {
             System.out.print(word.element);
             System.out.print(", ");
         }
+    }
+
+    @Test
+    public void testOffsetBitSet() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerOffsetBitSet(json);
+        OffsetBitSet numbers = new OffsetBitSet(9, 425);
+        numbers.addAll(new int[]{42, 23, 666, 420});
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        OffsetBitSet numbers2 = json.fromJson(OffsetBitSet.class, data);
+        PrimitiveIterator.OfInt it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextInt());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+    }
+
+    @Test
+    public void testAlternateRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerAlternateRandom(json);
+        AlternateRandom random = new AlternateRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L, -1L);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        AlternateRandom random2 = json.fromJson(AlternateRandom.class, data);
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
     @Test
