@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.*;
 import com.github.tommyettinger.ds.ObjectObjectMap;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -15,22 +16,25 @@ public class GdxJsonTest {
     public void testArray() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         Array<String> words = Array.with("Peanut", "Butter", "Jelly", "Time");
-        String data = json.toJson(words, Array.class, String.class);
+        String data = json.toJson(words, Array.class);
         System.out.println(data);
         Array<?> words2 = json.fromJson(Array.class, data);
         for(Object word : words2) {
             System.out.print(word);
             System.out.print(", ");
         }
+        Assert.assertEquals(words, words2);
         System.out.println();
         Array<GridPoint2> points = Array.with(new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666));
-        data = json.toJson(points, Array.class, GridPoint2.class);
+        data = json.toJson(points, Array.class);
         System.out.println(data);
         Array<?> points2 = json.fromJson(Array.class, data);
         for(Object point : points2) {
             System.out.print(point);
             System.out.print(", ");
         }
+        Assert.assertEquals(points, points2);
+        System.out.println();
     }
 
     @Test
@@ -45,6 +49,8 @@ public class GdxJsonTest {
             System.out.print(", ");
             System.out.print(numbers2.get(i));
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
@@ -59,6 +65,8 @@ public class GdxJsonTest {
             System.out.print(", ");
             System.out.print(numbers2.get(i));
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
@@ -73,12 +81,14 @@ public class GdxJsonTest {
             System.out.print(", ");
             System.out.print(numbers2.get(i));
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
     public void testCharArray() {
         Json json = new Json(JsonWriter.OutputType.minimal);
-        CharArray numbers = CharArray.with('l', 'i', 'b', 'G', 'D', 'X', '\u2600');
+        CharArray numbers = CharArray.with('l', 'i', 'b', 'G', 'D', 'X', '☀');
         String data = json.toJson(numbers);
         System.out.println(data);
         CharArray numbers2 = json.fromJson(CharArray.class, data);
@@ -87,6 +97,8 @@ public class GdxJsonTest {
             System.out.print(", ");
             System.out.print(numbers2.get(i));
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
@@ -101,6 +113,8 @@ public class GdxJsonTest {
             System.out.print(", ");
             System.out.print(numbers2.get(i));
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
@@ -115,6 +129,8 @@ public class GdxJsonTest {
             System.out.print(", ");
             System.out.print(numbers2.get(i));
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
@@ -128,6 +144,7 @@ public class GdxJsonTest {
             System.out.print(word);
             System.out.print(", ");
         }
+        Assert.assertEquals(words, words2);
         System.out.println();
         ObjectSet<GridPoint2> points = ObjectSet.with(new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666));
         data = json.toJson(points, ObjectSet.class, GridPoint2.class);
@@ -137,6 +154,8 @@ public class GdxJsonTest {
             System.out.print(point);
             System.out.print(", ");
         }
+//        Assert.assertEquals(points, points2); // Surprisingly, this fails due to non-String items
+        System.out.println();
     }
 
     @Test
@@ -150,6 +169,7 @@ public class GdxJsonTest {
             System.out.print(word);
             System.out.print(", ");
         }
+        Assert.assertEquals(words, words2);
         System.out.println();
         OrderedSet<GridPoint2> points = OrderedSet.with(new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666));
         data = json.toJson(points, OrderedSet.class, GridPoint2.class);
@@ -159,6 +179,8 @@ public class GdxJsonTest {
             System.out.print(point);
             System.out.print(", ");
         }
+//        Assert.assertEquals(points, points2); // Surprisingly, this fails due to non-String items
+        System.out.println();
     }
 
     @Test
@@ -174,6 +196,8 @@ public class GdxJsonTest {
             if(it.hasNext)
                 System.out.print(", ");
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
@@ -183,7 +207,7 @@ public class GdxJsonTest {
         words.put("foo", new GridPoint2(42, 42));
         words.put("bar", new GridPoint2(23, 23));
         words.put("baz", new GridPoint2(666, 666));
-        String data = json.toJson(words, ObjectMap.class, GridPoint2.class);
+        String data = json.toJson(words, ObjectMap.class);
         System.out.println(data);
         ObjectMap<?, ?> words2 = json.fromJson(ObjectMap.class, data);
         for(ObjectMap.Entry<?, ?> pair : words2) {
@@ -192,20 +216,25 @@ public class GdxJsonTest {
             System.out.print(pair.value);
             System.out.print("; ");
         }
+        Assert.assertEquals(words, words2);
         System.out.println();
         ObjectMap<GridPoint2, String> points = new ObjectMap<>(3);
         points.put(new GridPoint2(42, 42), "foo");
         points.put(new GridPoint2(23, 23), "bar");
         points.put(new GridPoint2(666, 666), "baz");
-        data = json.toJson(points, ObjectMap.class, String.class);
+        data = json.toJson(points, ObjectMap.class);
         System.out.println(data);
         ObjectMap<?, ?> points2 = json.fromJson(ObjectMap.class, data);
         for(ObjectMap.Entry<?, ?> pair : points2) {
             System.out.print(pair.key);
+            System.out.print("("+pair.key.getClass()+")");
             System.out.print("=");
             System.out.print(pair.value);
+            System.out.print("("+pair.value.getClass()+")");
             System.out.print("; ");
         }
+//        Assert.assertEquals(points, points2); // fails because ObjectMap only permits String keys (undocumented).
+        System.out.println();
     }
 
     @Test
@@ -215,7 +244,7 @@ public class GdxJsonTest {
         words.put("foo", new GridPoint2(42, 42));
         words.put("bar", new GridPoint2(23, 23));
         words.put("baz", new GridPoint2(666, 666));
-        String data = json.toJson(words, OrderedMap.class, GridPoint2.class);
+        String data = json.toJson(words, OrderedMap.class);
         System.out.println(data);
         OrderedMap<?, ?> words2 = json.fromJson(OrderedMap.class, data);
         for(OrderedMap.Entry<?, ?> pair : words2) {
@@ -224,12 +253,13 @@ public class GdxJsonTest {
             System.out.print(pair.value);
             System.out.print("; ");
         }
+        Assert.assertEquals(words, words2);
         System.out.println();
         OrderedMap<GridPoint2, String> points = new OrderedMap<>(3);
         points.put(new GridPoint2(42, 42), "foo");
         points.put(new GridPoint2(23, 23), "bar");
         points.put(new GridPoint2(666, 666), "baz");
-        data = json.toJson(points, OrderedMap.class, String.class);
+        data = json.toJson(points, OrderedMap.class);
         System.out.println(data);
         OrderedMap<?, ?> points2 = json.fromJson(OrderedMap.class, data);
         for(OrderedMap.Entry<?, ?> pair : points2) {
@@ -238,6 +268,8 @@ public class GdxJsonTest {
             System.out.print(pair.value);
             System.out.print("; ");
         }
+//        Assert.assertEquals(points, points2); // fails because OrderedMap only permits String keys (undocumented).
+        System.out.println();
     }
 
     @Test
@@ -256,6 +288,7 @@ public class GdxJsonTest {
             System.out.print(pair.value);
             System.out.print("; ");
         }
+        Assert.assertEquals(words, words2);
         System.out.println();
         ObjectLongMap<GridPoint2> points = new ObjectLongMap<>(3);
         points.put(new GridPoint2(42, 42), 42);
@@ -270,6 +303,8 @@ public class GdxJsonTest {
             System.out.print(pair.value);
             System.out.print("; ");
         }
+        Assert.assertEquals(points, points2); // this one passes because it doesn't have any special serializer.
+        System.out.println();
     }
 
     @Test
@@ -279,7 +314,7 @@ public class GdxJsonTest {
         words.put("foo", 42.42f);
         words.put("bar", 23.23f);
         words.put("baz", 666.666f);
-        String data = json.toJson(words, ObjectFloatMap.class, String.class);
+        String data = json.toJson(words, ObjectFloatMap.class);
         System.out.println(data);
         ObjectFloatMap<?> words2 = json.fromJson(ObjectFloatMap.class, data);
         for(ObjectFloatMap.Entry<?> pair : words2) {
@@ -288,12 +323,13 @@ public class GdxJsonTest {
             System.out.print(pair.value);
             System.out.print("; ");
         }
+        Assert.assertEquals(words, words2);
         System.out.println();
         ObjectFloatMap<GridPoint2> points = new ObjectFloatMap<>(3);
         points.put(new GridPoint2(42, 42), 42.42f);
         points.put(new GridPoint2(23, 23), 23.23f);
         points.put(new GridPoint2(666, 666), 666.666f);
-        data = json.toJson(points, ObjectFloatMap.class, GridPoint2.class);
+        data = json.toJson(points, ObjectFloatMap.class);
         System.out.println(data);
         ObjectFloatMap<?> points2 = json.fromJson(ObjectFloatMap.class, data);
         for(ObjectFloatMap.Entry<?> pair : points2) {
@@ -302,6 +338,8 @@ public class GdxJsonTest {
             System.out.print(pair.value);
             System.out.print("; ");
         }
+//        Assert.assertEquals(points, points2); // fails because of non-String keys
+        System.out.println();
     }
 
     @Test
@@ -320,6 +358,7 @@ public class GdxJsonTest {
             System.out.print(pair.value);
             System.out.print("; ");
         }
+        Assert.assertEquals(words, words2);
         System.out.println();
         ObjectIntMap<GridPoint2> points = new ObjectIntMap<>(3);
         points.put(new GridPoint2(42, 42), 42);
@@ -334,6 +373,8 @@ public class GdxJsonTest {
             System.out.print(pair.value);
             System.out.print("; ");
         }
+//        Assert.assertEquals(points, points2); // Fails due to non-String keys
+        System.out.println();
     }
     
     @Test
@@ -343,7 +384,7 @@ public class GdxJsonTest {
         words.put("foo", new GridPoint2(42, 42));
         words.put("bar", new GridPoint2(23, 23));
         words.put("baz", new GridPoint2(666, 666));
-        String data = json.toJson(words, ArrayMap.class, GridPoint2.class);
+        String data = json.toJson(words, ArrayMap.class);
         System.out.println(data);
         ArrayMap<?, ?> words2 = json.fromJson(ArrayMap.class, data);
         for(ObjectMap.Entry<?, ?> pair : words2) {
@@ -352,12 +393,13 @@ public class GdxJsonTest {
             System.out.print(pair.value);
             System.out.print("; ");
         }
+        Assert.assertEquals(words, words2);
         System.out.println();
         ArrayMap<GridPoint2, String> points = new ArrayMap<>(3);
         points.put(new GridPoint2(42, 42), "foo");
         points.put(new GridPoint2(23, 23), "bar");
         points.put(new GridPoint2(666, 666), "baz");
-        data = json.toJson(points, ArrayMap.class, String.class);
+        data = json.toJson(points, ArrayMap.class);
         System.out.println(data);
         ArrayMap<?, ?> points2 = json.fromJson(ArrayMap.class, data);
         for(ObjectMap.Entry<?, ?> pair : points2) {
@@ -366,6 +408,8 @@ public class GdxJsonTest {
             System.out.print(pair.value);
             System.out.print("; ");
         }
+//        Assert.assertEquals(points, points2); // There's some issue here with the non-String keys...
+        System.out.println();
     }
 
     @Test
@@ -375,7 +419,7 @@ public class GdxJsonTest {
         words.put("foo", new GridPoint2(42, 42));
         words.put("bar", new GridPoint2(23, 23));
         words.put("baz", new GridPoint2(666, 666));
-        String data = json.toJson(words, IdentityMap.class, GridPoint2.class);
+        String data = json.toJson(words, IdentityMap.class);
         System.out.println(data);
         IdentityMap<?, ?> words2 = json.fromJson(IdentityMap.class, data);
         for(ObjectMap.Entry<?, ?> pair : words2) {
@@ -384,12 +428,13 @@ public class GdxJsonTest {
             System.out.print(pair.value);
             System.out.print("; ");
         }
+//        Assert.assertEquals(words, words2); // Fails because of, well, identity comparison.
         System.out.println();
         IdentityMap<GridPoint2, String> points = new IdentityMap<>(3);
         points.put(new GridPoint2(42, 42), "foo");
         points.put(new GridPoint2(23, 23), "bar");
         points.put(new GridPoint2(666, 666), "baz");
-        data = json.toJson(points, IdentityMap.class, String.class);
+        data = json.toJson(points, IdentityMap.class);
         System.out.println(data);
         IdentityMap<?, ?> points2 = json.fromJson(IdentityMap.class, data);
         for(ObjectMap.Entry<?, ?> pair : points2) {
@@ -398,6 +443,8 @@ public class GdxJsonTest {
             System.out.print(pair.value);
             System.out.print("; ");
         }
+//        Assert.assertEquals(points, points2); // Also fails because of, well, identity comparison.
+        System.out.println();
     }
 
     @Test
@@ -408,7 +455,7 @@ public class GdxJsonTest {
         words.put(23 , "bar");
         words.put(666, "baz");
 
-        String data = json.toJson(words, IntMap.class, String.class);
+        String data = json.toJson(words, IntMap.class);
         System.out.println(data);
         IntMap<?> words2 = json.fromJson(IntMap.class, data);
         for(IntMap.Entry<?> pair : words2) {
@@ -417,12 +464,13 @@ public class GdxJsonTest {
             System.out.print(pair.value);
             System.out.print("; ");
         }
+        Assert.assertEquals(words, words2);
         System.out.println();
         IntMap<GridPoint2> points = new IntMap<>(3);
         points.put(42 , new GridPoint2(42, 42));
         points.put(23 , new GridPoint2(23, 23));
         points.put(666, new GridPoint2(666, 666));
-        data = json.toJson(points, IntMap.class, GridPoint2.class);
+        data = json.toJson(points, IntMap.class);
         System.out.println(data);
         IntMap<?> points2 = json.fromJson(IntMap.class, data);
         for(IntMap.Entry<?> pair : points2) {
@@ -431,6 +479,8 @@ public class GdxJsonTest {
             System.out.print(pair.value);
             System.out.print("; ");
         }
+        Assert.assertEquals(points, points2);
+        System.out.println();
     }
 
     @Test
@@ -450,6 +500,8 @@ public class GdxJsonTest {
             System.out.print(pair.value);
             System.out.print("; ");
         }
+        Assert.assertEquals(words, words2);
+        System.out.println();
     }
 
     @Test
@@ -469,6 +521,8 @@ public class GdxJsonTest {
             System.out.print(pair.value);
             System.out.print("; ");
         }
+        Assert.assertEquals(words, words2);
+        System.out.println();
     }
 
     @Test
@@ -479,7 +533,7 @@ public class GdxJsonTest {
         words.put(23L, "bar");
         words.put(66666666666666L, "baz");
 
-        String data = json.toJson(words, LongMap.class, String.class);
+        String data = json.toJson(words, LongMap.class);
         System.out.println(data);
         LongMap<?> words2 = json.fromJson(LongMap.class, data);
         for(LongMap.Entry<?> pair : words2) {
@@ -488,13 +542,15 @@ public class GdxJsonTest {
             System.out.print(pair.value);
             System.out.print("; ");
         }
+        Assert.assertEquals(words, words2);
         System.out.println();
         LongMap<GridPoint2> points = new LongMap<>(3);
         points.put(42 , new GridPoint2(42, 42));
         points.put(23 , new GridPoint2(23, 23));
         points.put(666, new GridPoint2(666, 666));
-        data = json.toJson(points, LongMap.class, GridPoint2.class);
+        data = json.toJson(points, LongMap.class);
         System.out.println(data);
+        Assert.assertEquals(words, words2);
         LongMap<?> points2 = json.fromJson(LongMap.class, data);
         for(LongMap.Entry<?> pair : points2) {
             System.out.print(pair.key);
@@ -502,6 +558,8 @@ public class GdxJsonTest {
             System.out.print(pair.value);
             System.out.print("; ");
         }
+        Assert.assertEquals(points, points2);
+        System.out.println();
     }
 
     @Test
@@ -519,18 +577,20 @@ public class GdxJsonTest {
             System.out.print(word);
             System.out.print(", ");
         }
+        Assert.assertEquals(words, words2);
         System.out.println();
         Queue<GridPoint2> points = new Queue<>(3);
         points.addLast(new GridPoint2(42, 42));
         points.addLast(new GridPoint2(23, 23));
         points.addLast(new GridPoint2(666, 666));
-        data = json.toJson(points, Queue.class, GridPoint2.class);
+        data = json.toJson(points, Queue.class); // don't specify an elementType!
         System.out.println(data);
         Queue<?> points2 = json.fromJson(Queue.class, data);
         for(Object point : points2) {
             System.out.print(point);
             System.out.print(", ");
         }
+        Assert.assertEquals(points, points2);
         System.out.println();
     }
 
@@ -550,6 +610,7 @@ public class GdxJsonTest {
             System.out.print(", ");
             System.out.print(numbers2.get(i));
         }
+        Assert.assertEquals(numbers, numbers2);
         System.out.println();
     }
 
@@ -566,10 +627,11 @@ public class GdxJsonTest {
 
         Json json = new Json(JsonWriter.OutputType.javascript);
         json.setTypeName(null);
-        String data = json.toJson(deep);
+        String data = json.toJson(deep, ArrayList.class);
         System.out.println(data);
         after = json.fromJson(ArrayList.class, data);
         System.out.println(after);
+//        Assert.assertEquals(deep, after); // fails because after contains JsonValue rather than HashMap items
     }
 
 }
