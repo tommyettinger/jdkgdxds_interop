@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.SerializationException;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
+import com.github.tommyettinger.digital.AlternateRandom;
 import com.github.tommyettinger.digital.Base;
 import com.github.tommyettinger.digital.Hasher;
 import com.github.tommyettinger.ds.*;
@@ -1531,6 +1532,31 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers AlternateRandom with the given Json object, so AlternateRandom can be written to and read from JSON.
+     * Note that AlternateRandom is not a juniper EnhancedRandom, and so cannot be deserialized to an EnhancedRandom
+     * field. It is also almost exactly the same as {@link PasarRandom}, so you might want to just prefer PasarRandom
+     * if you depend on juniper anyway because of this library.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerAlternateRandom(@Nonnull Json json) {
+        json.addClassTag("AltR", AlternateRandom.class);
+        json.setSerializer(AlternateRandom.class, new Json.Serializer<AlternateRandom>() {
+            @Override
+            public void write(Json json, AlternateRandom object, Class knownType) {
+                json.writeValue(object.serializeToString());
+            }
+
+            @Override
+            public AlternateRandom read(Json json, JsonValue jsonData, Class type) {
+                AlternateRandom r = new AlternateRandom(1L, 2L, 3L, 4L, 5L);
+                r.deserializeFromString(jsonData.asString());
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers FourWheelRandom with the given Json object, so FourWheelRandom can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -1951,13 +1977,34 @@ public final class JsonSupport {
             public RandomXS128 read(Json json, JsonValue jsonData, Class type) {
                 String s;
                 if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 5) return null;
-                final int slash = s.indexOf('~', 1);
-                final long stateA = BASE.readLong(s, 1, slash);
-                final long stateB = BASE.readLong(s, slash + 1, s.indexOf('`', slash));
+                final int split = s.indexOf('~', 1);
+                final long stateA = BASE.readLong(s, 1, split);
+                final long stateB = BASE.readLong(s, split + 1, s.indexOf('`', split));
                 return new RandomXS128(stateA, stateB);
             }
         });
     }
+
+    //// This can be used with no dependencies other than libGDX. It does allocate more than the above version.
+//    public static void registerRandomXS128(@Nonnull Json json) {
+//        json.setSerializer(RandomXS128.class, new Json.Serializer<RandomXS128>() {
+//            @Override
+//            public void write(Json json, RandomXS128 object, Class knownType) {
+//                json.writeValue("`" + object.getState(0) + "~" + object.getState(1) + "`");
+//            }
+//
+//            @Override
+//            public RandomXS128 read(Json json, JsonValue jsonData, Class type) {
+//                String s;
+//                if (jsonData == null || jsonData.isNull() || (s = jsonData.asString()) == null || s.length() < 5) return null;
+//                final int split = s.indexOf('~', 1);
+//                final long stateA = Long.parseLong(s.substring(1, split));
+//                final long stateB = Long.parseLong(s.substring(split + 1, s.indexOf('`', split)));
+//                return new RandomXS128(stateA, stateB);
+//            }
+//        });
+//    }
+
 
     /**
      * Registers ArcsineDistribution with the given Json object, so ArcsineDistribution can be written to and read from JSON.
