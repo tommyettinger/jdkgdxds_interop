@@ -178,6 +178,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerIntList(@Nonnull Json json) {
+        json.addClassTag("iL", IntList.class);
         json.setSerializer(IntList.class, new Json.Serializer<IntList>() {
             @Override
             public void write(Json json, IntList object, Class knownType) {
@@ -204,6 +205,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerLongList(@Nonnull Json json) {
+        json.addClassTag("lL", LongList.class);
         json.setSerializer(LongList.class, new Json.Serializer<LongList>() {
             @Override
             public void write(Json json, LongList object, Class knownType) {
@@ -229,6 +231,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerFloatList(@Nonnull Json json) {
+        json.addClassTag("fL", FloatList.class);
         json.setSerializer(FloatList.class, new Json.Serializer<FloatList>() {
             @Override
             public void write(Json json, FloatList object, Class knownType) {
@@ -254,6 +257,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerByteList(@Nonnull Json json) {
+        json.addClassTag("bL", ByteList.class);
         json.setSerializer(ByteList.class, new Json.Serializer<ByteList>() {
             @Override
             public void write(Json json, ByteList object, Class knownType) {
@@ -279,6 +283,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerShortList(@Nonnull Json json) {
+        json.addClassTag("sL", ShortList.class);
         json.setSerializer(ShortList.class, new Json.Serializer<ShortList>() {
             @Override
             public void write(Json json, ShortList object, Class knownType) {
@@ -304,6 +309,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerCharList(@Nonnull Json json) {
+        json.addClassTag("cL", CharList.class);
         json.setSerializer(CharList.class, new Json.Serializer<CharList>() {
             @Override
             public void write(Json json, CharList object, Class knownType) {
@@ -329,6 +335,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerDoubleList(@Nonnull Json json) {
+        json.addClassTag("dL", DoubleList.class);
         json.setSerializer(DoubleList.class, new Json.Serializer<DoubleList>() {
             @Override
             public void write(Json json, DoubleList object, Class knownType) {
@@ -354,6 +361,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerBooleanList(@Nonnull Json json) {
+        json.addClassTag("tL", BooleanList.class); // t for truth; represents boolean
         json.setSerializer(BooleanList.class, new Json.Serializer<BooleanList>() {
             @Override
             public void write(Json json, BooleanList object, Class knownType) {
@@ -374,11 +382,249 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers ObjectDeque with the given Json object, so ObjectDeque can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerObjectDeque(@Nonnull Json json) {
+        json.addClassTag("oQ", ObjectDeque.class);
+        json.setSerializer(ObjectDeque.class, new Json.Serializer<ObjectDeque>() {
+            @Override
+            public void write(Json json, ObjectDeque object, Class knownType) {
+                json.writeArrayStart();
+                for (Object o : object) {
+                    json.writeValue(o);
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public ObjectDeque<?> read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                ObjectDeque<?> data = new ObjectDeque<>(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.add(json.readValue(null, value));
+                }
+                return data;
+            }
+        });
+    }
+
+    /**
+     * Registers LongDeque with the given Json object, so LongDeque can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerLongDeque(@Nonnull Json json) {
+        json.addClassTag("lQ", LongDeque.class);
+        json.setSerializer(LongDeque.class, new Json.Serializer<LongDeque>() {
+            @Override
+            public void write(Json json, LongDeque object, Class knownType) {
+                json.writeArrayStart();
+                PrimitiveIterator.OfLong it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextLong());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public LongDeque read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return LongDeque.with(jsonData.asLongArray());
+            }
+        });
+    }
+
+    /**
+     * Registers IntDeque with the given Json object, so IntDeque can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerIntDeque(@Nonnull Json json) {
+        json.addClassTag("iQ", IntDeque.class);
+        json.setSerializer(IntDeque.class, new Json.Serializer<IntDeque>() {
+            @Override
+            public void write(Json json, IntDeque object, Class knownType) {
+                json.writeArrayStart();
+                PrimitiveIterator.OfInt it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextInt());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public IntDeque read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return IntDeque.with(jsonData.asIntArray());
+            }
+        });
+    }
+
+    /**
+     * Registers CharDeque with the given Json object, so CharDeque can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerCharDeque(@Nonnull Json json) {
+        json.addClassTag("cQ", CharDeque.class);
+        json.setSerializer(CharDeque.class, new Json.Serializer<CharDeque>() {
+            @Override
+            public void write(Json json, CharDeque object, Class knownType) {
+                json.writeArrayStart();
+                CharIterator it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextChar());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public CharDeque read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return CharDeque.with(jsonData.asCharArray());
+            }
+        });
+    }
+
+    /**
+     * Registers ShortDeque with the given Json object, so ShortDeque can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerShortDeque(@Nonnull Json json) {
+        json.addClassTag("sQ", ShortDeque.class);
+        json.setSerializer(ShortDeque.class, new Json.Serializer<ShortDeque>() {
+            @Override
+            public void write(Json json, ShortDeque object, Class knownType) {
+                json.writeArrayStart();
+                ShortIterator it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextShort());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public ShortDeque read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return ShortDeque.with(jsonData.asShortArray());
+            }
+        });
+    }
+
+    /**
+     * Registers ByteDeque with the given Json object, so ByteDeque can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerByteDeque(@Nonnull Json json) {
+        json.addClassTag("bQ", ByteDeque.class);
+        json.setSerializer(ByteDeque.class, new Json.Serializer<ByteDeque>() {
+            @Override
+            public void write(Json json, ByteDeque object, Class knownType) {
+                json.writeArrayStart();
+                ByteIterator it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextByte());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public ByteDeque read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return ByteDeque.with(jsonData.asByteArray());
+            }
+        });
+    }
+
+    /**
+     * Registers FloatDeque with the given Json object, so FloatDeque can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerFloatDeque(@Nonnull Json json) {
+        json.addClassTag("fQ", FloatDeque.class);
+        json.setSerializer(FloatDeque.class, new Json.Serializer<FloatDeque>() {
+            @Override
+            public void write(Json json, FloatDeque object, Class knownType) {
+                json.writeArrayStart();
+                FloatIterator it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextFloat());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public FloatDeque read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return FloatDeque.with(jsonData.asFloatArray());
+            }
+        });
+    }
+
+    /**
+     * Registers DoubleDeque with the given Json object, so DoubleDeque can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerDoubleDeque(@Nonnull Json json) {
+        json.addClassTag("dQ", DoubleDeque.class);
+        json.setSerializer(DoubleDeque.class, new Json.Serializer<DoubleDeque>() {
+            @Override
+            public void write(Json json, DoubleDeque object, Class knownType) {
+                json.writeArrayStart();
+                PrimitiveIterator.OfDouble it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextDouble());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public DoubleDeque read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return DoubleDeque.with(jsonData.asDoubleArray());
+            }
+        });
+    }
+
+    /**
+     * Registers BooleanDeque with the given Json object, so BooleanDeque can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerBooleanDeque(@Nonnull Json json) {
+        json.addClassTag("tQ", ObjectDeque.class); // t for truth (boolean)
+        json.setSerializer(BooleanDeque.class, new Json.Serializer<BooleanDeque>() {
+            @Override
+            public void write(Json json, BooleanDeque object, Class knownType) {
+                json.writeArrayStart();
+                BooleanIterator it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextBoolean());
+                }
+                json.writeArrayEnd();
+            }
+
+            @Override
+            public BooleanDeque read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return BooleanDeque.with(jsonData.asBooleanArray());
+            }
+        });
+    }
+
+    /**
      * Registers ObjectSet with the given Json object, so ObjectSet can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerObjectSet(@Nonnull Json json) {
+        json.addClassTag("oS", ObjectSet.class);
         json.setSerializer(ObjectSet.class, new Json.Serializer<ObjectSet>() {
             @Override
             public void write(Json json, ObjectSet object, Class knownType) {
@@ -407,6 +653,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerObjectOrderedSet(@Nonnull Json json) {
+        json.addClassTag("oOS", ObjectOrderedSet.class);
         json.setSerializer(ObjectOrderedSet.class, new Json.Serializer<ObjectOrderedSet>() {
             @Override
             public void write(Json json, ObjectOrderedSet object, Class knownType) {
@@ -435,6 +682,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerIntSet(@Nonnull Json json) {
+        json.addClassTag("iS", IntSet.class);
         json.setSerializer(IntSet.class, new Json.Serializer<IntSet>() {
             @Override
             public void write(Json json, IntSet object, Class knownType) {
@@ -460,6 +708,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerIntOrderedSet(@Nonnull Json json) {
+        json.addClassTag("iOS", IntOrderedSet.class);
         json.setSerializer(IntOrderedSet.class, new Json.Serializer<IntOrderedSet>() {
             @Override
             public void write(Json json, IntOrderedSet object, Class knownType) {
@@ -485,6 +734,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerLongSet(@Nonnull Json json) {
+        json.addClassTag("lS", LongSet.class);
         json.setSerializer(LongSet.class, new Json.Serializer<LongSet>() {
             @Override
             public void write(Json json, LongSet object, Class knownType) {
@@ -510,6 +760,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerLongOrderedSet(@Nonnull Json json) {
+        json.addClassTag("lOS", LongOrderedSet.class);
         json.setSerializer(LongOrderedSet.class, new Json.Serializer<LongOrderedSet>() {
             @Override
             public void write(Json json, LongOrderedSet object, Class knownType) {
@@ -2816,234 +3067,6 @@ public final class JsonSupport {
     }
 
     /**
-     * Registers ObjectDeque with the given Json object, so ObjectDeque can be written to and read from JSON.
-     *
-     * @param json a libGDX Json object that will have a serializer registered
-     */
-    public static void registerObjectDeque(@Nonnull Json json) {
-        json.setSerializer(ObjectDeque.class, new Json.Serializer<ObjectDeque>() {
-            @Override
-            public void write(Json json, ObjectDeque object, Class knownType) {
-                json.writeArrayStart();
-                for (Object o : object) {
-                    json.writeValue(o);
-                }
-                json.writeArrayEnd();
-            }
-
-            @Override
-            public ObjectDeque<?> read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
-                ObjectDeque<?> data = new ObjectDeque<>(jsonData.size);
-                for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.add(json.readValue(null, value));
-                }
-                return data;
-            }
-        });
-    }
-
-    /**
-     * Registers LongDeque with the given Json object, so LongDeque can be written to and read from JSON.
-     *
-     * @param json a libGDX Json object that will have a serializer registered
-     */
-    public static void registerLongDeque(@Nonnull Json json) {
-        json.setSerializer(LongDeque.class, new Json.Serializer<LongDeque>() {
-            @Override
-            public void write(Json json, LongDeque object, Class knownType) {
-                json.writeArrayStart();
-                PrimitiveIterator.OfLong it = object.iterator();
-                while (it.hasNext()) {
-                    json.writeValue(it.nextLong());
-                }
-                json.writeArrayEnd();
-            }
-
-            @Override
-            public LongDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
-                return LongDeque.with(jsonData.asLongArray());
-            }
-        });
-    }
-
-    /**
-     * Registers IntDeque with the given Json object, so IntDeque can be written to and read from JSON.
-     *
-     * @param json a libGDX Json object that will have a serializer registered
-     */
-    public static void registerIntDeque(@Nonnull Json json) {
-        json.setSerializer(IntDeque.class, new Json.Serializer<IntDeque>() {
-            @Override
-            public void write(Json json, IntDeque object, Class knownType) {
-                json.writeArrayStart();
-                PrimitiveIterator.OfInt it = object.iterator();
-                while (it.hasNext()) {
-                    json.writeValue(it.nextInt());
-                }
-                json.writeArrayEnd();
-            }
-
-            @Override
-            public IntDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
-                return IntDeque.with(jsonData.asIntArray());
-            }
-        });
-    }
-
-    /**
-     * Registers CharDeque with the given Json object, so CharDeque can be written to and read from JSON.
-     *
-     * @param json a libGDX Json object that will have a serializer registered
-     */
-    public static void registerCharDeque(@Nonnull Json json) {
-        json.setSerializer(CharDeque.class, new Json.Serializer<CharDeque>() {
-            @Override
-            public void write(Json json, CharDeque object, Class knownType) {
-                json.writeArrayStart();
-                CharIterator it = object.iterator();
-                while (it.hasNext()) {
-                    json.writeValue(it.nextChar());
-                }
-                json.writeArrayEnd();
-            }
-
-            @Override
-            public CharDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
-                return CharDeque.with(jsonData.asCharArray());
-            }
-        });
-    }
-
-    /**
-     * Registers ShortDeque with the given Json object, so ShortDeque can be written to and read from JSON.
-     *
-     * @param json a libGDX Json object that will have a serializer registered
-     */
-    public static void registerShortDeque(@Nonnull Json json) {
-        json.setSerializer(ShortDeque.class, new Json.Serializer<ShortDeque>() {
-            @Override
-            public void write(Json json, ShortDeque object, Class knownType) {
-                json.writeArrayStart();
-                ShortIterator it = object.iterator();
-                while (it.hasNext()) {
-                    json.writeValue(it.nextShort());
-                }
-                json.writeArrayEnd();
-            }
-
-            @Override
-            public ShortDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
-                return ShortDeque.with(jsonData.asShortArray());
-            }
-        });
-    }
-
-    /**
-     * Registers ByteDeque with the given Json object, so ByteDeque can be written to and read from JSON.
-     *
-     * @param json a libGDX Json object that will have a serializer registered
-     */
-    public static void registerByteDeque(@Nonnull Json json) {
-        json.setSerializer(ByteDeque.class, new Json.Serializer<ByteDeque>() {
-            @Override
-            public void write(Json json, ByteDeque object, Class knownType) {
-                json.writeArrayStart();
-                ByteIterator it = object.iterator();
-                while (it.hasNext()) {
-                    json.writeValue(it.nextByte());
-                }
-                json.writeArrayEnd();
-            }
-
-            @Override
-            public ByteDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
-                return ByteDeque.with(jsonData.asByteArray());
-            }
-        });
-    }
-
-    /**
-     * Registers FloatDeque with the given Json object, so FloatDeque can be written to and read from JSON.
-     *
-     * @param json a libGDX Json object that will have a serializer registered
-     */
-    public static void registerFloatDeque(@Nonnull Json json) {
-        json.setSerializer(FloatDeque.class, new Json.Serializer<FloatDeque>() {
-            @Override
-            public void write(Json json, FloatDeque object, Class knownType) {
-                json.writeArrayStart();
-                FloatIterator it = object.iterator();
-                while (it.hasNext()) {
-                    json.writeValue(it.nextFloat());
-                }
-                json.writeArrayEnd();
-            }
-
-            @Override
-            public FloatDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
-                return FloatDeque.with(jsonData.asFloatArray());
-            }
-        });
-    }
-
-    /**
-     * Registers DoubleDeque with the given Json object, so DoubleDeque can be written to and read from JSON.
-     *
-     * @param json a libGDX Json object that will have a serializer registered
-     */
-    public static void registerDoubleDeque(@Nonnull Json json) {
-        json.setSerializer(DoubleDeque.class, new Json.Serializer<DoubleDeque>() {
-            @Override
-            public void write(Json json, DoubleDeque object, Class knownType) {
-                json.writeArrayStart();
-                PrimitiveIterator.OfDouble it = object.iterator();
-                while (it.hasNext()) {
-                    json.writeValue(it.nextDouble());
-                }
-                json.writeArrayEnd();
-            }
-
-            @Override
-            public DoubleDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
-                return DoubleDeque.with(jsonData.asDoubleArray());
-            }
-        });
-    }
-
-    /**
-     * Registers BooleanDeque with the given Json object, so BooleanDeque can be written to and read from JSON.
-     *
-     * @param json a libGDX Json object that will have a serializer registered
-     */
-    public static void registerBooleanDeque(@Nonnull Json json) {
-        json.setSerializer(BooleanDeque.class, new Json.Serializer<BooleanDeque>() {
-            @Override
-            public void write(Json json, BooleanDeque object, Class knownType) {
-                json.writeArrayStart();
-                BooleanIterator it = object.iterator();
-                while (it.hasNext()) {
-                    json.writeValue(it.nextBoolean());
-                }
-                json.writeArrayEnd();
-            }
-
-            @Override
-            public BooleanDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
-                return BooleanDeque.with(jsonData.asBooleanArray());
-            }
-        });
-    }
-
-    /**
      * Registers Base with the given Json object, so Base can be written to and read from JSON.
      * This is a simple wrapper around Base's built-in {@link Base#serializeToString()} and
      * {@link Base#deserializeFromString(String)} methods.
@@ -3093,6 +3116,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerClass(@Nonnull Json json) {
+        json.addClassTag("C", Class.class); // just Class type
         json.setSerializer(Class.class, new Json.Serializer<Class>() {
             @Override
             public void write(Json json, Class object, Class knownType) {
