@@ -384,7 +384,7 @@ public final class JsonSupport {
             public void write(Json json, ObjectSet object, Class knownType) {
                 json.writeArrayStart();
                 for (Object o : object) {
-                    json.writeValue(o);
+                    json.writeValue(o, null);
                 }
                 json.writeArrayEnd();
             }
@@ -412,7 +412,7 @@ public final class JsonSupport {
             public void write(Json json, ObjectOrderedSet object, Class knownType) {
                 json.writeArrayStart();
                 for (Object o : object) {
-                    json.writeValue(o);
+                    json.writeValue(o, null);
                 }
                 json.writeArrayEnd();
             }
@@ -541,7 +541,7 @@ public final class JsonSupport {
             public void write(Json json, ObjectObjectMap object, Class knownType) {
                 JsonWriter writer = json.getWriter();
                 try {
-                    json.writeObjectStart(ObjectObjectMap.class, null);
+                    json.writeObjectStart();
                 } catch (SerializationException ignored) {
                 }
                 Iterator<Map.Entry<Object, Object>> es = new ObjectObjectMap.Entries<Object, Object>(object).iterator();
@@ -1530,7 +1530,8 @@ public final class JsonSupport {
             @Override
             public OffsetBitSet read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                OffsetBitSet obs = new OffsetBitSet(jsonData.get("offset").asInt());
+                OffsetBitSet obs = new OffsetBitSet();
+                obs.setOffset(jsonData.get("offset").asInt());
                 obs.addAll(jsonData.get("values").asIntArray());
                 return obs;
             }
