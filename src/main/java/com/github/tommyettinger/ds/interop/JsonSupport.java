@@ -579,6 +579,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerObjectObjectOrderedMap(@Nonnull Json json) {
+        json.addClassTag("ooOM", ObjectObjectOrderedMap.class);
         json.setSerializer(ObjectObjectOrderedMap.class, new Json.Serializer<ObjectObjectOrderedMap>() {
             @Override
             public void write(Json json, ObjectObjectOrderedMap object, Class knownType) {
@@ -623,6 +624,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerObjectLongMap(@Nonnull Json json) {
+        json.addClassTag("olM", ObjectLongMap.class);
         json.setSerializer(ObjectLongMap.class, new Json.Serializer<ObjectLongMap>() {
             @Override
             public void write(Json json, ObjectLongMap object, Class knownType) {
@@ -667,6 +669,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerObjectLongOrderedMap(@Nonnull Json json) {
+        json.addClassTag("olOM", ObjectLongOrderedMap.class);
         json.setSerializer(ObjectLongOrderedMap.class, new Json.Serializer<ObjectLongOrderedMap>() {
             @Override
             public void write(Json json, ObjectLongOrderedMap object, Class knownType) {
@@ -711,6 +714,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerObjectIntMap(@Nonnull Json json) {
+        json.addClassTag("oiM", ObjectIntMap.class);
         json.setSerializer(ObjectIntMap.class, new Json.Serializer<ObjectIntMap>() {
             @Override
             public void write(Json json, ObjectIntMap object, Class knownType) {
@@ -755,6 +759,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerObjectIntOrderedMap(@Nonnull Json json) {
+        json.addClassTag("oiOM", ObjectIntOrderedMap.class);
         json.setSerializer(ObjectIntOrderedMap.class, new Json.Serializer<ObjectIntOrderedMap>() {
             @Override
             public void write(Json json, ObjectIntOrderedMap object, Class knownType) {
@@ -799,6 +804,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerObjectFloatMap(@Nonnull Json json) {
+        json.addClassTag("ofM", ObjectFloatMap.class);
         json.setSerializer(ObjectFloatMap.class, new Json.Serializer<ObjectFloatMap>() {
             @Override
             public void write(Json json, ObjectFloatMap object, Class knownType) {
@@ -843,6 +849,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerObjectFloatOrderedMap(@Nonnull Json json) {
+        json.addClassTag("ofOM", ObjectFloatOrderedMap.class);
         json.setSerializer(ObjectFloatOrderedMap.class, new Json.Serializer<ObjectFloatOrderedMap>() {
             @Override
             public void write(Json json, ObjectFloatOrderedMap object, Class knownType) {
@@ -886,6 +893,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerIntObjectMap(@Nonnull Json json) {
+        json.addClassTag("ioM", IntObjectMap.class);
         json.setSerializer(IntObjectMap.class, new Json.Serializer<IntObjectMap>() {
             @Override
             public void write(Json json, IntObjectMap object, Class knownType) {
@@ -914,6 +922,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerIntObjectOrderedMap(@Nonnull Json json) {
+        json.addClassTag("ioOM", IntObjectOrderedMap.class);
         json.setSerializer(IntObjectOrderedMap.class, new Json.Serializer<IntObjectOrderedMap>() {
             @Override
             public void write(Json json, IntObjectOrderedMap object, Class knownType) {
@@ -942,6 +951,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerIntIntMap(@Nonnull Json json) {
+        json.addClassTag("iiM", IntIntMap.class);
         json.setSerializer(IntIntMap.class, new Json.Serializer<IntIntMap>() {
             @Override
             public void write(Json json, IntIntMap object, Class knownType) {
@@ -970,6 +980,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerIntIntOrderedMap(@Nonnull Json json) {
+        json.addClassTag("iiOM", IntIntOrderedMap.class);
         json.setSerializer(IntIntOrderedMap.class, new Json.Serializer<IntIntOrderedMap>() {
             @Override
             public void write(Json json, IntIntOrderedMap object, Class knownType) {
@@ -998,6 +1009,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerIntLongMap(@Nonnull Json json) {
+        json.addClassTag("ilM", IntLongMap.class);
         json.setSerializer(IntLongMap.class, new Json.Serializer<IntLongMap>() {
             @Override
             public void write(Json json, IntLongMap object, Class knownType) {
@@ -1026,6 +1038,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerIntLongOrderedMap(@Nonnull Json json) {
+        json.addClassTag("ilOM", IntLongOrderedMap.class);
         json.setSerializer(IntLongOrderedMap.class, new Json.Serializer<IntLongOrderedMap>() {
             @Override
             public void write(Json json, IntLongOrderedMap object, Class knownType) {
@@ -1054,6 +1067,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerIntFloatMap(@Nonnull Json json) {
+        json.addClassTag("ifM", IntFloatMap.class);
         json.setSerializer(IntFloatMap.class, new Json.Serializer<IntFloatMap>() {
             @Override
             public void write(Json json, IntFloatMap object, Class knownType) {
@@ -1082,6 +1096,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerIntFloatOrderedMap(@Nonnull Json json) {
+        json.addClassTag("ifOM", IntFloatOrderedMap.class);
         json.setSerializer(IntFloatOrderedMap.class, new Json.Serializer<IntFloatOrderedMap>() {
             @Override
             public void write(Json json, IntFloatOrderedMap object, Class knownType) {
@@ -1110,6 +1125,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerLongObjectMap(@Nonnull Json json) {
+        json.addClassTag("loM", LongObjectMap.class);
         json.setSerializer(LongObjectMap.class, new Json.Serializer<LongObjectMap>() {
             @Override
             public void write(Json json, LongObjectMap object, Class knownType) {
@@ -1138,6 +1154,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerLongObjectOrderedMap(@Nonnull Json json) {
+        json.addClassTag("loOM", LongObjectOrderedMap.class);
         json.setSerializer(LongObjectOrderedMap.class, new Json.Serializer<LongObjectOrderedMap>() {
             @Override
             public void write(Json json, LongObjectOrderedMap object, Class knownType) {
@@ -1166,6 +1183,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerLongIntMap(@Nonnull Json json) {
+        json.addClassTag("liM", LongIntMap.class);
         json.setSerializer(LongIntMap.class, new Json.Serializer<LongIntMap>() {
             @Override
             public void write(Json json, LongIntMap object, Class knownType) {
@@ -1194,6 +1212,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerLongIntOrderedMap(@Nonnull Json json) {
+        json.addClassTag("liOM", LongIntOrderedMap.class);
         json.setSerializer(LongIntOrderedMap.class, new Json.Serializer<LongIntOrderedMap>() {
             @Override
             public void write(Json json, LongIntOrderedMap object, Class knownType) {
@@ -1222,6 +1241,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerLongLongMap(@Nonnull Json json) {
+        json.addClassTag("llM", LongLongMap.class);
         json.setSerializer(LongLongMap.class, new Json.Serializer<LongLongMap>() {
             @Override
             public void write(Json json, LongLongMap object, Class knownType) {
@@ -1250,6 +1270,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerLongLongOrderedMap(@Nonnull Json json) {
+        json.addClassTag("llOM", LongLongOrderedMap.class);
         json.setSerializer(LongLongOrderedMap.class, new Json.Serializer<LongLongOrderedMap>() {
             @Override
             public void write(Json json, LongLongOrderedMap object, Class knownType) {
@@ -1278,6 +1299,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerLongFloatMap(@Nonnull Json json) {
+        json.addClassTag("lfM", LongFloatMap.class);
         json.setSerializer(LongFloatMap.class, new Json.Serializer<LongFloatMap>() {
             @Override
             public void write(Json json, LongFloatMap object, Class knownType) {
@@ -1306,6 +1328,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerLongFloatOrderedMap(@Nonnull Json json) {
+        json.addClassTag("lfOM", LongFloatOrderedMap.class);
         json.setSerializer(LongFloatOrderedMap.class, new Json.Serializer<LongFloatOrderedMap>() {
             @Override
             public void write(Json json, LongFloatOrderedMap object, Class knownType) {
@@ -1336,6 +1359,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerBinaryHeap(@Nonnull Json json) {
+        json.addClassTag("oBQ", BinaryHeap.class); // object items, Bit kind, Queue type
         json.setSerializer(BinaryHeap.class, new Json.Serializer<BinaryHeap>() {
             @Override
             public void write(Json json, BinaryHeap object, Class knownType) {
@@ -1368,6 +1392,7 @@ public final class JsonSupport {
      */
     
     public static void registerNumberedSet(@Nonnull Json json) {
+        json.addClassTag("oNS", NumberedSet.class); // object items, Numbered kind, Set type
         json.setSerializer(NumberedSet.class, new Json.Serializer<NumberedSet>() {
             @Override
             public void write(Json json, NumberedSet object, Class knownType) {
@@ -1396,6 +1421,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerCaseInsensitiveSet(@Nonnull Json json) {
+        json.addClassTag("oCS", CaseInsensitiveSet.class); // object items, Case-insensitive kind, Set type
         json.setSerializer(CaseInsensitiveSet.class, new Json.Serializer<CaseInsensitiveSet>() {
             @Override
             public void write(Json json, CaseInsensitiveSet object, Class knownType) {
@@ -1424,6 +1450,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerCaseInsensitiveOrderedSet(@Nonnull Json json) {
+        json.addClassTag("oCOS", CaseInsensitiveSet.class); // object items, Case-insensitive+Ordered kind, Set type
         json.setSerializer(CaseInsensitiveOrderedSet.class, new Json.Serializer<CaseInsensitiveOrderedSet>() {
             @Override
             public void write(Json json, CaseInsensitiveOrderedSet object, Class knownType) {
@@ -1452,6 +1479,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerCaseInsensitiveMap(@Nonnull Json json) {
+        json.addClassTag("ooCM", CaseInsensitiveSet.class); // object keys, object values, Case-insensitive kind, Map type
         json.setSerializer(CaseInsensitiveMap.class, new Json.Serializer<CaseInsensitiveMap>() {
             @Override
             public void write(Json json, CaseInsensitiveMap object, Class knownType) {
@@ -1482,6 +1510,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerCaseInsensitiveOrderedMap(@Nonnull Json json) {
+        json.addClassTag("ooCOM", CaseInsensitiveSet.class); // object keys, object values, Case-insensitive+Ordered kind, Map type
         json.setSerializer(CaseInsensitiveOrderedMap.class, new Json.Serializer<CaseInsensitiveOrderedMap>() {
             @Override
             public void write(Json json, CaseInsensitiveOrderedMap object, Class knownType) {
@@ -1512,6 +1541,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerOffsetBitSet(@Nonnull Json json) {
+        json.addClassTag("iBS", OffsetBitSet.class); // int items, Bit kind, Set type
         json.setSerializer(OffsetBitSet.class, new Json.Serializer<OffsetBitSet>() {
             @Override
             public void write(Json json, OffsetBitSet object, Class knownType) {

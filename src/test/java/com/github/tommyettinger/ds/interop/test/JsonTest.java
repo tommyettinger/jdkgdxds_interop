@@ -925,7 +925,7 @@ public class JsonTest {
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
-//        Assert.assertEquals(words, words2); // Should be fixed in 1.1.1
+//        Assert.assertEquals(words, words2); // Should be fixed in jdkgdxds 1.1.1
         System.out.println();
     }
 
@@ -944,7 +944,7 @@ public class JsonTest {
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
-//        Assert.assertEquals(words, words2); // Should be fixed in 1.1.1
+//        Assert.assertEquals(words, words2); // Should be fixed in jdkgdxds 1.1.1
         System.out.println();
     }
 
