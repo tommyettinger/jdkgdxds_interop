@@ -38,9 +38,9 @@ you should probably write your own serializer modeled after the serializer for t
 Java 17 and higher block libGDX's `Json` class from accessing the state of `java.util.Random`, which also prevents any
 serialization of subclasses unless they use custom serialization. This also means that `java.util.Random` can't be
 serialized or deserialized by libGDX `Json` on JDK 17 or higher, even with a custom serializer, unless some special
-additional work happens (and even that might not work on future JDKs). `digital`'s `AlternateRandom` class matches the
-API of `Random` exactly, so it doesn't allow anything to be serialized either on JDK 17 -- use juniper's `PasarRandom`
-instead, since it uses the same algorithm.
+additional work happens (and even that might not work on future JDKs). `digital`'s `AlternateRandom` class is also now
+serializable here; its algorithm is the same as `PasarRandom` from juniper, but it doesn't have as many features, so
+simply using `PasarRandom` is preferable if you depend on juniper anyway. 
 
 Starting with juniper 0.1.0, it now contains quite a few statistical distributions, each of which stores some parameter
 or parameters and an EnhancedRandom to generate numbers. These can all be registered individually or as a group by
@@ -56,17 +56,17 @@ be handy to weakly obfuscate numbers if you pass a scrambled base (as `Base` can
 ## How do I get it?
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api`, is: 
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.4.1"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.1.0.0"
 ```
 It's not unlikely that you might need `api` instead of `implementation`, especially if you are writing a library, or a
 module that needs to be used from another section.
 
 If you use GWT (libGDX's HTML target), then you also need this in your `html/build.gradle` file:
 ```groovy
-implementation "com.github.tommyettinger:digital:0.1.4:sources"
-implementation "com.github.tommyettinger:juniper:0.1.6:sources"
-implementation "com.github.tommyettinger:jdkgdxds:1.0.4:sources"
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.0.4.1:sources"
+implementation "com.github.tommyettinger:digital:0.1.6:sources"
+implementation "com.github.tommyettinger:juniper:0.1.7:sources"
+implementation "com.github.tommyettinger:jdkgdxds:1.1.0:sources"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.1.0.0:sources"
 ```
 You also need the GWT `inherits` in your `GdxDefinition.gwt.xml` file:
 ```xml
@@ -76,5 +76,10 @@ You also need the GWT `inherits` in your `GdxDefinition.gwt.xml` file:
     <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
     <inherits name="jdkgdxds_interop" />
 ```
+
+On GWT, this library patches a small bug in libGDX 1.11.0, where `ObjectLongMap` isn't available for reflection or even
+as a source file. This does mean you will currently get a minor warning when compiling on GWT because there will be
+duplicate reflection entries; one each from the incomplete libGDX file and one each from the jdkgdxds-interop file. This
+warning can be safely ignored.
 
 I hope that's all you need! It's a small-ish simple library!
