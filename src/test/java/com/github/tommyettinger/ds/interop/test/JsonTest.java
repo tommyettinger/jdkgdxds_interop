@@ -333,6 +333,7 @@ public class JsonTest {
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(points, points2);
     }
 
     @Test
@@ -396,6 +397,7 @@ public class JsonTest {
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(points, points2);
     }
 
     @Test
@@ -427,6 +429,7 @@ public class JsonTest {
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(points, points2);
     }
 
     @Test
@@ -458,6 +461,7 @@ public class JsonTest {
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(points, points2);
     }
 
     @Test
@@ -489,6 +493,7 @@ public class JsonTest {
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(points, points2);
     }
 
 
@@ -521,6 +526,7 @@ public class JsonTest {
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(points, points2);
     }
 
     @Test
@@ -552,6 +558,7 @@ public class JsonTest {
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(points, points2);
     }
 
     @Test
@@ -947,7 +954,7 @@ public class JsonTest {
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
-        Assert.assertEquals(words, words2); // Should be fixed in jdkgdxds 1.1.2
+        Assert.assertEquals(words, words2);
         System.out.println();
     }
 
@@ -973,6 +980,7 @@ public class JsonTest {
             System.out.print(point);
             System.out.print(", ");
         }
+        Assert.assertEquals(points, points2);
     }
 
     public static class TestNode<E> extends BinaryHeap.Node {

@@ -888,7 +888,7 @@ public final class JsonSupport {
                 while (es.hasNext()) {
                     ObjectLongMap.Entry<?> e = es.next();
                     try {
-                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
+                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey(), (Class) null);
                         json.setWriter(writer);
                         writer.name(k);
                         json.writeValue(e.getValue());
@@ -933,7 +933,7 @@ public final class JsonSupport {
                 while (es.hasNext()) {
                     ObjectLongMap.Entry<?> e = es.next();
                     try {
-                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
+                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey(), (Class) null);
                         json.setWriter(writer);
                         writer.name(k);
                         json.writeValue(e.getValue());
@@ -978,7 +978,7 @@ public final class JsonSupport {
                 while (es.hasNext()) {
                     ObjectIntMap.Entry<?> e = es.next();
                     try {
-                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
+                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey(), (Class) null);
                         json.setWriter(writer);
                         writer.name(k);
                         json.writeValue(e.getValue());
@@ -1023,7 +1023,7 @@ public final class JsonSupport {
                 while (es.hasNext()) {
                     ObjectIntMap.Entry<?> e = es.next();
                     try {
-                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
+                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey(), (Class) null);
                         json.setWriter(writer);
                         writer.name(k);
                         json.writeValue(e.getValue());
@@ -1068,7 +1068,7 @@ public final class JsonSupport {
                 while (es.hasNext()) {
                     ObjectFloatMap.Entry<?> e = es.next();
                     try {
-                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
+                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey(), (Class) null);
                         json.setWriter(writer);
                         writer.name(k);
                         json.writeValue(e.getValue());
@@ -1113,7 +1113,7 @@ public final class JsonSupport {
                 while (es.hasNext()) {
                     ObjectFloatMap.Entry<?> e = es.next();
                     try {
-                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey());
+                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey(), (Class) null);
                         json.setWriter(writer);
                         writer.name(k);
                         json.writeValue(e.getValue());
@@ -1649,7 +1649,7 @@ public final class JsonSupport {
             public void write(Json json, NumberedSet object, Class knownType) {
                 json.writeArrayStart();
                 for (Object o : object) {
-                    json.writeValue(o);
+                    json.writeValue(o, null);
                 }
                 json.writeArrayEnd();
             }
