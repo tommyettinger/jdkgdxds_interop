@@ -13,10 +13,10 @@ import com.github.tommyettinger.random.*;
 import com.github.tommyettinger.digital.Base;
 import com.github.tommyettinger.ds.support.util.*;
 import com.github.tommyettinger.random.distribution.*;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -913,10 +913,11 @@ public class JsonTest {
     @Test
     public void testCaseInsensitiveMap() {
         Json json = new Json(JsonWriter.OutputType.minimal);
+        json.addClassTag("Grd2", GridPoint2.class);
         JsonSupport.registerCaseInsensitiveMap(json);
         CaseInsensitiveMap<GridPoint2> words = new CaseInsensitiveMap<>(new String[]{"foo", "bar", "baz"},
                 new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)});
-        String data = json.toJson(words);
+        String data = json.toJson(words, CaseInsensitiveMap.class);
         System.out.println(data);
         CaseInsensitiveMap<?> words2 = json.fromJson(CaseInsensitiveMap.class, data);
         for(Map.Entry<CharSequence, ?> pair : words2) {
@@ -925,13 +926,14 @@ public class JsonTest {
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
-//        Assert.assertEquals(words, words2); // Should be fixed in jdkgdxds 1.1.1
+        Assert.assertEquals(words, words2);
         System.out.println();
     }
 
     @Test
     public void testCaseInsensitiveOrderedMap() {
         Json json = new Json(JsonWriter.OutputType.minimal);
+        json.addClassTag("Grd2", GridPoint2.class);
         JsonSupport.registerCaseInsensitiveOrderedMap(json);
         CaseInsensitiveOrderedMap<GridPoint2> words = new CaseInsensitiveOrderedMap<>(new String[]{"foo", "bar", "baz"},
                 new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)});
@@ -944,7 +946,7 @@ public class JsonTest {
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
-//        Assert.assertEquals(words, words2); // Should be fixed in jdkgdxds 1.1.1
+        Assert.assertEquals(words, words2); // Should be fixed in jdkgdxds 1.1.2
         System.out.println();
     }
 
@@ -2024,7 +2026,7 @@ public class JsonTest {
         }
     }
 
-    public static void registerComposite(@Nonnull Json json) {
+    public static void registerComposite(@NonNull Json json) {
         JsonSupport.registerObjectObjectMap(json);
         JsonSupport.registerEnhancedRandom(json);
         json.setSerializer(Composite.class, new Json.Serializer<Composite>() {
