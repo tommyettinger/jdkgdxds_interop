@@ -364,6 +364,7 @@ public class JsonTest {
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(points, points2);
     }
 
     @Test
