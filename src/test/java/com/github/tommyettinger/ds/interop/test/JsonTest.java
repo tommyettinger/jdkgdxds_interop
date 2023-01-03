@@ -2083,7 +2083,7 @@ public class JsonTest {
             ObjectObjectMap<Vector2, String> hm1 = ObjectObjectMap.with(new Vector2(1, 2), "1 2");
             ObjectObjectMap<Vector2, String> hm2 = ObjectObjectMap.with(new Vector2(3, 4), "3 4", new Vector2(5, 6), "5 6");
             ObjectObjectMap<Vector2, String> hm3 = ObjectObjectMap.with(new Vector2(7, 8), "7 8", new Vector2(9, 0), "9 0");
-            deep.add(ObjectList.with(hm0, hm1));
+            deep.add(ObjectList.with(hm1, hm0));
             deep.add(ObjectList.with(hm2, hm3));
             deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
 
@@ -2107,13 +2107,57 @@ public class JsonTest {
             ObjectObjectOrderedMap<Vector2, String> hm1 = ObjectObjectOrderedMap.with(new Vector2(1, 2), "1 2");
             ObjectObjectOrderedMap<Vector2, String> hm2 = ObjectObjectOrderedMap.with(new Vector2(3, 4), "3 4", new Vector2(5, 6), "5 6");
             ObjectObjectOrderedMap<Vector2, String> hm3 = ObjectObjectOrderedMap.with(new Vector2(7, 8), "7 8", new Vector2(9, 0), "9 0");
-            deep.add(ObjectList.with(hm0, hm1));
+            deep.add(ObjectList.with(hm1, hm0));
             deep.add(ObjectList.with(hm2, hm3));
             deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
 
             Json json = new Json(JsonWriter.OutputType.minimal);
             JsonSupport.registerObjectList(json);
             JsonSupport.registerObjectObjectOrderedMap(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().values().iterator().next().getClass());
+        }
+        {
+            ObjectList<ObjectList<ObjectFloatMap<Vector2>>> deep = new ObjectList<>(8), after;
+            ObjectFloatMap<Vector2> hm0 = new ObjectFloatMap<>(1);
+            ObjectFloatMap<Vector2> hm1 = ObjectFloatMap.with(new Vector2(1, 2), 1.2f);
+            ObjectFloatMap<Vector2> hm2 = ObjectFloatMap.with(new Vector2(3, 4), 3.4f, new Vector2(5, 6), 5.6f);
+            ObjectFloatMap<Vector2> hm3 = ObjectFloatMap.with(new Vector2(7, 8), 7.8f, new Vector2(9, 0), 9.0f);
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerObjectFloatMap(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().values().iterator().next().getClass());
+        }
+        {
+            ObjectList<ObjectList<ObjectFloatOrderedMap<Vector2>>> deep = new ObjectList<>(8), after;
+            ObjectFloatOrderedMap<Vector2> hm0 = new ObjectFloatOrderedMap<>(1);
+            ObjectFloatOrderedMap<Vector2> hm1 = ObjectFloatOrderedMap.with(new Vector2(1, 2), 1.2f);
+            ObjectFloatOrderedMap<Vector2> hm2 = ObjectFloatOrderedMap.with(new Vector2(3, 4), 3.4f, new Vector2(5, 6), 5.6f);
+            ObjectFloatOrderedMap<Vector2> hm3 = ObjectFloatOrderedMap.with(new Vector2(7, 8), 7.8f, new Vector2(9, 0), 9.0f);
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerObjectFloatOrderedMap(json);
             String data = json.toJson(deep);
             System.out.println(data);
             after = json.fromJson(ObjectList.class, data);

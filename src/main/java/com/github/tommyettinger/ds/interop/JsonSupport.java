@@ -805,6 +805,8 @@ public final class JsonSupport {
             @Override
             public ObjectObjectMap<?, ?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                if("ooM".equals(jsonData.getString(0)))
+                    jsonData.child.remove();
                 ObjectObjectMap<?, ?> data = new ObjectObjectMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), json.readValue(null, value));
@@ -839,6 +841,8 @@ public final class JsonSupport {
             @Override
             public ObjectObjectOrderedMap<?, ?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                if("ooOM".equals(jsonData.getString(0)))
+                    jsonData.child.remove();
                 ObjectObjectOrderedMap<?, ?> data = new ObjectObjectOrderedMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), json.readValue(null, value));
@@ -874,6 +878,8 @@ public final class JsonSupport {
             @Override
             public ObjectLongMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                if("olM".equals(jsonData.getString(0)))
+                    jsonData.child.remove();
                 ObjectLongMap<?> data = new ObjectLongMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), json.readValue(long.class, value));
@@ -909,6 +915,8 @@ public final class JsonSupport {
             @Override
             public ObjectLongOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                if("olOM".equals(jsonData.getString(0)))
+                    jsonData.child.remove();
                 ObjectLongOrderedMap<?> data = new ObjectLongOrderedMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), json.readValue(long.class, value));
@@ -944,6 +952,8 @@ public final class JsonSupport {
             @Override
             public ObjectIntMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                if("oiM".equals(jsonData.getString(0)))
+                    jsonData.child.remove();
                 ObjectIntMap<?> data = new ObjectIntMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), json.readValue(int.class, value));
@@ -979,6 +989,8 @@ public final class JsonSupport {
             @Override
             public ObjectIntOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                if("oiOM".equals(jsonData.getString(0)))
+                    jsonData.child.remove();
                 ObjectIntOrderedMap<?> data = new ObjectIntOrderedMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), json.readValue(int.class, value));
@@ -1014,9 +1026,11 @@ public final class JsonSupport {
             @Override
             public ObjectFloatMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                if("ofM".equals(jsonData.getString(0)))
+                    jsonData.child.remove();
                 ObjectFloatMap<?> data = new ObjectFloatMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.put(json.fromJson(null, value.name), json.readValue(float.class, value));
+                    data.put(json.fromJson(null, value.name), value.asFloat());
                 }
                 return data;
             }
@@ -1049,6 +1063,8 @@ public final class JsonSupport {
             @Override
             public ObjectFloatOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                if("ofOM".equals(jsonData.getString(0)))
+                    jsonData.child.remove();
                 ObjectFloatOrderedMap<?> data = new ObjectFloatOrderedMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), json.readValue(float.class, value));
