@@ -1084,7 +1084,7 @@ public final class JsonSupport {
         json.setSerializer(IntObjectMap.class, new Json.Serializer<IntObjectMap>() {
             @Override
             public void write(Json json, IntObjectMap object, Class knownType) {
-                json.writeObjectStart();
+                json.writeObjectStart(IntObjectMap.class, knownType);
                 for (IntObjectMap.Entry<Object> e : new IntObjectMap.Entries<Object>(object)) {
                     json.writeValue(Integer.toString(e.key), e.getValue());
                 }
@@ -1094,6 +1094,8 @@ public final class JsonSupport {
             @Override
             public IntObjectMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                if("ioM".equals(jsonData.getString(0)))
+                    jsonData.child.remove();
                 IntObjectMap<?> data = new IntObjectMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), json.readValue(null, value));
@@ -1113,7 +1115,7 @@ public final class JsonSupport {
         json.setSerializer(IntObjectOrderedMap.class, new Json.Serializer<IntObjectOrderedMap>() {
             @Override
             public void write(Json json, IntObjectOrderedMap object, Class knownType) {
-                json.writeObjectStart();
+                json.writeObjectStart(IntObjectOrderedMap.class, knownType);
                 for (IntObjectOrderedMap.Entry<Object> e : new IntObjectOrderedMap.OrderedMapEntries<Object>(object)) {
                     json.writeValue(Integer.toString(e.key), e.getValue());
                 }
@@ -1123,6 +1125,8 @@ public final class JsonSupport {
             @Override
             public IntObjectOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                if("ioOM".equals(jsonData.getString(0)))
+                    jsonData.child.remove();
                 IntObjectOrderedMap<?> data = new IntObjectOrderedMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), json.readValue(null, value));
@@ -1142,7 +1146,7 @@ public final class JsonSupport {
         json.setSerializer(IntIntMap.class, new Json.Serializer<IntIntMap>() {
             @Override
             public void write(Json json, IntIntMap object, Class knownType) {
-                json.writeObjectStart();
+                json.writeObjectStart(IntIntMap.class, knownType);
                 for (IntIntMap.Entry e : new IntIntMap.Entries(object)) {
                     json.writeValue(Integer.toString(e.key), e.getValue());
                 }
@@ -1152,6 +1156,8 @@ public final class JsonSupport {
             @Override
             public IntIntMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                if("iiM".equals(jsonData.getString(0)))
+                    jsonData.child.remove();
                 IntIntMap data = new IntIntMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), json.readValue(int.class, value));
@@ -1171,7 +1177,7 @@ public final class JsonSupport {
         json.setSerializer(IntIntOrderedMap.class, new Json.Serializer<IntIntOrderedMap>() {
             @Override
             public void write(Json json, IntIntOrderedMap object, Class knownType) {
-                json.writeObjectStart();
+                json.writeObjectStart(IntIntOrderedMap.class, knownType);
                 for (IntIntOrderedMap.Entry e : new IntIntOrderedMap.OrderedMapEntries(object)) {
                     json.writeValue(Integer.toString(e.key), e.getValue());
                 }
@@ -1181,6 +1187,8 @@ public final class JsonSupport {
             @Override
             public IntIntOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                if("iiOM".equals(jsonData.getString(0)))
+                    jsonData.child.remove();
                 IntIntOrderedMap data = new IntIntOrderedMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), json.readValue(int.class, value));
@@ -1200,7 +1208,7 @@ public final class JsonSupport {
         json.setSerializer(IntLongMap.class, new Json.Serializer<IntLongMap>() {
             @Override
             public void write(Json json, IntLongMap object, Class knownType) {
-                json.writeObjectStart();
+                json.writeObjectStart(IntLongMap.class, knownType);
                 for (IntLongMap.Entry e : new IntLongMap.Entries(object)) {
                     json.writeValue(Integer.toString(e.key), e.getValue());
                 }
@@ -1210,6 +1218,8 @@ public final class JsonSupport {
             @Override
             public IntLongMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                if("ilM".equals(jsonData.getString(0)))
+                    jsonData.child.remove();
                 IntLongMap data = new IntLongMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), json.readValue(long.class, value));
@@ -1229,7 +1239,7 @@ public final class JsonSupport {
         json.setSerializer(IntLongOrderedMap.class, new Json.Serializer<IntLongOrderedMap>() {
             @Override
             public void write(Json json, IntLongOrderedMap object, Class knownType) {
-                json.writeObjectStart();
+                json.writeObjectStart(IntLongOrderedMap.class, knownType);
                 for (IntLongOrderedMap.Entry e : new IntLongOrderedMap.OrderedMapEntries(object)) {
                     json.writeValue(Integer.toString(e.key), e.getValue());
                 }
@@ -1239,6 +1249,8 @@ public final class JsonSupport {
             @Override
             public IntLongOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                if("ilOM".equals(jsonData.getString(0)))
+                    jsonData.child.remove();
                 IntLongOrderedMap data = new IntLongOrderedMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), json.readValue(long.class, value));
@@ -1258,7 +1270,7 @@ public final class JsonSupport {
         json.setSerializer(IntFloatMap.class, new Json.Serializer<IntFloatMap>() {
             @Override
             public void write(Json json, IntFloatMap object, Class knownType) {
-                json.writeObjectStart();
+                json.writeObjectStart(IntFloatMap.class, knownType);
                 for (IntFloatMap.Entry e : new IntFloatMap.Entries(object)) {
                     json.writeValue(Integer.toString(e.key), e.getValue());
                 }
@@ -1268,6 +1280,8 @@ public final class JsonSupport {
             @Override
             public IntFloatMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                if("ifM".equals(jsonData.getString(0)))
+                    jsonData.child.remove();
                 IntFloatMap data = new IntFloatMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), json.readValue(float.class, value));
@@ -1287,7 +1301,7 @@ public final class JsonSupport {
         json.setSerializer(IntFloatOrderedMap.class, new Json.Serializer<IntFloatOrderedMap>() {
             @Override
             public void write(Json json, IntFloatOrderedMap object, Class knownType) {
-                json.writeObjectStart();
+                json.writeObjectStart(IntFloatOrderedMap.class, knownType);
                 for (IntFloatOrderedMap.Entry e : new IntFloatOrderedMap.OrderedMapEntries(object)) {
                     json.writeValue(Integer.toString(e.key), e.getValue());
                 }
@@ -1297,6 +1311,8 @@ public final class JsonSupport {
             @Override
             public IntFloatOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                if("ifOM".equals(jsonData.getString(0)))
+                    jsonData.child.remove();
                 IntFloatOrderedMap data = new IntFloatOrderedMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), json.readValue(float.class, value));
