@@ -805,8 +805,8 @@ public final class JsonSupport {
             @Override
             public ObjectObjectMap<?, ?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                if("ooM".equals(jsonData.getString(0)))
-                    jsonData.child.remove();
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 ObjectObjectMap<?, ?> data = new ObjectObjectMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), json.readValue(null, value));
@@ -841,8 +841,8 @@ public final class JsonSupport {
             @Override
             public ObjectObjectOrderedMap<?, ?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                if("ooOM".equals(jsonData.getString(0)))
-                    jsonData.child.remove();
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 ObjectObjectOrderedMap<?, ?> data = new ObjectObjectOrderedMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), json.readValue(null, value));
@@ -878,8 +878,8 @@ public final class JsonSupport {
             @Override
             public ObjectLongMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                if("olM".equals(jsonData.getString(0)))
-                    jsonData.child.remove();
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 ObjectLongMap<?> data = new ObjectLongMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), json.readValue(long.class, value));
@@ -915,8 +915,8 @@ public final class JsonSupport {
             @Override
             public ObjectLongOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                if("olOM".equals(jsonData.getString(0)))
-                    jsonData.child.remove();
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 ObjectLongOrderedMap<?> data = new ObjectLongOrderedMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), json.readValue(long.class, value));
@@ -952,8 +952,8 @@ public final class JsonSupport {
             @Override
             public ObjectIntMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                if("oiM".equals(jsonData.getString(0)))
-                    jsonData.child.remove();
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 ObjectIntMap<?> data = new ObjectIntMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), json.readValue(int.class, value));
@@ -989,8 +989,8 @@ public final class JsonSupport {
             @Override
             public ObjectIntOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                if("oiOM".equals(jsonData.getString(0)))
-                    jsonData.child.remove();
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 ObjectIntOrderedMap<?> data = new ObjectIntOrderedMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), json.readValue(int.class, value));
@@ -1026,8 +1026,8 @@ public final class JsonSupport {
             @Override
             public ObjectFloatMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                if("ofM".equals(jsonData.getString(0)))
-                    jsonData.child.remove();
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 ObjectFloatMap<?> data = new ObjectFloatMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), value.asFloat());
@@ -1063,8 +1063,8 @@ public final class JsonSupport {
             @Override
             public ObjectFloatOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                if("ofOM".equals(jsonData.getString(0)))
-                    jsonData.child.remove();
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 ObjectFloatOrderedMap<?> data = new ObjectFloatOrderedMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), json.readValue(float.class, value));
@@ -1094,8 +1094,8 @@ public final class JsonSupport {
             @Override
             public IntObjectMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                if("ioM".equals(jsonData.getString(0)))
-                    jsonData.child.remove();
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 IntObjectMap<?> data = new IntObjectMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), json.readValue(null, value));
@@ -1125,8 +1125,8 @@ public final class JsonSupport {
             @Override
             public IntObjectOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                if("ioOM".equals(jsonData.getString(0)))
-                    jsonData.child.remove();
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 IntObjectOrderedMap<?> data = new IntObjectOrderedMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), json.readValue(null, value));
@@ -1156,8 +1156,8 @@ public final class JsonSupport {
             @Override
             public IntIntMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                if("iiM".equals(jsonData.getString(0)))
-                    jsonData.child.remove();
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 IntIntMap data = new IntIntMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), json.readValue(int.class, value));
@@ -1187,8 +1187,8 @@ public final class JsonSupport {
             @Override
             public IntIntOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                if("iiOM".equals(jsonData.getString(0)))
-                    jsonData.child.remove();
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 IntIntOrderedMap data = new IntIntOrderedMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), json.readValue(int.class, value));
@@ -1218,8 +1218,8 @@ public final class JsonSupport {
             @Override
             public IntLongMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                if("ilM".equals(jsonData.getString(0)))
-                    jsonData.child.remove();
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 IntLongMap data = new IntLongMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), json.readValue(long.class, value));
@@ -1249,8 +1249,8 @@ public final class JsonSupport {
             @Override
             public IntLongOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                if("ilOM".equals(jsonData.getString(0)))
-                    jsonData.child.remove();
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 IntLongOrderedMap data = new IntLongOrderedMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), json.readValue(long.class, value));
@@ -1280,8 +1280,8 @@ public final class JsonSupport {
             @Override
             public IntFloatMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                if("ifM".equals(jsonData.getString(0)))
-                    jsonData.child.remove();
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 IntFloatMap data = new IntFloatMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), json.readValue(float.class, value));
@@ -1311,8 +1311,8 @@ public final class JsonSupport {
             @Override
             public IntFloatOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                if("ifOM".equals(jsonData.getString(0)))
-                    jsonData.child.remove();
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 IntFloatOrderedMap data = new IntFloatOrderedMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), json.readValue(float.class, value));
@@ -1332,7 +1332,7 @@ public final class JsonSupport {
         json.setSerializer(LongObjectMap.class, new Json.Serializer<LongObjectMap>() {
             @Override
             public void write(Json json, LongObjectMap object, Class knownType) {
-                json.writeObjectStart();
+                json.writeObjectStart(LongObjectMap.class, knownType);
                 for (LongObjectMap.Entry<?> e : new LongObjectMap.Entries<Object>(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue());
                 }
@@ -1342,6 +1342,8 @@ public final class JsonSupport {
             @Override
             public LongObjectMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 LongObjectMap<?> data = new LongObjectMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), json.readValue(null, value));
@@ -1361,7 +1363,7 @@ public final class JsonSupport {
         json.setSerializer(LongObjectOrderedMap.class, new Json.Serializer<LongObjectOrderedMap>() {
             @Override
             public void write(Json json, LongObjectOrderedMap object, Class knownType) {
-                json.writeObjectStart();
+                json.writeObjectStart(LongObjectOrderedMap.class, knownType);
                 for (LongObjectOrderedMap.Entry<Object> e : new LongObjectOrderedMap.OrderedMapEntries<Object>(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue());
                 }
@@ -1371,6 +1373,8 @@ public final class JsonSupport {
             @Override
             public LongObjectOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 LongObjectOrderedMap<?> data = new LongObjectOrderedMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), json.readValue(null, value));
@@ -1390,7 +1394,7 @@ public final class JsonSupport {
         json.setSerializer(LongIntMap.class, new Json.Serializer<LongIntMap>() {
             @Override
             public void write(Json json, LongIntMap object, Class knownType) {
-                json.writeObjectStart();
+                json.writeObjectStart(LongIntMap.class, knownType);
                 for (LongIntMap.Entry e : new LongIntMap.Entries(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue());
                 }
@@ -1400,6 +1404,8 @@ public final class JsonSupport {
             @Override
             public LongIntMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 LongIntMap data = new LongIntMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), json.readValue(int.class, value));
@@ -1419,7 +1425,7 @@ public final class JsonSupport {
         json.setSerializer(LongIntOrderedMap.class, new Json.Serializer<LongIntOrderedMap>() {
             @Override
             public void write(Json json, LongIntOrderedMap object, Class knownType) {
-                json.writeObjectStart();
+                json.writeObjectStart(LongIntOrderedMap.class, knownType);
                 for (LongIntOrderedMap.Entry e : new LongIntOrderedMap.OrderedMapEntries(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue());
                 }
@@ -1429,6 +1435,8 @@ public final class JsonSupport {
             @Override
             public LongIntOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 LongIntOrderedMap data = new LongIntOrderedMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), json.readValue(int.class, value));
@@ -1448,7 +1456,7 @@ public final class JsonSupport {
         json.setSerializer(LongLongMap.class, new Json.Serializer<LongLongMap>() {
             @Override
             public void write(Json json, LongLongMap object, Class knownType) {
-                json.writeObjectStart();
+                json.writeObjectStart(LongLongMap.class, knownType);
                 for (LongLongMap.Entry e : new LongLongMap.Entries(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue());
                 }
@@ -1458,6 +1466,8 @@ public final class JsonSupport {
             @Override
             public LongLongMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 LongLongMap data = new LongLongMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), json.readValue(long.class, value));
@@ -1477,7 +1487,7 @@ public final class JsonSupport {
         json.setSerializer(LongLongOrderedMap.class, new Json.Serializer<LongLongOrderedMap>() {
             @Override
             public void write(Json json, LongLongOrderedMap object, Class knownType) {
-                json.writeObjectStart();
+                json.writeObjectStart(LongLongOrderedMap.class, knownType);
                 for (LongLongOrderedMap.Entry e : new LongLongOrderedMap.OrderedMapEntries(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue());
                 }
@@ -1487,6 +1497,8 @@ public final class JsonSupport {
             @Override
             public LongLongOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 LongLongOrderedMap data = new LongLongOrderedMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), json.readValue(long.class, value));
@@ -1506,7 +1518,7 @@ public final class JsonSupport {
         json.setSerializer(LongFloatMap.class, new Json.Serializer<LongFloatMap>() {
             @Override
             public void write(Json json, LongFloatMap object, Class knownType) {
-                json.writeObjectStart();
+                json.writeObjectStart(LongFloatMap.class, knownType);
                 for (LongFloatMap.Entry e : new LongFloatMap.Entries(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue());
                 }
@@ -1516,6 +1528,8 @@ public final class JsonSupport {
             @Override
             public LongFloatMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 LongFloatMap data = new LongFloatMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), json.readValue(float.class, value));
@@ -1535,7 +1549,7 @@ public final class JsonSupport {
         json.setSerializer(LongFloatOrderedMap.class, new Json.Serializer<LongFloatOrderedMap>() {
             @Override
             public void write(Json json, LongFloatOrderedMap object, Class knownType) {
-                json.writeObjectStart();
+                json.writeObjectStart(LongFloatOrderedMap.class, knownType);
                 for (LongFloatOrderedMap.Entry e : new LongFloatOrderedMap.OrderedMapEntries(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue());
                 }
@@ -1545,6 +1559,8 @@ public final class JsonSupport {
             @Override
             public LongFloatOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 LongFloatOrderedMap data = new LongFloatOrderedMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), json.readValue(float.class, value));
@@ -1566,7 +1582,7 @@ public final class JsonSupport {
         json.setSerializer(BinaryHeap.class, new Json.Serializer<BinaryHeap>() {
             @Override
             public void write(Json json, BinaryHeap object, Class knownType) {
-                json.writeObjectStart();
+                json.writeObjectStart(BinaryHeap.class, knownType);
                 json.writeValue("max", object.isMaxHeap());
                 json.writeArrayStart("items");
                 for (Object o : object) {
@@ -1579,6 +1595,8 @@ public final class JsonSupport {
             @Override
             public BinaryHeap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 BinaryHeap<?> data = new BinaryHeap<>(jsonData.size, jsonData.parent.getBoolean("max"));
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.add(json.readValue(null, value));
