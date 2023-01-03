@@ -907,7 +907,7 @@ public class JsonTest {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerCaseInsensitiveOrderedSet(json);
         CaseInsensitiveOrderedSet words = CaseInsensitiveOrderedSet.with("Peanut", "Butter", "Jelly", "Time", "peanut", "butter", "jelly", "TIME");
-        String data = json.toJson(words);
+        String data = json.toJson(words, (Class) null);
         System.out.println(data);
         CaseInsensitiveOrderedSet words2 = json.fromJson(CaseInsensitiveOrderedSet.class, data);
         for (Object word : words2) {
@@ -2424,6 +2424,230 @@ public class JsonTest {
             Json json = new Json(JsonWriter.OutputType.minimal);
             JsonSupport.registerObjectList(json);
             JsonSupport.registerIntIntOrderedMap(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().values().iterator().next().getClass());
+        }
+
+        {
+            ObjectList<ObjectList<LongObjectMap<String>>> deep = new ObjectList<>(8), after;
+            LongObjectMap<String> hm0 = new LongObjectMap<>(1);
+            LongObjectMap<String> hm1 = LongObjectMap.with(12, "1 2");
+            LongObjectMap<String> hm2 = LongObjectMap.with(34, "3 4", 56, "5 6");
+            LongObjectMap<String> hm3 = LongObjectMap.with(78, "7 8", 90, "9 0");
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerIntObjectMap(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().values().iterator().next().getClass());
+        }
+        {
+            ObjectList<ObjectList<LongObjectOrderedMap<String>>> deep = new ObjectList<>(8), after;
+            LongObjectOrderedMap<String> hm0 = new LongObjectOrderedMap<>(1);
+            LongObjectOrderedMap<String> hm1 = LongObjectOrderedMap.with(12, "1 2");
+            LongObjectOrderedMap<String> hm2 = LongObjectOrderedMap.with(34, "3 4", 56, "5 6");
+            LongObjectOrderedMap<String> hm3 = LongObjectOrderedMap.with(78, "7 8", 90, "9 0");
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerIntObjectOrderedMap(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().values().iterator().next().getClass());
+        }
+        {
+            ObjectList<ObjectList<LongFloatMap>> deep = new ObjectList<>(8), after;
+            LongFloatMap hm0 = new LongFloatMap(1);
+            LongFloatMap hm1 = LongFloatMap.with(12, 1.2f);
+            LongFloatMap hm2 = LongFloatMap.with(34, 3.4f, 56, 5.6f);
+            LongFloatMap hm3 = LongFloatMap.with(78, 7.8f, 90, 9.0f);
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerIntFloatMap(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().values().iterator().next().getClass());
+        }
+        {
+            ObjectList<ObjectList<LongFloatOrderedMap>> deep = new ObjectList<>(8), after;
+            LongFloatOrderedMap hm0 = new LongFloatOrderedMap(1);
+            LongFloatOrderedMap hm1 = LongFloatOrderedMap.with(12, 1.2f);
+            LongFloatOrderedMap hm2 = LongFloatOrderedMap.with(34, 3.4f, 56, 5.6f);
+            LongFloatOrderedMap hm3 = LongFloatOrderedMap.with(78, 7.8f, 90, 9.0f);
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerIntFloatOrderedMap(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().values().iterator().next().getClass());
+        }
+        {
+            ObjectList<ObjectList<LongLongMap>> deep = new ObjectList<>(8), after;
+            LongLongMap hm0 = new LongLongMap(1);
+            LongLongMap hm1 = LongLongMap.with(12, 1.2f);
+            LongLongMap hm2 = LongLongMap.with(34, 3.4f, 56, 5.6f);
+            LongLongMap hm3 = LongLongMap.with(78, 7.8f, 90, 9.0f);
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerIntLongMap(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().values().iterator().next().getClass());
+        }
+        {
+            ObjectList<ObjectList<LongLongOrderedMap>> deep = new ObjectList<>(8), after;
+            LongLongOrderedMap hm0 = new LongLongOrderedMap(1);
+            LongLongOrderedMap hm1 = LongLongOrderedMap.with(12, 1.2f);
+            LongLongOrderedMap hm2 = LongLongOrderedMap.with(34, 3.4f, 56, 5.6f);
+            LongLongOrderedMap hm3 = LongLongOrderedMap.with(78, 7.8f, 90, 9.0f);
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerIntLongOrderedMap(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().values().iterator().next().getClass());
+        }
+        {
+            ObjectList<ObjectList<LongIntMap>> deep = new ObjectList<>(8), after;
+            LongIntMap hm0 = new LongIntMap(1);
+            LongIntMap hm1 = LongIntMap.with(12, 1.2f);
+            LongIntMap hm2 = LongIntMap.with(34, 3.4f, 56, 5.6f);
+            LongIntMap hm3 = LongIntMap.with(78, 7.8f, 90, 9.0f);
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerIntIntMap(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().values().iterator().next().getClass());
+        }
+
+        {
+            ObjectList<ObjectList<LongIntOrderedMap>> deep = new ObjectList<>(8), after;
+            LongIntOrderedMap hm0 = new LongIntOrderedMap(1);
+            LongIntOrderedMap hm1 = LongIntOrderedMap.with(12, 1.2f);
+            LongIntOrderedMap hm2 = LongIntOrderedMap.with(34, 3.4f, 56, 5.6f);
+            LongIntOrderedMap hm3 = LongIntOrderedMap.with(78, 7.8f, 90, 9.0f);
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerIntIntOrderedMap(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().values().iterator().next().getClass());
+        }
+
+
+        {
+            ObjectList<ObjectList<CaseInsensitiveMap<Vector2>>> deep = new ObjectList<>(8), after;
+            CaseInsensitiveMap<Vector2> hm0 = new CaseInsensitiveMap<>(1);
+            CaseInsensitiveMap<Vector2> hm1 = CaseInsensitiveMap.with("hm1 hm0", new Vector2(1, 2));
+            CaseInsensitiveMap<Vector2> hm2 = CaseInsensitiveMap.with("hm2 hm3", new Vector2(3, 4), "HAM 123", new Vector2(5, 6));
+            CaseInsensitiveMap<Vector2> hm3 = CaseInsensitiveMap.with("hm0 hm1", new Vector2(7, 8), "HAM 456", new Vector2(9, 0));
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerCaseInsensitiveMap(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().values().iterator().next().getClass());
+        }
+        {
+            ObjectList<ObjectList<CaseInsensitiveOrderedMap<Vector2>>> deep = new ObjectList<>(8), after;
+            CaseInsensitiveOrderedMap<Vector2> hm0 = new CaseInsensitiveOrderedMap<>(1);
+            CaseInsensitiveOrderedMap<Vector2> hm1 = CaseInsensitiveOrderedMap.with("hm1 hm0", new Vector2(1, 2));
+            CaseInsensitiveOrderedMap<Vector2> hm2 = CaseInsensitiveOrderedMap.with("hm2 hm3", new Vector2(3, 4), "HAM 123", new Vector2(5, 6));
+            CaseInsensitiveOrderedMap<Vector2> hm3 = CaseInsensitiveOrderedMap.with("hm0 hm1", new Vector2(7, 8), "HAM 456", new Vector2(9, 0));
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerCaseInsensitiveOrderedMap(json);
             String data = json.toJson(deep);
             System.out.println(data);
             after = json.fromJson(ObjectList.class, data);

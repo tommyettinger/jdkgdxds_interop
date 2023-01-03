@@ -1617,11 +1617,13 @@ public final class JsonSupport {
         json.setSerializer(NumberedSet.class, new Json.Serializer<NumberedSet>() {
             @Override
             public void write(Json json, NumberedSet object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(NumberedSet.class, knownType);
+                json.writeArrayStart("items"); // This name is special.
                 for (Object o : object) {
                     json.writeValue(o, null);
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
@@ -1646,11 +1648,13 @@ public final class JsonSupport {
         json.setSerializer(CaseInsensitiveSet.class, new Json.Serializer<CaseInsensitiveSet>() {
             @Override
             public void write(Json json, CaseInsensitiveSet object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(CaseInsensitiveSet.class, knownType);
+                json.writeArrayStart("items"); // This name is special.
                 for (Object o : object) {
                     json.writeValue(o);
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
@@ -1671,15 +1675,17 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerCaseInsensitiveOrderedSet(@NonNull Json json) {
-        json.addClassTag("oCOS", CaseInsensitiveSet.class); // object items, Case-insensitive+Ordered kind, Set type
+        json.addClassTag("oCOS", CaseInsensitiveOrderedSet.class); // object items, Case-insensitive+Ordered kind, Set type
         json.setSerializer(CaseInsensitiveOrderedSet.class, new Json.Serializer<CaseInsensitiveOrderedSet>() {
             @Override
             public void write(Json json, CaseInsensitiveOrderedSet object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(CaseInsensitiveOrderedSet.class, knownType);
+                json.writeArrayStart("items"); // This name is special.
                 for (Object o : object) {
                     json.writeValue(o);
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
@@ -1704,7 +1710,7 @@ public final class JsonSupport {
         json.setSerializer(CaseInsensitiveMap.class, new Json.Serializer<CaseInsensitiveMap>() {
             @Override
             public void write(Json json, CaseInsensitiveMap object, Class knownType) {
-                json.writeObjectStart();
+                json.writeObjectStart(CaseInsensitiveMap.class, knownType);
                 Iterator<Map.Entry<CharSequence, Object>> es = new CaseInsensitiveMap.Entries<CharSequence, Object>(object).iterator();
                 while (es.hasNext()) {
                     Map.Entry<CharSequence, ?> e = es.next();
@@ -1716,6 +1722,8 @@ public final class JsonSupport {
             @Override
             public CaseInsensitiveMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 CaseInsensitiveMap<?> data = new CaseInsensitiveMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(value.name, json.readValue(null, value));
@@ -1735,7 +1743,7 @@ public final class JsonSupport {
         json.setSerializer(CaseInsensitiveOrderedMap.class, new Json.Serializer<CaseInsensitiveOrderedMap>() {
             @Override
             public void write(Json json, CaseInsensitiveOrderedMap object, Class knownType) {
-                json.writeObjectStart();
+                json.writeObjectStart(CaseInsensitiveOrderedMap.class, knownType);
                 Iterator<Map.Entry<CharSequence, Object>> es = new ObjectObjectOrderedMap.OrderedMapEntries<CharSequence, Object>(object).iterator();
                 while (es.hasNext()) {
                     Map.Entry<CharSequence, ?> e = es.next();
@@ -1747,6 +1755,8 @@ public final class JsonSupport {
             @Override
             public CaseInsensitiveOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
                 CaseInsensitiveOrderedMap<?> data = new CaseInsensitiveOrderedMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(value.name, json.readValue(null, value));
@@ -1767,7 +1777,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, OffsetBitSet object, Class knownType) {
                 int off = object.getOffset();
-                json.writeObjectStart();
+                json.writeObjectStart(OffsetBitSet.class, knownType);
                 json.writeValue("offset", off);
                 json.writeArrayStart("values");
                 PrimitiveIterator.OfInt it = object.iterator();
