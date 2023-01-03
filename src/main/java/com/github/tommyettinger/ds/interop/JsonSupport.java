@@ -153,7 +153,7 @@ public final class JsonSupport {
                 json.writeObjectStart(ObjectList.class, null);
                 json.writeArrayStart("items");
                 for (Object o : object) {
-                    json.writeValue(o);
+                    json.writeValue(o, null);
                 }
                 json.writeArrayEnd();
                 json.writeObjectEnd();
@@ -163,7 +163,7 @@ public final class JsonSupport {
             public ObjectList<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
 //                System.out.println(jsonData.size);
-                ObjectList<Object> data = new ObjectList<Object>(jsonData.size);
+                ObjectList<?> data = new ObjectList<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.add(json.readValue(null, value));
                 }
@@ -792,19 +792,15 @@ public final class JsonSupport {
             public void write(Json json, ObjectObjectMap object, Class knownType) {
                 JsonWriter writer = json.getWriter();
                 try {
-                    json.writeObjectStart();
+                    json.writeObjectStart(ObjectObjectMap.class, knownType);
                 } catch (SerializationException ignored) {
                 }
                 Iterator<Map.Entry<Object, Object>> es = new ObjectObjectMap.Entries<Object, Object>(object).iterator();
                 while (es.hasNext()) {
                     Map.Entry<?, ?> e = es.next();
-                    try {
-                        String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey(), (Class) null);
-                        json.setWriter(writer);
-                        writer.name(k);
-                        json.writeValue(e.getValue(), null);
-                    } catch (IOException ignored) {
-                    }
+                    String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey(), (Class) null);
+                    json.setWriter(writer);
+                    json.writeValue(k, e.getValue(), null);
                 }
                 try {
                     writer.pop();

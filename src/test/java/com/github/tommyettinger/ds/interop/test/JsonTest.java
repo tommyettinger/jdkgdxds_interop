@@ -2096,9 +2096,9 @@ public class JsonTest {
         after = json.fromJson(ObjectList.class, data);
         System.out.println(after);
         System.out.println(after.getClass());
-//        System.out.println(after.first().getClass()); // Fails because an inner ObjectObjectMap is treated as a JsonValue.
-//        System.out.println(after.first().first().getClass());
-//        System.out.println(after.first().first().values().iterator().next().getClass());
+        System.out.println(after.first().getClass());
+        System.out.println(after.first().first().getClass());
+        System.out.println(after.first().first().values().iterator().next().getClass());
     }
 
 }
