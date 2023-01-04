@@ -2745,5 +2745,49 @@ public class JsonTest {
             System.out.println(after.first().first().getClass());
             System.out.println(after.first().first().iterator().next().getClass());
         }
+        {
+            ObjectList<ObjectList<LongSet>> deep = new ObjectList<>(8), after;
+            LongSet hm0 = new LongSet(1);
+            LongSet hm1 = LongSet.with(10);
+            LongSet hm2 = LongSet.with(23, 123);
+            LongSet hm3 = LongSet.with(17, 456);
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerLongSet(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().iterator().next().getClass());
+        }
+        {
+            ObjectList<ObjectList<LongOrderedSet>> deep = new ObjectList<>(8), after;
+            LongOrderedSet hm0 = new LongOrderedSet(1);
+            LongOrderedSet hm1 = LongOrderedSet.with(10);
+            LongOrderedSet hm2 = LongOrderedSet.with(23, 123);
+            LongOrderedSet hm3 = LongOrderedSet.with(17, 456);
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerLongOrderedSet(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().iterator().next().getClass());
+        }
     }
 }

@@ -742,17 +742,19 @@ public final class JsonSupport {
         json.setSerializer(LongSet.class, new Json.Serializer<LongSet>() {
             @Override
             public void write(Json json, LongSet object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(LongSet.class, knownType);
+                json.writeArrayStart("items");
                 PrimitiveIterator.OfLong it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextLong());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public LongSet read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return LongSet.with(jsonData.asLongArray());
             }
         });
@@ -768,17 +770,19 @@ public final class JsonSupport {
         json.setSerializer(LongOrderedSet.class, new Json.Serializer<LongOrderedSet>() {
             @Override
             public void write(Json json, LongOrderedSet object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(LongOrderedSet.class, knownType);
+                json.writeArrayStart("items");
                 PrimitiveIterator.OfLong it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextLong());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public LongOrderedSet read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return LongOrderedSet.with(jsonData.asLongArray());
             }
         });
