@@ -406,11 +406,13 @@ public final class JsonSupport {
         json.setSerializer(ObjectDeque.class, new Json.Serializer<ObjectDeque>() {
             @Override
             public void write(Json json, ObjectDeque object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(ObjectDeque.class, knownType);
+                json.writeArrayStart("items");
                 for (Object o : object) {
-                    json.writeValue(o);
+                    json.writeValue(o, null);
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
@@ -435,17 +437,19 @@ public final class JsonSupport {
         json.setSerializer(LongDeque.class, new Json.Serializer<LongDeque>() {
             @Override
             public void write(Json json, LongDeque object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(LongDeque.class, knownType);
+                json.writeArrayStart("items");
                 PrimitiveIterator.OfLong it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextLong());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public LongDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return LongDeque.with(jsonData.asLongArray());
             }
         });
@@ -461,17 +465,19 @@ public final class JsonSupport {
         json.setSerializer(IntDeque.class, new Json.Serializer<IntDeque>() {
             @Override
             public void write(Json json, IntDeque object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(IntDeque.class, knownType);
+                json.writeArrayStart("items");
                 PrimitiveIterator.OfInt it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextInt());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public IntDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return IntDeque.with(jsonData.asIntArray());
             }
         });
@@ -487,17 +493,19 @@ public final class JsonSupport {
         json.setSerializer(CharDeque.class, new Json.Serializer<CharDeque>() {
             @Override
             public void write(Json json, CharDeque object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(CharDeque.class, knownType);
+                json.writeArrayStart("items");
                 CharIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextChar());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public CharDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return CharDeque.with(jsonData.asCharArray());
             }
         });
@@ -513,17 +521,19 @@ public final class JsonSupport {
         json.setSerializer(ShortDeque.class, new Json.Serializer<ShortDeque>() {
             @Override
             public void write(Json json, ShortDeque object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(ShortDeque.class, knownType);
+                json.writeArrayStart("items");
                 ShortIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextShort());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public ShortDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return ShortDeque.with(jsonData.asShortArray());
             }
         });
@@ -539,17 +549,19 @@ public final class JsonSupport {
         json.setSerializer(ByteDeque.class, new Json.Serializer<ByteDeque>() {
             @Override
             public void write(Json json, ByteDeque object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(ByteDeque.class, knownType);
+                json.writeArrayStart("items");
                 ByteIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextByte());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public ByteDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return ByteDeque.with(jsonData.asByteArray());
             }
         });
@@ -565,17 +577,19 @@ public final class JsonSupport {
         json.setSerializer(FloatDeque.class, new Json.Serializer<FloatDeque>() {
             @Override
             public void write(Json json, FloatDeque object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(FloatDeque.class, knownType);
+                json.writeArrayStart("items");
                 FloatIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextFloat());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public FloatDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return FloatDeque.with(jsonData.asFloatArray());
             }
         });
@@ -591,17 +605,19 @@ public final class JsonSupport {
         json.setSerializer(DoubleDeque.class, new Json.Serializer<DoubleDeque>() {
             @Override
             public void write(Json json, DoubleDeque object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(DoubleDeque.class, knownType);
+                json.writeArrayStart("items");
                 PrimitiveIterator.OfDouble it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextDouble());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public DoubleDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return DoubleDeque.with(jsonData.asDoubleArray());
             }
         });
@@ -617,17 +633,19 @@ public final class JsonSupport {
         json.setSerializer(BooleanDeque.class, new Json.Serializer<BooleanDeque>() {
             @Override
             public void write(Json json, BooleanDeque object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(BooleanDeque.class, knownType);
+                json.writeArrayStart("items");
                 BooleanIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextBoolean());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public BooleanDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return BooleanDeque.with(jsonData.asBooleanArray());
             }
         });
