@@ -150,7 +150,7 @@ public final class JsonSupport {
         json.setSerializer(ObjectList.class, new Json.Serializer<ObjectList>() {
             @Override
             public void write(Json json, ObjectList object, Class knownType) {
-                json.writeObjectStart(ObjectList.class, null);
+                json.writeObjectStart(ObjectList.class, knownType);
                 json.writeArrayStart("items");
                 for (Object o : object) {
                     json.writeValue(o, null);
@@ -162,7 +162,6 @@ public final class JsonSupport {
             @Override
             public ObjectList<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-//                System.out.println(jsonData.size);
                 ObjectList<?> data = new ObjectList<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.add(json.readValue(null, value));
@@ -182,17 +181,19 @@ public final class JsonSupport {
         json.setSerializer(IntList.class, new Json.Serializer<IntList>() {
             @Override
             public void write(Json json, IntList object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(IntList.class, knownType);
+                json.writeArrayStart("items");
                 PrimitiveIterator.OfInt it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextInt());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public IntList read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return IntList.with(jsonData.asIntArray());
             }
         });
@@ -209,17 +210,19 @@ public final class JsonSupport {
         json.setSerializer(LongList.class, new Json.Serializer<LongList>() {
             @Override
             public void write(Json json, LongList object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(LongList.class, knownType);
+                json.writeArrayStart("items");
                 PrimitiveIterator.OfLong it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextLong());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public LongList read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return LongList.with(jsonData.asLongArray());
             }
         });
@@ -235,17 +238,19 @@ public final class JsonSupport {
         json.setSerializer(FloatList.class, new Json.Serializer<FloatList>() {
             @Override
             public void write(Json json, FloatList object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(FloatList.class, knownType);
+                json.writeArrayStart("items");
                 FloatIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextFloat());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public FloatList read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return FloatList.with(jsonData.asFloatArray());
             }
         });
@@ -261,17 +266,19 @@ public final class JsonSupport {
         json.setSerializer(ByteList.class, new Json.Serializer<ByteList>() {
             @Override
             public void write(Json json, ByteList object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(ByteList.class, knownType);
+                json.writeArrayStart("items");
                 ByteIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextByte());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public ByteList read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return ByteList.with(jsonData.asByteArray());
             }
         });
@@ -287,17 +294,19 @@ public final class JsonSupport {
         json.setSerializer(ShortList.class, new Json.Serializer<ShortList>() {
             @Override
             public void write(Json json, ShortList object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(ShortList.class, knownType);
+                json.writeArrayStart("items");
                 ShortIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextShort());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public ShortList read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return ShortList.with(jsonData.asShortArray());
             }
         });
@@ -313,17 +322,19 @@ public final class JsonSupport {
         json.setSerializer(CharList.class, new Json.Serializer<CharList>() {
             @Override
             public void write(Json json, CharList object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(CharList.class, knownType);
+                json.writeArrayStart("items");
                 CharIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextChar());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public CharList read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return CharList.with(jsonData.asCharArray());
             }
         });
@@ -339,17 +350,19 @@ public final class JsonSupport {
         json.setSerializer(DoubleList.class, new Json.Serializer<DoubleList>() {
             @Override
             public void write(Json json, DoubleList object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(DoubleList.class, knownType);
+                json.writeArrayStart("items");
                 PrimitiveIterator.OfDouble it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextDouble());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public DoubleList read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return DoubleList.with(jsonData.asDoubleArray());
             }
         });
@@ -365,17 +378,19 @@ public final class JsonSupport {
         json.setSerializer(BooleanList.class, new Json.Serializer<BooleanList>() {
             @Override
             public void write(Json json, BooleanList object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(BooleanList.class, knownType);
+                json.writeArrayStart("items");
                 BooleanIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextBoolean());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public BooleanList read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return BooleanList.with(jsonData.asBooleanArray());
             }
         });
