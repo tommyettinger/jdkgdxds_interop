@@ -628,11 +628,13 @@ public final class JsonSupport {
         json.setSerializer(ObjectSet.class, new Json.Serializer<ObjectSet>() {
             @Override
             public void write(Json json, ObjectSet object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(ObjectSet.class, knownType);
+                json.writeArrayStart("items"); // This name is special.
                 for (Object o : object) {
                     json.writeValue(o, null);
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
@@ -657,11 +659,13 @@ public final class JsonSupport {
         json.setSerializer(ObjectOrderedSet.class, new Json.Serializer<ObjectOrderedSet>() {
             @Override
             public void write(Json json, ObjectOrderedSet object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(ObjectOrderedSet.class, knownType);
+                json.writeArrayStart("items"); // This name is special.
                 for (Object o : object) {
                     json.writeValue(o, null);
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
@@ -1662,7 +1666,7 @@ public final class JsonSupport {
                 if (jsonData == null || jsonData.isNull()) return null;
                 CaseInsensitiveSet data = new CaseInsensitiveSet(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.add(json.readValue(null, value));
+                    data.add(value.asString());
                 }
                 return data;
             }
@@ -1693,7 +1697,7 @@ public final class JsonSupport {
                 if (jsonData == null || jsonData.isNull()) return null;
                 CaseInsensitiveOrderedSet data = new CaseInsensitiveOrderedSet(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.add(json.readValue(null, value));
+                    data.add(value.asString());
                 }
                 return data;
             }

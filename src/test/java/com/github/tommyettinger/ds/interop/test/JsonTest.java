@@ -2657,5 +2657,93 @@ public class JsonTest {
             System.out.println(after.first().first().getClass());
             System.out.println(after.first().first().values().iterator().next().getClass());
         }
+        {
+            ObjectList<ObjectList<CaseInsensitiveSet>> deep = new ObjectList<>(8), after;
+            CaseInsensitiveSet hm0 = new CaseInsensitiveSet(1);
+            CaseInsensitiveSet hm1 = CaseInsensitiveSet.with("hm1 hm0");
+            CaseInsensitiveSet hm2 = CaseInsensitiveSet.with("hm2 hm3", "HAM 123");
+            CaseInsensitiveSet hm3 = CaseInsensitiveSet.with("hm0 hm1", "HAM 456");
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerCaseInsensitiveSet(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().iterator().next().getClass());
+        }
+        {
+            ObjectList<ObjectList<CaseInsensitiveOrderedSet>> deep = new ObjectList<>(8), after;
+            CaseInsensitiveOrderedSet hm0 = new CaseInsensitiveOrderedSet(1);
+            CaseInsensitiveOrderedSet hm1 = CaseInsensitiveOrderedSet.with("hm1 hm0");
+            CaseInsensitiveOrderedSet hm2 = CaseInsensitiveOrderedSet.with("hm2 hm3", "HAM 123");
+            CaseInsensitiveOrderedSet hm3 = CaseInsensitiveOrderedSet.with("hm0 hm1", "HAM 456");
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerCaseInsensitiveOrderedSet(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().iterator().next().getClass());
+        }
+        {
+            ObjectList<ObjectList<ObjectSet<String>>> deep = new ObjectList<>(8), after;
+            ObjectSet<String> hm0 = new ObjectSet<>(1);
+            ObjectSet<String> hm1 = ObjectSet.with("hm1 hm0");
+            ObjectSet<String> hm2 = ObjectSet.with("hm2 hm3", "HAM 123");
+            ObjectSet<String> hm3 = ObjectSet.with("hm0 hm1", "HAM 456");
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerObjectSet(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().iterator().next().getClass());
+        }
+        {
+            ObjectList<ObjectList<ObjectOrderedSet<String>>> deep = new ObjectList<>(8), after;
+            ObjectOrderedSet<String> hm0 = new ObjectOrderedSet<>(1);
+            ObjectOrderedSet<String> hm1 = ObjectOrderedSet.with("hm1 hm0");
+            ObjectOrderedSet<String> hm2 = ObjectOrderedSet.with("hm2 hm3", "HAM 123");
+            ObjectOrderedSet<String> hm3 = ObjectOrderedSet.with("hm0 hm1", "HAM 456");
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerObjectOrderedSet(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().iterator().next().getClass());
+        }
     }
 }
