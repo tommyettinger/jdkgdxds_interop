@@ -2746,6 +2746,50 @@ public class JsonTest {
             System.out.println(after.first().first().iterator().next().getClass());
         }
         {
+            ObjectList<ObjectList<IntSet>> deep = new ObjectList<>(8), after;
+            IntSet hm0 = new IntSet(1);
+            IntSet hm1 = IntSet.with(10);
+            IntSet hm2 = IntSet.with(23, 123);
+            IntSet hm3 = IntSet.with(17, 456);
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerIntSet(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().iterator().next().getClass());
+        }
+        {
+            ObjectList<ObjectList<IntOrderedSet>> deep = new ObjectList<>(8), after;
+            IntOrderedSet hm0 = new IntOrderedSet(1);
+            IntOrderedSet hm1 = IntOrderedSet.with(10);
+            IntOrderedSet hm2 = IntOrderedSet.with(23, 123);
+            IntOrderedSet hm3 = IntOrderedSet.with(17, 456);
+            deep.add(ObjectList.with(hm1, hm0));
+            deep.add(ObjectList.with(hm2, hm3));
+            deep.add(ObjectList.with(hm0, hm1, hm2, hm3));
+
+            Json json = new Json(JsonWriter.OutputType.minimal);
+            JsonSupport.registerObjectList(json);
+            JsonSupport.registerIntOrderedSet(json);
+            String data = json.toJson(deep);
+            System.out.println(data);
+            after = json.fromJson(ObjectList.class, data);
+            System.out.println(after);
+            System.out.println(after.getClass());
+            System.out.println(after.first().getClass());
+            System.out.println(after.first().first().getClass());
+            System.out.println(after.first().first().iterator().next().getClass());
+        }
+        {
             ObjectList<ObjectList<LongSet>> deep = new ObjectList<>(8), after;
             LongSet hm0 = new LongSet(1);
             LongSet hm1 = LongSet.with(10);

@@ -690,17 +690,19 @@ public final class JsonSupport {
         json.setSerializer(IntSet.class, new Json.Serializer<IntSet>() {
             @Override
             public void write(Json json, IntSet object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(IntSet.class, knownType);
+                json.writeArrayStart("items");
                 PrimitiveIterator.OfInt it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextInt());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public IntSet read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return IntSet.with(jsonData.asIntArray());
             }
         });
@@ -716,17 +718,19 @@ public final class JsonSupport {
         json.setSerializer(IntOrderedSet.class, new Json.Serializer<IntOrderedSet>() {
             @Override
             public void write(Json json, IntOrderedSet object, Class knownType) {
-                json.writeArrayStart();
+                json.writeObjectStart(IntOrderedSet.class, knownType);
+                json.writeArrayStart("items");
                 PrimitiveIterator.OfInt it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextInt());
                 }
                 json.writeArrayEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public IntOrderedSet read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return IntOrderedSet.with(jsonData.asIntArray());
             }
         });
