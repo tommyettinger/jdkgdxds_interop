@@ -3106,6 +3106,8 @@ public final class JsonSupport {
         registerWeibullDistribution(json);
         registerZipfianDistribution(json);
 
+        if(ADD_CLASS_TAGS) json.addClassTag("Dist", Distribution.class);
+
         json.setSerializer(Distribution.class, new Json.Serializer<Distribution>() {
             @Override
             public void write(Json json, Distribution object, Class knownType) {
@@ -3133,6 +3135,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerBase(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("Base", Base.class);
         json.setSerializer(Base.class, new Json.Serializer<Base>() {
             @Override
             public void write(Json json, Base object, Class knownType) {
@@ -3153,6 +3156,8 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerHasher(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("Hshr", Hasher.class);
+
         json.setSerializer(Hasher.class, new Json.Serializer<Hasher>() {
             @Override
             public void write(Json json, Hasher object, Class knownType) {

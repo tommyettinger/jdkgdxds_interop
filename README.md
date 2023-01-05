@@ -53,10 +53,15 @@ The [digital](https://github.com/tommyettinger/digital) library is a direct depe
 configure the numeral base that numbers are printed in by specifying one to `JsonSupport.setNumeralBase(Base)`; this can
 be handy to weakly obfuscate numbers if you pass a scrambled base (as `Base` can generate).
 
+The Json flavor in libGDX allows specifying class tags as a kind of shorter alias for a package-qualified class name. As
+of jdkgdxds-interop 1.1.1.1, when registering any class, this will add a very short class tag unless you had previously
+called `JsonSupport.setAddClassTags(false);`. The class tags can be hard to read if you want human-readable JSON files,
+but long packages add to file size and can also be strenuous to read repeatedly. Class tags are added by default.
+
 ## How do I get it?
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api`, is: 
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.1.0.0"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.1.1.1"
 ```
 It's not unlikely that you might need `api` instead of `implementation`, especially if you are writing a library, or a
 module that needs to be used from another section.
@@ -65,8 +70,8 @@ If you use GWT (libGDX's HTML target), then you also need this in your `html/bui
 ```groovy
 implementation "com.github.tommyettinger:digital:0.1.6:sources"
 implementation "com.github.tommyettinger:juniper:0.1.7:sources"
-implementation "com.github.tommyettinger:jdkgdxds:1.1.0:sources"
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.1.0.0:sources"
+implementation "com.github.tommyettinger:jdkgdxds:1.1.1:sources"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.1.1.1:sources"
 ```
 You also need the GWT `inherits` in your `GdxDefinition.gwt.xml` file:
 ```xml
