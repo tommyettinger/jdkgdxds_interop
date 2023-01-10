@@ -21,12 +21,12 @@
 <!-- To compile to Gwt, you need to reference this file in your master .gwt.xml
      file (usually called GdxDefinition.gwt.xml) as follows:
      
-     <inherits name="jdkgdxds_interop" />
+     <inherits name="com.github.tommyettinger.jdkgdxds_interop" />
   -->
 <module>
-    <inherits name="digital" />
-    <inherits name="juniper" />
-    <inherits name="jdkgdxds" />
+    <inherits name="com.github.tommyettinger.digital" />
+    <inherits name="com.github.tommyettinger.juniper" />
+    <inherits name="com.github.tommyettinger.jdkgdxds" />
     <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
 	<inherits name="com.badlogic.gdx.utils" />
 
@@ -93,5 +93,5 @@
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.OffsetBitSet" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ShortDeque" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ShortList" />
-	<source path="com/github/tommyettinger/ds/interop" />
+	<source path="ds/interop" />
 </module>

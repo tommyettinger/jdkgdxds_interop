@@ -61,25 +61,25 @@ but long packages add to file size and can also be strenuous to read repeatedly.
 ## How do I get it?
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api`, is: 
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.1.1.1"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.1.2.0"
 ```
 It's not unlikely that you might need `api` instead of `implementation`, especially if you are writing a library, or a
 module that needs to be used from another section.
 
 If you use GWT (libGDX's HTML target), then you also need this in your `html/build.gradle` file:
 ```groovy
-implementation "com.github.tommyettinger:digital:0.1.6:sources"
-implementation "com.github.tommyettinger:juniper:0.1.7:sources"
-implementation "com.github.tommyettinger:jdkgdxds:1.1.1:sources"
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.1.1.1:sources"
+implementation "com.github.tommyettinger:digital:0.1.7:sources"
+implementation "com.github.tommyettinger:juniper:0.1.8:sources"
+implementation "com.github.tommyettinger:jdkgdxds:1.1.2:sources"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.1.2.0:sources"
 ```
 You also need the GWT `inherits` in your `GdxDefinition.gwt.xml` file:
 ```xml
-    <inherits name="digital" />
-    <inherits name="juniper" />
-    <inherits name="jdkgdxds" />
+    <inherits name="com.github.tommyettinger.digital" />
+    <inherits name="com.github.tommyettinger.juniper" />
+    <inherits name="com.github.tommyettinger.jdkgdxds" />
     <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
-    <inherits name="jdkgdxds_interop" />
+    <inherits name="com.github.tommyettinger.jdkgdxds_interop" />
 ```
 
 On GWT, this library patches a small bug in libGDX 1.11.0, where `ObjectLongMap` isn't available for reflection or even
