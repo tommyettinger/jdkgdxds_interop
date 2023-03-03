@@ -431,6 +431,262 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers ObjectBag with the given Json object, so ObjectBag can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerObjectBag(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("oB", ObjectBag.class);
+        json.setSerializer(ObjectBag.class, new Json.Serializer<ObjectBag>() {
+            @Override
+            public void write(Json json, ObjectBag object, Class knownType) {
+                json.writeObjectStart(ObjectBag.class, knownType);
+                json.writeArrayStart("items");
+                for (Object o : object) {
+                    json.writeValue(o, null);
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public ObjectBag<?> read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                ObjectBag<?> data = new ObjectBag<>(jsonData.size);
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.add(json.readValue(null, value));
+                }
+                return data;
+            }
+        });
+    }
+
+    /**
+     * Registers IntBag with the given Json object, so IntBag can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerIntBag(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("iB", IntBag.class);
+        json.setSerializer(IntBag.class, new Json.Serializer<IntBag>() {
+            @Override
+            public void write(Json json, IntBag object, Class knownType) {
+                json.writeObjectStart(IntBag.class, knownType);
+                json.writeArrayStart("items");
+                PrimitiveIterator.OfInt it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextInt());
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public IntBag read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
+                return IntBag.with(jsonData.asIntArray());
+            }
+        });
+
+    }
+
+    /**
+     * Registers LongBag with the given Json object, so LongBag can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerLongBag(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("lB", LongBag.class);
+        json.setSerializer(LongBag.class, new Json.Serializer<LongBag>() {
+            @Override
+            public void write(Json json, LongBag object, Class knownType) {
+                json.writeObjectStart(LongBag.class, knownType);
+                json.writeArrayStart("items");
+                PrimitiveIterator.OfLong it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextLong());
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public LongBag read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
+                return LongBag.with(jsonData.asLongArray());
+            }
+        });
+    }
+
+    /**
+     * Registers FloatBag with the given Json object, so FloatBag can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerFloatBag(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("fB", FloatBag.class);
+        json.setSerializer(FloatBag.class, new Json.Serializer<FloatBag>() {
+            @Override
+            public void write(Json json, FloatBag object, Class knownType) {
+                json.writeObjectStart(FloatBag.class, knownType);
+                json.writeArrayStart("items");
+                FloatIterator it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextFloat());
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public FloatBag read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
+                return FloatBag.with(jsonData.asFloatArray());
+            }
+        });
+    }
+
+    /**
+     * Registers ByteBag with the given Json object, so ByteBag can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerByteBag(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("bB", ByteBag.class);
+        json.setSerializer(ByteBag.class, new Json.Serializer<ByteBag>() {
+            @Override
+            public void write(Json json, ByteBag object, Class knownType) {
+                json.writeObjectStart(ByteBag.class, knownType);
+                json.writeArrayStart("items");
+                ByteIterator it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextByte());
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public ByteBag read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
+                return ByteBag.with(jsonData.asByteArray());
+            }
+        });
+    }
+
+    /**
+     * Registers ShortBag with the given Json object, so ShortBag can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerShortBag(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("sB", ShortBag.class);
+        json.setSerializer(ShortBag.class, new Json.Serializer<ShortBag>() {
+            @Override
+            public void write(Json json, ShortBag object, Class knownType) {
+                json.writeObjectStart(ShortBag.class, knownType);
+                json.writeArrayStart("items");
+                ShortIterator it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextShort());
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public ShortBag read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
+                return ShortBag.with(jsonData.asShortArray());
+            }
+        });
+    }
+
+    /**
+     * Registers CharBag with the given Json object, so CharBag can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerCharBag(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("cB", CharBag.class);
+        json.setSerializer(CharBag.class, new Json.Serializer<CharBag>() {
+            @Override
+            public void write(Json json, CharBag object, Class knownType) {
+                json.writeObjectStart(CharBag.class, knownType);
+                json.writeArrayStart("items");
+                CharIterator it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextChar());
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public CharBag read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
+                return CharBag.with(jsonData.asCharArray());
+            }
+        });
+    }
+
+    /**
+     * Registers DoubleBag with the given Json object, so DoubleBag can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerDoubleBag(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("dB", DoubleBag.class);
+        json.setSerializer(DoubleBag.class, new Json.Serializer<DoubleBag>() {
+            @Override
+            public void write(Json json, DoubleBag object, Class knownType) {
+                json.writeObjectStart(DoubleBag.class, knownType);
+                json.writeArrayStart("items");
+                PrimitiveIterator.OfDouble it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextDouble());
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public DoubleBag read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
+                return DoubleBag.with(jsonData.asDoubleArray());
+            }
+        });
+    }
+
+    /**
+     * Registers BooleanBag with the given Json object, so BooleanBag can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerBooleanBag(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("tB", BooleanBag.class); // t for truth; represents boolean
+        json.setSerializer(BooleanBag.class, new Json.Serializer<BooleanBag>() {
+            @Override
+            public void write(Json json, BooleanBag object, Class knownType) {
+                json.writeObjectStart(BooleanBag.class, knownType);
+                json.writeArrayStart("items");
+                BooleanIterator it = object.iterator();
+                while (it.hasNext()) {
+                    json.writeValue(it.nextBoolean());
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public BooleanBag read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
+                return BooleanBag.with(jsonData.asBooleanArray());
+            }
+        });
+    }
+
+    /**
      * Registers ObjectDeque with the given Json object, so ObjectDeque can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
