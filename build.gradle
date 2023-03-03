@@ -20,7 +20,7 @@ def projectName = 'jdkgdxds_interop'
 version "$VERSION_NAME"
 group 'com.github.tommyettinger'
 
-//api "com.github.tommyettinger:jdkgdxds_interop:1.1.2.0"
+//api "com.github.tommyettinger:jdkgdxds_interop:1.2.0.0"
 
 [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
 
@@ -57,7 +57,7 @@ if(JavaVersion.current().isJava9Compatible()) {
 }
 
 repositories {
-    mavenLocal()
+//    mavenLocal()
     mavenCentral()
     maven { url 'https://oss.sonatype.org/content/repositories/releases/' }
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }

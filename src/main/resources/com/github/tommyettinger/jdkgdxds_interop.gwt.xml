@@ -38,60 +38,6 @@
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.digital.Hasher" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.random" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.random.distribution" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.BinaryHeap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.BooleanDeque" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.BooleanList" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ByteDeque" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ByteList" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.CaseInsensitiveMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.CaseInsensitiveOrderedMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.CaseInsensitiveOrderedSet" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.CaseInsensitiveSet" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.CharDeque" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.CharList" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.DoubleDeque" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.DoubleList" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.FloatDeque" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.FloatList" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntDeque" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntFloatMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntFloatOrderedMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntIntMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntIntOrderedMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntList" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntLongMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntLongOrderedMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntObjectMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntObjectOrderedMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntOrderedSet" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.IntSet" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongDeque" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongFloatMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongFloatOrderedMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongIntMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongIntOrderedMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongList" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongLongMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongLongOrderedMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongObjectMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongObjectOrderedMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongOrderedSet" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.LongSet" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.NumberedSet" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectDeque" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectFloatMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectFloatOrderedMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectIntMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectIntOrderedMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectList" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectLongMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectLongOrderedMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectObjectMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectObjectOrderedMap" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectOrderedSet" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ObjectSet" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.OffsetBitSet" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ShortDeque" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds.ShortList" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds" />
 	<source path="ds/interop" />
 </module>

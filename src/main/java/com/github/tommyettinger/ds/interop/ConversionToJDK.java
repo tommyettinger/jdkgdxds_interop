@@ -31,48 +31,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.OrderedSet;
 import com.badlogic.gdx.utils.Queue;
 import com.badlogic.gdx.utils.ShortArray;
-import com.github.tommyettinger.ds.BooleanList;
-import com.github.tommyettinger.ds.ByteDeque;
-import com.github.tommyettinger.ds.ByteList;
-import com.github.tommyettinger.ds.CaseInsensitiveMap;
-import com.github.tommyettinger.ds.CaseInsensitiveOrderedMap;
-import com.github.tommyettinger.ds.CaseInsensitiveOrderedSet;
-import com.github.tommyettinger.ds.CaseInsensitiveSet;
-import com.github.tommyettinger.ds.CharDeque;
-import com.github.tommyettinger.ds.CharList;
-import com.github.tommyettinger.ds.FloatDeque;
-import com.github.tommyettinger.ds.FloatList;
-import com.github.tommyettinger.ds.IdentityObjectMap;
-import com.github.tommyettinger.ds.IdentityObjectOrderedMap;
-import com.github.tommyettinger.ds.IntDeque;
-import com.github.tommyettinger.ds.IntFloatMap;
-import com.github.tommyettinger.ds.IntFloatOrderedMap;
-import com.github.tommyettinger.ds.IntIntMap;
-import com.github.tommyettinger.ds.IntIntOrderedMap;
-import com.github.tommyettinger.ds.IntList;
-import com.github.tommyettinger.ds.IntObjectMap;
-import com.github.tommyettinger.ds.IntObjectOrderedMap;
-import com.github.tommyettinger.ds.IntOrderedSet;
-import com.github.tommyettinger.ds.IntSet;
-import com.github.tommyettinger.ds.LongDeque;
-import com.github.tommyettinger.ds.LongList;
-import com.github.tommyettinger.ds.LongObjectMap;
-import com.github.tommyettinger.ds.LongObjectOrderedMap;
-import com.github.tommyettinger.ds.NumberedSet;
-import com.github.tommyettinger.ds.ObjectDeque;
-import com.github.tommyettinger.ds.ObjectFloatMap;
-import com.github.tommyettinger.ds.ObjectFloatOrderedMap;
-import com.github.tommyettinger.ds.ObjectIntMap;
-import com.github.tommyettinger.ds.ObjectIntOrderedMap;
-import com.github.tommyettinger.ds.ObjectList;
-import com.github.tommyettinger.ds.ObjectLongMap;
-import com.github.tommyettinger.ds.ObjectLongOrderedMap;
-import com.github.tommyettinger.ds.ObjectObjectMap;
-import com.github.tommyettinger.ds.ObjectObjectOrderedMap;
-import com.github.tommyettinger.ds.ObjectOrderedSet;
-import com.github.tommyettinger.ds.ObjectSet;
-import com.github.tommyettinger.ds.ShortDeque;
-import com.github.tommyettinger.ds.ShortList;
+import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.support.sort.FloatComparator;
 import com.github.tommyettinger.ds.support.sort.IntComparator;
 import com.github.tommyettinger.ds.support.sort.LongComparator;
@@ -82,7 +41,7 @@ import java.util.Iterator;
 
 /**
  * Converts libGDX data structures to the JDK-interface-compatible data structures in jdkgdxds. This is arguably
- * misleadingly-named, because not all of the interfaces used by jdkgdxds are present in the JDK, and this isn't always
+ * misleadingly-named, because not all the interfaces used by jdkgdxds are present in the JDK, and this isn't always
  * a perfect fit. If you primarily use jdkgdxds data structures, then most of the APIs should be very similar to JDK
  * data structures, when they aren't identical. There are all sorts of extensions jdkgdxds does, such as for the ordered
  * data structures.
@@ -103,6 +62,19 @@ public class ConversionToJDK {
     }
 
     /**
+     * Can be used to convert from a libGDX Array to a jdkgdxds ObjectBag of the same element type.
+     * @param from an Array from libGDX; may be ordered or unordered
+     * @param <T> the element type for {@code from} and the result
+     * @return a new ObjectBag of type T holding the items of {@code from}
+     */
+    public static <T> ObjectBag<T> toObjectBag(Array<T> from) {
+        ObjectBag<T> bag = new ObjectBag<>(from.size);
+        for(T t : from)
+            bag.add(t);
+        return bag;
+    }
+
+    /**
      * Can be used to convert from a libGDX Queue to a jdkgdxds ObjectList of the same element type.
      * @param from a Queue from libGDX
      * @param <T> the element type for {@code from} and the result
@@ -113,6 +85,19 @@ public class ConversionToJDK {
         for(T t : from)
             list.add(t);
         return list;
+    }
+
+    /**
+     * Can be used to convert from a libGDX Queue to a jdkgdxds ObjectBag of the same element type.
+     * @param from a Queue from libGDX
+     * @param <T> the element type for {@code from} and the result
+     * @return a new ObjectBag of type T holding the items of {@code from}
+     */
+    public static <T> ObjectBag<T> toObjectBag(Queue<T> from) {
+        ObjectBag<T> Bag = new ObjectBag<>(from.size);
+        for(T t : from)
+            Bag.add(t);
+        return Bag;
     }
 
     /**
@@ -138,6 +123,15 @@ public class ConversionToJDK {
     }
 
     /**
+     * Can be used to convert from a libGDX IntArray to a jdkgdxds IntBag.
+     * @param from a libGDX IntArray, which may be ordered or unordered
+     * @return a new IntBag holding the items of {@code from}
+     */
+    public static IntBag toIntBag(IntArray from){
+        return new IntBag(from.items, 0, from.size);
+    }
+
+    /**
      * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.IntSet}
      * to a new jdkgdxds {@link IntList}.
      * @param from a libGDX IntSet
@@ -145,6 +139,21 @@ public class ConversionToJDK {
      */
     public static IntList toIntList(com.badlogic.gdx.utils.IntSet from) {
         IntList set = new IntList(from.size);
+        com.badlogic.gdx.utils.IntSet.IntSetIterator it = from.iterator();
+        while (it.hasNext) {
+            set.add(it.next());
+        }
+        return set;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.IntSet}
+     * to a new jdkgdxds {@link IntBag}.
+     * @param from a libGDX IntSet
+     * @return a new jdkgdxds IntBag holding the items in {@code from}
+     */
+    public static IntBag toIntBag(com.badlogic.gdx.utils.IntSet from) {
+        IntBag set = new IntBag(from.size);
         com.badlogic.gdx.utils.IntSet.IntSetIterator it = from.iterator();
         while (it.hasNext) {
             set.add(it.next());
@@ -162,12 +171,34 @@ public class ConversionToJDK {
     }
 
     /**
+     * Can be used to convert from a libGDX LongArray to a jdkgdxds LongBag.
+     * @param from a libGDX LongArray
+     * @return a new LongBag holding the items of {@code from}
+     */
+    public static LongBag toLongBag(LongArray from){
+        return new LongBag(from.items, 0, from.size);
+    }
+
+    /**
      * Can be used to convert from a libGDX LongQueue to a jdkgdxds LongList.
      * @param from a libGDX LongQueue
      * @return a new LongList holding the items of {@code from}
      */
     public static LongList toLongList(LongQueue from){
         LongList list = new LongList(from.size);
+        for (int i = 0; i < from.size; i++) {
+            list.add(from.get(i));
+        }
+        return list;
+    }
+
+    /**
+     * Can be used to convert from a libGDX LongQueue to a jdkgdxds LongBag.
+     * @param from a libGDX LongQueue
+     * @return a new LongBag holding the items of {@code from}
+     */
+    public static LongBag toLongBag(LongQueue from){
+        LongBag list = new LongBag(from.size);
         for (int i = 0; i < from.size; i++) {
             list.add(from.get(i));
         }
@@ -217,6 +248,51 @@ public class ConversionToJDK {
      */
     public static BooleanList toBooleanList(BooleanArray from){
         return new BooleanList(from.items, 0, from.size);
+    }
+
+    /**
+     * Can be used to convert from a libGDX FloatArray to a jdkgdxds FloatBag.
+     * @param from a libGDX FloatArray
+     * @return a new FloatBag holding the items of {@code from}
+     */
+    public static FloatBag toFloatBag(FloatArray from){
+        return new FloatBag(from.items, 0, from.size);
+    }
+
+    /**
+     * Can be used to convert from a libGDX ByteArray to a jdkgdxds ByteBag.
+     * @param from a libGDX ByteArray
+     * @return a new ByteBag holding the items of {@code from}
+     */
+    public static ByteBag toByteBag(ByteArray from){
+        return new ByteBag(from.items, 0, from.size);
+    }
+
+    /**
+     * Can be used to convert from a libGDX CharArray to a jdkgdxds CharBag.
+     * @param from a libGDX CharArray
+     * @return a new CharBag holding the items of {@code from}
+     */
+    public static CharBag toCharBag(CharArray from){
+        return new CharBag(from.items, 0, from.size);
+    }
+
+    /**
+     * Can be used to convert from a libGDX ShortArray to a jdkgdxds ShortBag.
+     * @param from a libGDX ShortArray
+     * @return a new ShortBag holding the items of {@code from}
+     */
+    public static ShortBag toShortBag(ShortArray from){
+        return new ShortBag(from.items, 0, from.size);
+    }
+
+    /**
+     * Can be used to convert from a libGDX BooleanArray to a jdkgdxds BooleanBag.
+     * @param from a libGDX BooleanArray
+     * @return a new BooleanBag holding the items of {@code from}
+     */
+    public static BooleanBag toBooleanBag(BooleanArray from){
+        return new BooleanBag(from.items, 0, from.size);
     }
 
     /**
