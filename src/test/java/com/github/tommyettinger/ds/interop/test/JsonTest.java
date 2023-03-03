@@ -2020,6 +2020,173 @@ public class JsonTest {
         System.out.println();
     }
 
+    @Test
+    public void testObjectBag() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerObjectBag(json);
+        ObjectBag<String> words = ObjectBag.with("Peanut", "Butter", "Jelly", "Time");
+        String data = json.toJson(words);
+        System.out.println(data);
+        ObjectBag<?> words2 = json.fromJson(ObjectBag.class, data);
+        for(Object word : words2) {
+            System.out.print(word);
+            System.out.print(", ");
+        }
+        System.out.println();
+        ObjectBag<GridPoint2> points = ObjectBag.with(new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666));
+        data = json.toJson(points);
+        System.out.println(data);
+        ObjectBag<?> points2 = json.fromJson(ObjectBag.class, data);
+        for(Object point : points2) {
+            System.out.print(point);
+            System.out.print(", ");
+        }
+    }
+
+    @Test
+    public void testIntBag() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerIntBag(json);
+        IntBag numbers = IntBag.with(42, 23, 666, 420);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        IntBag numbers2 = json.fromJson(IntBag.class, data);
+        PrimitiveIterator.OfInt it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextInt());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
+    }
+
+    @Test
+    public void testLongBag() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerLongBag(json);
+        LongBag numbers = LongBag.with(42, 23, 666, 420);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        LongBag numbers2 = json.fromJson(LongBag.class, data);
+        PrimitiveIterator.OfLong it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextLong());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
+    }
+
+    @Test
+    public void testFloatBag() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerFloatBag(json);
+        FloatBag numbers = FloatBag.with(42.42f, 23.23f, 666.666f, 420.42f);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        FloatBag numbers2 = json.fromJson(FloatBag.class, data);
+        FloatIterator it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextFloat());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
+    }
+
+    @Test
+    public void testByteBag() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerByteBag(json);
+        ByteBag numbers = ByteBag.with((byte) 42, (byte) 23, (byte) -66, (byte) -20);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        ByteBag numbers2 = json.fromJson(ByteBag.class, data);
+        ByteIterator it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextByte());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
+    }
+
+    @Test
+    public void testShortBag() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerShortBag(json);
+        ShortBag numbers = ShortBag.with((short) 42, (short) 23, (short) 666, (short) 420);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        ShortBag numbers2 = json.fromJson(ShortBag.class, data);
+        ShortIterator it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextShort());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
+    }
+
+    @Test
+    public void testCharBag() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerCharBag(json);
+        CharBag numbers = CharBag.with('a', 'b', 'y', 'z');
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        CharBag numbers2 = json.fromJson(CharBag.class, data);
+        CharIterator it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextChar());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
+    }
+
+    @Test
+    public void testDoubleBag() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerDoubleBag(json);
+        DoubleBag numbers = DoubleBag.with(42.42, 23.23, 666.666, 420.42);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        DoubleBag numbers2 = json.fromJson(DoubleBag.class, data);
+        PrimitiveIterator.OfDouble it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextDouble());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
+    }
+
+    @Test
+    public void testBooleanBag() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerBooleanBag(json);
+        BooleanBag numbers = BooleanBag.with(true, false, false, true);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        BooleanBag numbers2 = json.fromJson(BooleanBag.class, data);
+        BooleanIterator it = numbers2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextBoolean());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
+    }
+
     public static class Composite {
         public EnhancedRandom random;
         public ObjectObjectMap<String, String> mapping;

@@ -57,7 +57,7 @@ if(JavaVersion.current().isJava9Compatible()) {
 }
 
 repositories {
-//    mavenLocal()
+    mavenLocal()
     mavenCentral()
     maven { url 'https://oss.sonatype.org/content/repositories/releases/' }
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
