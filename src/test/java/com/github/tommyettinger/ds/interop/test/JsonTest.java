@@ -49,6 +49,7 @@ public class JsonTest {
             System.out.print(word);
             System.out.print(", ");
         }
+        Assert.assertEquals(words, words2);
         System.out.println();
         ObjectList<GridPoint2> points = ObjectList.with(new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666));
         data = json.toJson(points);
@@ -58,6 +59,9 @@ public class JsonTest {
             System.out.print(point);
             System.out.print(", ");
         }
+        Assert.assertEquals(points, points2);
+        System.out.println();
+
     }
 
     @Test
@@ -270,6 +274,8 @@ public class JsonTest {
             if(it.hasNext())
                 System.out.print(", ");
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
@@ -286,6 +292,8 @@ public class JsonTest {
             if(it.hasNext())
                 System.out.print(", ");
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
@@ -302,6 +310,8 @@ public class JsonTest {
             if(it.hasNext())
                 System.out.print(", ");
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
@@ -318,6 +328,8 @@ public class JsonTest {
             if(it.hasNext())
                 System.out.print(", ");
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
@@ -604,6 +616,8 @@ public class JsonTest {
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(points, points2);
+        System.out.println();
     }
 
     @Test
@@ -633,6 +647,8 @@ public class JsonTest {
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(points, points2);
+        System.out.println();
     }
 
     @Test
@@ -643,13 +659,15 @@ public class JsonTest {
                 new int[]{1, 10, 100});
         String data = json.toJson(numbers);
         System.out.println(data);
-        IntIntMap points2 = json.fromJson(IntIntMap.class, data);
-        for(IntIntMap.Entry pair : points2) {
+        IntIntMap numbers2 = json.fromJson(IntIntMap.class, data);
+        for(IntIntMap.Entry pair : numbers2) {
             System.out.print(pair.getKey());
             System.out.print("=");
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
@@ -677,13 +695,15 @@ public class JsonTest {
                 new long[]{1L, 10000000000L, -1000000000000000L});
         String data = json.toJson(numbers);
         System.out.println(data);
-        IntLongMap points2 = json.fromJson(IntLongMap.class, data);
-        for(IntLongMap.Entry pair : points2) {
+        IntLongMap numbers2 = json.fromJson(IntLongMap.class, data);
+        for(IntLongMap.Entry pair : numbers2) {
             System.out.print(pair.getKey());
             System.out.print("=");
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
@@ -694,13 +714,15 @@ public class JsonTest {
                 new long[]{1L, 10000000000L, -1000000000000000L});
         String data = json.toJson(numbers);
         System.out.println(data);
-        IntLongOrderedMap points2 = json.fromJson(IntLongOrderedMap.class, data);
-        for(IntLongOrderedMap.Entry pair : points2) {
+        IntLongOrderedMap numbers2 = json.fromJson(IntLongOrderedMap.class, data);
+        for(IntLongOrderedMap.Entry pair : numbers2) {
             System.out.print(pair.getKey());
             System.out.print("=");
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
@@ -711,13 +733,15 @@ public class JsonTest {
                 new float[]{42.42f, 23.23f, 666.666f});
         String data = json.toJson(numbers);
         System.out.println(data);
-        IntFloatMap points2 = json.fromJson(IntFloatMap.class, data);
-        for(IntFloatMap.Entry pair : points2) {
+        IntFloatMap numbers2 = json.fromJson(IntFloatMap.class, data);
+        for(IntFloatMap.Entry pair : numbers2) {
             System.out.print(pair.getKey());
             System.out.print("=");
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
 
@@ -729,13 +753,15 @@ public class JsonTest {
                 new float[]{42.42f, 23.23f, 666.666f});
         String data = json.toJson(numbers);
         System.out.println(data);
-        IntFloatOrderedMap points2 = json.fromJson(IntFloatOrderedMap.class, data);
-        for(IntFloatOrderedMap.Entry pair : points2) {
+        IntFloatOrderedMap numbers2 = json.fromJson(IntFloatOrderedMap.class, data);
+        for(IntFloatOrderedMap.Entry pair : numbers2) {
             System.out.print(pair.getKey());
             System.out.print("=");
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
@@ -766,6 +792,8 @@ public class JsonTest {
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(points, points2);
+        System.out.println();
     }
 
 
@@ -797,6 +825,8 @@ public class JsonTest {
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(points, points2);
+        System.out.println();
     }
 
     @Test
@@ -807,13 +837,15 @@ public class JsonTest {
                 new int[]{1, 10, 100});
         String data = json.toJson(numbers);
         System.out.println(data);
-        LongIntMap points2 = json.fromJson(LongIntMap.class, data);
-        for(LongIntMap.Entry pair : points2) {
+        LongIntMap numbers2 = json.fromJson(LongIntMap.class, data);
+        for(LongIntMap.Entry pair : numbers2) {
             System.out.print(pair.getKey());
             System.out.print("=");
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
@@ -824,13 +856,15 @@ public class JsonTest {
                 new int[]{1, 10, 100});
         String data = json.toJson(numbers);
         System.out.println(data);
-        LongIntOrderedMap points2 = json.fromJson(LongIntOrderedMap.class, data);
-        for(LongIntOrderedMap.Entry pair : points2) {
+        LongIntOrderedMap numbers2 = json.fromJson(LongIntOrderedMap.class, data);
+        for(LongIntOrderedMap.Entry pair : numbers2) {
             System.out.print(pair.getKey());
             System.out.print("=");
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
@@ -841,13 +875,15 @@ public class JsonTest {
                 new long[]{1L, 10000000000L, -1000000000000000L});
         String data = json.toJson(numbers);
         System.out.println(data);
-        LongLongMap points2 = json.fromJson(LongLongMap.class, data);
-        for(LongLongMap.Entry pair : points2) {
+        LongLongMap numbers2 = json.fromJson(LongLongMap.class, data);
+        for(LongLongMap.Entry pair : numbers2) {
             System.out.print(pair.getKey());
             System.out.print("=");
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
 
@@ -859,13 +895,15 @@ public class JsonTest {
                 new long[]{1L, 10000000000L, -1000000000000000L});
         String data = json.toJson(numbers);
         System.out.println(data);
-        LongLongOrderedMap points2 = json.fromJson(LongLongOrderedMap.class, data);
-        for(LongLongOrderedMap.Entry pair : points2) {
+        LongLongOrderedMap numbers2 = json.fromJson(LongLongOrderedMap.class, data);
+        for(LongLongOrderedMap.Entry pair : numbers2) {
             System.out.print(pair.getKey());
             System.out.print("=");
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
@@ -876,13 +914,15 @@ public class JsonTest {
                 new float[]{42.42f, 23.23f, 666.666f});
         String data = json.toJson(numbers);
         System.out.println(data);
-        LongFloatMap points2 = json.fromJson(LongFloatMap.class, data);
-        for(LongFloatMap.Entry pair : points2) {
+        LongFloatMap numbers2 = json.fromJson(LongFloatMap.class, data);
+        for(LongFloatMap.Entry pair : numbers2) {
             System.out.print(pair.getKey());
             System.out.print("=");
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
@@ -893,13 +933,15 @@ public class JsonTest {
                 new float[]{42.42f, 23.23f, 666.666f});
         String data = json.toJson(numbers);
         System.out.println(data);
-        LongFloatOrderedMap points2 = json.fromJson(LongFloatOrderedMap.class, data);
-        for(LongFloatOrderedMap.Entry pair : points2) {
+        LongFloatOrderedMap numbers2 = json.fromJson(LongFloatOrderedMap.class, data);
+        for(LongFloatOrderedMap.Entry pair : numbers2) {
             System.out.print(pair.getKey());
             System.out.print("=");
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
     }
 
     @Test
