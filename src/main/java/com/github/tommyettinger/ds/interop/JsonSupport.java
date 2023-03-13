@@ -1421,7 +1421,7 @@ public final class JsonSupport {
             public void write(Json json, IntObjectMap object, Class knownType) {
                 json.writeObjectStart(IntObjectMap.class, knownType);
                 for (IntObjectMap.Entry<Object> e : new IntObjectMap.Entries<Object>(object)) {
-                    json.writeValue(Integer.toString(e.key), e.getValue());
+                    json.writeValue(Integer.toString(e.key), e.getValue(), null);
                 }
                 json.writeObjectEnd();
             }
@@ -1452,7 +1452,7 @@ public final class JsonSupport {
             public void write(Json json, IntObjectOrderedMap object, Class knownType) {
                 json.writeObjectStart(IntObjectOrderedMap.class, knownType);
                 for (IntObjectOrderedMap.Entry<Object> e : new IntObjectOrderedMap.OrderedMapEntries<Object>(object)) {
-                    json.writeValue(Integer.toString(e.key), e.getValue());
+                    json.writeValue(Integer.toString(e.key), e.getValue(), null);
                 }
                 json.writeObjectEnd();
             }
@@ -1669,7 +1669,7 @@ public final class JsonSupport {
             public void write(Json json, LongObjectMap object, Class knownType) {
                 json.writeObjectStart(LongObjectMap.class, knownType);
                 for (LongObjectMap.Entry<?> e : new LongObjectMap.Entries<Object>(object)) {
-                    json.writeValue(Long.toString(e.key), e.getValue());
+                    json.writeValue(Long.toString(e.key), e.getValue(), null);
                 }
                 json.writeObjectEnd();
             }
@@ -1700,7 +1700,7 @@ public final class JsonSupport {
             public void write(Json json, LongObjectOrderedMap object, Class knownType) {
                 json.writeObjectStart(LongObjectOrderedMap.class, knownType);
                 for (LongObjectOrderedMap.Entry<Object> e : new LongObjectOrderedMap.OrderedMapEntries<Object>(object)) {
-                    json.writeValue(Long.toString(e.key), e.getValue());
+                    json.writeValue(Long.toString(e.key), e.getValue(), null);
                 }
                 json.writeObjectEnd();
             }
