@@ -1382,6 +1382,21 @@ public class JsonTest {
     }
 
     @Test
+    public void testLowChangeQuasiRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new LowChangeQuasiRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerLowChangeQuasiRandom(json);
+        LowChangeQuasiRandom random = new LowChangeQuasiRandom(123456789);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        LowChangeQuasiRandom random2 = json.fromJson(LowChangeQuasiRandom.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getSelectedState(0)));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
     public void testDistributedRandom() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistributedRandom()));
         //JsonSupport.setNumeralBase(Base.BASE16);

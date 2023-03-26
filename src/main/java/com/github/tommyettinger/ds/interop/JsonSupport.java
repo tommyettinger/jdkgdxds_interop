@@ -2516,6 +2516,28 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers LowChangeQuasiRandom with the given Json object, so LowChangeQuasiRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerLowChangeQuasiRandom(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("VCQR", LowChangeQuasiRandom.class);
+        json.setSerializer(LowChangeQuasiRandom.class, new Json.Serializer<LowChangeQuasiRandom>() {
+            @Override
+            public void write(Json json, LowChangeQuasiRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public LowChangeQuasiRandom read(Json json, JsonValue jsonData, Class type) {
+                LowChangeQuasiRandom r = new LowChangeQuasiRandom(1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers DistributedRandom with the given Json object, so DistributedRandom can be written to and read from JSON.
      * This also registers all other EnhancedRandom types and all Distribution types.
      *
@@ -2569,6 +2591,7 @@ public final class JsonSupport {
         registerPasarRandom(json);
         registerGoldenQuasiRandom(json);
         registerVanDerCorputQuasiRandom(json);
+        registerLowChangeQuasiRandom(json);
         if(ADD_CLASS_TAGS) json.addClassTag("EnhR", EnhancedRandom.class);
         json.setSerializer(EnhancedRandom.class, new Json.Serializer<EnhancedRandom>() {
             @Override
