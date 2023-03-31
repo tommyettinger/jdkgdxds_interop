@@ -33,7 +33,6 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.PrimitiveIterator;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -217,7 +216,7 @@ public final class JsonSupport {
             public void write(Json json, IntList object, Class knownType) {
                 json.writeObjectStart(IntList.class, knownType);
                 json.writeArrayStart("items");
-                PrimitiveIterator.OfInt it = object.iterator();
+                IntIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextInt());
                 }
@@ -246,7 +245,7 @@ public final class JsonSupport {
             public void write(Json json, LongList object, Class knownType) {
                 json.writeObjectStart(LongList.class, knownType);
                 json.writeArrayStart("items");
-                PrimitiveIterator.OfLong it = object.iterator();
+                LongIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextLong());
                 }
@@ -386,7 +385,7 @@ public final class JsonSupport {
             public void write(Json json, DoubleList object, Class knownType) {
                 json.writeObjectStart(DoubleList.class, knownType);
                 json.writeArrayStart("items");
-                PrimitiveIterator.OfDouble it = object.iterator();
+                DoubleIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextDouble());
                 }
@@ -473,7 +472,7 @@ public final class JsonSupport {
             public void write(Json json, IntBag object, Class knownType) {
                 json.writeObjectStart(IntBag.class, knownType);
                 json.writeArrayStart("items");
-                PrimitiveIterator.OfInt it = object.iterator();
+                IntIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextInt());
                 }
@@ -502,7 +501,7 @@ public final class JsonSupport {
             public void write(Json json, LongBag object, Class knownType) {
                 json.writeObjectStart(LongBag.class, knownType);
                 json.writeArrayStart("items");
-                PrimitiveIterator.OfLong it = object.iterator();
+                LongIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextLong());
                 }
@@ -642,7 +641,7 @@ public final class JsonSupport {
             public void write(Json json, DoubleBag object, Class knownType) {
                 json.writeObjectStart(DoubleBag.class, knownType);
                 json.writeArrayStart("items");
-                PrimitiveIterator.OfDouble it = object.iterator();
+                DoubleIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextDouble());
                 }
@@ -729,7 +728,7 @@ public final class JsonSupport {
             public void write(Json json, LongDeque object, Class knownType) {
                 json.writeObjectStart(LongDeque.class, knownType);
                 json.writeArrayStart("items");
-                PrimitiveIterator.OfLong it = object.iterator();
+                LongIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextLong());
                 }
@@ -757,7 +756,7 @@ public final class JsonSupport {
             public void write(Json json, IntDeque object, Class knownType) {
                 json.writeObjectStart(IntDeque.class, knownType);
                 json.writeArrayStart("items");
-                PrimitiveIterator.OfInt it = object.iterator();
+                IntIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextInt());
                 }
@@ -897,7 +896,7 @@ public final class JsonSupport {
             public void write(Json json, DoubleDeque object, Class knownType) {
                 json.writeObjectStart(DoubleDeque.class, knownType);
                 json.writeArrayStart("items");
-                PrimitiveIterator.OfDouble it = object.iterator();
+                DoubleIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextDouble());
                 }
@@ -1015,7 +1014,7 @@ public final class JsonSupport {
             public void write(Json json, IntSet object, Class knownType) {
                 json.writeObjectStart(IntSet.class, knownType);
                 json.writeArrayStart("items");
-                PrimitiveIterator.OfInt it = object.iterator();
+                IntIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextInt());
                 }
@@ -1043,7 +1042,7 @@ public final class JsonSupport {
             public void write(Json json, IntOrderedSet object, Class knownType) {
                 json.writeObjectStart(IntOrderedSet.class, knownType);
                 json.writeArrayStart("items");
-                PrimitiveIterator.OfInt it = object.iterator();
+                IntIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextInt());
                 }
@@ -1071,7 +1070,7 @@ public final class JsonSupport {
             public void write(Json json, LongSet object, Class knownType) {
                 json.writeObjectStart(LongSet.class, knownType);
                 json.writeArrayStart("items");
-                PrimitiveIterator.OfLong it = object.iterator();
+                LongIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextLong());
                 }
@@ -1099,7 +1098,7 @@ public final class JsonSupport {
             public void write(Json json, LongOrderedSet object, Class knownType) {
                 json.writeObjectStart(LongOrderedSet.class, knownType);
                 json.writeArrayStart("items");
-                PrimitiveIterator.OfLong it = object.iterator();
+                LongIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextLong());
                 }
@@ -2113,7 +2112,7 @@ public final class JsonSupport {
                 json.writeObjectStart(OffsetBitSet.class, knownType);
                 json.writeValue("offset", off);
                 json.writeArrayStart("values");
-                PrimitiveIterator.OfInt it = object.iterator();
+                IntIterator it = object.iterator();
                 while (it.hasNext()) {
                     json.writeValue(it.nextInt());
                 }

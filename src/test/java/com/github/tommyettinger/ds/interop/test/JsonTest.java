@@ -72,7 +72,7 @@ public class JsonTest {
         String data = json.toJson(numbers);
         System.out.println(data);
         IntList numbers2 = json.fromJson(IntList.class, data);
-        PrimitiveIterator.OfInt it = numbers2.iterator();
+        IntIterator it = numbers2.iterator();
         while (it.hasNext()){
             System.out.print(it.nextInt());
             if(it.hasNext())
@@ -90,7 +90,7 @@ public class JsonTest {
         String data = json.toJson(numbers);
         System.out.println(data);
         LongList numbers2 = json.fromJson(LongList.class, data);
-        PrimitiveIterator.OfLong it = numbers2.iterator();
+        LongIterator it = numbers2.iterator();
         while (it.hasNext()){
             System.out.print(it.nextLong());
             if(it.hasNext())
@@ -180,7 +180,7 @@ public class JsonTest {
         String data = json.toJson(numbers);
         System.out.println(data);
         DoubleList numbers2 = json.fromJson(DoubleList.class, data);
-        PrimitiveIterator.OfDouble it = numbers2.iterator();
+        DoubleIterator it = numbers2.iterator();
         while (it.hasNext()){
             System.out.print(it.nextDouble());
             if(it.hasNext())
@@ -268,7 +268,7 @@ public class JsonTest {
         String data = json.toJson(numbers);
         System.out.println(data);
         IntSet numbers2 = json.fromJson(IntSet.class, data);
-        PrimitiveIterator.OfInt it = numbers2.iterator();
+        IntIterator it = numbers2.iterator();
         while (it.hasNext()){
             System.out.print(it.nextInt());
             if(it.hasNext())
@@ -286,7 +286,7 @@ public class JsonTest {
         String data = json.toJson(numbers);
         System.out.println(data);
         IntOrderedSet numbers2 = json.fromJson(IntOrderedSet.class, data);
-        PrimitiveIterator.OfInt it = numbers2.iterator();
+        IntIterator it = numbers2.iterator();
         while (it.hasNext()){
             System.out.print(it.nextInt());
             if(it.hasNext())
@@ -304,7 +304,7 @@ public class JsonTest {
         String data = json.toJson(numbers);
         System.out.println(data);
         LongSet numbers2 = json.fromJson(LongSet.class, data);
-        PrimitiveIterator.OfLong it = numbers2.iterator();
+        LongIterator it = numbers2.iterator();
         while (it.hasNext()){
             System.out.print(it.nextLong());
             if(it.hasNext())
@@ -322,7 +322,7 @@ public class JsonTest {
         String data = json.toJson(numbers);
         System.out.println(data);
         LongOrderedSet numbers2 = json.fromJson(LongOrderedSet.class, data);
-        PrimitiveIterator.OfLong it = numbers2.iterator();
+        LongIterator it = numbers2.iterator();
         while (it.hasNext()){
             System.out.print(it.nextLong());
             if(it.hasNext())
@@ -1088,7 +1088,7 @@ public class JsonTest {
         System.out.println(data);
         OffsetBitSet numbers2 = json.fromJson(OffsetBitSet.class, data);
         System.out.println(numbers2.getOffset());
-        PrimitiveIterator.OfInt it = numbers2.iterator();
+        IntIterator it = numbers2.iterator();
         while (it.hasNext()){
             System.out.print(it.nextInt());
             if(it.hasNext())
@@ -1941,7 +1941,7 @@ public class JsonTest {
         String data = json.toJson(numbers);
         System.out.println(data);
         LongDeque numbers2 = json.fromJson(LongDeque.class, data);
-        PrimitiveIterator.OfLong it = numbers2.iterator();
+        LongIterator it = numbers2.iterator();
         while (it.hasNext()){
             System.out.print(it.nextLong());
             if(it.hasNext())
@@ -1959,7 +1959,7 @@ public class JsonTest {
         String data = json.toJson(numbers);
         System.out.println(data);
         IntDeque numbers2 = json.fromJson(IntDeque.class, data);
-        PrimitiveIterator.OfInt it = numbers2.iterator();
+        IntIterator it = numbers2.iterator();
         while (it.hasNext()){
             System.out.print(it.nextInt());
             if(it.hasNext())
@@ -2049,7 +2049,7 @@ public class JsonTest {
         String data = json.toJson(numbers);
         System.out.println(data);
         DoubleDeque numbers2 = json.fromJson(DoubleDeque.class, data);
-        PrimitiveIterator.OfDouble it = numbers2.iterator();
+        DoubleIterator it = numbers2.iterator();
         while (it.hasNext()){
             System.out.print(it.nextDouble());
             if(it.hasNext())
@@ -2108,7 +2108,7 @@ public class JsonTest {
         String data = json.toJson(numbers);
         System.out.println(data);
         IntBag numbers2 = json.fromJson(IntBag.class, data);
-        PrimitiveIterator.OfInt it = numbers2.iterator();
+        IntIterator it = numbers2.iterator();
         while (it.hasNext()){
             System.out.print(it.nextInt());
             if(it.hasNext())
@@ -2126,7 +2126,7 @@ public class JsonTest {
         String data = json.toJson(numbers);
         System.out.println(data);
         LongBag numbers2 = json.fromJson(LongBag.class, data);
-        PrimitiveIterator.OfLong it = numbers2.iterator();
+        LongIterator it = numbers2.iterator();
         while (it.hasNext()){
             System.out.print(it.nextLong());
             if(it.hasNext())
@@ -2216,7 +2216,7 @@ public class JsonTest {
         String data = json.toJson(numbers);
         System.out.println(data);
         DoubleBag numbers2 = json.fromJson(DoubleBag.class, data);
-        PrimitiveIterator.OfDouble it = numbers2.iterator();
+        DoubleIterator it = numbers2.iterator();
         while (it.hasNext()){
             System.out.print(it.nextDouble());
             if(it.hasNext())

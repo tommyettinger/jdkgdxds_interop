@@ -16,66 +16,20 @@
 
 package com.github.tommyettinger.ds.interop;
 
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ArrayMap;
-import com.badlogic.gdx.utils.BooleanArray;
-import com.badlogic.gdx.utils.ByteArray;
-import com.badlogic.gdx.utils.CharArray;
-import com.badlogic.gdx.utils.FloatArray;
-import com.badlogic.gdx.utils.IdentityMap;
-import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.IntFloatMap;
 import com.badlogic.gdx.utils.IntIntMap;
-import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.IntSet;
-import com.badlogic.gdx.utils.LongArray;
-import com.badlogic.gdx.utils.LongMap;
-import com.badlogic.gdx.utils.LongQueue;
 import com.badlogic.gdx.utils.ObjectFloatMap;
 import com.badlogic.gdx.utils.ObjectIntMap;
 import com.badlogic.gdx.utils.ObjectLongMap;
-import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectSet;
-import com.badlogic.gdx.utils.OrderedMap;
-import com.badlogic.gdx.utils.OrderedSet;
-import com.badlogic.gdx.utils.Queue;
-import com.badlogic.gdx.utils.ShortArray;
-import com.github.tommyettinger.ds.BooleanList;
-import com.github.tommyettinger.ds.ByteList;
-import com.github.tommyettinger.ds.CaseInsensitiveMap;
-import com.github.tommyettinger.ds.CaseInsensitiveOrderedMap;
-import com.github.tommyettinger.ds.CharList;
-import com.github.tommyettinger.ds.FloatList;
-import com.github.tommyettinger.ds.IdentityObjectMap;
-import com.github.tommyettinger.ds.IntFloatOrderedMap;
-import com.github.tommyettinger.ds.IntIntOrderedMap;
-import com.github.tommyettinger.ds.IntList;
-import com.github.tommyettinger.ds.IntObjectMap;
-import com.github.tommyettinger.ds.IntObjectOrderedMap;
-import com.github.tommyettinger.ds.LongDeque;
-import com.github.tommyettinger.ds.LongList;
-import com.github.tommyettinger.ds.LongObjectMap;
-import com.github.tommyettinger.ds.LongObjectOrderedMap;
-import com.github.tommyettinger.ds.LongSet;
-import com.github.tommyettinger.ds.NumberedSet;
-import com.github.tommyettinger.ds.ObjectFloatOrderedMap;
-import com.github.tommyettinger.ds.ObjectIntOrderedMap;
-import com.github.tommyettinger.ds.ObjectList;
-import com.github.tommyettinger.ds.ObjectLongOrderedMap;
-import com.github.tommyettinger.ds.ObjectObjectMap;
-import com.github.tommyettinger.ds.ObjectObjectOrderedMap;
-import com.github.tommyettinger.ds.PrimitiveCollection;
-import com.github.tommyettinger.ds.ShortList;
-import com.github.tommyettinger.ds.support.util.BooleanIterator;
-import com.github.tommyettinger.ds.support.util.ByteIterator;
-import com.github.tommyettinger.ds.support.util.CharIterator;
-import com.github.tommyettinger.ds.support.util.FloatIterator;
-import com.github.tommyettinger.ds.support.util.ShortIterator;
+import com.badlogic.gdx.utils.*;
+import com.github.tommyettinger.ds.*;
+import com.github.tommyettinger.ds.support.util.*;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.PrimitiveIterator;
 
 /**
  * Converts from arbitrary data structures that implement JDK interfaces to libGDX data structures (which typically
@@ -107,7 +61,7 @@ public class ConversionToGDX {
      */
     public static IntArray toIntArray(PrimitiveCollection.OfInt from) {
         IntArray array = new IntArray(from.size());
-        PrimitiveIterator.OfInt it = from.iterator();
+        IntIterator it = from.iterator();
         while (it.hasNext()){
             array.add(it.nextInt());
         }
@@ -122,7 +76,7 @@ public class ConversionToGDX {
      */
     public static LongArray toLongArray(PrimitiveCollection.OfLong from) {
         LongArray array = new LongArray(from.size());
-        PrimitiveIterator.OfLong it = from.iterator();
+        LongIterator it = from.iterator();
         while (it.hasNext()){
             array.add(it.nextLong());
         }
@@ -261,7 +215,7 @@ public class ConversionToGDX {
      */
     public static IntSet toIntSet(PrimitiveCollection.OfInt from) {
         IntSet set = new IntSet(from.size());
-        PrimitiveIterator.OfInt it = from.iterator();
+        IntIterator it = from.iterator();
         while (it.hasNext()) {
             set.add(it.nextInt());
         }
@@ -356,7 +310,7 @@ public class ConversionToGDX {
      */
     public static <V> IntMap<V> toIntMap(com.github.tommyettinger.ds.IntObjectMap<? extends V> from){
         IntMap<V> map = new IntMap<>(from.size());
-        PrimitiveIterator.OfInt it = from.keySet().iterator();
+        IntIterator it = from.keySet().iterator();
         while (it.hasNext()) {
             int k = it.nextInt();
             map.put(k, from.get(k));
@@ -372,7 +326,7 @@ public class ConversionToGDX {
      */
     public static IntIntMap toIntIntMap(com.github.tommyettinger.ds.IntIntMap from){
         IntIntMap map = new IntIntMap(from.size());
-        PrimitiveIterator.OfInt it = from.keySet().iterator();
+        IntIterator it = from.keySet().iterator();
         while (it.hasNext()) {
             int k = it.nextInt();
             map.put(k, from.get(k));
@@ -388,7 +342,7 @@ public class ConversionToGDX {
      */
     public static IntFloatMap toIntFloatMap(com.github.tommyettinger.ds.IntFloatMap from){
         IntFloatMap map = new IntFloatMap(from.size());
-        PrimitiveIterator.OfInt it = from.keySet().iterator();
+        IntIterator it = from.keySet().iterator();
         while (it.hasNext()) {
             int k = it.nextInt();
             map.put(k, from.get(k));
@@ -405,7 +359,7 @@ public class ConversionToGDX {
      */
     public static <V> LongMap<V> toLongMap(com.github.tommyettinger.ds.LongObjectMap<? extends V> from){
         LongMap<V> map = new LongMap<>(from.size());
-        PrimitiveIterator.OfLong it = from.keySet().iterator();
+        LongIterator it = from.keySet().iterator();
         while (it.hasNext()) {
             long k = it.nextLong();
             map.put(k, from.get(k));
@@ -457,7 +411,7 @@ public class ConversionToGDX {
      */
     public static LongQueue toLongQueue(PrimitiveCollection.OfLong from) {
         LongQueue queue = new LongQueue(from.size());
-        PrimitiveIterator.OfLong it = from.iterator();
+        LongIterator it = from.iterator();
         while (it.hasNext()){
             queue.addLast(it.nextLong());
         }
