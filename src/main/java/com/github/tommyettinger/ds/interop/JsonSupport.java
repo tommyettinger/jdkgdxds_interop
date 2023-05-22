@@ -2273,6 +2273,28 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers AceRandom with the given Json object, so AceRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerAceRandom(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("AceR", AceRandom.class);
+        json.setSerializer(AceRandom.class, new Json.Serializer<AceRandom>() {
+            @Override
+            public void write(Json json, AceRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public AceRandom read(Json json, JsonValue jsonData, Class type) {
+                AceRandom r = new AceRandom(1L, 1L, 1L, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers ChopRandom with the given Json object, so ChopRandom can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -2485,7 +2507,7 @@ public final class JsonSupport {
 
             @Override
             public ScruffRandom read(Json json, JsonValue jsonData, Class type) {
-                ScruffRandom r = new ScruffRandom(1L);
+                ScruffRandom r = new ScruffRandom(1L, 1L, 1L, 1L);
                 r.stringDeserialize(jsonData.asString(), BASE);
                 return r;
             }
@@ -2581,6 +2603,28 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers LongSequence with the given Json object, so LongSequence can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerLongSequence(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("LSeq", LongSequence.class);
+        json.setSerializer(LongSequence.class, new Json.Serializer<LongSequence>() {
+            @Override
+            public void write(Json json, LongSequence object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public LongSequence read(Json json, JsonValue jsonData, Class type) {
+                LongSequence s = new LongSequence();
+                s.stringDeserialize(jsonData.asString(), BASE);
+                return s;
+            }
+        });
+    }
+
+    /**
      * Registers DistributedRandom with the given Json object, so DistributedRandom can be written to and read from JSON.
      * This also registers all other EnhancedRandom types and all Distribution types.
      *
@@ -2607,7 +2651,9 @@ public final class JsonSupport {
      * Registers EnhancedRandom with the given Json object, so EnhancedRandom can be written to and read from JSON.
      * This also registers {@link DistinctRandom}, {@link LaserRandom}, {@link TricycleRandom}, {@link FourWheelRandom},
      * {@link Xoshiro256StarStarRandom}, {@link StrangerRandom}, {@link TrimRandom}, {@link WhiskerRandom},
-     * {@link RomuTrioRandom}, {@link ChopRandom}, {@link Xoshiro128PlusPlusRandom}, and {@link MizuchiRandom}, plus
+     * {@link RomuTrioRandom}, {@link ChopRandom}, {@link Xoshiro128PlusPlusRandom}, {@link MizuchiRandom},
+     * {@link ScruffRandom}, {@link AceRandom}, {@link GoldenQuasiRandom}, {@link VanDerCorputQuasiRandom},
+     * {@link LowChangeQuasiRandom}, and {@link TupleQuasiRandom}, plus
      * {@link AtomicLong} because some subclasses of {@link java.util.Random} need it. This does not register
      * {@link DistributedRandom}, but {@link #registerDistributedRandom(Json)} calls this method instead (and also calls
      * {@link #registerDistribution(Json)}).
@@ -2632,9 +2678,12 @@ public final class JsonSupport {
         registerChopRandom(json);
         registerXoshiro128PlusPlusRandom(json);
         registerPasarRandom(json);
+        registerAceRandom(json);
+        registerScruffRandom(json);
         registerGoldenQuasiRandom(json);
         registerVanDerCorputQuasiRandom(json);
         registerLowChangeQuasiRandom(json);
+        registerTupleQuasiRandom(json);
         if(ADD_CLASS_TAGS) json.addClassTag("EnhR", EnhancedRandom.class);
         json.setSerializer(EnhancedRandom.class, new Json.Serializer<EnhancedRandom>() {
             @Override
