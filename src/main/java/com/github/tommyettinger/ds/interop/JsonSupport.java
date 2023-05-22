@@ -2471,6 +2471,28 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers ScruffRandom with the given Json object, so ScruffRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerScruffRandom(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("ScrR", ScruffRandom.class);
+        json.setSerializer(ScruffRandom.class, new Json.Serializer<ScruffRandom>() {
+            @Override
+            public void write(Json json, ScruffRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public ScruffRandom read(Json json, JsonValue jsonData, Class type) {
+                ScruffRandom r = new ScruffRandom(1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers GoldenQuasiRandom with the given Json object, so GoldenQuasiRandom can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -2530,6 +2552,28 @@ public final class JsonSupport {
             @Override
             public LowChangeQuasiRandom read(Json json, JsonValue jsonData, Class type) {
                 LowChangeQuasiRandom r = new LowChangeQuasiRandom(1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers TupleQuasiRandom with the given Json object, so TupleQuasiRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerTupleQuasiRandom(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("TuQR", TupleQuasiRandom.class);
+        json.setSerializer(TupleQuasiRandom.class, new Json.Serializer<TupleQuasiRandom>() {
+            @Override
+            public void write(Json json, TupleQuasiRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public TupleQuasiRandom read(Json json, JsonValue jsonData, Class type) {
+                TupleQuasiRandom r = new TupleQuasiRandom(1L);
                 r.stringDeserialize(jsonData.asString(), BASE);
                 return r;
             }
