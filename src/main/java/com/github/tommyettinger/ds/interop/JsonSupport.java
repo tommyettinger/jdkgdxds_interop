@@ -2623,6 +2623,29 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers KnownSequenceRandom with the given Json object, so KnownSequenceRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerKnownSequenceRandom(@NonNull Json json) {
+        if(json.getSerializer(KnownSequenceRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("KnSR", KnownSequenceRandom.class);
+        json.setSerializer(KnownSequenceRandom.class, new Json.Serializer<KnownSequenceRandom>() {
+            @Override
+            public void write(Json json, KnownSequenceRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public KnownSequenceRandom read(Json json, JsonValue jsonData, Class type) {
+                KnownSequenceRandom r = new KnownSequenceRandom();
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers LongSequence with the given Json object, so LongSequence can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -2641,6 +2664,57 @@ public final class JsonSupport {
                 LongSequence s = new LongSequence();
                 s.stringDeserialize(jsonData.asString(), BASE);
                 return s;
+            }
+        });
+    }
+
+    /**
+     * Registers ReverseWrapper with the given Json object, so ReverseWrapper can be written to and read from JSON.
+     * This also registers all other EnhancedRandom types.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerReverseWrapper(@NonNull Json json) {
+        if(json.getSerializer(ReverseWrapper.class) != null) return;
+        JsonSupport.registerEnhancedRandom(json);
+        if(ADD_CLASS_TAGS) json.addClassTag("RevW", ReverseWrapper.class);
+        json.setSerializer(ReverseWrapper.class, new Json.Serializer<ReverseWrapper>() {
+            @Override
+            public void write(Json json, ReverseWrapper object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public ReverseWrapper read(Json json, JsonValue jsonData, Class type) {
+                ReverseWrapper w = new ReverseWrapper();
+                w.stringDeserialize(jsonData.asString(), BASE);
+                return w;
+            }
+        });
+    }
+
+    /**
+     * Registers ArchivalWrapper with the given Json object, so ArchivalWrapper can be written to and read from JSON.
+     * This also registers all other EnhancedRandom types, and {@link LongSequence}.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerArchivalWrapper(@NonNull Json json) {
+        if(json.getSerializer(ArchivalWrapper.class) != null) return;
+        JsonSupport.registerEnhancedRandom(json);
+        JsonSupport.registerLongSequence(json);
+        if(ADD_CLASS_TAGS) json.addClassTag("ArcW", ArchivalWrapper.class);
+        json.setSerializer(ArchivalWrapper.class, new Json.Serializer<ArchivalWrapper>() {
+            @Override
+            public void write(Json json, ArchivalWrapper object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public ArchivalWrapper read(Json json, JsonValue jsonData, Class type) {
+                ArchivalWrapper w = new ArchivalWrapper();
+                w.stringDeserialize(jsonData.asString(), BASE);
+                return w;
             }
         });
     }
@@ -2675,9 +2749,11 @@ public final class JsonSupport {
      * {@link Xoshiro256StarStarRandom}, {@link StrangerRandom}, {@link TrimRandom}, {@link WhiskerRandom},
      * {@link RomuTrioRandom}, {@link ChopRandom}, {@link Xoshiro128PlusPlusRandom}, {@link MizuchiRandom},
      * {@link ScruffRandom}, {@link AceRandom}, {@link GoldenQuasiRandom}, {@link VanDerCorputQuasiRandom},
-     * {@link LowChangeQuasiRandom}, and {@link TupleQuasiRandom}, plus
+     * {@link LowChangeQuasiRandom}, {@link TupleQuasiRandom}, and {@link KnownSequenceRandom}, plus
      * {@link AtomicLong} because some subclasses of {@link java.util.Random} need it. This does not register
-     * {@link DistributedRandom}, but {@link #registerDistributedRandom(Json)} calls this method instead (and also calls
+     * {@link DistributedRandom} or the wrappers {@link ReverseWrapper} and {@link ArchivalWrapper}, but
+     * {@link #registerDistributedRandom(Json)}, {@link #registerReverseWrapper(Json)}, and
+     * {@link #registerArchivalWrapper(Json)} call this method instead (the first of those also calls
      * {@link #registerDistribution(Json)}).
      * <br>
      * Abstract classes aren't usually serializable like this, but because each of the EnhancedRandom serializers uses a
@@ -2703,6 +2779,7 @@ public final class JsonSupport {
         registerPasarRandom(json);
         registerAceRandom(json);
         registerScruffRandom(json);
+        registerKnownSequenceRandom(json);
         registerGoldenQuasiRandom(json);
         registerVanDerCorputQuasiRandom(json);
         registerLowChangeQuasiRandom(json);
