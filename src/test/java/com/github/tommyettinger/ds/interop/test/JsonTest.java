@@ -1288,6 +1288,38 @@ public class JsonTest {
     }
 
     @Test
+    public void testAceRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerAceRandom(json);
+        AceRandom random = new AceRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L, -1L);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        AceRandom random2 = json.fromJson(AceRandom.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateD()));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
+    public void testKnownSequenceRandom() {
+//        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        JsonSupport.setNumeralBase(Base.BASE10);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerKnownSequenceRandom(json);
+        KnownSequenceRandom random = new KnownSequenceRandom(LongSequence.with(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L, -1L));
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        KnownSequenceRandom random2 = json.fromJson(KnownSequenceRandom.class, data);
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
     public void testChopRandom() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
 //        JsonSupport.setNumeralBase(Base.BASE16);
