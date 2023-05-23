@@ -1478,6 +1478,39 @@ public class JsonTest {
     }
 
     @Test
+    public void testReverseWrapper() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new ReverseWrapper()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerReverseWrapper(json);
+        ReverseWrapper random = new ReverseWrapper(new WhiskerRandom(123456789));
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        ReverseWrapper random2 = json.fromJson(ReverseWrapper.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getSelectedState(0)));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+    
+    @Test
+    public void testLongSequence() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerLongSequence(json);
+        LongSequence numbers = LongSequence.with(42, 23, 666, 420);
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        LongSequence numbers2 = json.fromJson(LongSequence.class, data);
+        long[] arr = numbers2.items;
+        for (int i = 0; i < numbers2.size; i++) {
+            System.out.print(arr[i]);
+            if(i < numbers2.size - 1)
+                System.out.print(", ");
+        }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
+    }
+    
+    @Test
     public void testRandomXS128() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
         //JsonSupport.setNumeralBase(Base.BASE16);
