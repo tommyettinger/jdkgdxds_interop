@@ -1268,6 +1268,23 @@ public class JsonTest {
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
+    @Test
+    public void testScruffRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerScruffRandom(json);
+        ScruffRandom random = new ScruffRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        ScruffRandom random2 = json.fromJson(ScruffRandom.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateD()));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
 
     @Test
     public void testPasarRandom() {
@@ -1307,8 +1324,8 @@ public class JsonTest {
 
     @Test
     public void testKnownSequenceRandom() {
-//        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
-        JsonSupport.setNumeralBase(Base.BASE10);
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+//        JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerKnownSequenceRandom(json);
         KnownSequenceRandom random = new KnownSequenceRandom(LongSequence.with(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L, -1L));
@@ -1424,6 +1441,21 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         LowChangeQuasiRandom random2 = json.fromJson(LowChangeQuasiRandom.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getSelectedState(0)));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
+    public void testTupleQuasiRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new TupleQuasiRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerTupleQuasiRandom(json);
+        TupleQuasiRandom random = new TupleQuasiRandom(123456789);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        TupleQuasiRandom random2 = json.fromJson(TupleQuasiRandom.class, data);
         System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getSelectedState(0)));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
