@@ -1123,8 +1123,8 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         LaserRandom random2 = json.fromJson(LaserRandom.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateA()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1139,8 +1139,8 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         MizuchiRandom random2 = json.fromJson(MizuchiRandom.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateA()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1155,9 +1155,9 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         TricycleRandom random2 = json.fromJson(TricycleRandom.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateA()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateB()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateC()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1172,9 +1172,9 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         RomuTrioRandom random2 = json.fromJson(RomuTrioRandom.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateA()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateB()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateC()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1189,10 +1189,10 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         FourWheelRandom random2 = json.fromJson(FourWheelRandom.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateA()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateB()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateC()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateD()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateD()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1207,10 +1207,10 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         StrangerRandom random2 = json.fromJson(StrangerRandom.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateA()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateB()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateC()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateD()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateD()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1225,10 +1225,10 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         Xoshiro256StarStarRandom random2 = json.fromJson(Xoshiro256StarStarRandom.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateA()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateB()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateC()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateD()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateD()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1243,10 +1243,10 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         TrimRandom random2 = json.fromJson(TrimRandom.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateA()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateB()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateC()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateD()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateD()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1261,10 +1261,10 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         WhiskerRandom random2 = json.fromJson(WhiskerRandom.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateA()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateB()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateC()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateD()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateD()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1279,10 +1279,10 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         ScruffRandom random2 = json.fromJson(ScruffRandom.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateA()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateB()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateC()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateD()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateD()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1297,10 +1297,10 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         PasarRandom random2 = json.fromJson(PasarRandom.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateA()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateB()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateC()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateD()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateD()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1315,24 +1315,10 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         AceRandom random2 = json.fromJson(AceRandom.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateA()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateB()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateC()));
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateD()));
-        Assert.assertEquals(random.nextLong(), random2.nextLong());
-    }
-
-    @Test
-    public void testKnownSequenceRandom() {
-        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
-//        JsonSupport.setNumeralBase(Base.BASE16);
-        Json json = new Json(JsonWriter.OutputType.minimal);
-        JsonSupport.registerKnownSequenceRandom(json);
-        KnownSequenceRandom random = new KnownSequenceRandom(LongSequence.with(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L, -1L));
-        random.nextLong();
-        String data = json.toJson(random);
-        System.out.println(data);
-        KnownSequenceRandom random2 = json.fromJson(KnownSequenceRandom.class, data);
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateD()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1396,7 +1382,7 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         DistinctRandom random2 = json.fromJson(DistinctRandom.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getSelectedState(0)));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1411,7 +1397,7 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         GoldenQuasiRandom random2 = json.fromJson(GoldenQuasiRandom.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getSelectedState(0)));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1426,7 +1412,7 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         VanDerCorputQuasiRandom random2 = json.fromJson(VanDerCorputQuasiRandom.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getSelectedState(0)));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1441,7 +1427,7 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         LowChangeQuasiRandom random2 = json.fromJson(LowChangeQuasiRandom.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getSelectedState(0)));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1456,7 +1442,21 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         TupleQuasiRandom random2 = json.fromJson(TupleQuasiRandom.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getSelectedState(0)));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
+    public void testKnownSequenceRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+//        JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerKnownSequenceRandom(json);
+        KnownSequenceRandom random = new KnownSequenceRandom(LongSequence.with(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L, -1L));
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        KnownSequenceRandom random2 = json.fromJson(KnownSequenceRandom.class, data);
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1473,7 +1473,7 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         DistributedRandom random2 = json.fromJson(DistributedRandom.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getSelectedState(0)));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -1488,7 +1488,22 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         ReverseWrapper random2 = json.fromJson(ReverseWrapper.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getSelectedState(0)));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
+    public void testArchivalWrapper() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new ArchivalWrapper()));
+//        JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerArchivalWrapper(json);
+        ArchivalWrapper random = new ArchivalWrapper(new WhiskerRandom(123456789));
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        ArchivalWrapper random2 = json.fromJson(ArchivalWrapper.class, data);
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getSelectedState(0)));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
     
@@ -1537,7 +1552,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         ArcsineDistribution dist2 = json.fromJson(ArcsineDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1552,7 +1567,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         BernoulliDistribution dist2 = json.fromJson(BernoulliDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1567,7 +1582,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         BetaDistribution dist2 = json.fromJson(BetaDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1582,7 +1597,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         BetaPrimeDistribution dist2 = json.fromJson(BetaPrimeDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1597,7 +1612,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         BinomialDistribution dist2 = json.fromJson(BinomialDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1612,7 +1627,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         CauchyDistribution dist2 = json.fromJson(CauchyDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1627,7 +1642,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         ChiDistribution dist2 = json.fromJson(ChiDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1642,7 +1657,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         ChiSquareDistribution dist2 = json.fromJson(ChiSquareDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1657,7 +1672,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         ContinuousUniformDistribution dist2 = json.fromJson(ContinuousUniformDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1672,7 +1687,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         DiscreteUniformDistribution dist2 = json.fromJson(DiscreteUniformDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1687,7 +1702,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         ErlangDistribution dist2 = json.fromJson(ErlangDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1702,7 +1717,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         ExponentialDistribution dist2 = json.fromJson(ExponentialDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1717,7 +1732,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         FisherSnedecorDistribution dist2 = json.fromJson(FisherSnedecorDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1732,7 +1747,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         FisherTippettDistribution dist2 = json.fromJson(FisherTippettDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1747,7 +1762,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         GammaDistribution dist2 = json.fromJson(GammaDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1762,7 +1777,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         GeometricDistribution dist2 = json.fromJson(GeometricDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1777,7 +1792,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         KumaraswamyDistribution dist2 = json.fromJson(KumaraswamyDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1792,7 +1807,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         LaplaceDistribution dist2 = json.fromJson(LaplaceDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1807,7 +1822,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         LogCauchyDistribution dist2 = json.fromJson(LogCauchyDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1822,7 +1837,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         LogisticDistribution dist2 = json.fromJson(LogisticDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1837,7 +1852,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         LogNormalDistribution dist2 = json.fromJson(LogNormalDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1852,7 +1867,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         LumpDistribution dist2 = json.fromJson(LumpDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1867,7 +1882,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         NormalDistribution dist2 = json.fromJson(NormalDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1882,7 +1897,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         ParetoDistribution dist2 = json.fromJson(ParetoDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1897,7 +1912,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         PoissonDistribution dist2 = json.fromJson(PoissonDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1912,7 +1927,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         PowerDistribution dist2 = json.fromJson(PowerDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1927,7 +1942,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         RayleighDistribution dist2 = json.fromJson(RayleighDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1942,7 +1957,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         StudentsTDistribution dist2 = json.fromJson(StudentsTDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1957,7 +1972,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         TriangularDistribution dist2 = json.fromJson(TriangularDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -1972,14 +1987,14 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         WeibullDistribution dist2 = json.fromJson(WeibullDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
     @Test
     public void testZipfianDistribution() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
-        //JsonSupport.setNumeralBase(Base.BASE16);
+//        JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerZipfianDistribution(json);
         ZipfianDistribution dist = new ZipfianDistribution(new DistinctRandom(123456789), 16, 0.625);
@@ -1987,7 +2002,7 @@ public class JsonTest {
         String data = json.toJson(dist);
         System.out.println(data);
         ZipfianDistribution dist2 = json.fromJson(ZipfianDistribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
@@ -2002,7 +2017,7 @@ public class JsonTest {
         String data = json.toJson(dist, Distribution.class);
         System.out.println(data);
         Distribution dist2 = json.fromJson(Distribution.class, data);
-        System.out.println(JsonSupport.getNumeralBase().unsigned(dist2.generator.getSelectedState(0)));
+        System.out.println(JsonSupport.getNumeralBase().signed(dist2.generator.getSelectedState(0)));
         Assert.assertEquals(dist.nextDouble(), dist2.nextDouble(), 0.0);
     }
 
