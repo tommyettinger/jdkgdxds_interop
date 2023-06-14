@@ -228,7 +228,7 @@ public class ConversionToGDX {
      * @param from any Map that has a usable {@link Map#keySet()} method
      * @param <K> the type of keys; the same in {@code from} and the returned ObjectMap
      * @param <V> the type of values; the same in {@code from} and the returned ObjectMap
-     * @return a new ObjectMap holding all of the key-value pairs in {@code from}
+     * @return a new ObjectMap holding all the key-value pairs in {@code from}
      */
     public static <K, V> ObjectMap<K, V> toObjectMap(Map<? extends K, ? extends V> from){
         ObjectMap<K, V> map = new ObjectMap<>(from.size());
@@ -246,7 +246,7 @@ public class ConversionToGDX {
      * @param from any Map that has a usable {@link Map#keySet()} method
      * @param <K> the type of keys; the same in {@code from} and the returned OrderedMap
      * @param <V> the type of values; the same in {@code from} and the returned OrderedMap
-     * @return a new OrderedMap holding all of the key-value pairs in {@code from}
+     * @return a new OrderedMap holding all the key-value pairs in {@code from}
      */
     public static <K, V> OrderedMap<K, V> toOrderedMap(Map<? extends K, ? extends V> from){
         OrderedMap<K, V> map = new OrderedMap<>(from.size());
@@ -261,7 +261,7 @@ public class ConversionToGDX {
      * {@link ObjectIntOrderedMap} to a libGDX ObjectIntMap.
      * @param from a jdkgdxds ObjectIntMap or ObjectIntOrderedMap
      * @param <K> the type of keys; the same in {@code from} and the returned ObjectIntMap
-     * @return a new libGDX ObjectIntMap holding all of the key-value pairs in {@code from}
+     * @return a new libGDX ObjectIntMap holding all the key-value pairs in {@code from}
      */
     public static <K> ObjectIntMap<K> toObjectIntMap(com.github.tommyettinger.ds.ObjectIntMap<? extends K> from){
         ObjectIntMap<K> map = new ObjectIntMap<>(from.size());
@@ -276,7 +276,7 @@ public class ConversionToGDX {
      * {@link ObjectLongOrderedMap} to a libGDX ObjectLongMap.
      * @param from a jdkgdxds ObjectLongMap or ObjectLongOrderedMap
      * @param <K> the type of keys; the same in {@code from} and the returned ObjectLongMap
-     * @return a new libGDX ObjectLongMap holding all of the key-value pairs in {@code from}
+     * @return a new libGDX ObjectLongMap holding all the key-value pairs in {@code from}
      */
     public static <K> ObjectLongMap<K> toObjectLongMap(com.github.tommyettinger.ds.ObjectLongMap<? extends K> from){
         ObjectLongMap<K> map = new ObjectLongMap<>(from.size());
@@ -291,7 +291,7 @@ public class ConversionToGDX {
      * {@link ObjectFloatOrderedMap} to a libGDX ObjectFloatMap.
      * @param from a jdkgdxds ObjectFloatMap or ObjectFloatOrderedMap
      * @param <K> the type of keys; the same in {@code from} and the returned ObjectFloatMap
-     * @return a new libGDX ObjectFloatMap holding all of the key-value pairs in {@code from}
+     * @return a new libGDX ObjectFloatMap holding all the key-value pairs in {@code from}
      */
     public static <K> ObjectFloatMap<K> toObjectFloatMap(com.github.tommyettinger.ds.ObjectFloatMap<? extends K> from){
         ObjectFloatMap<K> map = new ObjectFloatMap<>(from.size());
@@ -306,7 +306,7 @@ public class ConversionToGDX {
      * {@link IntObjectOrderedMap} to a libGDX IntMap.
      * @param from a jdkgdxds IntObjectMap or IntObjectOrderedMap
      * @param <V> the type of values; the same in {@code from} and the returned IntMap
-     * @return a new libGDX IntMap holding all of the key-value pairs in {@code from}
+     * @return a new libGDX IntMap holding all the key-value pairs in {@code from}
      */
     public static <V> IntMap<V> toIntMap(com.github.tommyettinger.ds.IntObjectMap<? extends V> from){
         IntMap<V> map = new IntMap<>(from.size());
@@ -322,7 +322,7 @@ public class ConversionToGDX {
      * Can be used to convert from a jdkgdxds {@link com.github.tommyettinger.ds.IntIntMap} or
      * {@link IntIntOrderedMap} to a libGDX IntIntMap.
      * @param from a jdkgdxds IntIntMap or IntIntOrderedMap
-     * @return a new libGDX IntIntMap holding all of the key-value pairs in {@code from}
+     * @return a new libGDX IntIntMap holding all the key-value pairs in {@code from}
      */
     public static IntIntMap toIntIntMap(com.github.tommyettinger.ds.IntIntMap from){
         IntIntMap map = new IntIntMap(from.size());
@@ -338,7 +338,7 @@ public class ConversionToGDX {
      * Can be used to convert from a jdkgdxds {@link com.github.tommyettinger.ds.IntFloatMap} or
      * {@link IntFloatOrderedMap} to a libGDX IntFloatMap.
      * @param from a jdkgdxds IntFloatMap or IntFloatOrderedMap
-     * @return a new libGDX IntFloatMap holding all of the key-value pairs in {@code from}
+     * @return a new libGDX IntFloatMap holding all the key-value pairs in {@code from}
      */
     public static IntFloatMap toIntFloatMap(com.github.tommyettinger.ds.IntFloatMap from){
         IntFloatMap map = new IntFloatMap(from.size());
@@ -355,7 +355,7 @@ public class ConversionToGDX {
      * {@link LongObjectOrderedMap} to a libGDX IntMap.
      * @param from a jdkgdxds LongObjectMap or LongObjectOrderedMap
      * @param <V> the type of values; the same in {@code from} and the returned IntMap
-     * @return a new libGDX IntMap holding all of the key-value pairs in {@code from}
+     * @return a new libGDX IntMap holding all the key-value pairs in {@code from}
      */
     public static <V> LongMap<V> toLongMap(com.github.tommyettinger.ds.LongObjectMap<? extends V> from){
         LongMap<V> map = new LongMap<>(from.size());
@@ -374,7 +374,7 @@ public class ConversionToGDX {
      * @param from any Map that has a usable {@link Map#keySet()} method
      * @param <K> the type of keys; the same in {@code from} and the returned IdentityMap
      * @param <V> the type of values; the same in {@code from} and the returned IdentityMap
-     * @return a new IdentityMap holding all of the key-value pairs in {@code from}
+     * @return a new IdentityMap holding all the key-value pairs in {@code from}
      */
     public static <K, V> IdentityMap<K, V> toIdentityMap(Map<? extends K, ? extends V> from){
         IdentityMap<K, V> map = new IdentityMap<>(from.size());

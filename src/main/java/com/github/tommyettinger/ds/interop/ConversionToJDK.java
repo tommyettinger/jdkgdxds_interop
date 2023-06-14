@@ -559,7 +559,7 @@ public class ConversionToJDK {
      * @param from a libGDX ObjectMap (or OrderedMap)
      * @param <K> the type of keys; the same in {@code from} and the returned ObjectObjectMap
      * @param <V> the type of values; the same in {@code from} and the returned ObjectObjectMap
-     * @return a new ObjectObjectMap holding all of the key-value pairs in {@code from}
+     * @return a new ObjectObjectMap holding all the key-value pairs in {@code from}
      */
     public static <K, V> ObjectObjectMap<K, V> toObjectObjectMap(ObjectMap<K, V> from){
         ObjectObjectMap<K, V> map = new ObjectObjectMap<>(from.size);
@@ -576,7 +576,7 @@ public class ConversionToJDK {
      * @param from a libGDX ObjectMap (or OrderedMap)
      * @param <K> the type of keys; the same in {@code from} and the returned ObjectObjectOrderedMap
      * @param <V> the type of values; the same in {@code from} and the returned ObjectObjectOrderedMap
-     * @return a new ObjectObjectOrderedMap holding all of the key-value pairs in {@code from}
+     * @return a new ObjectObjectOrderedMap holding all the key-value pairs in {@code from}
      */
     public static <K, V> ObjectObjectOrderedMap<K, V> toObjectObjectOrderedMap(ObjectMap<K, V> from){
         ObjectObjectOrderedMap<K, V> map = new ObjectObjectOrderedMap<>(from.size);
@@ -591,7 +591,7 @@ public class ConversionToJDK {
      * @param from a libGDX ArrayMap
      * @param <K> the type of keys; the same in {@code from} and the returned ObjectObjectMap
      * @param <V> the type of values; the same in {@code from} and the returned ObjectObjectMap
-     * @return a new ObjectObjectMap holding all of the key-value pairs in {@code from}
+     * @return a new ObjectObjectMap holding all the key-value pairs in {@code from}
      */
     public static <K, V> ObjectObjectMap<K, V> toObjectObjectMap(ArrayMap<K, V> from){
         ObjectObjectMap<K, V> map = new ObjectObjectMap<>(from.size);
@@ -608,7 +608,7 @@ public class ConversionToJDK {
      * @param from a libGDX ArrayMap
      * @param <K> the type of keys; the same in {@code from} and the returned ObjectObjectOrderedMap
      * @param <V> the type of values; the same in {@code from} and the returned ObjectObjectOrderedMap
-     * @return a new ObjectObjectOrderedMap holding all of the key-value pairs in {@code from}
+     * @return a new ObjectObjectOrderedMap holding all the key-value pairs in {@code from}
      */
     public static <K, V> ObjectObjectOrderedMap<K, V> toObjectObjectOrderedMap(ArrayMap<K, V> from){
         ObjectObjectOrderedMap<K, V> map = new ObjectObjectOrderedMap<>(from.size);
@@ -624,7 +624,7 @@ public class ConversionToJDK {
      * @param from a libGDX ObjectMap (or OrderedMap)
      * @param <K> the type of keys; must extend CharSequence, so this could be String, StringBuilder, etc.
      * @param <V> the type of values; the same in {@code from} and the returned CaseInsensitiveMap
-     * @return a new CaseInsensitiveMap holding all of the key-value pairs in {@code from}
+     * @return a new CaseInsensitiveMap holding all the key-value pairs in {@code from}
      */
     public static <K extends CharSequence, V> CaseInsensitiveMap<V> toCaseInsensitiveMap(ObjectMap<K, V> from){
         CaseInsensitiveMap<V> map = new CaseInsensitiveMap<>(from.size);
@@ -641,7 +641,7 @@ public class ConversionToJDK {
      * @param from a libGDX ObjectMap (or OrderedMap)
      * @param <K> the type of keys; must extend CharSequence, so this could be String, StringBuilder, etc.
      * @param <V> the type of values; the same in {@code from} and the returned CaseInsensitiveOrderedMap
-     * @return a new CaseInsensitiveOrderedMap holding all of the key-value pairs in {@code from}
+     * @return a new CaseInsensitiveOrderedMap holding all the key-value pairs in {@code from}
      */
     public static <K extends CharSequence, V> CaseInsensitiveOrderedMap<V> toCaseInsensitiveOrderedMap(ObjectMap<K, V> from){
         CaseInsensitiveOrderedMap<V> map = new CaseInsensitiveOrderedMap<>(from.size);
@@ -656,7 +656,7 @@ public class ConversionToJDK {
      * jdkgdxds ObjectIntMap.
      * @param from a libGDX ObjectIntMap
      * @param <K> the type of keys; the same in {@code from} and the returned ObjectIntMap
-     * @return a new jdkgdxds ObjectIntMap holding all of the key-value pairs in {@code from}
+     * @return a new jdkgdxds ObjectIntMap holding all the key-value pairs in {@code from}
      */
     public static <K> ObjectIntMap<K> toObjectIntMap(com.badlogic.gdx.utils.ObjectIntMap<K> from){
         ObjectIntMap<K> map = new ObjectIntMap<>(from.size);
@@ -673,7 +673,7 @@ public class ConversionToJDK {
      * with {@link ObjectIntOrderedMap#sort()} or {@link ObjectIntOrderedMap#sortByValue(IntComparator)}.
      * @param from a libGDX ObjectIntMap
      * @param <K> the type of keys; the same in {@code from} and the returned ObjectIntOrderedMap
-     * @return a new jdkgdxds ObjectIntOrderedMap holding all of the key-value pairs in {@code from}
+     * @return a new jdkgdxds ObjectIntOrderedMap holding all the key-value pairs in {@code from}
      */
     public static <K> ObjectIntOrderedMap<K> toObjectIntOrderedMap(com.badlogic.gdx.utils.ObjectIntMap<K> from){
         ObjectIntOrderedMap<K> map = new ObjectIntOrderedMap<>(from.size);
@@ -688,7 +688,7 @@ public class ConversionToJDK {
      * jdkgdxds ObjectLongMap.
      * @param from a libGDX ObjectLongMap
      * @param <K> the type of keys; the same in {@code from} and the returned ObjectLongMap
-     * @return a new jdkgdxds ObjectLongMap holding all of the key-value pairs in {@code from}
+     * @return a new jdkgdxds ObjectLongMap holding all the key-value pairs in {@code from}
      */
     public static <K> ObjectLongMap<K> toObjectLongMap(com.badlogic.gdx.utils.ObjectLongMap<K> from){
         ObjectLongMap<K> map = new ObjectLongMap<>(from.size);
@@ -705,7 +705,7 @@ public class ConversionToJDK {
      * with {@link ObjectLongOrderedMap#sort()} or {@link ObjectLongOrderedMap#sortByValue(LongComparator)}.
      * @param from a libGDX ObjectLongMap
      * @param <K> the type of keys; the same in {@code from} and the returned ObjectLongOrderedMap
-     * @return a new jdkgdxds ObjectLongOrderedMap holding all of the key-value pairs in {@code from}
+     * @return a new jdkgdxds ObjectLongOrderedMap holding all the key-value pairs in {@code from}
      */
     public static <K> ObjectLongOrderedMap<K> toObjectLongOrderedMap(com.badlogic.gdx.utils.ObjectLongMap<K> from){
         ObjectLongOrderedMap<K> map = new ObjectLongOrderedMap<>(from.size);
@@ -720,7 +720,7 @@ public class ConversionToJDK {
      * jdkgdxds ObjectFloatMap.
      * @param from a libGDX ObjectFloatMap
      * @param <K> the type of keys; the same in {@code from} and the returned ObjectFloatMap
-     * @return a new jdkgdxds ObjectFloatMap holding all of the key-value pairs in {@code from}
+     * @return a new jdkgdxds ObjectFloatMap holding all the key-value pairs in {@code from}
      */
     public static <K> ObjectFloatMap<K> toObjectFloatMap(com.badlogic.gdx.utils.ObjectFloatMap<K> from){
         ObjectFloatMap<K> map = new ObjectFloatMap<>(from.size);
@@ -737,7 +737,7 @@ public class ConversionToJDK {
      * with {@link ObjectFloatOrderedMap#sort()} or {@link ObjectFloatOrderedMap#sortByValue(FloatComparator)}.
      * @param from a libGDX ObjectFloatMap
      * @param <K> the type of keys; the same in {@code from} and the returned ObjectFloatOrderedMap
-     * @return a new jdkgdxds ObjectFloatOrderedMap holding all of the key-value pairs in {@code from}
+     * @return a new jdkgdxds ObjectFloatOrderedMap holding all the key-value pairs in {@code from}
      */
     public static <K> ObjectFloatOrderedMap<K> toObjectFloatOrderedMap(com.badlogic.gdx.utils.ObjectFloatMap<K> from){
         ObjectFloatOrderedMap<K> map = new ObjectFloatOrderedMap<>(from.size);
@@ -752,7 +752,7 @@ public class ConversionToJDK {
      * jdkgdxds IntObjectMap.
      * @param from a libGDX IntMap
      * @param <V> the type of values; the same in {@code from} and the returned IntObjectMap
-     * @return a new jdkgdxds IntObjectMap holding all of the key-value pairs in {@code from}
+     * @return a new jdkgdxds IntObjectMap holding all the key-value pairs in {@code from}
      */
     public static <V> IntObjectMap<V> toIntObjectMap(com.badlogic.gdx.utils.IntMap<V> from){
         IntObjectMap<V> map = new IntObjectMap<>(from.size);
@@ -771,7 +771,7 @@ public class ConversionToJDK {
      * with {@link IntObjectOrderedMap#sort()} or {@link IntObjectOrderedMap#sortByValue(Comparator)}.
      * @param from a libGDX IntMap
      * @param <V> the type of values; the same in {@code from} and the returned IntObjectOrderedMap
-     * @return a new jdkgdxds IntObjectOrderedMap holding all of the key-value pairs in {@code from}
+     * @return a new jdkgdxds IntObjectOrderedMap holding all the key-value pairs in {@code from}
      */
     public static <V> IntObjectOrderedMap<V> toIntObjectOrderedMap(com.badlogic.gdx.utils.IntMap<V> from){
         IntObjectOrderedMap<V> map = new IntObjectOrderedMap<>(from.size);
@@ -787,7 +787,7 @@ public class ConversionToJDK {
      * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.IntIntMap} to a
      * jdkgdxds IntIntMap.
      * @param from a libGDX IntIntMap
-     * @return a new jdkgdxds IntIntMap holding all of the key-value pairs in {@code from}
+     * @return a new jdkgdxds IntIntMap holding all the key-value pairs in {@code from}
      */
     public static IntIntMap toIntIntMap(com.badlogic.gdx.utils.IntIntMap from){
         IntIntMap map = new IntIntMap(from.size);
@@ -805,7 +805,7 @@ public class ConversionToJDK {
      * the initial ordering of the returned IntIntOrderedMap is undefined, but it can be sorted
      * with {@link IntIntOrderedMap#sort()} or {@link IntIntOrderedMap#sortByValue(IntComparator)}.
      * @param from a libGDX IntIntMap
-     * @return a new jdkgdxds IntIntOrderedMap holding all of the key-value pairs in {@code from}
+     * @return a new jdkgdxds IntIntOrderedMap holding all the key-value pairs in {@code from}
      */
     public static IntIntOrderedMap toIntIntOrderedMap(com.badlogic.gdx.utils.IntIntMap from){
         IntIntOrderedMap map = new IntIntOrderedMap(from.size);
@@ -821,7 +821,7 @@ public class ConversionToJDK {
      * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.IntFloatMap} to a
      * jdkgdxds IntFloatMap.
      * @param from a libGDX IntFloatMap
-     * @return a new jdkgdxds IntFloatMap holding all of the key-value pairs in {@code from}
+     * @return a new jdkgdxds IntFloatMap holding all the key-value pairs in {@code from}
      */
     public static IntFloatMap toIntFloatMap(com.badlogic.gdx.utils.IntFloatMap from){
         IntFloatMap map = new IntFloatMap(from.size);
@@ -839,7 +839,7 @@ public class ConversionToJDK {
      * the initial ordering of the returned IntFloatOrderedMap is undefined, but it can be sorted
      * with {@link IntFloatOrderedMap#sort()} or {@link IntFloatOrderedMap#sortByValue(FloatComparator)}.
      * @param from a libGDX IntFloatMap
-     * @return a new jdkgdxds IntFloatOrderedMap holding all of the key-value pairs in {@code from}
+     * @return a new jdkgdxds IntFloatOrderedMap holding all the key-value pairs in {@code from}
      */
     public static IntFloatOrderedMap toIntFloatOrderedMap(com.badlogic.gdx.utils.IntFloatMap from){
         IntFloatOrderedMap map = new IntFloatOrderedMap(from.size);
@@ -856,7 +856,7 @@ public class ConversionToJDK {
      * jdkgdxds LongObjectMap.
      * @param from a libGDX LongMap
      * @param <V> the type of values; the same in {@code from} and the returned LongObjectMap
-     * @return a new jdkgdxds LongObjectMap holding all of the key-value pairs in {@code from}
+     * @return a new jdkgdxds LongObjectMap holding all the key-value pairs in {@code from}
      */
     public static <V> LongObjectMap<V> toLongObjectMap(com.badlogic.gdx.utils.LongMap<V> from){
         LongObjectMap<V> map = new LongObjectMap<>(from.size);
@@ -875,7 +875,7 @@ public class ConversionToJDK {
      * with {@link LongObjectOrderedMap#sort()} or {@link LongObjectOrderedMap#sortByValue(Comparator)}.
      * @param from a libGDX LongMap
      * @param <V> the type of values; the same in {@code from} and the returned LongObjectOrderedMap
-     * @return a new jdkgdxds LongObjectOrderedMap holding all of the key-value pairs in {@code from}
+     * @return a new jdkgdxds LongObjectOrderedMap holding all the key-value pairs in {@code from}
      */
     public static <V> LongObjectOrderedMap<V> toLongObjectOrderedMap(com.badlogic.gdx.utils.LongMap<V> from){
         LongObjectOrderedMap<V> map = new LongObjectOrderedMap<>(from.size);
@@ -893,7 +893,7 @@ public class ConversionToJDK {
      * @param from a libGDX IdentityMap, ObjectMap, or OrderedMap
      * @param <K> the type of keys; the same in {@code from} and the returned IdentityObjectMap
      * @param <V> the type of values; the same in {@code from} and the returned IdentityObjectMap
-     * @return a new IdentityObjectMap holding all of the key-value pairs in {@code from}
+     * @return a new IdentityObjectMap holding all the key-value pairs in {@code from}
      */
     public static <K, V> IdentityObjectMap<K, V> toIdentityObjectMap(ObjectMap<K, V> from){
         IdentityObjectMap<K, V> map = new IdentityObjectMap<>(from.size);
@@ -910,7 +910,7 @@ public class ConversionToJDK {
      * @param from a libGDX IdentityMap, ObjectMap, or OrderedMap
      * @param <K> the type of keys; the same in {@code from} and the returned IdentityObjectOrderedMap
      * @param <V> the type of values; the same in {@code from} and the returned IdentityObjectOrderedMap
-     * @return a new IdentityObjectOrderedMap holding all of the key-value pairs in {@code from}
+     * @return a new IdentityObjectOrderedMap holding all the key-value pairs in {@code from}
      */
     public static <K, V> IdentityObjectOrderedMap<K, V> toIdentityObjectOrderedMap(ObjectMap<K, V> from){
         IdentityObjectOrderedMap<K, V> map = new IdentityObjectOrderedMap<>(from.size);
