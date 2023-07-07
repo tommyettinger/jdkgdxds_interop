@@ -16,7 +16,7 @@
   -->
 
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.8.2//EN"
-        "http://www.gwtproject.org/doctype/2.8.2/gwt-module.dtd">
+        "https://www.gwtproject.org/doctype/2.8.2/gwt-module.dtd">
 
 <!-- To compile to Gwt, you need to reference this file in your master .gwt.xml
      file (usually called GdxDefinition.gwt.xml) as follows:
@@ -28,7 +28,6 @@
     <inherits name="com.github.tommyettinger.juniper" />
     <inherits name="com.github.tommyettinger.jdkgdxds" />
     <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
-	<inherits name="com.badlogic.gdx.utils" />
 
 	<extend-configuration-property name="gdx.reflect.include" value="java.lang.Class" />
 	<extend-configuration-property name="gdx.reflect.include" value="java.util.concurrent.atomic.AtomicLong" />
@@ -37,7 +36,6 @@
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.digital.Base" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.digital.Hasher" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.random" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.random.distribution" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds" />
 	<source path="ds/interop" />
 </module>
