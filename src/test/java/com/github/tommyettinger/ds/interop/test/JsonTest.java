@@ -2461,6 +2461,7 @@ public class JsonTest {
         System.out.println();
     }
 
+    @SuppressWarnings({"unchecked", "DataFlowIssue"})
     @Test
     public void testDeep() {
 //        json.addClassTag("str", String.class);

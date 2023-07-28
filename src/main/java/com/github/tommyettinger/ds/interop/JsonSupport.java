@@ -25,6 +25,8 @@ import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.github.tommyettinger.digital.AlternateRandom;
 import com.github.tommyettinger.digital.Base;
 import com.github.tommyettinger.digital.Hasher;
+import com.github.tommyettinger.digital.Interpolations;
+import com.github.tommyettinger.digital.Interpolations.Interpolator;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.support.util.*;
 import com.github.tommyettinger.random.*;
@@ -118,11 +120,11 @@ public final class JsonSupport {
 
         registerBase(json);
         registerHasher(json);
+        registerAlternateRandom(json);
+        registerInterpolator(json);
 
         // registers many others
         registerDistributedRandom(json);
-
-        registerAlternateRandom(json);
 
         registerRandomXS128(json);
 
@@ -3671,6 +3673,7 @@ public final class JsonSupport {
             }
         });
     }
+
     /**
      * Registers Hasher with the given Json object, so Hasher can be written to and read from JSON.
      * This just stores the seed (which is a single {@code long}) as a String in the current Base used by JsonSupport.
@@ -3690,6 +3693,29 @@ public final class JsonSupport {
             public Hasher read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 return new Hasher(BASE.readLong(jsonData.asString()));
+            }
+        });
+    }
+
+    /**
+     * Registers Interpolator with the given Json object, so Interpolator can be written to and read from JSON.
+     * This is a simple wrapper around each Interpolator's unique {@link Interpolator#getTag()} and
+     * {@link Interpolations#get(String)} to read it back.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerInterpolator(@NonNull Json json) {
+        json.addClassTag("Inlr", Interpolator.class);
+        json.setSerializer(Interpolator.class, new Json.Serializer<Interpolator>() {
+            @Override
+            public void write(Json json, Interpolator object, Class knownType) {
+                json.writeValue(object.getTag());
+            }
+
+            @Override
+            public Interpolator read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return Interpolations.get(jsonData.asString());
             }
         });
     }
