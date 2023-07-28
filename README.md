@@ -28,8 +28,9 @@ The Json serialization also uses an especially-concise format to store each of t
 [juniper](https://github.com/tommyettinger/juniper). Even though juniper is not a direct dependency of jdkgdxds, it used
 to be part of that library, and its use is recommended with any of the randomized methods in jdkgdxds, so it still makes
 sense to have here. These classes (`DistinctRandom`, `LaserRandom`, `TricycleRandom`, `FourWheelRandom`, `ChopRandom`,
-`WhiskerRandom`, `StrangerRandom`, `TrimRandom`, `MizuchiRandom`, `RomuTrioRandom`, `PasarRandom`, `GoldenQuasiRandom`,
-`VanDerCorputQuasiRandom`, `Xoshiro256StarStarRandom`, and `Xoshiro128PlusPlusRandom`, ) are sometimes serializable
+`WhiskerRandom`, `StrangerRandom`, `TrimRandom`, `MizuchiRandom`, `RomuTrioRandom`, `PasarRandom`, `AceRandom`,
+`GoldenQuasiRandom`, `VanDerCorputQuasiRandom`, `Xoshiro256StarStarRandom`, `Xoshiro256MX3Random`,
+`Xoroshiro128StarStarRandom`, and `Xoshiro128PlusPlusRandom`) are sometimes serializable
 without jdkgdxds-interop, but work regardless of JDK version if
 you do use this library. Better still, you can register `EnhancedRandom` for serialization, so places that have an
 `EnhancedRandom` but don't specify an implementation can still store one (which includes its implementing class) and
@@ -48,8 +49,9 @@ or parameters and an EnhancedRandom to generate numbers. These can all be regist
 it uses a similar compact storage system. You can also store a `Distribution` and deserialize it as a `Distribution`,
 allowing any implementation to be fit into that variable.
 
-The [digital](https://github.com/tommyettinger/digital) library is a direct dependency of jdkgdxds, and it has a
-`Hasher` class that can be registered, as well as a `Base` class. `Base` is especially important here because you can
+The [digital](https://github.com/tommyettinger/digital) library is a direct dependency of jdkgdxds, and it has the
+`Hasher`, `Interpolator`, and `AlternateRandom` classes that can be registered, as well as a `Base` class. `Base` is
+especially important here because you can
 configure the numeral base that numbers are printed in by specifying one to `JsonSupport.setNumeralBase(Base)`; this can
 be handy to weakly obfuscate numbers if you pass a scrambled base (as `Base` can generate).
 
@@ -61,7 +63,7 @@ but long packages add to file size and can also be strenuous to read repeatedly.
 ## How do I get it?
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api`, is: 
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.4.0.0"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.4.0.1"
 ```
 It's not unlikely that you might need `api` instead of `implementation`, especially if you are writing a library, or a
 module that needs to be used from another section.
@@ -69,10 +71,10 @@ module that needs to be used from another section.
 If you use GWT (libGDX's HTML target), then you also need this in your `html/build.gradle` file:
 ```groovy
 implementation "com.github.tommyettinger:funderby:0.1.1:sources"
-implementation "com.github.tommyettinger:digital:0.3.3:sources"
-implementation "com.github.tommyettinger:juniper:0.3.5:sources"
+implementation "com.github.tommyettinger:digital:0.3.5:sources"
+implementation "com.github.tommyettinger:juniper:0.3.7:sources"
 implementation "com.github.tommyettinger:jdkgdxds:1.4.0:sources"
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.4.0.0:sources"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.4.0.1:sources"
 ```
 You also need the GWT `inherits` in your `GdxDefinition.gwt.xml` file:
 ```xml
@@ -83,10 +85,5 @@ You also need the GWT `inherits` in your `GdxDefinition.gwt.xml` file:
     <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
     <inherits name="com.github.tommyettinger.jdkgdxds_interop" />
 ```
-
-On GWT, this library patches a small bug in libGDX 1.11.0, where `ObjectLongMap` isn't available for reflection or even
-as a source file. This does mean you will currently get a minor warning when compiling on GWT because there will be
-duplicate reflection entries; one each from the incomplete libGDX file and one each from the jdkgdxds-interop file. This
-warning can be safely ignored.
 
 I hope that's all you need! It's a small-ish simple library!
