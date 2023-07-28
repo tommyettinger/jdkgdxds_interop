@@ -2393,6 +2393,52 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers Xoroshiro128StarStarRandom with the given Json object, so Xoroshiro128StarStarRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerXoroshiro128StarStarRandom(@NonNull Json json) {
+        if(json.getSerializer(Xoroshiro128StarStarRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("XSSR", Xoroshiro128StarStarRandom.class);
+        json.setSerializer(Xoroshiro128StarStarRandom.class, new Json.Serializer<Xoroshiro128StarStarRandom>() {
+            @Override
+            public void write(Json json, Xoroshiro128StarStarRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Xoroshiro128StarStarRandom read(Json json, JsonValue jsonData, Class type) {
+                Xoroshiro128StarStarRandom r = new Xoroshiro128StarStarRandom(1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers Xoshiro256MX3Random with the given Json object, so Xoshiro256MX3Random can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerXoshiro256MX3Random(@NonNull Json json) {
+        if(json.getSerializer(Xoshiro256MX3Random.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("XMXR", Xoshiro256MX3Random.class);
+        json.setSerializer(Xoshiro256MX3Random.class, new Json.Serializer<Xoshiro256MX3Random>() {
+            @Override
+            public void write(Json json, Xoshiro256MX3Random object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Xoshiro256MX3Random read(Json json, JsonValue jsonData, Class type) {
+                Xoshiro256MX3Random r = new Xoshiro256MX3Random(1L, 1L, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers TricycleRandom with the given Json object, so TricycleRandom can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -2746,7 +2792,8 @@ public final class JsonSupport {
     /**
      * Registers EnhancedRandom with the given Json object, so EnhancedRandom can be written to and read from JSON.
      * This also registers {@link DistinctRandom}, {@link LaserRandom}, {@link TricycleRandom}, {@link FourWheelRandom},
-     * {@link Xoshiro256StarStarRandom}, {@link StrangerRandom}, {@link TrimRandom}, {@link WhiskerRandom},
+     * {@link Xoshiro256StarStarRandom}, {@link Xoshiro128PlusPlusRandom}, {@link Xoshiro256MX3Random},
+     * {@link Xoroshiro128StarStarRandom}, {@link StrangerRandom}, {@link TrimRandom}, {@link WhiskerRandom},
      * {@link RomuTrioRandom}, {@link ChopRandom}, {@link Xoshiro128PlusPlusRandom}, {@link MizuchiRandom},
      * {@link ScruffRandom}, {@link AceRandom}, {@link GoldenQuasiRandom}, {@link VanDerCorputQuasiRandom},
      * {@link LowChangeQuasiRandom}, {@link TupleQuasiRandom}, and {@link KnownSequenceRandom}, plus
@@ -2769,6 +2816,7 @@ public final class JsonSupport {
         registerTricycleRandom(json);
         registerFourWheelRandom(json);
         registerXoshiro256StarStarRandom(json);
+        registerXoshiro256MX3Random(json);
         registerStrangerRandom(json);
         registerTrimRandom(json);
         registerWhiskerRandom(json);
@@ -2776,6 +2824,7 @@ public final class JsonSupport {
         registerRomuTrioRandom(json);
         registerChopRandom(json);
         registerXoshiro128PlusPlusRandom(json);
+        registerXoroshiro128StarStarRandom(json);
         registerPasarRandom(json);
         registerAceRandom(json);
         registerScruffRandom(json);

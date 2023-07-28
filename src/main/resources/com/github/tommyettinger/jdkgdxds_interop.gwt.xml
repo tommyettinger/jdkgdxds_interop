@@ -35,6 +35,7 @@
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.digital.AlternateRandom" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.digital.Base" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.digital.Hasher" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.digital.Interpolations" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.random" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.github.tommyettinger.ds" />
 	<source path="ds/interop" />
