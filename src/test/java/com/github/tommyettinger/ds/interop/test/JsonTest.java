@@ -22,11 +22,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
-import com.github.tommyettinger.digital.AlternateRandom;
+import com.github.tommyettinger.digital.*;
+import com.github.tommyettinger.digital.Interpolations.Interpolator;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.interop.JsonSupport;
 import com.github.tommyettinger.random.*;
-import com.github.tommyettinger.digital.Base;
 import com.github.tommyettinger.ds.support.util.*;
 import com.github.tommyettinger.random.distribution.*;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -37,6 +37,68 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class JsonTest {
+    @Test
+    public void testBase() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerBase(json);
+        Base bounce = new Base("C3P0");
+        String data = json.toJson(bounce);
+        System.out.println(data);
+        Base bounce2 = json.fromJson(Base.class, data);
+        Assert.assertEquals(bounce, bounce2);
+        Assert.assertEquals(bounce.signed(-111), bounce2.signed(-111));
+        Assert.assertEquals(bounce.unsigned(333), bounce2.unsigned(333));
+        Assert.assertEquals(bounce.readInt("C3P0 is annoying"), bounce2.readInt("C3P0 is annoying"));
+    }
+
+    @Test
+    public void testHasher() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerHasher(json);
+        Hasher bounce = new Hasher("Animals!");
+        String data = json.toJson(bounce);
+        System.out.println(data);
+        Hasher bounce2 = json.fromJson(Hasher.class, data);
+        Assert.assertEquals(bounce.seed, bounce2.seed);
+        Assert.assertEquals(bounce.hash64(new String[]{"Eddie", "Satchmo", "Juniper"}), bounce2.hash64(new String[]{"Eddie", "Satchmo", "Juniper"}));
+        Assert.assertEquals(bounce.hash(new int[]{1, 11, 111, -1111}), bounce2.hash(new int[]{1, 11, 111, -1111}));
+        Assert.assertEquals(bounce.hash64("These are the names of my pets."), bounce2.hash64("These are the names of my pets."));
+    }
+
+    @Test
+    public void testAlternateRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerAlternateRandom(json);
+        AlternateRandom random = new AlternateRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L, -1L);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        AlternateRandom random2 = json.fromJson(AlternateRandom.class, data);
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
+    public void testInterpolator() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerInterpolator(json);
+        Interpolator bounce = Interpolations.bounce3;
+        String data = json.toJson(bounce);
+        System.out.println(data);
+        Interpolator bounce2 = json.fromJson(Interpolator.class, data);
+        Assert.assertEquals(bounce, bounce2);
+        Assert.assertEquals(bounce.apply(0.1f), bounce2.apply(0.1f), MathTools.FLOAT_ROUNDING_ERROR);
+        Assert.assertEquals(bounce.apply(0.3f), bounce2.apply(0.3f), MathTools.FLOAT_ROUNDING_ERROR);
+        Assert.assertEquals(bounce.apply(0.7f), bounce2.apply(0.7f), MathTools.FLOAT_ROUNDING_ERROR);
+    }
+
     @Test
     public void testObjectList() {
         Json json = new Json(JsonWriter.OutputType.minimal);
@@ -1096,20 +1158,6 @@ public class JsonTest {
         }
         Assert.assertEquals(numbers, numbers2);
         System.out.println();
-    }
-
-    @Test
-    public void testAlternateRandom() {
-        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
-        //JsonSupport.setNumeralBase(Base.BASE16);
-        Json json = new Json(JsonWriter.OutputType.minimal);
-        JsonSupport.registerAlternateRandom(json);
-        AlternateRandom random = new AlternateRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L, -1L);
-        random.nextLong();
-        String data = json.toJson(random);
-        System.out.println(data);
-        AlternateRandom random2 = json.fromJson(AlternateRandom.class, data);
-        Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
     @Test
