@@ -43,14 +43,34 @@ public class JsonTest {
         //JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerBase(json);
-        Base bounce = new Base("C3P0");
-        String data = json.toJson(bounce);
-        System.out.println(data);
-        Base bounce2 = json.fromJson(Base.class, data);
-        Assert.assertEquals(bounce, bounce2);
-        Assert.assertEquals(bounce.signed(-111), bounce2.signed(-111));
-        Assert.assertEquals(bounce.unsigned(333), bounce2.unsigned(333));
-        Assert.assertEquals(bounce.readInt("C3P0 is annoying"), bounce2.readInt("C3P0 is annoying"));
+        Base base = new Base("C3P0");
+        String ser = json.toJson(base);
+        System.out.println(ser);
+        Base bounce2 = json.fromJson(Base.class, ser);
+        Assert.assertEquals(base, bounce2);
+        Assert.assertEquals(base.signed(-111), bounce2.signed(-111));
+        Assert.assertEquals(base.unsigned(333), bounce2.unsigned(333));
+        Assert.assertEquals(base.readInt("C3P0 is annoying"), bounce2.readInt("C3P0 is annoying"));
+
+        AceRandom random = new AceRandom(1234567890L);
+        ObjectList<Base> bases = new ObjectList<>(Base.values());
+        bases.add(Base.scrambledBase(random));
+        bases.add(Base.scrambledBase(random));
+        bases.add(Base.scrambledBase(random));
+        for(Base b : bases){
+            random.setSeed(-12345L);
+            String data = json.toJson(b);
+            Base b2 = json.fromJson(Base.class, data);
+            Assert.assertEquals(b, b2);
+            for (int i = 0; i < 100; i++) {
+                long ln = random.nextLong();
+                Assert.assertEquals(b.unsigned(ln), b2.unsigned(ln));
+                Assert.assertEquals(b.signed(ln), b2.signed(ln));
+                float fl = random.nextFloat(-100f, 100f);
+                Assert.assertEquals(b.unsigned(fl), b2.unsigned(fl));
+                Assert.assertEquals(b.signed(fl), b2.signed(fl));
+            }
+        }
     }
 
     @Test
