@@ -118,14 +118,17 @@ public final class JsonSupport {
 
         registerBinaryHeap(json);
 
+        // from digital.
         registerBase(json);
         registerHasher(json);
         registerAlternateRandom(json);
         registerInterpolator(json);
 
-        // registers many others
+        // from juniper. these register many others.
         registerDistributedRandom(json);
+        registerInterpolatedRandom(json);
 
+        // from libGDX.
         registerRandomXS128(json);
 
         registerClass(json);
@@ -2787,6 +2790,30 @@ public final class JsonSupport {
             @Override
             public DistributedRandom read(Json json, JsonValue jsonData, Class type) {
                 return new DistributedRandom().stringDeserialize(jsonData.asString(), BASE);
+            }
+        });
+    }
+
+    /**
+     * Registers InterpolatedRandom with the given Json object, so InterpolatedRandom can be written to and read from JSON.
+     * This also registers all other EnhancedRandom types and all Interpolator types.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerInterpolatedRandom(@NonNull Json json) {
+        if(json.getSerializer(InterpolatedRandom.class) != null) return;
+        JsonSupport.registerEnhancedRandom(json);
+        JsonSupport.registerInterpolator(json);
+        if(ADD_CLASS_TAGS) json.addClassTag("InrR", InterpolatedRandom.class);
+        json.setSerializer(InterpolatedRandom.class, new Json.Serializer<InterpolatedRandom>() {
+            @Override
+            public void write(Json json, InterpolatedRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public InterpolatedRandom read(Json json, JsonValue jsonData, Class type) {
+                return new InterpolatedRandom().stringDeserialize(jsonData.asString(), BASE);
             }
         });
     }
