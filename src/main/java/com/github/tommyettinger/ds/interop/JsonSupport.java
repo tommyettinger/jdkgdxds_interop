@@ -16,6 +16,7 @@
 
 package com.github.tommyettinger.ds.interop;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
@@ -2875,7 +2876,7 @@ public final class JsonSupport {
                 try {
                     return Deserializer.deserialize(jsonData.asString(), BASE);
                 } catch (RuntimeException e) {
-                    e.printStackTrace();
+                    Gdx.app.error("Json Read Exception (EnhancedRandom)", e.toString());
                     return null;
                 }
             }
@@ -3671,7 +3672,7 @@ public final class JsonSupport {
                 try {
                     return Deserializer.deserializeDistribution(jsonData.asString(), BASE);
                 } catch (RuntimeException e) {
-                    e.printStackTrace();
+                    Gdx.app.error("Json Read Exception (Distribution)", e.toString());
                     return null;
                 }
             }
@@ -3773,7 +3774,9 @@ public final class JsonSupport {
                 {
                     try {
                         return ClassReflection.forName(jsonData.asString());
-                    } catch (ReflectionException ignored) {
+                    } catch (ReflectionException e) {
+                        Gdx.app.error("Json Read Exception (Class)", e.toString());
+                        return null;
                     }
                 }
                 return null;
