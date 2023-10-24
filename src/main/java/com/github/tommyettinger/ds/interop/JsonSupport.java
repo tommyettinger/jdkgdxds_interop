@@ -2330,6 +2330,29 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers Jsf32Random with the given Json object, so Jsf32Random can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerJsf32Random(@NonNull Json json) {
+        if(json.getSerializer(Jsf32Random.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("JS3R", Jsf32Random.class);
+        json.setSerializer(Jsf32Random.class, new Json.Serializer<Jsf32Random>() {
+            @Override
+            public void write(Json json, Jsf32Random object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Jsf32Random read(Json json, JsonValue jsonData, Class type) {
+                Jsf32Random r = new Jsf32Random(1, 1, 1, 1);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers Xoshiro128PlusPlusRandom with the given Json object, so Xoshiro128PlusPlusRandom can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -2576,6 +2599,75 @@ public final class JsonSupport {
             @Override
             public ScruffRandom read(Json json, JsonValue jsonData, Class type) {
                 ScruffRandom r = new ScruffRandom(1L, 1L, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers PouchRandom with the given Json object, so PouchRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerPouchRandom(@NonNull Json json) {
+        if(json.getSerializer(PouchRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("PouR", PouchRandom.class);
+        json.setSerializer(PouchRandom.class, new Json.Serializer<PouchRandom>() {
+            @Override
+            public void write(Json json, PouchRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public PouchRandom read(Json json, JsonValue jsonData, Class type) {
+                PouchRandom r = new PouchRandom(1L, 1L, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers Sfc64Random with the given Json object, so Sfc64Random can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerSfc64Random(@NonNull Json json) {
+        if(json.getSerializer(Sfc64Random.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("SfcR", Sfc64Random.class);
+        json.setSerializer(Sfc64Random.class, new Json.Serializer<Sfc64Random>() {
+            @Override
+            public void write(Json json, Sfc64Random object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Sfc64Random read(Json json, JsonValue jsonData, Class type) {
+                Sfc64Random r = new Sfc64Random(1L, 1L, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers Crand64Random with the given Json object, so Crand64Random can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerCrand64Random(@NonNull Json json) {
+        if(json.getSerializer(Crand64Random.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("CraR", Crand64Random.class);
+        json.setSerializer(Crand64Random.class, new Json.Serializer<Crand64Random>() {
+            @Override
+            public void write(Json json, Crand64Random object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Crand64Random read(Json json, JsonValue jsonData, Class type) {
+                Crand64Random r = new Crand64Random(1L, 1L, 1L, 1L, 1L);
                 r.stringDeserialize(jsonData.asString(), BASE);
                 return r;
             }
