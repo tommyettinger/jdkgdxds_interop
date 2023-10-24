@@ -1425,6 +1425,24 @@ public class JsonTest {
     }
 
     @Test
+    public void testCrand64Random() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerCrand64Random(json);
+        Crand64Random random = new Crand64Random(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L, -1L);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        Crand64Random random2 = json.fromJson(Crand64Random.class, data);
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateD()));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
     public void testChopRandom() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
 //        JsonSupport.setNumeralBase(Base.BASE16);
@@ -1460,6 +1478,60 @@ public class JsonTest {
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
     
+    @Test
+    public void testJsf32Random() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+//        JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerJsf32Random(json);
+        Jsf32Random random = new Jsf32Random(123456789, 0xBAB1E5, 0xB0BAFE77, 0x12341234);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        Jsf32Random random2 = json.fromJson(Jsf32Random.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateD()));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
+    public void testPouchRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+//        JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerPouchRandom(json);
+        PouchRandom random = new PouchRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        PouchRandom random2 = json.fromJson(PouchRandom.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateD()));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
+    public void testSfc64Random() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+//        JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerSfc64Random(json);
+        Sfc64Random random = new Sfc64Random(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        Sfc64Random random2 = json.fromJson(Sfc64Random.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateD()));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+        
     @Test
     public void testAtomicLong() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
