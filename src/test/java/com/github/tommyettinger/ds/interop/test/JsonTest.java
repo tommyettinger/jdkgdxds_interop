@@ -1495,6 +1495,23 @@ public class JsonTest {
         System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateD()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
+    
+    @Test
+    public void testRespite32Random() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+//        JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerRespite32Random(json);
+        Respite32Random random = new Respite32Random(123456789, 0xBAB1E5, 0xB0BAFE77);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        Respite32Random random2 = json.fromJson(Respite32Random.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateC()));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
 
     @Test
     public void testPouchRandom() {

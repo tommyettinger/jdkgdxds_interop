@@ -2376,6 +2376,29 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers Respite32Random with the given Json object, so Respite32Random can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerRespite32Random(@NonNull Json json) {
+        if(json.getSerializer(Respite32Random.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("Re3R", Respite32Random.class);
+        json.setSerializer(Respite32Random.class, new Json.Serializer<Respite32Random>() {
+            @Override
+            public void write(Json json, Respite32Random object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Respite32Random read(Json json, JsonValue jsonData, Class type) {
+                Respite32Random r = new Respite32Random(1, 1, 1);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers StrangerRandom with the given Json object, so StrangerRandom can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -2945,11 +2968,16 @@ public final class JsonSupport {
         registerMizuchiRandom(json);
         registerRomuTrioRandom(json);
         registerChopRandom(json);
+        registerJsf32Random(json);
+        registerRespite32Random(json);
         registerXoshiro128PlusPlusRandom(json);
         registerXoroshiro128StarStarRandom(json);
         registerPasarRandom(json);
+        registerPouchRandom(json);
         registerAceRandom(json);
         registerScruffRandom(json);
+        registerCrand64Random(json);
+        registerSfc64Random(json);
         registerKnownSequenceRandom(json);
         registerGoldenQuasiRandom(json);
         registerVanDerCorputQuasiRandom(json);
