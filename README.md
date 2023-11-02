@@ -27,10 +27,8 @@ or one at a time using any of its other methods.
 The Json serialization also uses an especially-concise format to store each of the `EnhancedRandom` implementations in
 [juniper](https://github.com/tommyettinger/juniper). Even though juniper is not a direct dependency of jdkgdxds, it used
 to be part of that library, and its use is recommended with any of the randomized methods in jdkgdxds, so it still makes
-sense to have here. These classes (`DistinctRandom`, `LaserRandom`, `TricycleRandom`, `FourWheelRandom`, `ChopRandom`,
-`WhiskerRandom`, `StrangerRandom`, `TrimRandom`, `MizuchiRandom`, `RomuTrioRandom`, `PasarRandom`, `AceRandom`,
-`GoldenQuasiRandom`, `VanDerCorputQuasiRandom`, `Xoshiro256StarStarRandom`, `Xoshiro256MX3Random`,
-`Xoroshiro128StarStarRandom`, and `Xoshiro128PlusPlusRandom`) are sometimes serializable
+sense to have here. These classes (`DistinctRandom`, `LaserRandom`, `TricycleRandom`, uhh... there's a lot in the
+`com.github.tommyettinger.random` package) are sometimes serializable
 without jdkgdxds-interop, but work regardless of JDK version if
 you do use this library. Better still, you can register `EnhancedRandom` for serialization, so places that have an
 `EnhancedRandom` but don't specify an implementation can still store one (which includes its implementing class) and
@@ -63,7 +61,7 @@ but long packages add to file size and can also be strenuous to read repeatedly.
 ## How do I get it?
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api`, is: 
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.4.2.0"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.4.3.0"
 ```
 It's not unlikely that you might need `api` instead of `implementation`, especially if you are writing a library, or a
 module that needs to be used from another section.
@@ -71,10 +69,10 @@ module that needs to be used from another section.
 If you use GWT (libGDX's HTML target), then you also need this in your `html/build.gradle` file:
 ```groovy
 implementation "com.github.tommyettinger:funderby:0.1.1:sources"
-implementation "com.github.tommyettinger:digital:0.4.1:sources"
-implementation "com.github.tommyettinger:juniper:0.4.0:sources"
-implementation "com.github.tommyettinger:jdkgdxds:1.4.2:sources"
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.4.2.0:sources"
+implementation "com.github.tommyettinger:digital:0.4.2:sources"
+implementation "com.github.tommyettinger:juniper:0.4.1:sources"
+implementation "com.github.tommyettinger:jdkgdxds:1.4.3:sources"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.4.3.0:sources"
 ```
 You also need the GWT `inherits` in your `GdxDefinition.gwt.xml` file:
 ```xml
