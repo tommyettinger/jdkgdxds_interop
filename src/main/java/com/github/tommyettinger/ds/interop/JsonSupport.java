@@ -2148,12 +2148,13 @@ public final class JsonSupport {
      * Registers FilteredStringSet with the given Json object, so FilteredStringSet can be written to and read from JSON.
      * This is special in that it needs a name for the combination of filter and editor that this can serialize and
      * deserialize. It also needs the filter (a {@link CharPredicate} and editor (a {@link CharToCharFunction}) given
-     * up-front.
+     * up-front. This is not called by {@link #registerAll(Json)} because it needs this extra information.
+     *
      * @param json a libGDX Json object that will have a serializer registered
      */
     public static void registerFilteredStringSet(@NonNull Json json, String name,
                                                  @NonNull final CharPredicate filter, @NonNull final CharToCharFunction editor) {
-        if(ADD_CLASS_TAGS) json.addClassTag("oFSS_"+name, FilteredStringSet.class); // object items, Filtered String kind, Set type
+        if(ADD_CLASS_TAGS) json.addClassTag("oFSS", FilteredStringSet.class); // object items, Filtered String kind, Set type
         CharFilterEditorPair pair = new CharFilterEditorPair(filter, editor);
         String existingName = CHAR_FILTERING_REVERSE.get(pair);
         if(existingName != null) {
@@ -2182,9 +2183,9 @@ public final class JsonSupport {
             @Override
             public FilteredStringSet read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                CharFilterEditorPair pair = CHAR_FILTERING.get(jsonData.getString("filtering"));
+                CharFilterEditorPair pair = CHAR_FILTERING.get(jsonData.parent.getString("filtering"));
                 FilteredStringSet data = new FilteredStringSet(pair.filter, pair.editor, jsonData.size, Utilities.getDefaultLoadFactor());
-                for (JsonValue value = jsonData.get("items"); value != null; value = value.next) {
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.add(value.asString());
                 }
                 return data;

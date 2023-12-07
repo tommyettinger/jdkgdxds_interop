@@ -26,6 +26,8 @@ import com.github.tommyettinger.digital.*;
 import com.github.tommyettinger.digital.Interpolations.Interpolator;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.interop.JsonSupport;
+import com.github.tommyettinger.function.CharPredicate;
+import com.github.tommyettinger.function.CharToCharFunction;
 import com.github.tommyettinger.random.*;
 import com.github.tommyettinger.ds.support.util.*;
 import com.github.tommyettinger.random.distribution.*;
@@ -1093,6 +1095,24 @@ public class JsonTest {
             System.out.print("=");
             System.out.print(pair.getValue());
             System.out.print("; ");
+        }
+        Assert.assertEquals(words, words2);
+        System.out.println();
+    }
+
+    @Test
+    public void testFilteredStringSet() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        CharPredicate filter = Character::isLetter;
+        CharToCharFunction editor = Character::toUpperCase;
+        JsonSupport.registerFilteredStringSet(json, "LettersOnlyIgnoreCase", filter, editor);
+        FilteredStringSet words = FilteredStringSet.with(filter, editor, "Peanut!!", "Butter!!", "Jelly!!", "Time!!", "peanut", "butter", "jelly", "TIME");
+        String data = json.toJson(words);
+        System.out.println(data);
+        FilteredStringSet words2 = json.fromJson(FilteredStringSet.class, data);
+        for (Object word : words2) {
+            System.out.print(word);
+            System.out.print(", ");
         }
         Assert.assertEquals(words, words2);
         System.out.println();
