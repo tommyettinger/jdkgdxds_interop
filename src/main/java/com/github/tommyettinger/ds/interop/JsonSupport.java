@@ -2142,6 +2142,41 @@ public final class JsonSupport {
         });
     }
     
+
+    /**
+     * Registers FilteredStringOrderedSet with the given Json object, so FilteredStringOrderedSet can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerFilteredStringOrderedSet(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("oFSOS", FilteredStringOrderedSet.class); // object items, Filtered String kind, Ordered kind, Set type
+        json.setSerializer(FilteredStringOrderedSet.class, new Json.Serializer<FilteredStringOrderedSet>() {
+            @Override
+            public void write(Json json, FilteredStringOrderedSet object, Class knownType) {
+                json.writeObjectStart(FilteredStringOrderedSet.class, knownType);
+                String gotName = object.getFilter().getName();
+                json.writeValue("filtering", gotName);
+                json.writeArrayStart("items"); // This name is special.
+                for (Object o : object) {
+                    json.writeValue(o);
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public FilteredStringOrderedSet read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                CharFilter filter = CharFilter.get(jsonData.parent.getString("filtering"));
+                FilteredStringOrderedSet data = new FilteredStringOrderedSet(filter, jsonData.size, Utilities.getDefaultLoadFactor());
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.add(value.asString());
+                }
+                return data;
+            }
+        });
+    }
+    
     /**
      * Registers OffsetBitSet with the given Json object, so OffsetBitSet can be written to and read from JSON.
      *

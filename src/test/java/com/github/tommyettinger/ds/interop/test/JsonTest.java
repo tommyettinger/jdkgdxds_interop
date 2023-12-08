@@ -1118,6 +1118,23 @@ public class JsonTest {
     }
 
     @Test
+    public void testFilteredStringOrderedSet() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        CharFilter filter = CharFilter.getOrCreate("LettersOnlyIgnoreCase", Character::isLetter, Character::toUpperCase);
+        JsonSupport.registerFilteredStringOrderedSet(json);
+        FilteredStringOrderedSet words = FilteredStringOrderedSet.with(filter, "Peanut!!", "Butter!!", "Jelly!!", "Time!!", "peanut", "butter", "jelly", "TIME");
+        String data = json.toJson(words);
+        System.out.println(data);
+        FilteredStringOrderedSet words2 = json.fromJson(FilteredStringOrderedSet.class, data);
+        for (Object word : words2) {
+            System.out.print(word);
+            System.out.print(", ");
+        }
+        Assert.assertEquals(words, words2);
+        System.out.println();
+    }
+
+    @Test
     public void testNumberedSet() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerNumberedSet(json);
