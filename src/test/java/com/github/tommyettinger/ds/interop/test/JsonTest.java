@@ -1135,6 +1135,27 @@ public class JsonTest {
     }
 
     @Test
+    public void testFilteredStringMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        json.addClassTag("Grd2", GridPoint2.class);
+        CharFilter filter = CharFilter.getOrCreate("LettersOnlyIgnoreCase", Character::isLetter, Character::toUpperCase);
+        JsonSupport.registerFilteredStringMap(json);
+        FilteredStringMap<GridPoint2> words = new FilteredStringMap<>(filter, new String[]{"foo", "bar", "baz"},
+                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)});
+        String data = json.toJson(words, FilteredStringMap.class);
+        System.out.println(data);
+        FilteredStringMap<?> words2 = json.fromJson(FilteredStringMap.class, data);
+        for(Map.Entry<String, ?> pair : words2) {
+            System.out.print(pair.getKey());
+            System.out.print("=");
+            System.out.print(pair.getValue());
+            System.out.print("; ");
+        }
+        Assert.assertEquals(words, words2);
+        System.out.println();
+    }
+
+    @Test
     public void testNumberedSet() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerNumberedSet(json);

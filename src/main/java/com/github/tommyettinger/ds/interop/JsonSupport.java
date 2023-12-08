@@ -2119,8 +2119,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, FilteredStringSet object, Class knownType) {
                 json.writeObjectStart(FilteredStringSet.class, knownType);
-                String gotName = object.getFilter().getName();
-                json.writeValue("filtering", gotName);
+                json.writeValue("filtering", object.getFilter().getName());
                 json.writeArrayStart("items"); // This name is special.
                 for (Object o : object) {
                     json.writeValue(o);
@@ -2154,8 +2153,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, FilteredStringOrderedSet object, Class knownType) {
                 json.writeObjectStart(FilteredStringOrderedSet.class, knownType);
-                String gotName = object.getFilter().getName();
-                json.writeValue("filtering", gotName);
+                json.writeValue("filtering", object.getFilter().getName());
                 json.writeArrayStart("items"); // This name is special.
                 for (Object o : object) {
                     json.writeValue(o);
@@ -2171,6 +2169,44 @@ public final class JsonSupport {
                 FilteredStringOrderedSet data = new FilteredStringOrderedSet(filter, jsonData.size, Utilities.getDefaultLoadFactor());
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.add(value.asString());
+                }
+                return data;
+            }
+        });
+    }
+
+    /**
+     * Registers FilteredStringMap with the given Json object, so FilteredStringMap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerFilteredStringMap(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("ooFSM", FilteredStringSet.class); // object keys, object values, Filtered String kind, Map type
+        json.setSerializer(FilteredStringMap.class, new Json.Serializer<FilteredStringMap>() {
+            @Override
+            public void write(Json json, FilteredStringMap object, Class knownType) {
+                json.writeObjectStart(FilteredStringMap.class, knownType);
+                json.writeValue("filtering", object.getFilter().getName());
+                json.writeObjectStart("data");
+                Iterator<Map.Entry<CharSequence, Object>> es = new FilteredStringMap.Entries<CharSequence, Object>(object).iterator();
+                while (es.hasNext()) {
+                    Map.Entry<CharSequence, ?> e = es.next();
+                    json.writeValue(e.getKey().toString(), e.getValue(), null);
+                }
+                json.writeObjectEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public FilteredStringMap<?> read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
+                CharFilter filter = CharFilter.get(jsonData.getString("filtering"));
+                jsonData = jsonData.get("data");
+                FilteredStringMap<?> data = new FilteredStringMap<>(filter, jsonData.size, Utilities.getDefaultLoadFactor());
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.put(value.name, json.readValue(null, value));
                 }
                 return data;
             }
