@@ -1103,10 +1103,9 @@ public class JsonTest {
     @Test
     public void testFilteredStringSet() {
         Json json = new Json(JsonWriter.OutputType.minimal);
-        CharPredicate filter = Character::isLetter;
-        CharToCharFunction editor = Character::toUpperCase;
-        JsonSupport.registerFilteredStringSet(json, "LettersOnlyIgnoreCase", filter, editor);
-        FilteredStringSet words = FilteredStringSet.with(filter, editor, "Peanut!!", "Butter!!", "Jelly!!", "Time!!", "peanut", "butter", "jelly", "TIME");
+        CharFilter filter = CharFilter.getOrCreate("LettersOnlyIgnoreCase", Character::isLetter, Character::toUpperCase);
+        JsonSupport.registerFilteredStringSet(json);
+        FilteredStringSet words = FilteredStringSet.with(filter, "Peanut!!", "Butter!!", "Jelly!!", "Time!!", "peanut", "butter", "jelly", "TIME");
         String data = json.toJson(words);
         System.out.println(data);
         FilteredStringSet words2 = json.fromJson(FilteredStringSet.class, data);

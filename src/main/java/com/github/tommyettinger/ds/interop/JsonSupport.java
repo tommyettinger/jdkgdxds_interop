@@ -2108,69 +2108,18 @@ public final class JsonSupport {
         });
     }
 
-    public static class CharFilterEditorPair {
-        public @NonNull CharPredicate filter;
-        public @NonNull CharToCharFunction editor;
-
-        public CharFilterEditorPair() {
-            this(c -> true, c -> c);
-        }
-        public CharFilterEditorPair(@NonNull CharPredicate filter, @NonNull CharToCharFunction editor) {
-            this.filter = filter;
-            this.editor = editor;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            CharFilterEditorPair that = (CharFilterEditorPair) o;
-
-            if (!filter.equals(that.filter)) return false;
-            return editor.equals(that.editor);
-        }
-
-        /**
-         * Uses identity hash codes for each item (the filter and the editor), but combines them into one result.
-         * @return the combined identity hash code for both the filter and the editor
-         */
-        @Override
-        public int hashCode() {
-            return 107 * filter.hashCode() + editor.hashCode();
-        }
-    }
-
-    public static final ObjectObjectMap<String, CharFilterEditorPair> CHAR_FILTERING = new ObjectObjectMap<>();
-    public static final ObjectObjectMap<CharFilterEditorPair, String> CHAR_FILTERING_REVERSE = new ObjectObjectMap<>();
-
     /**
      * Registers FilteredStringSet with the given Json object, so FilteredStringSet can be written to and read from JSON.
-     * This is special in that it needs a name for the combination of filter and editor that this can serialize and
-     * deserialize. It also needs the filter (a {@link CharPredicate} and editor (a {@link CharToCharFunction}) given
-     * up-front. This is not called by {@link #registerAll(Json)} because it needs this extra information.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerFilteredStringSet(@NonNull Json json, String name,
-                                                 @NonNull final CharPredicate filter, @NonNull final CharToCharFunction editor) {
+    public static void registerFilteredStringSet(@NonNull Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("oFSS", FilteredStringSet.class); // object items, Filtered String kind, Set type
-        CharFilterEditorPair pair = new CharFilterEditorPair(filter, editor);
-        String existingName = CHAR_FILTERING_REVERSE.get(pair);
-        if(existingName != null) {
-            name = existingName;
-        }
-        CharFilterEditorPair existingPair = CHAR_FILTERING.get(name);
-        if(existingPair != null){
-            CHAR_FILTERING_REVERSE.remove(existingPair);
-        }
-        CHAR_FILTERING.put(name, pair);
-        CHAR_FILTERING_REVERSE.put(pair, name);
         json.setSerializer(FilteredStringSet.class, new Json.Serializer<FilteredStringSet>() {
             @Override
             public void write(Json json, FilteredStringSet object, Class knownType) {
                 json.writeObjectStart(FilteredStringSet.class, knownType);
-                String gotName = CHAR_FILTERING_REVERSE.get(new CharFilterEditorPair(object.getFilter(), object.getEditor()));
+                String gotName = object.getFilter().getName();
                 json.writeValue("filtering", gotName);
                 json.writeArrayStart("items"); // This name is special.
                 for (Object o : object) {
@@ -2183,8 +2132,8 @@ public final class JsonSupport {
             @Override
             public FilteredStringSet read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                CharFilterEditorPair pair = CHAR_FILTERING.get(jsonData.parent.getString("filtering"));
-                FilteredStringSet data = new FilteredStringSet(pair.filter, pair.editor, jsonData.size, Utilities.getDefaultLoadFactor());
+                CharFilter filter = CharFilter.get(jsonData.parent.getString("filtering"));
+                FilteredStringSet data = new FilteredStringSet(filter, jsonData.size, Utilities.getDefaultLoadFactor());
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.add(value.asString());
                 }
