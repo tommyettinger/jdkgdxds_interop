@@ -2213,6 +2213,45 @@ public final class JsonSupport {
         });
     }
     
+
+    /**
+     * Registers FilteredStringOrderedMap with the given Json object, so FilteredStringOrderedMap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerFilteredStringOrderedMap(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("ooFSOM", FilteredStringSet.class); // object keys, object values, Filtered String kind, Ordered kind, Map type
+        json.setSerializer(FilteredStringOrderedMap.class, new Json.Serializer<FilteredStringOrderedMap>() {
+            @Override
+            public void write(Json json, FilteredStringOrderedMap object, Class knownType) {
+                json.writeObjectStart(FilteredStringOrderedMap.class, knownType);
+                json.writeValue("filtering", object.getFilter().getName());
+                json.writeObjectStart("data");
+                Iterator<Map.Entry<CharSequence, Object>> es = new FilteredStringOrderedMap.Entries<CharSequence, Object>(object).iterator();
+                while (es.hasNext()) {
+                    Map.Entry<CharSequence, ?> e = es.next();
+                    json.writeValue(e.getKey().toString(), e.getValue(), null);
+                }
+                json.writeObjectEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public FilteredStringOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
+                CharFilter filter = CharFilter.get(jsonData.getString("filtering"));
+                jsonData = jsonData.get("data");
+                FilteredStringOrderedMap<?> data = new FilteredStringOrderedMap<>(filter, jsonData.size, Utilities.getDefaultLoadFactor());
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.put(value.name, json.readValue(null, value));
+                }
+                return data;
+            }
+        });
+    }
+    
     /**
      * Registers OffsetBitSet with the given Json object, so OffsetBitSet can be written to and read from JSON.
      *
