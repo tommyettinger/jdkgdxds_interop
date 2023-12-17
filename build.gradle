@@ -13,9 +13,6 @@ buildscript {
 apply plugin: 'java-library'
 apply plugin: 'com.vanniktech.maven.publish'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 def projectName = 'jdkgdxds_interop'
 version "$VERSION_NAME"
 group 'com.github.tommyettinger'
@@ -48,11 +45,19 @@ jar {
     }
 }
 
-if(JavaVersion.current().isJava9Compatible()) {
-    allprojects {
-        tasks.withType(JavaCompile) {
-            options.release.set(8)
-        }
+compileJava {
+    sourceCompatibility = 8
+    targetCompatibility = 8
+    if (JavaVersion.current().isJava9Compatible()) {
+        options.release.set(8)
+    }
+}
+
+compileTestJava {
+    sourceCompatibility = 17
+    targetCompatibility = 17
+    if (JavaVersion.current().isJava9Compatible()) {
+        options.release.set(17)
     }
 }
 
