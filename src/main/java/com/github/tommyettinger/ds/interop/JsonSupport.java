@@ -1216,7 +1216,7 @@ public final class JsonSupport {
                     ObjectLongMap.Entry<?> e = es.next();
                     String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey(), (Class) null);
                     json.setWriter(writer);
-                    json.writeValue(k, e.getValue());
+                    json.writeValue(k, BASE.signed(e.getValue()), String.class);
                 }
                 json.writeObjectEnd();
             }
@@ -1253,7 +1253,7 @@ public final class JsonSupport {
                     ObjectLongMap.Entry<?> e = es.next();
                     String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey(), (Class) null);
                     json.setWriter(writer);
-                    json.writeValue(k, e.getValue());
+                    json.writeValue(k, BASE.signed(e.getValue()), String.class);
                 }
                 json.writeObjectEnd();
             }
@@ -1290,7 +1290,7 @@ public final class JsonSupport {
                     ObjectIntMap.Entry<?> e = es.next();
                     String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey(), (Class) null);
                     json.setWriter(writer);
-                    json.writeValue(k, e.getValue());
+                    json.writeValue(k, BASE.signed(e.getValue()), String.class);
                 }
                 json.writeObjectEnd();
             }
@@ -1302,7 +1302,7 @@ public final class JsonSupport {
                 if(tag != null) tag.remove();
                 ObjectIntMap<?> data = new ObjectIntMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.put(json.fromJson(null, value.name), value.asInt());
+                    data.put(json.fromJson(null, value.name), BASE.readInt(value.asString()));
                 }
                 return data;
             }
@@ -1327,7 +1327,7 @@ public final class JsonSupport {
                     ObjectIntMap.Entry<?> e = es.next();
                     String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey(), (Class) null);
                     json.setWriter(writer);
-                    json.writeValue(k, e.getValue());
+                    json.writeValue(k, BASE.signed(e.getValue()), String.class);
                 }
                 json.writeObjectEnd();
             }
@@ -1339,7 +1339,7 @@ public final class JsonSupport {
                 if(tag != null) tag.remove();
                 ObjectIntOrderedMap<?> data = new ObjectIntOrderedMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.put(json.fromJson(null, value.name), value.asInt());
+                    data.put(json.fromJson(null, value.name), BASE.readInt(value.asString()));
                 }
                 return data;
             }
