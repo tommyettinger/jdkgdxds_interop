@@ -47,6 +47,8 @@ public final class JsonSupport {
     @NonNull
     private static Base BASE = Base.BASE10;
 
+    private static boolean LEGIBLE_FLOATS = true;
+
     private static boolean ADD_CLASS_TAGS = true;
 
     /**
@@ -164,6 +166,30 @@ public final class JsonSupport {
     }
 
     /**
+     * Gets the status of whether this will write float and double items using {@link Base#friendly(float)} (when true)
+     * or {@link Base#signed(int)} (when false). Sometimes one option will produce smaller output, and sometimes the
+     * other will. If this is false, then there is a maximum length a float or double will use (in chars). If this is
+     * true, then floats and doubles will always print in base-10, and only use scientific notation for very large or
+     * very small numbers (determined by distance from 0.0), but the maximum length is larger.
+     * @return true if this is writing floats in a human-readable way, or false if writing floats in a compact way
+     */
+    public static boolean areFloatsLegible() {
+        return LEGIBLE_FLOATS;
+    }
+
+    /**
+     * Sets the status of whether this will write float and double items using {@link Base#friendly(float)} (when true)
+     * or {@link Base#signed(int)} (when false). Sometimes one option will produce smaller output, and sometimes the
+     * other will. If this is false, then there is a maximum length a float or double will use (in chars). If this is
+     * true, then floats and doubles will always print in base-10, and only use scientific notation for very large or
+     * very small numbers (determined by distance from 0.0), but the maximum length is larger.
+     * @param legibleFloats true to write floats in a human-readable way, or false to write floats in a compact way
+     */
+    public static void setFloatsLegible(boolean legibleFloats) {
+        LEGIBLE_FLOATS = legibleFloats;
+    }
+
+    /**
      * Gets the status of whether this will add short class tags when registering classes. If true (the default), this
      * will use very short class tags. If false, this will use the normal Json behavior of package-qualified class
      * names, which can be quite long.
@@ -183,6 +209,22 @@ public final class JsonSupport {
      */
     public static void setAddClassTags(boolean addClassTags) {
         ADD_CLASS_TAGS = addClassTags;
+    }
+
+    private static String str(float data) {
+        return LEGIBLE_FLOATS ? BASE.friendly(data) : BASE.signed(data);
+    }
+
+    private static String str(double data) {
+        return LEGIBLE_FLOATS ? BASE.friendly(data) : BASE.signed(data);
+    }
+
+    private static StringBuilder append(StringBuilder sb, float data) {
+        return LEGIBLE_FLOATS ? BASE.appendFriendly(sb, data) : BASE.appendSigned(sb, data);
+    }
+
+    private static StringBuilder append(StringBuilder sb, double data) {
+        return LEGIBLE_FLOATS ? BASE.appendFriendly(sb, data) : BASE.appendSigned(sb, data);
     }
 
     /**
