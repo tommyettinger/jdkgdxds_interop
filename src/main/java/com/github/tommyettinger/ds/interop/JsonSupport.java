@@ -166,7 +166,7 @@ public final class JsonSupport {
     }
 
     /**
-     * Gets the status of whether this will write float and double items using {@link Base#friendly(float)} (when true)
+     * Gets the status of whether this will write float and double items using {@link Base#general(float)} (when true)
      * or {@link Base#signed(int)} (when false). Sometimes one option will produce smaller output, and sometimes the
      * other will. If this is false, then there is a maximum length a float or double will use (in chars). If this is
      * true, then floats and doubles will always print in base-10, and only use scientific notation for very large or
@@ -178,7 +178,7 @@ public final class JsonSupport {
     }
 
     /**
-     * Sets the status of whether this will write float and double items using {@link Base#friendly(float)} (when true)
+     * Sets the status of whether this will write float and double items using {@link Base#general(float)} (when true)
      * or {@link Base#signed(int)} (when false). Sometimes one option will produce smaller output, and sometimes the
      * other will. If this is false, then there is a maximum length a float or double will use (in chars). If this is
      * true, then floats and doubles will always print in base-10, and only use scientific notation for very large or
@@ -212,19 +212,59 @@ public final class JsonSupport {
     }
 
     private static String str(float data) {
-        return LEGIBLE_FLOATS ? BASE.friendly(data) : BASE.signed(data);
+        return LEGIBLE_FLOATS ? BASE.general(data) : BASE.signed(data);
     }
 
     private static String str(double data) {
-        return LEGIBLE_FLOATS ? BASE.friendly(data) : BASE.signed(data);
+        return LEGIBLE_FLOATS ? BASE.general(data) : BASE.signed(data);
     }
 
     private static StringBuilder append(StringBuilder sb, float data) {
-        return LEGIBLE_FLOATS ? BASE.appendFriendly(sb, data) : BASE.appendSigned(sb, data);
+        return LEGIBLE_FLOATS ? BASE.appendGeneral(sb, data) : BASE.appendSigned(sb, data);
     }
 
     private static StringBuilder append(StringBuilder sb, double data) {
-        return LEGIBLE_FLOATS ? BASE.appendFriendly(sb, data) : BASE.appendSigned(sb, data);
+        return LEGIBLE_FLOATS ? BASE.appendGeneral(sb, data) : BASE.appendSigned(sb, data);
+    }
+
+    private static String join(float[] data) {
+        return LEGIBLE_FLOATS ? BASE.join(" ", data) : BASE.joinExact(" ", data);
+    }
+
+    private static String join(double[] data) {
+        return LEGIBLE_FLOATS ? BASE.join(" ", data) : BASE.joinExact(" ", data);
+    }
+
+    private static StringBuilder appendJoined(StringBuilder sb, float[] data) {
+        return LEGIBLE_FLOATS ? BASE.appendJoined(sb, " ", data) : BASE.appendJoinedExact(sb, " ", data);
+    }
+
+    private static StringBuilder appendJoined(StringBuilder sb, double[] data) {
+        return LEGIBLE_FLOATS ? BASE.appendJoined(sb, " ", data) : BASE.appendJoinedExact(sb, " ", data);
+    }
+
+    private static String join(float[] data, int start, int length) {
+        return LEGIBLE_FLOATS ? BASE.join(" ", data, start, length) : BASE.joinExact(" ", data, start, length);
+    }
+
+    private static String join(double[] data, int start, int length) {
+        return LEGIBLE_FLOATS ? BASE.join(" ", data, start, length) : BASE.joinExact(" ", data, start, length);
+    }
+
+    private static StringBuilder appendJoined(StringBuilder sb, float[] data, int start, int length) {
+        return LEGIBLE_FLOATS ? BASE.appendJoined(sb, " ", data, start, length) : BASE.appendJoinedExact(sb, " ", data, start, length);
+    }
+
+    private static StringBuilder appendJoined(StringBuilder sb, double[] data, int start, int length) {
+        return LEGIBLE_FLOATS ? BASE.appendJoined(sb, " ", data, start, length) : BASE.appendJoinedExact(sb, " ", data, start, length);
+    }
+
+    private static float[] floatSplit(String data) {
+        return LEGIBLE_FLOATS ? BASE.floatSplit(data, " ") : BASE.floatSplitExact(data, " ");
+    }
+
+    private static double[] doubleSplit(String data) {
+        return LEGIBLE_FLOATS ? BASE.doubleSplit(data, " ") : BASE.doubleSplitExact(data, " ");
     }
 
     /**
@@ -582,19 +622,14 @@ public final class JsonSupport {
             @Override
             public void write(Json json, FloatBag object, Class knownType) {
                 json.writeObjectStart(FloatBag.class, knownType);
-                json.writeArrayStart("items");
-                FloatIterator it = object.iterator();
-                while (it.hasNext()) {
-                    json.writeValue(it.nextFloat());
-                }
-                json.writeArrayEnd();
+                json.writeValue("items", join(object.items, 0, object.size()));
                 json.writeObjectEnd();
             }
 
             @Override
             public FloatBag read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return FloatBag.with(jsonData.asFloatArray());
+                return FloatBag.with(floatSplit(jsonData.asString()));
             }
         });
     }
