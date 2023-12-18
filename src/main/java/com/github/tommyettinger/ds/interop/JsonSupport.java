@@ -309,19 +309,14 @@ public final class JsonSupport {
             @Override
             public void write(Json json, IntList object, Class knownType) {
                 json.writeObjectStart(IntList.class, knownType);
-                json.writeArrayStart("items");
-                IntIterator it = object.iterator();
-                while (it.hasNext()) {
-                    json.writeValue(it.nextInt());
-                }
-                json.writeArrayEnd();
+                json.writeValue("items", BASE.join(" ", object.items, 0, object.size()));
                 json.writeObjectEnd();
             }
 
             @Override
             public IntList read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return IntList.with(jsonData.asIntArray());
+                return IntList.with(BASE.intSplit(jsonData.asString(), " "));
             }
         });
 
@@ -338,19 +333,14 @@ public final class JsonSupport {
             @Override
             public void write(Json json, LongList object, Class knownType) {
                 json.writeObjectStart(LongList.class, knownType);
-                json.writeArrayStart("items");
-                LongIterator it = object.iterator();
-                while (it.hasNext()) {
-                    json.writeValue(it.nextLong());
-                }
-                json.writeArrayEnd();
+                json.writeValue("items", BASE.join(" ", object.items, 0, object.size()));
                 json.writeObjectEnd();
             }
 
             @Override
             public LongList read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return LongList.with(jsonData.asLongArray());
+                return LongList.with(BASE.longSplit(jsonData.asString(), " "));
             }
         });
     }
@@ -389,19 +379,14 @@ public final class JsonSupport {
             @Override
             public void write(Json json, ByteList object, Class knownType) {
                 json.writeObjectStart(ByteList.class, knownType);
-                json.writeArrayStart("items");
-                ByteIterator it = object.iterator();
-                while (it.hasNext()) {
-                    json.writeValue(it.nextByte());
-                }
-                json.writeArrayEnd();
+                json.writeValue("items", BASE.join(" ", object.items, 0, object.size()));
                 json.writeObjectEnd();
             }
 
             @Override
             public ByteList read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return ByteList.with(jsonData.asByteArray());
+                return ByteList.with(BASE.byteSplit(jsonData.asString(), " "));
             }
         });
     }
@@ -417,19 +402,14 @@ public final class JsonSupport {
             @Override
             public void write(Json json, ShortList object, Class knownType) {
                 json.writeObjectStart(ShortList.class, knownType);
-                json.writeArrayStart("items");
-                ShortIterator it = object.iterator();
-                while (it.hasNext()) {
-                    json.writeValue(it.nextShort());
-                }
-                json.writeArrayEnd();
+                json.writeValue("items", BASE.join(" ", object.items, 0, object.size()));
                 json.writeObjectEnd();
             }
 
             @Override
             public ShortList read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return ShortList.with(jsonData.asShortArray());
+                return ShortList.with(BASE.shortSplit(jsonData.asString(), " "));
             }
         });
     }
