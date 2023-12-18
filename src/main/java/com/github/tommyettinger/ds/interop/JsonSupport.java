@@ -366,19 +366,14 @@ public final class JsonSupport {
             @Override
             public void write(Json json, FloatList object, Class knownType) {
                 json.writeObjectStart(FloatList.class, knownType);
-                json.writeArrayStart("items");
-                FloatIterator it = object.iterator();
-                while (it.hasNext()) {
-                    json.writeValue(it.nextFloat());
-                }
-                json.writeArrayEnd();
+                json.writeValue("items", join(object.items, 0, object.size()));
                 json.writeObjectEnd();
             }
 
             @Override
             public FloatList read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return FloatList.with(jsonData.asFloatArray());
+                return FloatList.with(floatSplit(jsonData.asString()));
             }
         });
     }
@@ -478,19 +473,14 @@ public final class JsonSupport {
             @Override
             public void write(Json json, DoubleList object, Class knownType) {
                 json.writeObjectStart(DoubleList.class, knownType);
-                json.writeArrayStart("items");
-                DoubleIterator it = object.iterator();
-                while (it.hasNext()) {
-                    json.writeValue(it.nextDouble());
-                }
-                json.writeArrayEnd();
+                json.writeValue("items", join(object.items, 0, object.size()));
                 json.writeObjectEnd();
             }
 
             @Override
             public DoubleList read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return DoubleList.with(jsonData.asDoubleArray());
+                return DoubleList.with(doubleSplit(jsonData.asString()));
             }
         });
     }
@@ -729,19 +719,14 @@ public final class JsonSupport {
             @Override
             public void write(Json json, DoubleBag object, Class knownType) {
                 json.writeObjectStart(DoubleBag.class, knownType);
-                json.writeArrayStart("items");
-                DoubleIterator it = object.iterator();
-                while (it.hasNext()) {
-                    json.writeValue(it.nextDouble());
-                }
-                json.writeArrayEnd();
+                json.writeValue("items", join(object.items, 0, object.size()));
                 json.writeObjectEnd();
             }
 
             @Override
             public DoubleBag read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return DoubleBag.with(jsonData.asDoubleArray());
+                return DoubleBag.with(doubleSplit(jsonData.asString()));
             }
         });
     }
