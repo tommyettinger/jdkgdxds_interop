@@ -30,10 +30,6 @@ import com.github.tommyettinger.digital.Interpolations;
 import com.github.tommyettinger.digital.Interpolations.Interpolator;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.support.util.*;
-import com.github.tommyettinger.function.CharPredicate;
-import com.github.tommyettinger.function.CharToCharFunction;
-import com.github.tommyettinger.function.ObjPredicate;
-import com.github.tommyettinger.function.ObjToSameFunction;
 import com.github.tommyettinger.random.*;
 import com.github.tommyettinger.random.distribution.*;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -49,7 +45,7 @@ public final class JsonSupport {
     }
 
     @NonNull
-    private static Base BASE = Base.BASE16;
+    private static Base BASE = Base.BASE10;
 
     private static boolean ADD_CLASS_TAGS = true;
 
@@ -119,6 +115,11 @@ public final class JsonSupport {
         registerCaseInsensitiveMap(json);
         registerCaseInsensitiveOrderedMap(json);
 
+        registerFilteredStringSet(json);
+        registerFilteredStringOrderedSet(json);
+        registerFilteredStringMap(json);
+        registerFilteredStringOrderedMap(json);
+
         registerNumberedSet(json);
 
         registerBinaryHeap(json);
@@ -136,13 +137,14 @@ public final class JsonSupport {
         // from libGDX.
         registerRandomXS128(json);
 
+        // from the JDK.
         registerClass(json);
     }
 
 
     /**
      * Gets the numeral system, also called radix or base, used by some methods here to encode numbers.
-     * If it hasn't been changed, the default this uses is {@link Base#BASE36}, because it is fairly compact.
+     * If it hasn't been changed, the default this uses is {@link Base#BASE10}, because it is the most human-readable.
      * @return the Base system this uses, which is always non-null.
      */
     public static Base getNumeralBase() {
@@ -151,9 +153,9 @@ public final class JsonSupport {
     /**
      * Sets the numeral system, also called radix or base, used by some methods here to encode numbers.
      * This is most likely to be used with {@link Base#scrambledBase(Random)} to obfuscate specific numbers,
-     * typically random seeds, put into readable JSON files. The methods this affects are all related to registering
+     * such as random seeds, put into readable JSON files. The methods this affects are mostly related to registering
      * {@link EnhancedRandom} and its implementations, {@link RandomXS128}, and {@link AtomicLong}. If this hasn't been
-     * called, the default this uses is {@link Base#BASE36}, because it is fairly compact.
+     * called, the default this uses is {@link Base#BASE10}, because it is the most human-readable.
      * @param base a non-null Base system
      */
     public static void setNumeralBase(Base base){
@@ -1430,7 +1432,7 @@ public final class JsonSupport {
             public void write(Json json, IntObjectMap object, Class knownType) {
                 json.writeObjectStart(IntObjectMap.class, knownType);
                 for (IntObjectMap.Entry<Object> e : new IntObjectMap.Entries<Object>(object)) {
-                    json.writeValue(Integer.toString(e.key), e.getValue(), null);
+                    json.writeValue(BASE.signed(e.key), e.getValue(), null);
                 }
                 json.writeObjectEnd();
             }
@@ -1442,7 +1444,7 @@ public final class JsonSupport {
                 if(tag != null) tag.remove();
                 IntObjectMap<?> data = new IntObjectMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.put(Integer.parseInt(value.name), json.readValue(null, value));
+                    data.put(BASE.readInt(value.name), json.readValue(null, value));
                 }
                 return data;
             }
@@ -1461,7 +1463,7 @@ public final class JsonSupport {
             public void write(Json json, IntObjectOrderedMap object, Class knownType) {
                 json.writeObjectStart(IntObjectOrderedMap.class, knownType);
                 for (IntObjectOrderedMap.Entry<Object> e : new IntObjectOrderedMap.OrderedMapEntries<Object>(object)) {
-                    json.writeValue(Integer.toString(e.key), e.getValue(), null);
+                    json.writeValue(BASE.signed(e.key), e.getValue(), null);
                 }
                 json.writeObjectEnd();
             }
@@ -1473,7 +1475,7 @@ public final class JsonSupport {
                 if(tag != null) tag.remove();
                 IntObjectOrderedMap<?> data = new IntObjectOrderedMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.put(Integer.parseInt(value.name), json.readValue(null, value));
+                    data.put(BASE.readInt(value.name), json.readValue(null, value));
                 }
                 return data;
             }
@@ -1492,7 +1494,7 @@ public final class JsonSupport {
             public void write(Json json, IntIntMap object, Class knownType) {
                 json.writeObjectStart(IntIntMap.class, knownType);
                 for (IntIntMap.Entry e : new IntIntMap.Entries(object)) {
-                    json.writeValue(Integer.toString(e.key), e.getValue());
+                    json.writeValue(BASE.signed(e.key), e.getValue());
                 }
                 json.writeObjectEnd();
             }
@@ -1504,7 +1506,7 @@ public final class JsonSupport {
                 if(tag != null) tag.remove();
                 IntIntMap data = new IntIntMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.put(Integer.parseInt(value.name), value.asInt());
+                    data.put(BASE.readInt(value.name), value.asInt());
                 }
                 return data;
             }
@@ -1523,7 +1525,7 @@ public final class JsonSupport {
             public void write(Json json, IntIntOrderedMap object, Class knownType) {
                 json.writeObjectStart(IntIntOrderedMap.class, knownType);
                 for (IntIntOrderedMap.Entry e : new IntIntOrderedMap.OrderedMapEntries(object)) {
-                    json.writeValue(Integer.toString(e.key), e.getValue());
+                    json.writeValue(BASE.signed(e.key), e.getValue());
                 }
                 json.writeObjectEnd();
             }
@@ -1535,7 +1537,7 @@ public final class JsonSupport {
                 if(tag != null) tag.remove();
                 IntIntOrderedMap data = new IntIntOrderedMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.put(Integer.parseInt(value.name), value.asInt());
+                    data.put(BASE.readInt(value.name), value.asInt());
                 }
                 return data;
             }
@@ -1554,7 +1556,7 @@ public final class JsonSupport {
             public void write(Json json, IntLongMap object, Class knownType) {
                 json.writeObjectStart(IntLongMap.class, knownType);
                 for (IntLongMap.Entry e : new IntLongMap.Entries(object)) {
-                    json.writeValue(Integer.toString(e.key), e.getValue());
+                    json.writeValue(BASE.signed(e.key), e.getValue());
                 }
                 json.writeObjectEnd();
             }
@@ -1566,7 +1568,7 @@ public final class JsonSupport {
                 if(tag != null) tag.remove();
                 IntLongMap data = new IntLongMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.put(Integer.parseInt(value.name), value.asLong());
+                    data.put(BASE.readInt(value.name), value.asLong());
                 }
                 return data;
             }
@@ -1585,7 +1587,7 @@ public final class JsonSupport {
             public void write(Json json, IntLongOrderedMap object, Class knownType) {
                 json.writeObjectStart(IntLongOrderedMap.class, knownType);
                 for (IntLongOrderedMap.Entry e : new IntLongOrderedMap.OrderedMapEntries(object)) {
-                    json.writeValue(Integer.toString(e.key), e.getValue());
+                    json.writeValue(BASE.signed(e.key), e.getValue());
                 }
                 json.writeObjectEnd();
             }
@@ -1597,7 +1599,7 @@ public final class JsonSupport {
                 if(tag != null) tag.remove();
                 IntLongOrderedMap data = new IntLongOrderedMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.put(Integer.parseInt(value.name), value.asLong());
+                    data.put(BASE.readInt(value.name), value.asLong());
                 }
                 return data;
             }
@@ -1616,7 +1618,7 @@ public final class JsonSupport {
             public void write(Json json, IntFloatMap object, Class knownType) {
                 json.writeObjectStart(IntFloatMap.class, knownType);
                 for (IntFloatMap.Entry e : new IntFloatMap.Entries(object)) {
-                    json.writeValue(Integer.toString(e.key), e.getValue());
+                    json.writeValue(BASE.signed(e.key), e.getValue());
                 }
                 json.writeObjectEnd();
             }
@@ -1628,7 +1630,7 @@ public final class JsonSupport {
                 if(tag != null) tag.remove();
                 IntFloatMap data = new IntFloatMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.put(Integer.parseInt(value.name), value.asFloat());
+                    data.put(BASE.readInt(value.name), value.asFloat());
                 }
                 return data;
             }
@@ -1647,7 +1649,7 @@ public final class JsonSupport {
             public void write(Json json, IntFloatOrderedMap object, Class knownType) {
                 json.writeObjectStart(IntFloatOrderedMap.class, knownType);
                 for (IntFloatOrderedMap.Entry e : new IntFloatOrderedMap.OrderedMapEntries(object)) {
-                    json.writeValue(Integer.toString(e.key), e.getValue());
+                    json.writeValue(BASE.signed(e.key), e.getValue());
                 }
                 json.writeObjectEnd();
             }
@@ -1659,7 +1661,7 @@ public final class JsonSupport {
                 if(tag != null) tag.remove();
                 IntFloatOrderedMap data = new IntFloatOrderedMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.put(Integer.parseInt(value.name), value.asFloat());
+                    data.put(BASE.readInt(value.name), value.asFloat());
                 }
                 return data;
             }
