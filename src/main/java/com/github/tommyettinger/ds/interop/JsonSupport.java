@@ -1305,7 +1305,7 @@ public final class JsonSupport {
                 if(tag != null) tag.remove();
                 ObjectLongMap<?> data = new ObjectLongMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.put(json.fromJson(null, value.name), value.asLong());
+                    data.put(json.fromJson(null, value.name), BASE.readLong(value.asString()));
                 }
                 return data;
             }
@@ -1342,7 +1342,7 @@ public final class JsonSupport {
                 if(tag != null) tag.remove();
                 ObjectLongOrderedMap<?> data = new ObjectLongOrderedMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.put(json.fromJson(null, value.name), value.asLong());
+                    data.put(json.fromJson(null, value.name), BASE.readLong(value.asString()));
                 }
                 return data;
             }
