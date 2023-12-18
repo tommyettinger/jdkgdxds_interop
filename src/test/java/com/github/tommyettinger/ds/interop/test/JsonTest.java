@@ -242,7 +242,7 @@ public class JsonTest {
     public void testCharList() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerCharList(json);
-        CharList numbers = CharList.with('a', 'b', 'y', 'z');
+        CharList numbers = CharList.with('a', 'b', 'y', 'z', '}', ':', '{', '\\', '"');
         String data = json.toJson(numbers);
         System.out.println(data);
         CharList numbers2 = json.fromJson(CharList.class, data);

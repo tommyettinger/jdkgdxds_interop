@@ -425,19 +425,14 @@ public final class JsonSupport {
             @Override
             public void write(Json json, CharList object, Class knownType) {
                 json.writeObjectStart(CharList.class, knownType);
-                json.writeArrayStart("items");
-                CharIterator it = object.iterator();
-                while (it.hasNext()) {
-                    json.writeValue(it.nextChar());
-                }
-                json.writeArrayEnd();
+                json.writeValue("data", object.toDenseString(), String.class);
                 json.writeObjectEnd();
             }
 
             @Override
             public CharList read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return CharList.with(jsonData.asCharArray());
+                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("data")) == null) return null;
+                return CharList.with(jsonData.asString().toCharArray());
             }
         });
     }
