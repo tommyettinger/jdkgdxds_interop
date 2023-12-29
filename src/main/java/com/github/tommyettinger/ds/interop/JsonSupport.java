@@ -64,6 +64,16 @@ public final class JsonSupport {
         registerDoubleList(json);
         registerBooleanList(json);
 
+        registerObjectBag(json);
+        registerIntBag(json);
+        registerLongBag(json);
+        registerFloatBag(json);
+        registerByteBag(json);
+        registerShortBag(json);
+        registerCharBag(json);
+        registerDoubleBag(json);
+        registerBooleanBag(json);
+
         registerObjectDeque(json);
         registerLongDeque(json);
         registerIntDeque(json);
@@ -254,6 +264,14 @@ public final class JsonSupport {
 
     private static StringBuilder appendJoined(StringBuilder sb, double[] data, int start, int length) {
         return LEGIBLE_FLOATS ? BASE.appendJoined(sb, " ", data, start, length) : BASE.appendJoinedExact(sb, " ", data, start, length);
+    }
+
+    private static float floatRead(String data) {
+        return LEGIBLE_FLOATS ? BASE.readFloat(data) : BASE.readFloatExact(data);
+    }
+
+    private static double doubleRead(String data) {
+        return LEGIBLE_FLOATS ? BASE.readDouble(data) : BASE.readDoubleExact(data);
     }
 
     private static float[] floatSplit(String data) {
@@ -903,19 +921,20 @@ public final class JsonSupport {
             @Override
             public void write(Json json, FloatDeque object, Class knownType) {
                 json.writeObjectStart(FloatDeque.class, knownType);
-                json.writeArrayStart("items");
+                StringBuilder sb = new StringBuilder(object.size());
                 FloatIterator it = object.iterator();
                 while (it.hasNext()) {
-                    json.writeValue(it.nextFloat());
+                    sb.append(' ');
+                    append(sb, it.nextFloat());
                 }
-                json.writeArrayEnd();
+                json.writeValue("items", sb.substring(1));
                 json.writeObjectEnd();
             }
 
             @Override
             public FloatDeque read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return FloatDeque.with(jsonData.asFloatArray());
+                return FloatDeque.with(floatSplit(jsonData.asString()));
             }
         });
     }
@@ -931,19 +950,20 @@ public final class JsonSupport {
             @Override
             public void write(Json json, DoubleDeque object, Class knownType) {
                 json.writeObjectStart(DoubleDeque.class, knownType);
-                json.writeArrayStart("items");
+                StringBuilder sb = new StringBuilder(object.size());
                 DoubleIterator it = object.iterator();
                 while (it.hasNext()) {
-                    json.writeValue(it.nextDouble());
+                    sb.append(' ');
+                    append(sb, it.nextDouble());
                 }
-                json.writeArrayEnd();
+                json.writeValue("items", sb.substring(1));
                 json.writeObjectEnd();
             }
 
             @Override
             public DoubleDeque read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return DoubleDeque.with(jsonData.asDoubleArray());
+                return DoubleDeque.with(doubleSplit(jsonData.asString()));
             }
         });
     }
