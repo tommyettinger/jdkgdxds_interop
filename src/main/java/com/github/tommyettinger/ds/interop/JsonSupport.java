@@ -23,10 +23,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
-import com.github.tommyettinger.digital.AlternateRandom;
-import com.github.tommyettinger.digital.Base;
-import com.github.tommyettinger.digital.Hasher;
-import com.github.tommyettinger.digital.Interpolations;
+import com.github.tommyettinger.digital.*;
 import com.github.tommyettinger.digital.Interpolations.Interpolator;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.support.util.*;
@@ -471,19 +468,14 @@ public final class JsonSupport {
             @Override
             public void write(Json json, BooleanList object, Class knownType) {
                 json.writeObjectStart(BooleanList.class, knownType);
-                json.writeArrayStart("items");
-                BooleanIterator it = object.iterator();
-                while (it.hasNext()) {
-                    json.writeValue(it.nextBoolean());
-                }
-                json.writeArrayEnd();
+                json.writeValue("items", TextTools.joinDense(object.items, 0, object.size()));
                 json.writeObjectEnd();
             }
 
             @Override
             public BooleanList read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return BooleanList.with(jsonData.asBooleanArray());
+                return BooleanList.with(TextTools.booleanSplitDense(jsonData.asString()));
             }
         });
     }
