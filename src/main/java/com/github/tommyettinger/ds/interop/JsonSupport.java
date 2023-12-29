@@ -709,19 +709,14 @@ public final class JsonSupport {
             @Override
             public void write(Json json, BooleanBag object, Class knownType) {
                 json.writeObjectStart(BooleanBag.class, knownType);
-                json.writeArrayStart("items");
-                BooleanIterator it = object.iterator();
-                while (it.hasNext()) {
-                    json.writeValue(it.nextBoolean());
-                }
-                json.writeArrayEnd();
+                json.writeValue("items", TextTools.joinDense(object.items, 0, object.size()));
                 json.writeObjectEnd();
             }
 
             @Override
             public BooleanBag read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return BooleanBag.with(jsonData.asBooleanArray());
+                return BooleanBag.with(TextTools.booleanSplitDense(jsonData.asString()));
             }
         });
     }
@@ -964,19 +959,19 @@ public final class JsonSupport {
             @Override
             public void write(Json json, BooleanDeque object, Class knownType) {
                 json.writeObjectStart(BooleanDeque.class, knownType);
-                json.writeArrayStart("items");
+                StringBuilder sb = new StringBuilder(object.size());
                 BooleanIterator it = object.iterator();
                 while (it.hasNext()) {
-                    json.writeValue(it.nextBoolean());
+                    sb.append(it.nextBoolean() ? '1' : '0');
                 }
-                json.writeArrayEnd();
+                json.writeValue("items", sb.toString());
                 json.writeObjectEnd();
             }
 
             @Override
             public BooleanDeque read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return BooleanDeque.with(jsonData.asBooleanArray());
+                return BooleanDeque.with(TextTools.booleanSplitDense(jsonData.asString()));
             }
         });
     }
