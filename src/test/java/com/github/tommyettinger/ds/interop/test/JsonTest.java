@@ -17,6 +17,7 @@
 package com.github.tommyettinger.ds.interop.test;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Plane;
 import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Json;
@@ -25,6 +26,7 @@ import com.badlogic.gdx.utils.JsonWriter;
 import com.github.tommyettinger.digital.*;
 import com.github.tommyettinger.digital.Interpolations.Interpolator;
 import com.github.tommyettinger.ds.*;
+import com.github.tommyettinger.ds.EnumSet;
 import com.github.tommyettinger.ds.interop.JsonSupport;
 import com.github.tommyettinger.function.CharPredicate;
 import com.github.tommyettinger.function.CharToCharFunction;
@@ -292,6 +294,47 @@ public class JsonTest {
         System.out.println();
     }
 
+    public enum Banana {
+        PEANUT, BUTTER, JELLY, TIME
+    }
+
+    @Test
+    public void testEnumSet() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerEnumSet(json);
+        EnumSet words = EnumSet.with(Banana.PEANUT, Banana.BUTTER, Banana.JELLY, Banana.TIME);
+        String data = json.toJson(words);
+        System.out.println(data);
+        EnumSet words2 = json.fromJson(EnumSet.class, data);
+        for(Object word : words2) {
+            System.out.print(word);
+            System.out.print(", ");
+        }
+        Assert.assertEquals(words, words2);
+        System.out.println();
+        EnumSet points = EnumSet.allOf(Plane.PlaneSide.values());
+        data = json.toJson(points);
+        System.out.println(data);
+        EnumSet points2 = json.fromJson(EnumSet.class, data);
+        for(Object side : points2) {
+            System.out.print(side);
+            System.out.print(", ");
+        }
+        Assert.assertEquals(points, points2);
+        System.out.println();
+
+        EnumSet empty = EnumSet.noneOf(Plane.PlaneSide.values());
+        data = json.toJson(empty);
+        System.out.println(data);
+        EnumSet empty2 = json.fromJson(EnumSet.class, data);
+        for(Object side : empty2) {
+            System.out.print(side);
+            System.out.print(", ");
+        }
+        Assert.assertEquals(empty, empty2);
+        System.out.println();
+    }
+    
     @Test
     public void testObjectSet() {
         Json json = new Json(JsonWriter.OutputType.minimal);

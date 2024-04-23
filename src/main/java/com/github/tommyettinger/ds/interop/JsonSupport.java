@@ -91,6 +91,7 @@ public final class JsonSupport {
         registerLongSet(json);
         registerLongOrderedSet(json);
         registerOffsetBitSet(json);
+        registerEnumSet(json);
 
         registerObjectObjectMap(json);
         registerObjectObjectOrderedMap(json);
@@ -992,6 +993,37 @@ public final class JsonSupport {
             public BooleanDeque read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
                 return BooleanDeque.with(TextTools.booleanSplitDense(jsonData.asString()));
+            }
+        });
+    }
+
+    /**
+     * Registers EnumSet with the given Json object, so EnumSet can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerEnumSet(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("eS", EnumSet.class);
+        json.setSerializer(EnumSet.class, new Json.Serializer<EnumSet>() {
+            @Override
+            public void write(Json json, EnumSet object, Class knownType) {
+                json.writeObjectStart(EnumSet.class, knownType);
+                json.writeArrayStart("items"); // This name is special.
+                for (Enum<?> o : object) {
+                    json.writeValue(o, Enum.class);
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public EnumSet read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                EnumSet data = new EnumSet();
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.add(json.readValue(Enum.class, value));
+                }
+                return data;
             }
         });
     }
