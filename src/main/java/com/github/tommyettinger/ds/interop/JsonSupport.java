@@ -120,6 +120,8 @@ public final class JsonSupport {
         registerLongFloatMap(json);
         registerLongFloatOrderedMap(json);
 
+        registerEnumMap(json);
+
         registerCaseInsensitiveSet(json);
         registerCaseInsensitiveOrderedSet(json);
         registerCaseInsensitiveMap(json);
@@ -1201,6 +1203,43 @@ public final class JsonSupport {
             }
         });
     }
+
+    /**
+     * Registers EnumMap with the given Json object, so EnumMap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerEnumMap(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("eoM", EnumMap.class);
+        json.setSerializer(EnumMap.class, new Json.Serializer<EnumMap>() {
+            @Override
+            public void write(Json json, EnumMap object, Class knownType) {
+                json.writeObjectStart(EnumMap.class, knownType);
+                Iterator<Map.Entry<Enum<?>, Object>> es = new EnumMap.Entries<Object>(object).iterator();
+                json.writeArrayStart("parts");
+                while (es.hasNext()) {
+                    Map.Entry<Enum<?>, ?> e = es.next();
+                    json.writeValue(e.getKey(), Enum.class);
+                    json.writeValue(e.getValue(), null);
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public EnumMap<?> read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
+                EnumMap<?> data = new EnumMap<>();
+                for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
+                    data.put(json.readValue(Enum.class, value), json.readValue(null, value = value.next));
+                }
+                return data;
+            }
+        });
+    }
+
 
     /**
      * Registers ObjectObjectMap with the given Json object, so ObjectObjectMap can be written to and read from JSON.

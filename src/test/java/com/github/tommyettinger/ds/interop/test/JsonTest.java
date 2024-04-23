@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.JsonWriter;
 import com.github.tommyettinger.digital.*;
 import com.github.tommyettinger.digital.Interpolations.Interpolator;
 import com.github.tommyettinger.ds.*;
+import com.github.tommyettinger.ds.EnumMap;
 import com.github.tommyettinger.ds.EnumSet;
 import com.github.tommyettinger.ds.interop.JsonSupport;
 import com.github.tommyettinger.function.CharPredicate;
@@ -323,7 +324,7 @@ public class JsonTest {
         Assert.assertEquals(points, points2);
         System.out.println();
 
-        EnumSet empty = EnumSet.noneOf(Plane.PlaneSide.values());
+        EnumSet empty = new EnumSet();
         data = json.toJson(empty);
         System.out.println(data);
         EnumSet empty2 = json.fromJson(EnumSet.class, data);
@@ -335,6 +336,44 @@ public class JsonTest {
         System.out.println();
     }
     
+    @Test
+    public void testEnumMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerEnumMap(json);
+        EnumMap<String> words = EnumMap.with(Banana.PEANUT, "Peanut",  Banana.BUTTER, "Butter",
+                Banana.JELLY, "Jelly", Banana.TIME, "Time");
+        String data = json.toJson(words);
+        System.out.println(data);
+        EnumMap<?> words2 = json.fromJson(EnumMap.class, data);
+        for(Object word : words2) {
+            System.out.print(word);
+            System.out.print(", ");
+        }
+        Assert.assertEquals(words, words2);
+        System.out.println();
+        EnumMap<Integer> points = EnumMap.with(Plane.PlaneSide.Front, 100, Plane.PlaneSide.OnPlane, 0, Plane.PlaneSide.Back, -1000);
+        data = json.toJson(points);
+        System.out.println(data);
+        EnumMap<?> points2 = json.fromJson(EnumMap.class, data);
+        for(Object side : points2) {
+            System.out.print(side);
+            System.out.print(", ");
+        }
+        Assert.assertEquals(points, points2);
+        System.out.println();
+
+        EnumMap empty = new EnumMap();
+        data = json.toJson(empty);
+        System.out.println(data);
+        EnumMap empty2 = json.fromJson(EnumMap.class, data);
+        for(Object side : empty2) {
+            System.out.print(side);
+            System.out.print(", ");
+        }
+        Assert.assertEquals(empty, empty2);
+        System.out.println();
+    }
+
     @Test
     public void testObjectSet() {
         Json json = new Json(JsonWriter.OutputType.minimal);
