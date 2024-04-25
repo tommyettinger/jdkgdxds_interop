@@ -61,7 +61,7 @@ but long packages add to file size and can also be strenuous to read repeatedly.
 ## How do I get it?
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api`, is: 
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.5.2.0"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.5.3.0"
 ```
 It's not unlikely that you might need `api` instead of `implementation`, especially if you are writing a library, or a
 module that needs to be used from another section.
@@ -71,8 +71,8 @@ If you use GWT (libGDX's HTML target), then you also need this in your `html/bui
 implementation "com.github.tommyettinger:funderby:0.1.1:sources"
 implementation "com.github.tommyettinger:digital:0.4.8:sources"
 implementation "com.github.tommyettinger:juniper:0.6.0:sources"
-implementation "com.github.tommyettinger:jdkgdxds:1.5.2:sources"
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.5.2.0:sources"
+implementation "com.github.tommyettinger:jdkgdxds:1.5.3:sources"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.5.3.0:sources"
 ```
 You also need the GWT `inherits` in your `GdxDefinition.gwt.xml` file:
 ```xml
