@@ -45,6 +45,15 @@ jar {
     }
 }
 
+import com.vanniktech.maven.publish.JavaLibrary
+import com.vanniktech.maven.publish.JavadocJar
+
+mavenPublishing {
+    configure(new JavaLibrary(new JavadocJar.Javadoc(), true))
+}
+
+mavenPlainJavadocJar.archiveBaseName.set("$projectName")
+
 compileJava {
     sourceCompatibility = 8
     targetCompatibility = 8
