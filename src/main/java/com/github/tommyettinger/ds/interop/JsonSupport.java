@@ -2986,6 +2986,52 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers Taxon32Random with the given Json object, so Taxon32Random can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerTaxon32Random(@NonNull Json json) {
+        if(json.getSerializer(Taxon32Random.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("JS3R", Taxon32Random.class);
+        json.setSerializer(Taxon32Random.class, new Json.Serializer<Taxon32Random>() {
+            @Override
+            public void write(Json json, Taxon32Random object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Taxon32Random read(Json json, JsonValue jsonData, Class type) {
+                Taxon32Random r = new Taxon32Random(1, 1);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers Choo32Random with the given Json object, so Choo32Random can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerChoo32Random(@NonNull Json json) {
+        if(json.getSerializer(Choo32Random.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("JS3R", Choo32Random.class);
+        json.setSerializer(Choo32Random.class, new Json.Serializer<Choo32Random>() {
+            @Override
+            public void write(Json json, Choo32Random object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Choo32Random read(Json json, JsonValue jsonData, Class type) {
+                Choo32Random r = new Choo32Random(1, 1, 1, 1);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers GoldenQuasiRandom with the given Json object, so GoldenQuasiRandom can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -3228,7 +3274,8 @@ public final class JsonSupport {
      * {@link Xoshiro256StarStarRandom}, {@link Xoshiro128PlusPlusRandom}, {@link Xoshiro256MX3Random},
      * {@link Xoroshiro128StarStarRandom}, {@link StrangerRandom}, {@link TrimRandom}, {@link WhiskerRandom},
      * {@link RomuTrioRandom}, {@link ChopRandom}, {@link Xoshiro128PlusPlusRandom}, {@link MizuchiRandom},
-     * {@link ScruffRandom}, {@link AceRandom}, {@link GoldenQuasiRandom}, {@link VanDerCorputQuasiRandom},
+     * {@link ScruffRandom}, {@link AceRandom}, {@link FlowRandom}, {@link Taxon32Random}, {@link Choo32Random},
+     * {@link GoldenQuasiRandom}, {@link VanDerCorputQuasiRandom},
      * {@link LowChangeQuasiRandom}, {@link TupleQuasiRandom}, and {@link KnownSequenceRandom}, plus
      * {@link AtomicLong} because some subclasses of {@link java.util.Random} need it. This does not register
      * {@link DistributedRandom} or the wrappers {@link ReverseWrapper} and {@link ArchivalWrapper}, but
@@ -3246,6 +3293,7 @@ public final class JsonSupport {
         registerAtomicLong(json);
         registerDistinctRandom(json);
         registerLaserRandom(json);
+        registerFlowRandom(json);
         registerTricycleRandom(json);
         registerFourWheelRandom(json);
         registerXoshiro256StarStarRandom(json);
@@ -3266,6 +3314,8 @@ public final class JsonSupport {
         registerScruffRandom(json);
         registerCrand64Random(json);
         registerSfc64Random(json);
+        registerTaxon32Random(json);
+        registerChoo32Random(json);
         registerKnownSequenceRandom(json);
         registerGoldenQuasiRandom(json);
         registerVanDerCorputQuasiRandom(json);
