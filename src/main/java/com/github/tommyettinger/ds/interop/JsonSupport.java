@@ -2848,6 +2848,29 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers PcgRXSMXSRandom with the given Json object, so PcgRXSMXSRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerPcgRXSMXSRandom(@NonNull Json json) {
+        if(json.getSerializer(PcgRXSMXSRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("PRXR", PcgRXSMXSRandom.class);
+        json.setSerializer(PcgRXSMXSRandom.class, new Json.Serializer<PcgRXSMXSRandom>() {
+            @Override
+            public void write(Json json, PcgRXSMXSRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public PcgRXSMXSRandom read(Json json, JsonValue jsonData, Class type) {
+                PcgRXSMXSRandom r = new PcgRXSMXSRandom(1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers DistinctRandom with the given Json object, so DistinctRandom can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -2992,7 +3015,7 @@ public final class JsonSupport {
      */
     public static void registerTaxon32Random(@NonNull Json json) {
         if(json.getSerializer(Taxon32Random.class) != null) return;
-        if(ADD_CLASS_TAGS) json.addClassTag("JS3R", Taxon32Random.class);
+        if(ADD_CLASS_TAGS) json.addClassTag("TxnR", Taxon32Random.class);
         json.setSerializer(Taxon32Random.class, new Json.Serializer<Taxon32Random>() {
             @Override
             public void write(Json json, Taxon32Random object, Class knownType) {
@@ -3015,7 +3038,7 @@ public final class JsonSupport {
      */
     public static void registerChoo32Random(@NonNull Json json) {
         if(json.getSerializer(Choo32Random.class) != null) return;
-        if(ADD_CLASS_TAGS) json.addClassTag("JS3R", Choo32Random.class);
+        if(ADD_CLASS_TAGS) json.addClassTag("ChoR", Choo32Random.class);
         json.setSerializer(Choo32Random.class, new Json.Serializer<Choo32Random>() {
             @Override
             public void write(Json json, Choo32Random object, Class knownType) {
@@ -3025,6 +3048,52 @@ public final class JsonSupport {
             @Override
             public Choo32Random read(Json json, JsonValue jsonData, Class type) {
                 Choo32Random r = new Choo32Random(1, 1, 1, 1);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers Chill32Random with the given Json object, so Chill32Random can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerChill32Random(@NonNull Json json) {
+        if(json.getSerializer(Chill32Random.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("Ch3R", Chill32Random.class);
+        json.setSerializer(Chill32Random.class, new Json.Serializer<Chill32Random>() {
+            @Override
+            public void write(Json json, Chill32Random object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Chill32Random read(Json json, JsonValue jsonData, Class type) {
+                Chill32Random r = new Chill32Random(1, 1, 1);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers Bear32Random with the given Json object, so Bear32Random can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerBear32Random(@NonNull Json json) {
+        if(json.getSerializer(Bear32Random.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("BeaR", Bear32Random.class);
+        json.setSerializer(Bear32Random.class, new Json.Serializer<Bear32Random>() {
+            @Override
+            public void write(Json json, Bear32Random object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Bear32Random read(Json json, JsonValue jsonData, Class type) {
+                Bear32Random r = new Bear32Random(1, 1, 1, 1);
                 r.stringDeserialize(jsonData.asString(), BASE);
                 return r;
             }
@@ -3291,36 +3360,39 @@ public final class JsonSupport {
     public static void registerEnhancedRandom(@NonNull Json json) {
         if(json.getSerializer(EnhancedRandom.class) != null) return;
         registerAtomicLong(json);
-        registerDistinctRandom(json);
-        registerLaserRandom(json);
-        registerFlowRandom(json);
-        registerTricycleRandom(json);
-        registerFourWheelRandom(json);
-        registerXoshiro256StarStarRandom(json);
-        registerXoshiro256MX3Random(json);
-        registerStrangerRandom(json);
-        registerTrimRandom(json);
-        registerWhiskerRandom(json);
-        registerMizuchiRandom(json);
-        registerRomuTrioRandom(json);
-        registerChopRandom(json);
-        registerJsf32Random(json);
-        registerRespite32Random(json);
-        registerXoshiro128PlusPlusRandom(json);
-        registerXoroshiro128StarStarRandom(json);
-        registerPasarRandom(json);
-        registerPouchRandom(json);
         registerAceRandom(json);
-        registerScruffRandom(json);
-        registerCrand64Random(json);
-        registerSfc64Random(json);
-        registerTaxon32Random(json);
+        registerBear32Random(json);
+        registerChill32Random(json);
         registerChoo32Random(json);
-        registerKnownSequenceRandom(json);
+        registerChopRandom(json);
+        registerCrand64Random(json);
+        registerDistinctRandom(json);
+        registerFlowRandom(json);
+        registerFourWheelRandom(json);
         registerGoldenQuasiRandom(json);
-        registerVanDerCorputQuasiRandom(json);
+        registerJsf32Random(json);
+        registerKnownSequenceRandom(json);
+        registerLaserRandom(json);
         registerLowChangeQuasiRandom(json);
+        registerMizuchiRandom(json);
+        registerPasarRandom(json);
+        registerPcgRXSMXSRandom(json);
+        registerPouchRandom(json);
+        registerRespite32Random(json);
+        registerRomuTrioRandom(json);
+        registerScruffRandom(json);
+        registerSfc64Random(json);
+        registerStrangerRandom(json);
+        registerTaxon32Random(json);
+        registerTricycleRandom(json);
+        registerTrimRandom(json);
         registerTupleQuasiRandom(json);
+        registerVanDerCorputQuasiRandom(json);
+        registerWhiskerRandom(json);
+        registerXoroshiro128StarStarRandom(json);
+        registerXoshiro128PlusPlusRandom(json);
+        registerXoshiro256MX3Random(json);
+        registerXoshiro256StarStarRandom(json);
         if(ADD_CLASS_TAGS) json.addClassTag("EnhR", EnhancedRandom.class);
         json.setSerializer(EnhancedRandom.class, new Json.Serializer<EnhancedRandom>() {
             @Override
