@@ -84,6 +84,7 @@ dependencies {
     api "com.github.tommyettinger:digital:$digitalVersion"
     api "com.github.tommyettinger:juniper:$juniperVersion"
     api "com.github.tommyettinger:jdkgdxds:$jdkgdxdsVersion"
+    //noinspection GDXOutdatedVersionGradleGroovy
     api "com.badlogicgames.gdx:gdx:$gdxVersion"
     testImplementation "junit:junit:4.13.2"
 }

@@ -61,20 +61,24 @@ but long packages add to file size and can also be strenuous to read repeatedly.
 ## How do I get it?
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api`, is: 
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.6.5.0"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.6.5.1"
 ```
 It's not unlikely that you might need `api` instead of `implementation`, especially if you are writing a library, or a
 module that needs to be used from another section.
 
 If you use GWT (libGDX's HTML target), then you also need this in your `html/build.gradle` file:
+
 ```groovy
 implementation "com.github.tommyettinger:funderby:0.1.2:sources"
-implementation "com.github.tommyettinger:digital:0.5.2:sources"
-implementation "com.github.tommyettinger:juniper:0.6.1:sources"
+implementation "com.github.tommyettinger:digital:0.5.3:sources"
+implementation "com.github.tommyettinger:juniper:0.6.2:sources"
 implementation "com.github.tommyettinger:jdkgdxds:1.6.5:sources"
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.6.5.0:sources"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.6.5.1:sources"
 ```
+
+Newer versions of funderby, digital, and possibly juniper and jdkgdxds may be usable as well.
 You also need the GWT `inherits` in your `GdxDefinition.gwt.xml` file:
+
 ```xml
     <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
     <inherits name="com.github.tommyettinger.funderby" />
