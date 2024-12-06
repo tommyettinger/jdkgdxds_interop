@@ -1408,6 +1408,23 @@ public class JsonTest {
     }
 
     @Test
+    public void testSoloRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerSoloRandom(json);
+        SoloRandom random = new SoloRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        SoloRandom random2 = json.fromJson(SoloRandom.class, data);
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateC()));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
     public void testFourWheelRandom() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
         //JsonSupport.setNumeralBase(Base.BASE16);

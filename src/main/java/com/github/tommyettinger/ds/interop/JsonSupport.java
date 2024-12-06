@@ -3405,6 +3405,7 @@ public final class JsonSupport {
         registerRomuTrioRandom(json);
         registerScruffRandom(json);
         registerSfc64Random(json);
+        registerSoloRandom(json);
         registerStrangerRandom(json);
         registerTaxon32Random(json);
         registerTricycleRandom(json);
