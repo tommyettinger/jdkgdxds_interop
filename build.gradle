@@ -17,8 +17,6 @@ def projectName = 'jdkgdxds_interop'
 version "$VERSION_NAME"
 group 'com.github.tommyettinger'
 
-//api "com.github.tommyettinger:jdkgdxds_interop:1.6.5.0"
-
 [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
 
 // Disable JDK 8's doclint

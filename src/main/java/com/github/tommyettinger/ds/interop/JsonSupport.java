@@ -2305,10 +2305,10 @@ public final class JsonSupport {
                 json.writeObjectStart(FilteredStringMap.class, knownType);
                 json.writeValue("filtering", object.getFilter().getName());
                 json.writeObjectStart("data");
-                Iterator<Map.Entry<CharSequence, Object>> es = new FilteredStringMap.Entries<CharSequence, Object>(object).iterator();
+                Iterator<Map.Entry<String, Object>> es = new FilteredStringMap.Entries<String, Object>(object).iterator();
                 while (es.hasNext()) {
-                    Map.Entry<CharSequence, ?> e = es.next();
-                    json.writeValue(e.getKey().toString(), e.getValue(), null);
+                    Map.Entry<String, ?> e = es.next();
+                    json.writeValue(e.getKey(), e.getValue(), null);
                 }
                 json.writeObjectEnd();
                 json.writeObjectEnd();
@@ -2344,10 +2344,10 @@ public final class JsonSupport {
                 json.writeObjectStart(FilteredStringOrderedMap.class, knownType);
                 json.writeValue("filtering", object.getFilter().getName());
                 json.writeObjectStart("data");
-                Iterator<Map.Entry<CharSequence, Object>> es = new FilteredStringOrderedMap.Entries<CharSequence, Object>(object).iterator();
+                Iterator<Map.Entry<String, Object>> es = new FilteredStringOrderedMap.Entries<String, Object>(object).iterator();
                 while (es.hasNext()) {
-                    Map.Entry<CharSequence, ?> e = es.next();
-                    json.writeValue(e.getKey().toString(), e.getValue(), null);
+                    Map.Entry<String, ?> e = es.next();
+                    json.writeValue(e.getKey(), e.getValue(), null);
                 }
                 json.writeObjectEnd();
                 json.writeObjectEnd();
@@ -2795,6 +2795,29 @@ public final class JsonSupport {
             @Override
             public RomuTrioRandom read(Json json, JsonValue jsonData, Class type) {
                 RomuTrioRandom r = new RomuTrioRandom(1L, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers SoloRandom with the given Json object, so SoloRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerSoloRandom(@NonNull Json json) {
+        if(json.getSerializer(SoloRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("SolR", SoloRandom.class);
+        json.setSerializer(SoloRandom.class, new Json.Serializer<SoloRandom>() {
+            @Override
+            public void write(Json json, SoloRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public SoloRandom read(Json json, JsonValue jsonData, Class type) {
+                SoloRandom r = new SoloRandom(1L, 1L, 1L);
                 r.stringDeserialize(jsonData.asString(), BASE);
                 return r;
             }
