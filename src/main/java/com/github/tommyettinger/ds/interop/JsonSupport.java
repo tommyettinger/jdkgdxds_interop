@@ -27,6 +27,7 @@ import com.github.tommyettinger.digital.*;
 import com.github.tommyettinger.digital.Interpolations.Interpolator;
 import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.support.util.*;
+import com.github.tommyettinger.function.ObjToObjFunction;
 import com.github.tommyettinger.random.*;
 import com.github.tommyettinger.random.distribution.*;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -135,6 +136,8 @@ public final class JsonSupport {
         registerNumberedSet(json);
 
         registerBinaryHeap(json);
+
+        registerJunction(json);
 
         // from digital.
         registerBase(json);
@@ -2406,6 +2409,11 @@ public final class JsonSupport {
      * Only adds class tags for {@link Junction}, {@link Junction.Any}, {@link Junction.All}, {@link Junction.One},
      * {@link Junction.Not}, adds {@link Junction.Leaf}, and only if {@link #ADD_CLASS_TAGS} is true. You may also want
      * to add a class tag for the item type of the Junction, such as {@code json.addClassTag("Str", String.class);} .
+     * <br>
+     * Note: If you have a Junction of String, then {@link Junction#toString()} can produce a valid serialized String
+     * that can be read back in with {@link Junction#parse(String)} . More complicated parsing is possible via
+     * {@link Junction#parse(ObjToObjFunction, String)}, but it has to operate on the results of toString() on items, at
+     * least for now.
      *
      * @param json a libGDX Json object that will have class tags added, if allowed
      */
