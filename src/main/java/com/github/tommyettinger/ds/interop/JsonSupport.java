@@ -2403,6 +2403,24 @@ public final class JsonSupport {
     }
 
     /**
+     * Only adds class tags for {@link Junction}, {@link Junction.Any}, {@link Junction.All}, {@link Junction.One},
+     * {@link Junction.Not}, adds {@link Junction.Leaf}, and only if {@link #ADD_CLASS_TAGS} is true. You may also want
+     * to add a class tag for the item type of the Junction, such as {@code json.addClassTag("Str", String.class);} .
+     *
+     * @param json a libGDX Json object that will have class tags added, if allowed
+     */
+    public static void registerJunction(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) {
+            json.addClassTag("Junc", Junction.class);
+            json.addClassTag("JAny", Junction.Any.class);
+            json.addClassTag("JAll", Junction.All.class);
+            json.addClassTag("JOne", Junction.One.class);
+            json.addClassTag("JNot", Junction.Not.class);
+            json.addClassTag("JLea", Junction.Leaf.class);
+        }
+    }
+
+    /**
      * Registers AtomicLong with the given Json object, so AtomicLong can be written to and read from JSON.
      * This primarily matters if you intend to read and/or write {@link java.util.Random} objects or their subclasses
      * without registering a custom serializer for them. Although the EnhancedRandom implementations in jdkgdxds have

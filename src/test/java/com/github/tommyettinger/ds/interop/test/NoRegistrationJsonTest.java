@@ -345,9 +345,7 @@ public class NoRegistrationJsonTest {
         System.out.println();
     }
 
-    //TODO: jdkgdxds 1.7.1 should have this fixed.
     @Test
-    @Ignore
     public void testIntSet() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         //JsonSupport.registerIntSet(json);
@@ -366,9 +364,7 @@ public class NoRegistrationJsonTest {
         System.out.println();
     }
 
-    //TODO: jdkgdxds 1.7.1 should have this fixed.
     @Test
-    @Ignore
     public void testIntOrderedSet() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         //JsonSupport.registerIntOrderedSet(json);
@@ -1267,6 +1263,27 @@ public class NoRegistrationJsonTest {
         }
         Assert.assertEquals(numbers, numbers2);
         System.out.println();
+    }
+
+    @Test
+    public void testJunction() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        json.addClassTag("Junc", Junction.class);
+        json.addClassTag("JAny", Junction.Any.class);
+        json.addClassTag("JAll", Junction.All.class);
+        json.addClassTag("JOne", Junction.One.class);
+        json.addClassTag("JNot", Junction.Not.class);
+        json.addClassTag("JLea", Junction.Leaf.class);
+        json.addClassTag("Str", String.class);
+        Junction<String> junction = Junction.parse("(foo|bar|baz)&QUUX");
+        System.out.println(junction);
+        String data = json.toJson(junction, Junction.class);
+        System.out.println(data);
+        Junction<?> junction2 = json.fromJson(Junction.class, data);
+        System.out.println(junction2);
+        Assert.assertEquals(junction, junction2);
+
+
     }
 
     @Test
