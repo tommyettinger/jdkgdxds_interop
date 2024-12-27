@@ -20,6 +20,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.*;
 import com.github.tommyettinger.ds.ObjectObjectMap;
+import com.github.tommyettinger.ds.interop.JsonSupport;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -648,6 +649,30 @@ public class GdxJsonTest {
         after = json.fromJson(ArrayList.class, data);
         System.out.println(after);
 //        Assert.assertEquals(deep, after); // fails because after contains JsonValue rather than HashMap items
+    }
+
+    @Test
+    public void testMixedDeserialization() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        json.setTypeName(null);
+
+        // optional; doesn't seem to be needed:
+//        JsonSupport.registerStringArray(json);
+
+        String data ="{\n" +
+                "areaTrianEqui: [\n" +
+                "    <0>^2*sqrt3/4\n" +
+                "    lado\n" +
+                "]\n" +
+                "areaHexa: [\n" +
+                "    6*areaTrianEqui<<0>>\n" +
+                "    lado\n" +
+                "]\n" +
+                "}";
+
+        System.out.println(data);
+        HashMap after = json.fromJson(HashMap.class, String[].class, data);
+        System.out.println(json.prettyPrint(after));
     }
 
 }
