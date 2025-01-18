@@ -1311,6 +1311,78 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers EnumIntMap with the given Json object, so EnumIntMap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerEnumIntMap(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("elM", EnumIntMap.class);
+        json.setSerializer(EnumIntMap.class, new Json.Serializer<EnumIntMap>() {
+            @Override
+            public void write(Json json, EnumIntMap object, Class knownType) {
+                json.writeObjectStart(EnumIntMap.class, knownType);
+                Iterator<EnumIntMap.Entry> es = object.entrySet().iterator().iterator();
+                json.writeArrayStart("parts");
+                while (es.hasNext()) {
+                    EnumIntMap.Entry e = es.next();
+                    json.writeValue(e.getKey(), Enum.class);
+                    json.writeValue(e.getValue(), int.class);
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public EnumIntMap read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
+                EnumIntMap data = new EnumIntMap();
+                for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
+                    data.put(json.readValue(Enum.class, value), (value = value.next).asInt());
+                }
+                return data;
+            }
+        });
+    }
+
+    /**
+     * Registers EnumIntOrderedMap with the given Json object, so EnumIntOrderedMap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerEnumIntOrderedMap(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("elOM", EnumIntOrderedMap.class);
+        json.setSerializer(EnumIntOrderedMap.class, new Json.Serializer<EnumIntOrderedMap>() {
+            @Override
+            public void write(Json json, EnumIntOrderedMap object, Class knownType) {
+                json.writeObjectStart(EnumIntOrderedMap.class, knownType);
+                Iterator<EnumIntMap.Entry> es = new EnumIntOrderedMap.OrderedMapEntries(object).iterator();
+                json.writeArrayStart("parts");
+                while (es.hasNext()) {
+                    EnumIntMap.Entry e = es.next();
+                    json.writeValue(e.getKey(), Enum.class);
+                    json.writeValue(e.getValue(), int.class);
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public EnumIntOrderedMap read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
+                EnumIntOrderedMap data = new EnumIntOrderedMap();
+                for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
+                    data.put(json.readValue(Enum.class, value), (value = value.next).asInt());
+                }
+                return data;
+            }
+        });
+    }
+
+    /**
      * Registers EnumLongMap with the given Json object, so EnumLongMap can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -1376,6 +1448,78 @@ public final class JsonSupport {
                 EnumLongOrderedMap data = new EnumLongOrderedMap();
                 for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
                     data.put(json.readValue(Enum.class, value), (value = value.next).asLong());
+                }
+                return data;
+            }
+        });
+    }
+
+    /**
+     * Registers EnumFloatMap with the given Json object, so EnumFloatMap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerEnumFloatMap(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("elM", EnumFloatMap.class);
+        json.setSerializer(EnumFloatMap.class, new Json.Serializer<EnumFloatMap>() {
+            @Override
+            public void write(Json json, EnumFloatMap object, Class knownType) {
+                json.writeObjectStart(EnumFloatMap.class, knownType);
+                Iterator<EnumFloatMap.Entry> es = object.entrySet().iterator().iterator();
+                json.writeArrayStart("parts");
+                while (es.hasNext()) {
+                    EnumFloatMap.Entry e = es.next();
+                    json.writeValue(e.getKey(), Enum.class);
+                    json.writeValue(e.getValue(), float.class);
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public EnumFloatMap read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
+                EnumFloatMap data = new EnumFloatMap();
+                for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
+                    data.put(json.readValue(Enum.class, value), (value = value.next).asFloat());
+                }
+                return data;
+            }
+        });
+    }
+
+    /**
+     * Registers EnumFloatOrderedMap with the given Json object, so EnumFloatOrderedMap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerEnumFloatOrderedMap(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("elOM", EnumFloatOrderedMap.class);
+        json.setSerializer(EnumFloatOrderedMap.class, new Json.Serializer<EnumFloatOrderedMap>() {
+            @Override
+            public void write(Json json, EnumFloatOrderedMap object, Class knownType) {
+                json.writeObjectStart(EnumFloatOrderedMap.class, knownType);
+                Iterator<EnumFloatMap.Entry> es = new EnumFloatOrderedMap.OrderedMapEntries(object).iterator();
+                json.writeArrayStart("parts");
+                while (es.hasNext()) {
+                    EnumFloatMap.Entry e = es.next();
+                    json.writeValue(e.getKey(), Enum.class);
+                    json.writeValue(e.getValue(), float.class);
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public EnumFloatOrderedMap read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
+                EnumFloatOrderedMap data = new EnumFloatOrderedMap();
+                for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
+                    data.put(json.readValue(Enum.class, value), (value = value.next).asFloat());
                 }
                 return data;
             }
