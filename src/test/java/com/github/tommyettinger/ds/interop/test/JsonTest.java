@@ -399,10 +399,10 @@ public class JsonTest {
         Assert.assertEquals(points, points2);
         System.out.println();
 
-        EnumMap empty = new EnumMap();
+        EnumMap<?> empty = new EnumMap<>();
         data = json.toJson(empty);
         System.out.println(data);
-        EnumMap empty2 = json.fromJson(EnumMap.class, data);
+        EnumMap<?> empty2 = json.fromJson(EnumMap.class, data);
         for(Object side : empty2) {
             System.out.print(side);
             System.out.print(", ");
@@ -437,10 +437,67 @@ public class JsonTest {
         Assert.assertEquals(points, points2);
         System.out.println();
 
-        EnumOrderedMap empty = new EnumOrderedMap();
+        EnumOrderedMap<?> empty = new EnumOrderedMap<>();
         data = json.toJson(empty);
         System.out.println(data);
-        EnumOrderedMap empty2 = json.fromJson(EnumOrderedMap.class, data);
+        EnumOrderedMap<?> empty2 = json.fromJson(EnumOrderedMap.class, data);
+        for(Object side : empty2) {
+            System.out.print(side);
+            System.out.print(", ");
+        }
+        Assert.assertEquals(empty, empty2);
+        System.out.println();
+    }
+    
+    @Test
+    public void testEnumLongMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerEnumLongMap(json);
+        EnumLongMap words = EnumLongMap.with(Banana.PEANUT, 8,  Banana.BUTTER, 3,
+                Banana.JELLY, 23, Banana.TIME, 420);
+        String data = json.toJson(words);
+        System.out.println(data);
+        EnumLongMap words2 = json.fromJson(EnumLongMap.class, data);
+        for(Object word : words2) {
+            System.out.print(word);
+            System.out.print(", ");
+        }
+        Assert.assertEquals(words, words2);
+        System.out.println();
+
+        EnumLongMap empty = new EnumLongMap();
+        data = json.toJson(empty);
+        System.out.println(data);
+        EnumLongMap empty2 = json.fromJson(EnumLongMap.class, data);
+        for(Object side : empty2) {
+            System.out.print(side);
+            System.out.print(", ");
+        }
+        Assert.assertEquals(empty, empty2);
+        System.out.println();
+    }
+    
+    @Test
+    public void testEnumLongOrderedMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerEnumLongOrderedMap(json);
+        EnumLongOrderedMap words = EnumLongOrderedMap.with(Banana.PEANUT, 8,  Banana.BUTTER, 3,
+                Banana.JELLY, 23, Banana.TIME, 420);
+        String data = json.toJson(words);
+        System.out.println(data);
+        EnumLongOrderedMap words2 = json.fromJson(EnumLongOrderedMap.class, data);
+        for(Object word : words2) {
+            System.out.print(word);
+            System.out.print(", ");
+        }
+        Assert.assertEquals(words, words2);
+        System.out.println(words);
+        System.out.println(words2);
+
+        EnumLongOrderedMap empty = new EnumLongOrderedMap();
+        data = json.toJson(empty);
+        System.out.println(data);
+        EnumLongOrderedMap empty2 = json.fromJson(EnumLongOrderedMap.class, data);
         for(Object side : empty2) {
             System.out.print(side);
             System.out.print(", ");

@@ -1285,7 +1285,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, EnumOrderedMap object, Class knownType) {
                 json.writeObjectStart(EnumOrderedMap.class, knownType);
-                Iterator<Map.Entry<Enum<?>, Object>> es = new EnumOrderedMap.Entries<Object>(object).iterator();
+                Iterator<Map.Entry<Enum<?>, Object>> es = object.entrySet().iterator();
                 json.writeArrayStart("parts");
                 while (es.hasNext()) {
                     Map.Entry<Enum<?>, ?> e = es.next();
@@ -1304,6 +1304,78 @@ public final class JsonSupport {
                 EnumOrderedMap<?> data = new EnumOrderedMap<>();
                 for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
                     data.put(json.readValue(Enum.class, value), json.readValue(null, value = value.next));
+                }
+                return data;
+            }
+        });
+    }
+
+    /**
+     * Registers EnumLongMap with the given Json object, so EnumLongMap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerEnumLongMap(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("elM", EnumLongMap.class);
+        json.setSerializer(EnumLongMap.class, new Json.Serializer<EnumLongMap>() {
+            @Override
+            public void write(Json json, EnumLongMap object, Class knownType) {
+                json.writeObjectStart(EnumLongMap.class, knownType);
+                Iterator<EnumLongMap.Entry> es = object.entrySet().iterator().iterator();
+                json.writeArrayStart("parts");
+                while (es.hasNext()) {
+                    EnumLongMap.Entry e = es.next();
+                    json.writeValue(e.getKey(), Enum.class);
+                    json.writeValue(e.getValue(), long.class);
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public EnumLongMap read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
+                EnumLongMap data = new EnumLongMap();
+                for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
+                    data.put(json.readValue(Enum.class, value), (value = value.next).asLong());
+                }
+                return data;
+            }
+        });
+    }
+
+    /**
+     * Registers EnumLongOrderedMap with the given Json object, so EnumLongOrderedMap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerEnumLongOrderedMap(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("elOM", EnumLongOrderedMap.class);
+        json.setSerializer(EnumLongOrderedMap.class, new Json.Serializer<EnumLongOrderedMap>() {
+            @Override
+            public void write(Json json, EnumLongOrderedMap object, Class knownType) {
+                json.writeObjectStart(EnumLongOrderedMap.class, knownType);
+                Iterator<EnumLongMap.Entry> es = new EnumLongOrderedMap.OrderedMapEntries(object).iterator();
+                json.writeArrayStart("parts");
+                while (es.hasNext()) {
+                    EnumLongMap.Entry e = es.next();
+                    json.writeValue(e.getKey(), Enum.class);
+                    json.writeValue(e.getValue(), long.class);
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public EnumLongOrderedMap read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
+                EnumLongOrderedMap data = new EnumLongOrderedMap();
+                for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
+                    data.put(json.readValue(Enum.class, value), (value = value.next).asLong());
                 }
                 return data;
             }
