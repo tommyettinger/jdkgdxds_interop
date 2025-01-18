@@ -4365,30 +4365,4 @@ public final class JsonSupport {
 
     }
 
-    /**
-     * Registers IntList with the given Json object, so IntList can be written to and read from JSON.
-     *
-     * @param json a libGDX Json object that will have a serializer registered
-     */
-    public static void registerStringArray(@NonNull Json json) {
-        if(ADD_CLASS_TAGS) json.addClassTag("oSa", String[].class); // object String type, array
-        json.setSerializer(String[].class, new Json.Serializer<String[]>() {
-            @Override
-            public void write(Json json, String[] object, Class knownType) {
-                json.writeArrayStart();
-                for(String s : object){
-                    json.writeValue((Object) s, String.class);
-                }
-                json.writeArrayEnd();
-            }
-
-            @Override
-            public String[] read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull()) return null;
-                return jsonData.asStringArray();
-            }
-        });
-
-    }
-
 }
