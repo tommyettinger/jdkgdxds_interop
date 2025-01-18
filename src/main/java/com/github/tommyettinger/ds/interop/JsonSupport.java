@@ -1034,6 +1034,37 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers EnumOrderedSet with the given Json object, so EnumOrderedSet can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerEnumOrderedSet(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("eOS", EnumOrderedSet.class);
+        json.setSerializer(EnumOrderedSet.class, new Json.Serializer<EnumOrderedSet>() {
+            @Override
+            public void write(Json json, EnumOrderedSet object, Class knownType) {
+                json.writeObjectStart(EnumOrderedSet.class, knownType);
+                json.writeArrayStart("items"); // This name is special.
+                for (Enum<?> o : object) {
+                    json.writeValue(o, Enum.class);
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public EnumOrderedSet read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                EnumOrderedSet data = new EnumOrderedSet();
+                for (JsonValue value = jsonData.child; value != null; value = value.next) {
+                    data.add(json.readValue(Enum.class, value));
+                }
+                return data;
+            }
+        });
+    }
+
+    /**
      * Registers ObjectSet with the given Json object, so ObjectSet can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -1243,6 +1274,41 @@ public final class JsonSupport {
         });
     }
 
+    /**
+     * Registers EnumOrderedMap with the given Json object, so EnumOrderedMap can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerEnumOrderedMap(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("eoOM", EnumOrderedMap.class);
+        json.setSerializer(EnumOrderedMap.class, new Json.Serializer<EnumOrderedMap>() {
+            @Override
+            public void write(Json json, EnumOrderedMap object, Class knownType) {
+                json.writeObjectStart(EnumOrderedMap.class, knownType);
+                Iterator<Map.Entry<Enum<?>, Object>> es = new EnumOrderedMap.Entries<Object>(object).iterator();
+                json.writeArrayStart("parts");
+                while (es.hasNext()) {
+                    Map.Entry<Enum<?>, ?> e = es.next();
+                    json.writeValue(e.getKey(), Enum.class);
+                    json.writeValue(e.getValue(), null);
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public EnumOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                JsonValue tag = jsonData.get("class");
+                if(tag != null) tag.remove();
+                EnumOrderedMap<?> data = new EnumOrderedMap<>();
+                for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
+                    data.put(json.readValue(Enum.class, value), json.readValue(null, value = value.next));
+                }
+                return data;
+            }
+        });
+    }
 
     /**
      * Registers ObjectObjectMap with the given Json object, so ObjectObjectMap can be written to and read from JSON.

@@ -296,7 +296,7 @@ public class JsonTest {
     }
 
     public enum Banana {
-        PEANUT, BUTTER, JELLY, TIME
+        BUTTER, JELLY, PEANUT, TIME
     }
 
     @Test
@@ -335,6 +335,43 @@ public class JsonTest {
         Assert.assertEquals(empty, empty2);
         System.out.println();
     }
+
+    @Test
+    public void testEnumOrderedSet() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerEnumOrderedSet(json);
+        EnumOrderedSet words = EnumOrderedSet.with(Banana.PEANUT, Banana.BUTTER, Banana.JELLY, Banana.TIME);
+        String data = json.toJson(words);
+        System.out.println(data);
+        EnumOrderedSet words2 = json.fromJson(EnumOrderedSet.class, data);
+        for(Object word : words2) {
+            System.out.print(word);
+            System.out.print(", ");
+        }
+        Assert.assertEquals(words, words2);
+        System.out.println();
+        EnumOrderedSet points = EnumOrderedSet.allOf(Plane.PlaneSide.values());
+        data = json.toJson(points);
+        System.out.println(data);
+        EnumOrderedSet points2 = json.fromJson(EnumOrderedSet.class, data);
+        for(Object side : points2) {
+            System.out.print(side);
+            System.out.print(", ");
+        }
+        Assert.assertEquals(points, points2);
+        System.out.println();
+
+        EnumOrderedSet empty = new EnumOrderedSet();
+        data = json.toJson(empty);
+        System.out.println(data);
+        EnumOrderedSet empty2 = json.fromJson(EnumOrderedSet.class, data);
+        for(Object side : empty2) {
+            System.out.print(side);
+            System.out.print(", ");
+        }
+        Assert.assertEquals(empty, empty2);
+        System.out.println();
+    }
     
     @Test
     public void testEnumMap() {
@@ -366,6 +403,44 @@ public class JsonTest {
         data = json.toJson(empty);
         System.out.println(data);
         EnumMap empty2 = json.fromJson(EnumMap.class, data);
+        for(Object side : empty2) {
+            System.out.print(side);
+            System.out.print(", ");
+        }
+        Assert.assertEquals(empty, empty2);
+        System.out.println();
+    }
+    
+    @Test
+    public void testEnumOrderedMap() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerEnumOrderedMap(json);
+        EnumOrderedMap<String> words = EnumOrderedMap.with(Banana.PEANUT, "Peanut",  Banana.BUTTER, "Butter",
+                Banana.JELLY, "Jelly", Banana.TIME, "Time");
+        String data = json.toJson(words);
+        System.out.println(data);
+        EnumOrderedMap<?> words2 = json.fromJson(EnumOrderedMap.class, data);
+        for(Object word : words2) {
+            System.out.print(word);
+            System.out.print(", ");
+        }
+        Assert.assertEquals(words, words2);
+        System.out.println();
+        EnumOrderedMap<Integer> points = EnumOrderedMap.with(Plane.PlaneSide.Front, 100, Plane.PlaneSide.OnPlane, 0, Plane.PlaneSide.Back, -1000);
+        data = json.toJson(points);
+        System.out.println(data);
+        EnumOrderedMap<?> points2 = json.fromJson(EnumOrderedMap.class, data);
+        for(Object side : points2) {
+            System.out.print(side);
+            System.out.print(", ");
+        }
+        Assert.assertEquals(points, points2);
+        System.out.println();
+
+        EnumOrderedMap empty = new EnumOrderedMap();
+        data = json.toJson(empty);
+        System.out.println(data);
+        EnumOrderedMap empty2 = json.fromJson(EnumOrderedMap.class, data);
         for(Object side : empty2) {
             System.out.print(side);
             System.out.print(", ");
