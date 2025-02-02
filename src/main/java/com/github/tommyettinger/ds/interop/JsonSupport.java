@@ -3340,6 +3340,29 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers OrbitalRandom with the given Json object, so OrbitalRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerOrbitalRandom(@NonNull Json json) {
+        if(json.getSerializer(OrbitalRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("OrbR", OrbitalRandom.class);
+        json.setSerializer(OrbitalRandom.class, new Json.Serializer<OrbitalRandom>() {
+            @Override
+            public void write(Json json, OrbitalRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public OrbitalRandom read(Json json, JsonValue jsonData, Class type) {
+                OrbitalRandom r = new OrbitalRandom(1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers Taxon32Random with the given Json object, so Taxon32Random can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
