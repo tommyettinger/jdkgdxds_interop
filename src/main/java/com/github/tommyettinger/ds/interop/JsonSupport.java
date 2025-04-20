@@ -2949,6 +2949,29 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers Xoshiro160RoadroxoRandom with the given Json object, so Xoshiro160RoadroxoRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerXoshiro160RoadroxoRandom(@NonNull Json json) {
+        if(json.getSerializer(Xoshiro160RoadroxoRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("XPPR", Xoshiro160RoadroxoRandom.class);
+        json.setSerializer(Xoshiro160RoadroxoRandom.class, new Json.Serializer<Xoshiro160RoadroxoRandom>() {
+            @Override
+            public void write(Json json, Xoshiro160RoadroxoRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Xoshiro160RoadroxoRandom read(Json json, JsonValue jsonData, Class type) {
+                Xoshiro160RoadroxoRandom r = new Xoshiro160RoadroxoRandom(1, 1, 1, 1, 1);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers Respite32Random with the given Json object, so Respite32Random can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
