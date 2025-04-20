@@ -2949,6 +2949,29 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers Chip32Random with the given Json object, so Chip32Random can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerChip32Random(@NonNull Json json) {
+        if(json.getSerializer(Chip32Random.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("XPPR", Chip32Random.class);
+        json.setSerializer(Chip32Random.class, new Json.Serializer<Chip32Random>() {
+            @Override
+            public void write(Json json, Chip32Random object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Chip32Random read(Json json, JsonValue jsonData, Class type) {
+                Chip32Random r = new Chip32Random(1, 1, 1, 1);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers Xoshiro160RoadroxoRandom with the given Json object, so Xoshiro160RoadroxoRandom can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
