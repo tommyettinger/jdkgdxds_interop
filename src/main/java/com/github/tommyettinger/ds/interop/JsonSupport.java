@@ -3763,6 +3763,7 @@ public final class JsonSupport {
         registerAceRandom(json);
         registerBear32Random(json);
         registerChill32Random(json);
+        registerChip32Random(json);
         registerChoo32Random(json);
         registerChopRandom(json);
         registerCrand64Random(json);
@@ -3775,6 +3776,7 @@ public final class JsonSupport {
         registerLaserRandom(json);
         registerLowChangeQuasiRandom(json);
         registerMizuchiRandom(json);
+        registerOrbitalRandom(json);
         registerPasarRandom(json);
         registerPcgRXSMXSRandom(json);
         registerPouchRandom(json);
@@ -3792,6 +3794,7 @@ public final class JsonSupport {
         registerWhiskerRandom(json);
         registerXoroshiro128StarStarRandom(json);
         registerXoshiro128PlusPlusRandom(json);
+        registerXoshiro160RoadroxoRandom(json);
         registerXoshiro256MX3Random(json);
         registerXoshiro256StarStarRandom(json);
         if(ADD_CLASS_TAGS) json.addClassTag("EnhR", EnhancedRandom.class);

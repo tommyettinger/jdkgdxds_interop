@@ -2005,6 +2005,30 @@ public class JsonTest {
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
         
+
+    @Test
+    public void testAllEnhancedRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+//        JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerInterpolatedRandom(json);
+        JsonSupport.registerDistributedRandom(json);
+        ArrayList<EnhancedRandom> randoms = Deserializer.copyRandoms();
+        for(EnhancedRandom r : randoms) {
+            EnhancedRandom random = r.copy();
+            random.setSeed(1337);
+            random.nextLong();
+            String data = json.toJson(random);
+            EnhancedRandom random2 = json.fromJson(EnhancedRandom.class, data);
+            Assert.assertEquals(random.nextLong(), random2.nextLong());
+            Assert.assertEquals(random.nextLong(), random2.nextLong());
+            Assert.assertEquals(random.nextLong(), random2.nextLong());
+            Assert.assertEquals(random.nextLong(), random2.nextLong());
+            Assert.assertEquals(random.nextLong(), random2.nextLong());
+            Assert.assertEquals(random.nextLong(), random2.nextLong());
+        }
+    }
+
     @Test
     public void testAtomicLong() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
