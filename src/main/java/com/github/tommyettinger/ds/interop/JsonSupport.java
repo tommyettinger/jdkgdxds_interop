@@ -2116,6 +2116,8 @@ public final class JsonSupport {
             @Override
             public void write(Json json, LongObjectOrderedMap object, Class knownType) {
                 json.writeObjectStart(LongObjectOrderedMap.class, knownType);
+                // will never overlap with a long key
+                json.writeValue("o", object.order() instanceof LongDeque);
                 for (LongObjectOrderedMap.Entry<Object> e : new LongObjectOrderedMap.OrderedMapEntries<Object>(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue(), null);
                 }
@@ -2127,7 +2129,9 @@ public final class JsonSupport {
                 if (jsonData == null || jsonData.isNull()) return null;
                 JsonValue tag = jsonData.get("class");
                 if(tag != null) tag.remove();
-                LongObjectOrderedMap<?> data = new LongObjectOrderedMap<>(jsonData.size);
+                boolean order = jsonData.getBoolean("o", false);
+                jsonData.remove("o");
+                LongObjectOrderedMap<?> data = new LongObjectOrderedMap<>(jsonData.size, order);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), json.readValue(null, value));
                 }
@@ -2178,6 +2182,8 @@ public final class JsonSupport {
             @Override
             public void write(Json json, LongIntOrderedMap object, Class knownType) {
                 json.writeObjectStart(LongIntOrderedMap.class, knownType);
+                // will never overlap with a long key
+                json.writeValue("o", object.order() instanceof LongDeque);
                 for (LongIntOrderedMap.Entry e : new LongIntOrderedMap.OrderedMapEntries(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue());
                 }
@@ -2189,7 +2195,9 @@ public final class JsonSupport {
                 if (jsonData == null || jsonData.isNull()) return null;
                 JsonValue tag = jsonData.get("class");
                 if(tag != null) tag.remove();
-                LongIntOrderedMap data = new LongIntOrderedMap(jsonData.size);
+                boolean order = jsonData.getBoolean("o", false);
+                jsonData.remove("o");
+                LongIntOrderedMap data = new LongIntOrderedMap(jsonData.size, order);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), value.asInt());
                 }
@@ -2240,6 +2248,8 @@ public final class JsonSupport {
             @Override
             public void write(Json json, LongLongOrderedMap object, Class knownType) {
                 json.writeObjectStart(LongLongOrderedMap.class, knownType);
+                // will never overlap with a long key
+                json.writeValue("o", object.order() instanceof LongDeque);
                 for (LongLongOrderedMap.Entry e : new LongLongOrderedMap.OrderedMapEntries(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue());
                 }
@@ -2251,7 +2261,9 @@ public final class JsonSupport {
                 if (jsonData == null || jsonData.isNull()) return null;
                 JsonValue tag = jsonData.get("class");
                 if(tag != null) tag.remove();
-                LongLongOrderedMap data = new LongLongOrderedMap(jsonData.size);
+                boolean order = jsonData.getBoolean("o", false);
+                jsonData.remove("o");
+                LongLongOrderedMap data = new LongLongOrderedMap(jsonData.size, order);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), value.asLong());
                 }
@@ -2302,6 +2314,8 @@ public final class JsonSupport {
             @Override
             public void write(Json json, LongFloatOrderedMap object, Class knownType) {
                 json.writeObjectStart(LongFloatOrderedMap.class, knownType);
+                // will never overlap with a long key
+                json.writeValue("o", object.order() instanceof LongDeque);
                 for (LongFloatOrderedMap.Entry e : new LongFloatOrderedMap.OrderedMapEntries(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue());
                 }
@@ -2313,7 +2327,9 @@ public final class JsonSupport {
                 if (jsonData == null || jsonData.isNull()) return null;
                 JsonValue tag = jsonData.get("class");
                 if(tag != null) tag.remove();
-                LongFloatOrderedMap data = new LongFloatOrderedMap(jsonData.size);
+                boolean order = jsonData.getBoolean("o", false);
+                jsonData.remove("o");
+                LongFloatOrderedMap data = new LongFloatOrderedMap(jsonData.size, order);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), value.asFloat());
                 }
