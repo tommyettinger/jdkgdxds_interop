@@ -1165,6 +1165,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, IntOrderedSet object, Class knownType) {
                 json.writeObjectStart(IntOrderedSet.class, knownType);
+                json.writeValue("o", object.order() instanceof IntDeque);
                 json.writeArrayStart("items");
                 IntIterator it = object.iterator();
                 while (it.hasNext()) {
@@ -1176,8 +1177,10 @@ public final class JsonSupport {
 
             @Override
             public IntOrderedSet read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return IntOrderedSet.with(jsonData.asIntArray());
+                if (jsonData == null || jsonData.isNull()) return null;
+                boolean order = jsonData.getBoolean("o", false);
+                if((jsonData = jsonData.get("items")) == null) return null;
+                return new IntOrderedSet(jsonData.asIntArray(), order);
             }
         });
     }
@@ -1221,6 +1224,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, LongOrderedSet object, Class knownType) {
                 json.writeObjectStart(LongOrderedSet.class, knownType);
+                json.writeValue("o", object.order() instanceof LongDeque);
                 json.writeArrayStart("items");
                 LongIterator it = object.iterator();
                 while (it.hasNext()) {
@@ -1232,8 +1236,10 @@ public final class JsonSupport {
 
             @Override
             public LongOrderedSet read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return LongOrderedSet.with(jsonData.asLongArray());
+                if (jsonData == null || jsonData.isNull()) return null;
+                boolean order = jsonData.getBoolean("o", false);
+                if((jsonData = jsonData.get("items")) == null) return null;
+                return new LongOrderedSet(jsonData.asLongArray(), order);
             }
         });
     }
