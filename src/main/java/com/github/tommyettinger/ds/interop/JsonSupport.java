@@ -1622,6 +1622,8 @@ public final class JsonSupport {
             public void write(Json json, ObjectObjectOrderedMap object, Class knownType) {
                 JsonWriter writer = json.getWriter();
                 json.writeObjectStart(ObjectObjectOrderedMap.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), null);
+                json.writeObjectStart("m");
                 Iterator<Map.Entry<Object, Object>> es = new ObjectObjectOrderedMap.OrderedMapEntries<Object, Object>(object).iterator();
                 while (es.hasNext()) {
                     Map.Entry<?, ?> e = es.next();
@@ -1630,6 +1632,7 @@ public final class JsonSupport {
                     json.writeValue(k, e.getValue(), null);
                 }
                 json.writeObjectEnd();
+                json.writeObjectEnd();
             }
 
             @Override
@@ -1637,7 +1640,11 @@ public final class JsonSupport {
                 if (jsonData == null || jsonData.isNull()) return null;
                 JsonValue tag = jsonData.get("class");
                 if(tag != null) tag.remove();
-                ObjectObjectOrderedMap<?, ?> data = new ObjectObjectOrderedMap<>(jsonData.size);
+                Object d = json.readValue(null, jsonData.get("d"));
+                jsonData.get("d").remove();
+                jsonData = jsonData.get("m");
+                ObjectObjectOrderedMap data = new ObjectObjectOrderedMap<>(jsonData.size);
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), json.readValue(null, value));
                 }
