@@ -756,6 +756,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, ObjectDeque object, Class knownType) {
                 json.writeObjectStart(ObjectDeque.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), null);
                 json.writeArrayStart("items");
                 for (Object o : object) {
                     json.writeValue(o, null);
@@ -768,6 +769,7 @@ public final class JsonSupport {
             public ObjectDeque<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 ObjectDeque<?> data = new ObjectDeque<>(jsonData.size);
+                data.setDefaultValue(json.readValue("d", null, jsonData));
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.add(json.readValue(null, value));
                 }
@@ -787,6 +789,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, LongDeque object, Class knownType) {
                 json.writeObjectStart(LongDeque.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), long.class);
                 json.writeArrayStart("items");
                 LongIterator it = object.iterator();
                 while (it.hasNext()) {
@@ -798,8 +801,12 @@ public final class JsonSupport {
 
             @Override
             public LongDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return LongDeque.with(jsonData.asLongArray());
+                if (jsonData == null || jsonData.isNull()) return null;
+                long d = json.readValue("d", long.class, 0L, jsonData);
+                if((jsonData = jsonData.get("items")) == null) return null;
+                LongDeque data = LongDeque.with(jsonData.asLongArray());
+                data.setDefaultValue(d);
+                return data;
             }
         });
     }
@@ -815,6 +822,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, IntDeque object, Class knownType) {
                 json.writeObjectStart(IntDeque.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), int.class);
                 json.writeArrayStart("items");
                 IntIterator it = object.iterator();
                 while (it.hasNext()) {
@@ -826,8 +834,12 @@ public final class JsonSupport {
 
             @Override
             public IntDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return IntDeque.with(jsonData.asIntArray());
+                if (jsonData == null || jsonData.isNull()) return null;
+                int d = json.readValue("d", int.class, 0, jsonData);
+                if((jsonData = jsonData.get("items")) == null) return null;
+                IntDeque data = IntDeque.with(jsonData.asIntArray());
+                data.setDefaultValue(d);
+                return data;
             }
         });
     }
@@ -843,6 +855,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, CharDeque object, Class knownType) {
                 json.writeObjectStart(CharDeque.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), char.class);
                 json.writeArrayStart("items");
                 CharIterator it = object.iterator();
                 while (it.hasNext()) {
@@ -854,8 +867,12 @@ public final class JsonSupport {
 
             @Override
             public CharDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return CharDeque.with(jsonData.asCharArray());
+                if (jsonData == null || jsonData.isNull()) return null;
+                char d = json.readValue("d", char.class, '\u0000', jsonData);
+                if((jsonData = jsonData.get("items")) == null) return null;
+                CharDeque data = CharDeque.with(jsonData.asCharArray());
+                data.setDefaultValue(d);
+                return data;
             }
         });
     }
@@ -871,6 +888,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, ShortDeque object, Class knownType) {
                 json.writeObjectStart(ShortDeque.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), short.class);
                 json.writeArrayStart("items");
                 ShortIterator it = object.iterator();
                 while (it.hasNext()) {
@@ -882,8 +900,12 @@ public final class JsonSupport {
 
             @Override
             public ShortDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return ShortDeque.with(jsonData.asShortArray());
+                if (jsonData == null || jsonData.isNull()) return null;
+                short d = json.readValue("d", short.class, (short)0, jsonData);
+                if((jsonData = jsonData.get("items")) == null) return null;
+                ShortDeque data = ShortDeque.with(jsonData.asShortArray());
+                data.setDefaultValue(d);
+                return data;
             }
         });
     }
@@ -899,6 +921,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, ByteDeque object, Class knownType) {
                 json.writeObjectStart(ByteDeque.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), byte.class);
                 json.writeArrayStart("items");
                 ByteIterator it = object.iterator();
                 while (it.hasNext()) {
@@ -910,8 +933,12 @@ public final class JsonSupport {
 
             @Override
             public ByteDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return ByteDeque.with(jsonData.asByteArray());
+                if (jsonData == null || jsonData.isNull()) return null;
+                byte d = json.readValue("d", byte.class, (byte)0, jsonData);
+                if((jsonData = jsonData.get("items")) == null) return null;
+                ByteDeque data = ByteDeque.with(jsonData.asByteArray());
+                data.setDefaultValue(d);
+                return data;
             }
         });
     }
@@ -927,6 +954,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, FloatDeque object, Class knownType) {
                 json.writeObjectStart(FloatDeque.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), float.class);
                 StringBuilder sb = new StringBuilder(object.size());
                 FloatIterator it = object.iterator();
                 while (it.hasNext()) {
@@ -939,8 +967,12 @@ public final class JsonSupport {
 
             @Override
             public FloatDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return FloatDeque.with(floatSplit(jsonData.asString()));
+                if (jsonData == null || jsonData.isNull()) return null;
+                float d = json.readValue("d", float.class, 0f, jsonData);
+                if((jsonData = jsonData.get("items")) == null) return null;
+                FloatDeque data = FloatDeque.with(floatSplit(jsonData.asString()));
+                data.setDefaultValue(d);
+                return data;
             }
         });
     }
@@ -956,6 +988,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, DoubleDeque object, Class knownType) {
                 json.writeObjectStart(DoubleDeque.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), double.class);
                 StringBuilder sb = new StringBuilder(object.size());
                 DoubleIterator it = object.iterator();
                 while (it.hasNext()) {
@@ -968,8 +1001,12 @@ public final class JsonSupport {
 
             @Override
             public DoubleDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return DoubleDeque.with(doubleSplit(jsonData.asString()));
+                if (jsonData == null || jsonData.isNull()) return null;
+                double d = json.readValue("d", double.class, 0.0, jsonData);
+                if((jsonData = jsonData.get("items")) == null) return null;
+                DoubleDeque data = DoubleDeque.with(doubleSplit(jsonData.asString()));
+                data.setDefaultValue(d);
+                return data;
             }
         });
     }
@@ -985,6 +1022,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, BooleanDeque object, Class knownType) {
                 json.writeObjectStart(BooleanDeque.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), boolean.class);
                 StringBuilder sb = new StringBuilder(object.size());
                 BooleanIterator it = object.iterator();
                 while (it.hasNext()) {
@@ -996,8 +1034,12 @@ public final class JsonSupport {
 
             @Override
             public BooleanDeque read(Json json, JsonValue jsonData, Class type) {
-                if (jsonData == null || jsonData.isNull() || (jsonData = jsonData.get("items")) == null) return null;
-                return BooleanDeque.with(TextTools.booleanSplitDense(jsonData.asString()));
+                if (jsonData == null || jsonData.isNull()) return null;
+                boolean d = json.readValue("d", boolean.class, false, jsonData);
+                if((jsonData = jsonData.get("items")) == null) return null;
+                BooleanDeque data = BooleanDeque.with(TextTools.booleanSplitDense(jsonData.asString()));
+                data.setDefaultValue(d);
+                return data;
             }
         });
     }
