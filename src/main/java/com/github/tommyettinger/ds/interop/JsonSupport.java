@@ -1641,7 +1641,7 @@ public final class JsonSupport {
                 JsonValue tag = jsonData.get("class");
                 if(tag != null) tag.remove();
                 Object d = json.readValue(null, jsonData.get("d"));
-                jsonData.get("d").remove();
+                jsonData.remove("d");
                 jsonData = jsonData.get("m");
                 ObjectObjectOrderedMap data = new ObjectObjectOrderedMap<>(jsonData.size);
                 data.setDefaultValue(d);
@@ -1703,6 +1703,8 @@ public final class JsonSupport {
             public void write(Json json, ObjectLongOrderedMap object, Class knownType) {
                 JsonWriter writer = json.getWriter();
                 json.writeObjectStart(ObjectLongOrderedMap.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), long.class);
+                json.writeObjectStart("m");
                 Iterator<ObjectLongMap.Entry<Object>> es = new ObjectLongOrderedMap.OrderedMapEntries<Object>(object).iterator();
                 while (es.hasNext()) {
                     ObjectLongMap.Entry<?> e = es.next();
@@ -1711,6 +1713,7 @@ public final class JsonSupport {
                     json.writeValue(k, BASE.signed(e.getValue()), String.class);
                 }
                 json.writeObjectEnd();
+                json.writeObjectEnd();
             }
 
             @Override
@@ -1718,7 +1721,11 @@ public final class JsonSupport {
                 if (jsonData == null || jsonData.isNull()) return null;
                 JsonValue tag = jsonData.get("class");
                 if(tag != null) tag.remove();
+                long d = jsonData.getLong("d", 0L);
+                jsonData.remove("d");
+                jsonData = jsonData.get("m");
                 ObjectLongOrderedMap<?> data = new ObjectLongOrderedMap<>(jsonData.size);
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), BASE.readLong(value.asString()));
                 }
