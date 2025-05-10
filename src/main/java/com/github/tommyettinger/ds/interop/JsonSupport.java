@@ -1908,9 +1908,9 @@ public final class JsonSupport {
             public IntObjectMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
+                IntObjectMap data = new IntObjectMap<>(jsonData.size);
                 Object d = json.readValue("d", null, jsonData);
                 jsonData.remove("d");
-                IntObjectMap data = new IntObjectMap<>(jsonData.size);
                 data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), json.readValue(null, value));
@@ -1946,9 +1946,9 @@ public final class JsonSupport {
                 jsonData.remove("class");
                 boolean order = jsonData.getBoolean("o", false);
                 jsonData.remove("o");
+                IntObjectOrderedMap data = new IntObjectOrderedMap<>(jsonData.size, order);
                 Object d = json.readValue("d", null, jsonData);
                 jsonData.remove("d");
-                IntObjectOrderedMap data = new IntObjectOrderedMap<>(jsonData.size, order);
                 data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), json.readValue(null, value));
@@ -2041,6 +2041,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, IntLongMap object, Class knownType) {
                 json.writeObjectStart(IntLongMap.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), long.class);
                 for (IntLongMap.Entry e : new IntLongMap.Entries(object)) {
                     json.writeValue(Integer.toString(e.key), e.getValue());
                 }
@@ -2052,6 +2053,9 @@ public final class JsonSupport {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
                 IntLongMap data = new IntLongMap(jsonData.size);
+                long d = jsonData.getLong("d", 0);
+                jsonData.remove("d");
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), value.asLong());
                 }
@@ -2073,6 +2077,7 @@ public final class JsonSupport {
                 json.writeObjectStart(IntLongOrderedMap.class, knownType);
                 // will never overlap with an int key
                 json.writeValue("o", object.order() instanceof IntDeque, boolean.class);
+                json.writeValue("d", object.getDefaultValue(), long.class);
                 for (IntLongOrderedMap.Entry e : new IntLongOrderedMap.OrderedMapEntries(object)) {
                     json.writeValue(Integer.toString(e.key), e.getValue());
                 }
@@ -2086,6 +2091,9 @@ public final class JsonSupport {
                 boolean order = jsonData.getBoolean("o", false);
                 jsonData.remove("o");
                 IntLongOrderedMap data = new IntLongOrderedMap(jsonData.size, order);
+                long d = jsonData.getLong("d", 0);
+                jsonData.remove("d");
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), value.asLong());
                 }
@@ -2105,6 +2113,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, IntFloatMap object, Class knownType) {
                 json.writeObjectStart(IntFloatMap.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), long.class);
                 for (IntFloatMap.Entry e : new IntFloatMap.Entries(object)) {
                     json.writeValue(Integer.toString(e.key), e.getValue());
                 }
@@ -2116,6 +2125,9 @@ public final class JsonSupport {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
                 IntFloatMap data = new IntFloatMap(jsonData.size);
+                float d = jsonData.getFloat("d", 0);
+                jsonData.remove("d");
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), value.asFloat());
                 }
@@ -2137,6 +2149,7 @@ public final class JsonSupport {
                 json.writeObjectStart(IntFloatOrderedMap.class, knownType);
                 // will never overlap with an int key
                 json.writeValue("o", object.order() instanceof IntDeque, boolean.class);
+                json.writeValue("d", object.getDefaultValue(), long.class);
                 for (IntFloatOrderedMap.Entry e : new IntFloatOrderedMap.OrderedMapEntries(object)) {
                     json.writeValue(Integer.toString(e.key), e.getValue());
                 }
@@ -2150,6 +2163,9 @@ public final class JsonSupport {
                 boolean order = jsonData.getBoolean("o", false);
                 jsonData.remove("o");
                 IntFloatOrderedMap data = new IntFloatOrderedMap(jsonData.size, order);
+                float d = jsonData.getFloat("d", 0);
+                jsonData.remove("d");
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), value.asFloat());
                 }
