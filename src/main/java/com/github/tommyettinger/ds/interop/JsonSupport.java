@@ -1586,6 +1586,8 @@ public final class JsonSupport {
             public void write(Json json, ObjectObjectMap object, Class knownType) {
                 JsonWriter writer = json.getWriter();
                 json.writeObjectStart(ObjectObjectMap.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), null);
+                json.writeObjectStart("m");
                 Iterator<Map.Entry<Object, Object>> es = new ObjectObjectMap.Entries<Object, Object>(object).iterator();
                 while (es.hasNext()) {
                     Map.Entry<?, ?> e = es.next();
@@ -1594,14 +1596,16 @@ public final class JsonSupport {
                     json.writeValue(k, e.getValue(), null);
                 }
                 json.writeObjectEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public ObjectObjectMap<?, ?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
-                ObjectObjectMap<?, ?> data = new ObjectObjectMap<>(jsonData.size);
+                Object d = json.readValue(null, jsonData.get("d"));
+                jsonData = jsonData.get("m");
+                ObjectObjectMap data = new ObjectObjectMap<>(jsonData.size);
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), json.readValue(null, value));
                 }
@@ -1638,10 +1642,7 @@ public final class JsonSupport {
             @Override
             public ObjectObjectOrderedMap<?, ?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
                 Object d = json.readValue(null, jsonData.get("d"));
-                jsonData.remove("d");
                 jsonData = jsonData.get("m");
                 ObjectObjectOrderedMap data = new ObjectObjectOrderedMap<>(jsonData.size);
                 data.setDefaultValue(d);
@@ -1666,6 +1667,8 @@ public final class JsonSupport {
             public void write(Json json, ObjectLongMap object, Class knownType) {
                 JsonWriter writer = json.getWriter();
                 json.writeObjectStart(ObjectLongMap.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), long.class);
+                json.writeObjectStart("m");
                 Iterator<ObjectLongMap.Entry<Object>> es = new ObjectLongMap.Entries<Object>(object).iterator();
                 while (es.hasNext()) {
                     ObjectLongMap.Entry<?> e = es.next();
@@ -1674,14 +1677,16 @@ public final class JsonSupport {
                     json.writeValue(k, BASE.signed(e.getValue()), String.class);
                 }
                 json.writeObjectEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public ObjectLongMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                long d = jsonData.getLong("d", 0L);
+                jsonData = jsonData.get("m");
                 ObjectLongMap<?> data = new ObjectLongMap<>(jsonData.size);
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), BASE.readLong(value.asString()));
                 }
@@ -1719,10 +1724,7 @@ public final class JsonSupport {
             @Override
             public ObjectLongOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
                 long d = jsonData.getLong("d", 0L);
-                jsonData.remove("d");
                 jsonData = jsonData.get("m");
                 ObjectLongOrderedMap<?> data = new ObjectLongOrderedMap<>(jsonData.size);
                 data.setDefaultValue(d);
