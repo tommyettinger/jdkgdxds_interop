@@ -1682,7 +1682,7 @@ public final class JsonSupport {
             @Override
             public ObjectLongMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                long d = jsonData.getLong("d", 0L);
+                long d = jsonData.getLong("d", 0);
                 jsonData = jsonData.get("m");
                 ObjectLongMap<?> data = new ObjectLongMap<>(jsonData.size);
                 data.setDefaultValue(d);
@@ -1722,7 +1722,7 @@ public final class JsonSupport {
             @Override
             public ObjectLongOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                long d = jsonData.getLong("d", 0L);
+                long d = jsonData.getLong("d", 0);
                 jsonData = jsonData.get("m");
                 ObjectLongOrderedMap<?> data = new ObjectLongOrderedMap<>(jsonData.size);
                 data.setDefaultValue(d);
@@ -1753,7 +1753,7 @@ public final class JsonSupport {
                     ObjectIntMap.Entry<?> e = es.next();
                     String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey(), (Class) null);
                     json.setWriter(writer);
-                    json.writeValue(k, BASE.signed(e.getValue()), String.class);
+                    json.writeValue(k, e.getValue(), int.class);
                 }
                 json.writeObjectEnd();
                 json.writeObjectEnd();
@@ -1767,7 +1767,7 @@ public final class JsonSupport {
                 ObjectIntMap<?> data = new ObjectIntMap<>(jsonData.size);
                 data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.put(json.fromJson(null, value.name), BASE.readInt(value.asString()));
+                    data.put(json.fromJson(null, value.name), value.asInt());
                 }
                 return data;
             }
@@ -1793,7 +1793,7 @@ public final class JsonSupport {
                     ObjectIntMap.Entry<?> e = es.next();
                     String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey(), (Class) null);
                     json.setWriter(writer);
-                    json.writeValue(k, BASE.signed(e.getValue()), String.class);
+                    json.writeValue(k, e.getValue(), int.class);
                 }
                 json.writeObjectEnd();
                 json.writeObjectEnd();
@@ -1807,7 +1807,7 @@ public final class JsonSupport {
                 ObjectIntOrderedMap<?> data = new ObjectIntOrderedMap<>(jsonData.size);
                 data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.put(json.fromJson(null, value.name), BASE.readInt(value.asString()));
+                    data.put(json.fromJson(null, value.name), value.asInt());
                 }
                 return data;
             }
@@ -1826,29 +1826,32 @@ public final class JsonSupport {
             public void write(Json json, ObjectFloatMap object, Class knownType) {
                 JsonWriter writer = json.getWriter();
                 json.writeObjectStart(ObjectFloatMap.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), float.class);
+                json.writeObjectStart("m");
                 Iterator<ObjectFloatMap.Entry<Object>> es = new ObjectFloatMap.Entries<Object>(object).iterator();
                 while (es.hasNext()) {
                     ObjectFloatMap.Entry<?> e = es.next();
                     String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey(), (Class) null);
                     json.setWriter(writer);
-                    json.writeValue(k, e.getValue());
+                    json.writeValue(k, e.getValue(), float.class);
                 }
+                json.writeObjectEnd();
                 json.writeObjectEnd();
             }
 
             @Override
             public ObjectFloatMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                float d = jsonData.getFloat("d", 0);
+                jsonData = jsonData.get("m");
                 ObjectFloatMap<?> data = new ObjectFloatMap<>(jsonData.size);
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), value.asFloat());
                 }
                 return data;
             }
         });
-
     }
 
     /**
@@ -1863,22 +1866,26 @@ public final class JsonSupport {
             public void write(Json json, ObjectFloatOrderedMap object, Class knownType) {
                 JsonWriter writer = json.getWriter();
                 json.writeObjectStart(ObjectFloatOrderedMap.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), float.class);
+                json.writeObjectStart("m");
                 Iterator<ObjectFloatMap.Entry<Object>> es = new ObjectFloatOrderedMap.OrderedMapEntries<Object>(object).iterator();
                 while (es.hasNext()) {
                     ObjectFloatMap.Entry<?> e = es.next();
                     String k = e.getKey() instanceof CharSequence ? e.getKey().toString() : json.toJson(e.getKey(), (Class) null);
                     json.setWriter(writer);
-                    json.writeValue(k, e.getValue());
+                    json.writeValue(k, e.getValue(), float.class);
                 }
+                json.writeObjectEnd();
                 json.writeObjectEnd();
             }
 
             @Override
             public ObjectFloatOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                float d = jsonData.getFloat("d", 0);
+                jsonData = jsonData.get("m");
                 ObjectFloatOrderedMap<?> data = new ObjectFloatOrderedMap<>(jsonData.size);
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), value.asFloat());
                 }
