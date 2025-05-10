@@ -1897,8 +1897,9 @@ public final class JsonSupport {
             @Override
             public void write(Json json, IntObjectMap object, Class knownType) {
                 json.writeObjectStart(IntObjectMap.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), null);
                 for (IntObjectMap.Entry<Object> e : new IntObjectMap.Entries<Object>(object)) {
-                    json.writeValue(BASE.signed(e.key), e.getValue(), null);
+                    json.writeValue(Integer.toString(e.key), e.getValue(), null);
                 }
                 json.writeObjectEnd();
             }
@@ -1906,10 +1907,13 @@ public final class JsonSupport {
             @Override
             public IntObjectMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                IntObjectMap<?> data = new IntObjectMap<>(jsonData.size);
                 jsonData.remove("class");
+                Object d = json.readValue("d", null, jsonData);
+                jsonData.remove("d");
+                IntObjectMap data = new IntObjectMap<>(jsonData.size);
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.put(BASE.readInt(value.name), json.readValue(null, value));
+                    data.put(Integer.parseInt(value.name), json.readValue(null, value));
                 }
                 return data;
             }
@@ -1929,8 +1933,9 @@ public final class JsonSupport {
                 json.writeObjectStart(IntObjectOrderedMap.class, knownType);
                 // will never overlap with an int key
                 json.writeValue("o", object.order() instanceof IntDeque, boolean.class);
+                json.writeValue("d", object.getDefaultValue(), null);
                 for (IntObjectOrderedMap.Entry<Object> e : new IntObjectOrderedMap.OrderedMapEntries<Object>(object)) {
-                    json.writeValue(BASE.signed(e.key), e.getValue(), null);
+                    json.writeValue(Integer.toString(e.key), e.getValue(), null);
                 }
                 json.writeObjectEnd();
             }
@@ -1941,9 +1946,12 @@ public final class JsonSupport {
                 jsonData.remove("class");
                 boolean order = jsonData.getBoolean("o", false);
                 jsonData.remove("o");
-                IntObjectOrderedMap<?> data = new IntObjectOrderedMap<>(jsonData.size, order);
+                Object d = json.readValue("d", null, jsonData);
+                jsonData.remove("d");
+                IntObjectOrderedMap data = new IntObjectOrderedMap<>(jsonData.size, order);
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
-                    data.put(BASE.readInt(value.name), json.readValue(null, value));
+                    data.put(Integer.parseInt(value.name), json.readValue(null, value));
                 }
                 return data;
             }
