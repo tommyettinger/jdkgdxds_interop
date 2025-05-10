@@ -1311,8 +1311,7 @@ public final class JsonSupport {
             @Override
             public EnumMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 EnumMap<?> data = new EnumMap<>();
                 for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
                     data.put(json.readValue(Enum.class, value), json.readValue(null, value = value.next));
@@ -1347,8 +1346,7 @@ public final class JsonSupport {
             @Override
             public EnumOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 EnumOrderedMap<?> data = new EnumOrderedMap<>();
                 for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
                     data.put(json.readValue(Enum.class, value), json.readValue(null, value = value.next));
@@ -1383,8 +1381,7 @@ public final class JsonSupport {
             @Override
             public EnumIntMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 EnumIntMap data = new EnumIntMap();
                 for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
                     data.put(json.readValue(Enum.class, value), (value = value.next).asInt());
@@ -1419,8 +1416,7 @@ public final class JsonSupport {
             @Override
             public EnumIntOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 EnumIntOrderedMap data = new EnumIntOrderedMap();
                 for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
                     data.put(json.readValue(Enum.class, value), (value = value.next).asInt());
@@ -1455,8 +1451,7 @@ public final class JsonSupport {
             @Override
             public EnumLongMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 EnumLongMap data = new EnumLongMap();
                 for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
                     data.put(json.readValue(Enum.class, value), (value = value.next).asLong());
@@ -1491,8 +1486,7 @@ public final class JsonSupport {
             @Override
             public EnumLongOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 EnumLongOrderedMap data = new EnumLongOrderedMap();
                 for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
                     data.put(json.readValue(Enum.class, value), (value = value.next).asLong());
@@ -1527,8 +1521,7 @@ public final class JsonSupport {
             @Override
             public EnumFloatMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 EnumFloatMap data = new EnumFloatMap();
                 for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
                     data.put(json.readValue(Enum.class, value), (value = value.next).asFloat());
@@ -1563,8 +1556,7 @@ public final class JsonSupport {
             @Override
             public EnumFloatOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 EnumFloatOrderedMap data = new EnumFloatOrderedMap();
                 for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
                     data.put(json.readValue(Enum.class, value), (value = value.next).asFloat());
@@ -1914,9 +1906,8 @@ public final class JsonSupport {
             @Override
             public IntObjectMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
                 IntObjectMap<?> data = new IntObjectMap<>(jsonData.size);
+                jsonData.remove("class");
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(BASE.readInt(value.name), json.readValue(null, value));
                 }
@@ -1947,8 +1938,7 @@ public final class JsonSupport {
             @Override
             public IntObjectOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 boolean order = jsonData.getBoolean("o", false);
                 jsonData.remove("o");
                 IntObjectOrderedMap<?> data = new IntObjectOrderedMap<>(jsonData.size, order);
@@ -1980,8 +1970,7 @@ public final class JsonSupport {
             @Override
             public IntIntMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 IntIntMap data = new IntIntMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(BASE.readInt(value.name), value.asInt());
@@ -2013,8 +2002,7 @@ public final class JsonSupport {
             @Override
             public IntIntOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 boolean order = jsonData.getBoolean("o", false);
                 jsonData.remove("o");
                 IntIntOrderedMap data = new IntIntOrderedMap(jsonData.size, order);
@@ -2046,8 +2034,7 @@ public final class JsonSupport {
             @Override
             public IntLongMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 IntLongMap data = new IntLongMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(BASE.readInt(value.name), value.asLong());
@@ -2079,8 +2066,7 @@ public final class JsonSupport {
             @Override
             public IntLongOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 boolean order = jsonData.getBoolean("o", false);
                 jsonData.remove("o");
                 IntLongOrderedMap data = new IntLongOrderedMap(jsonData.size, order);
@@ -2112,8 +2098,7 @@ public final class JsonSupport {
             @Override
             public IntFloatMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 IntFloatMap data = new IntFloatMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(BASE.readInt(value.name), value.asFloat());
@@ -2145,8 +2130,7 @@ public final class JsonSupport {
             @Override
             public IntFloatOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 boolean order = jsonData.getBoolean("o", false);
                 jsonData.remove("o");
                 IntFloatOrderedMap data = new IntFloatOrderedMap(jsonData.size, order);
@@ -2178,8 +2162,7 @@ public final class JsonSupport {
             @Override
             public LongObjectMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 LongObjectMap<?> data = new LongObjectMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), json.readValue(null, value));
@@ -2211,8 +2194,7 @@ public final class JsonSupport {
             @Override
             public LongObjectOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 boolean order = jsonData.getBoolean("o", false);
                 jsonData.remove("o");
                 LongObjectOrderedMap<?> data = new LongObjectOrderedMap<>(jsonData.size, order);
@@ -2244,8 +2226,7 @@ public final class JsonSupport {
             @Override
             public LongIntMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 LongIntMap data = new LongIntMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), value.asInt());
@@ -2277,8 +2258,7 @@ public final class JsonSupport {
             @Override
             public LongIntOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 boolean order = jsonData.getBoolean("o", false);
                 jsonData.remove("o");
                 LongIntOrderedMap data = new LongIntOrderedMap(jsonData.size, order);
@@ -2310,8 +2290,7 @@ public final class JsonSupport {
             @Override
             public LongLongMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 LongLongMap data = new LongLongMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), value.asLong());
@@ -2343,8 +2322,7 @@ public final class JsonSupport {
             @Override
             public LongLongOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 boolean order = jsonData.getBoolean("o", false);
                 jsonData.remove("o");
                 LongLongOrderedMap data = new LongLongOrderedMap(jsonData.size, order);
@@ -2376,8 +2354,7 @@ public final class JsonSupport {
             @Override
             public LongFloatMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 LongFloatMap data = new LongFloatMap(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), value.asFloat());
@@ -2409,8 +2386,7 @@ public final class JsonSupport {
             @Override
             public LongFloatOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 boolean order = jsonData.getBoolean("o", false);
                 jsonData.remove("o");
                 LongFloatOrderedMap data = new LongFloatOrderedMap(jsonData.size, order);
@@ -2572,8 +2548,7 @@ public final class JsonSupport {
             @Override
             public CaseInsensitiveMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 CaseInsensitiveMap<?> data = new CaseInsensitiveMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(value.name, json.readValue(null, value));
@@ -2605,8 +2580,7 @@ public final class JsonSupport {
             @Override
             public CaseInsensitiveOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 CaseInsensitiveOrderedMap<?> data = new CaseInsensitiveOrderedMap<>(jsonData.size);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(value.name, json.readValue(null, value));
@@ -2708,8 +2682,7 @@ public final class JsonSupport {
             @Override
             public FilteredStringMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 CharFilter filter = CharFilter.get(jsonData.getString("filtering"));
                 jsonData = jsonData.get("data");
                 FilteredStringMap<?> data = new FilteredStringMap<>(filter, jsonData.size, Utilities.getDefaultLoadFactor());
@@ -2747,8 +2720,7 @@ public final class JsonSupport {
             @Override
             public FilteredStringOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                jsonData.remove("class");
                 CharFilter filter = CharFilter.get(jsonData.getString("filtering"));
                 jsonData = jsonData.get("data");
                 FilteredStringOrderedMap<?> data = new FilteredStringOrderedMap<>(filter, jsonData.size, Utilities.getDefaultLoadFactor());
