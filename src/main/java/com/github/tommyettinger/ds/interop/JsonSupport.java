@@ -1652,7 +1652,6 @@ public final class JsonSupport {
                 return data;
             }
         });
-
     }
 
     /**
@@ -1693,7 +1692,6 @@ public final class JsonSupport {
                 return data;
             }
         });
-
     }
 
     /**
@@ -1734,7 +1732,6 @@ public final class JsonSupport {
                 return data;
             }
         });
-
     }
 
     /**
@@ -1749,6 +1746,8 @@ public final class JsonSupport {
             public void write(Json json, ObjectIntMap object, Class knownType) {
                 JsonWriter writer = json.getWriter();
                 json.writeObjectStart(ObjectIntMap.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), int.class);
+                json.writeObjectStart("m");
                 Iterator<ObjectIntMap.Entry<Object>> es = new ObjectIntMap.Entries<Object>(object).iterator();
                 while (es.hasNext()) {
                     ObjectIntMap.Entry<?> e = es.next();
@@ -1757,21 +1756,22 @@ public final class JsonSupport {
                     json.writeValue(k, BASE.signed(e.getValue()), String.class);
                 }
                 json.writeObjectEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public ObjectIntMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                int d = jsonData.getInt("d", 0);
+                jsonData = jsonData.get("m");
                 ObjectIntMap<?> data = new ObjectIntMap<>(jsonData.size);
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), BASE.readInt(value.asString()));
                 }
                 return data;
             }
         });
-
     }
 
     /**
@@ -1786,6 +1786,8 @@ public final class JsonSupport {
             public void write(Json json, ObjectIntOrderedMap object, Class knownType) {
                 JsonWriter writer = json.getWriter();
                 json.writeObjectStart(ObjectIntOrderedMap.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), int.class);
+                json.writeObjectStart("m");
                 Iterator<ObjectIntMap.Entry<Object>> es = new ObjectIntOrderedMap.OrderedMapEntries<Object>(object).iterator();
                 while (es.hasNext()) {
                     ObjectIntMap.Entry<?> e = es.next();
@@ -1794,21 +1796,22 @@ public final class JsonSupport {
                     json.writeValue(k, BASE.signed(e.getValue()), String.class);
                 }
                 json.writeObjectEnd();
+                json.writeObjectEnd();
             }
 
             @Override
             public ObjectIntOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                JsonValue tag = jsonData.get("class");
-                if(tag != null) tag.remove();
+                int d = jsonData.getInt("d", 0);
+                jsonData = jsonData.get("m");
                 ObjectIntOrderedMap<?> data = new ObjectIntOrderedMap<>(jsonData.size);
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), BASE.readInt(value.asString()));
                 }
                 return data;
             }
         });
-
     }
 
     /**
