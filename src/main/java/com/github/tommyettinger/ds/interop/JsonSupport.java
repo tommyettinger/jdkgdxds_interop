@@ -2329,6 +2329,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, LongLongMap object, Class knownType) {
                 json.writeObjectStart(LongLongMap.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), long.class);
                 for (LongLongMap.Entry e : new LongLongMap.Entries(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue());
                 }
@@ -2339,7 +2340,10 @@ public final class JsonSupport {
             public LongLongMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
-                LongLongMap data = new LongLongMap(jsonData.size);
+                LongLongMap data = new LongLongMap(jsonData.size - 1);
+                long d = jsonData.getLong("d", 0);
+                jsonData.remove("d");
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), value.asLong());
                 }
@@ -2359,8 +2363,9 @@ public final class JsonSupport {
             @Override
             public void write(Json json, LongLongOrderedMap object, Class knownType) {
                 json.writeObjectStart(LongLongOrderedMap.class, knownType);
-                // will never overlap with a long key
+                // will never overlap with a key
                 json.writeValue("o", object.order() instanceof LongDeque, boolean.class);
+                json.writeValue("d", object.getDefaultValue(), long.class);
                 for (LongLongOrderedMap.Entry e : new LongLongOrderedMap.OrderedMapEntries(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue());
                 }
@@ -2373,7 +2378,10 @@ public final class JsonSupport {
                 jsonData.remove("class");
                 boolean order = jsonData.getBoolean("o", false);
                 jsonData.remove("o");
-                LongLongOrderedMap data = new LongLongOrderedMap(jsonData.size, order);
+                LongLongOrderedMap data = new LongLongOrderedMap(jsonData.size - 1, order);
+                long d = jsonData.getLong("d", 0);
+                jsonData.remove("d");
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), value.asLong());
                 }
