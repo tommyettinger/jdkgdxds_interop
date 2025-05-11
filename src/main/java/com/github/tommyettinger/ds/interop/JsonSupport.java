@@ -2185,7 +2185,8 @@ public final class JsonSupport {
             @Override
             public void write(Json json, LongObjectMap object, Class knownType) {
                 json.writeObjectStart(LongObjectMap.class, knownType);
-                for (LongObjectMap.Entry<?> e : new LongObjectMap.Entries<Object>(object)) {
+                json.writeValue("d", object.getDefaultValue(), null);
+                for (LongObjectMap.Entry<Object> e : new LongObjectMap.Entries<Object>(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue(), null);
                 }
                 json.writeObjectEnd();
@@ -2195,7 +2196,10 @@ public final class JsonSupport {
             public LongObjectMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
-                LongObjectMap<?> data = new LongObjectMap<>(jsonData.size);
+                LongObjectMap data = new LongObjectMap<>(jsonData.size);
+                Object d = json.readValue("d", null, jsonData);
+                jsonData.remove("d");
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), json.readValue(null, value));
                 }
@@ -2215,8 +2219,9 @@ public final class JsonSupport {
             @Override
             public void write(Json json, LongObjectOrderedMap object, Class knownType) {
                 json.writeObjectStart(LongObjectOrderedMap.class, knownType);
-                // will never overlap with a long key
+                // will never overlap with a key
                 json.writeValue("o", object.order() instanceof LongDeque, boolean.class);
+                json.writeValue("d", object.getDefaultValue(), null);
                 for (LongObjectOrderedMap.Entry<Object> e : new LongObjectOrderedMap.OrderedMapEntries<Object>(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue(), null);
                 }
@@ -2229,7 +2234,10 @@ public final class JsonSupport {
                 jsonData.remove("class");
                 boolean order = jsonData.getBoolean("o", false);
                 jsonData.remove("o");
-                LongObjectOrderedMap<?> data = new LongObjectOrderedMap<>(jsonData.size, order);
+                LongObjectOrderedMap data = new LongObjectOrderedMap<>(jsonData.size, order);
+                Object d = json.readValue("d", null, jsonData);
+                jsonData.remove("d");
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), json.readValue(null, value));
                 }
