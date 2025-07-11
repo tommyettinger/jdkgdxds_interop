@@ -1097,7 +1097,9 @@ public final class JsonSupport {
             @Override
             public EnumOrderedSet read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                EnumOrderedSet data = new EnumOrderedSet();
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
+                jsonData.remove("o");
+                EnumOrderedSet data = new EnumOrderedSet(order);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.add(json.readValue(Enum.class, value));
                 }
@@ -1148,6 +1150,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, ObjectOrderedSet object, Class knownType) {
                 json.writeObjectStart(ObjectOrderedSet.class, knownType);
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeArrayStart("items"); // This name is special.
                 for (Object o : object) {
                     json.writeValue(o, null);
@@ -1159,7 +1162,9 @@ public final class JsonSupport {
             @Override
             public ObjectOrderedSet<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                ObjectOrderedSet<?> data = new ObjectOrderedSet<>(jsonData.size);
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
+                jsonData.remove("o");
+                ObjectOrderedSet<?> data = new ObjectOrderedSet<>(jsonData.size, order);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.add(json.readValue(null, value));
                 }
@@ -1207,7 +1212,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, IntOrderedSet object, Class knownType) {
                 json.writeObjectStart(IntOrderedSet.class, knownType);
-                json.writeValue("o", object.order() instanceof IntDeque, boolean.class);
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeArrayStart("items");
                 IntIterator it = object.iterator();
                 while (it.hasNext()) {
@@ -1220,7 +1225,8 @@ public final class JsonSupport {
             @Override
             public IntOrderedSet read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                boolean order = jsonData.getBoolean("o", false);
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
+                jsonData.remove("o");
                 if((jsonData = jsonData.get("items")) == null) return null;
                 return new IntOrderedSet(jsonData.asIntArray(), order);
             }
@@ -1266,7 +1272,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, LongOrderedSet object, Class knownType) {
                 json.writeObjectStart(LongOrderedSet.class, knownType);
-                json.writeValue("o", object.order() instanceof LongDeque, boolean.class);
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeArrayStart("items");
                 LongIterator it = object.iterator();
                 while (it.hasNext()) {
@@ -1279,7 +1285,8 @@ public final class JsonSupport {
             @Override
             public LongOrderedSet read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                boolean order = jsonData.getBoolean("o", false);
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
+                jsonData.remove("o");
                 if((jsonData = jsonData.get("items")) == null) return null;
                 return new LongOrderedSet(jsonData.asLongArray(), order);
             }
@@ -1333,6 +1340,7 @@ public final class JsonSupport {
             public void write(Json json, EnumOrderedMap object, Class knownType) {
                 json.writeObjectStart(EnumOrderedMap.class, knownType);
                 Iterator<Map.Entry<Enum<?>, Object>> es = object.entrySet().iterator();
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeArrayStart("parts");
                 while (es.hasNext()) {
                     Map.Entry<Enum<?>, ?> e = es.next();
@@ -1347,7 +1355,9 @@ public final class JsonSupport {
             public EnumOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
-                EnumOrderedMap<?> data = new EnumOrderedMap<>();
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
+                jsonData.remove("o");
+                EnumOrderedMap<?> data = new EnumOrderedMap<>(order);
                 for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
                     data.put(json.readValue(Enum.class, value), json.readValue(null, value = value.next));
                 }
@@ -1403,6 +1413,7 @@ public final class JsonSupport {
             public void write(Json json, EnumIntOrderedMap object, Class knownType) {
                 json.writeObjectStart(EnumIntOrderedMap.class, knownType);
                 Iterator<EnumIntMap.Entry> es = new EnumIntOrderedMap.OrderedMapEntries(object).iterator();
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeArrayStart("parts");
                 while (es.hasNext()) {
                     EnumIntMap.Entry e = es.next();
@@ -1417,7 +1428,9 @@ public final class JsonSupport {
             public EnumIntOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
-                EnumIntOrderedMap data = new EnumIntOrderedMap();
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
+                jsonData.remove("o");
+                EnumIntOrderedMap data = new EnumIntOrderedMap(order);
                 for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
                     data.put(json.readValue(Enum.class, value), (value = value.next).asInt());
                 }
@@ -1473,6 +1486,7 @@ public final class JsonSupport {
             public void write(Json json, EnumLongOrderedMap object, Class knownType) {
                 json.writeObjectStart(EnumLongOrderedMap.class, knownType);
                 Iterator<EnumLongMap.Entry> es = new EnumLongOrderedMap.OrderedMapEntries(object).iterator();
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeArrayStart("parts");
                 while (es.hasNext()) {
                     EnumLongMap.Entry e = es.next();
@@ -1487,7 +1501,9 @@ public final class JsonSupport {
             public EnumLongOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
-                EnumLongOrderedMap data = new EnumLongOrderedMap();
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
+                jsonData.remove("o");
+                EnumLongOrderedMap data = new EnumLongOrderedMap(order);
                 for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
                     data.put(json.readValue(Enum.class, value), (value = value.next).asLong());
                 }
@@ -1543,6 +1559,7 @@ public final class JsonSupport {
             public void write(Json json, EnumFloatOrderedMap object, Class knownType) {
                 json.writeObjectStart(EnumFloatOrderedMap.class, knownType);
                 Iterator<EnumFloatMap.Entry> es = new EnumFloatOrderedMap.OrderedMapEntries(object).iterator();
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeArrayStart("parts");
                 while (es.hasNext()) {
                     EnumFloatMap.Entry e = es.next();
@@ -1557,7 +1574,9 @@ public final class JsonSupport {
             public EnumFloatOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
-                EnumFloatOrderedMap data = new EnumFloatOrderedMap();
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
+                jsonData.remove("o");
+                EnumFloatOrderedMap data = new EnumFloatOrderedMap(order);
                 for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
                     data.put(json.readValue(Enum.class, value), (value = value.next).asFloat());
                 }
@@ -1635,8 +1654,10 @@ public final class JsonSupport {
             public ObjectObjectOrderedMap<?, ?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 Object d = json.readValue("d", null, jsonData);
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
+                jsonData.remove("o");
                 jsonData = jsonData.get("m");
-                ObjectObjectOrderedMap data = new ObjectObjectOrderedMap<>(jsonData.size);
+                ObjectObjectOrderedMap data = new ObjectObjectOrderedMap<>(jsonData.size, order);
                 data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), json.readValue(null, value));
@@ -1699,6 +1720,7 @@ public final class JsonSupport {
                 JsonWriter writer = json.getWriter();
                 json.writeObjectStart(ObjectLongOrderedMap.class, knownType);
                 json.writeValue("d", object.getDefaultValue(), long.class);
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeObjectStart("m");
                 Iterator<ObjectLongMap.Entry<Object>> es = new ObjectLongOrderedMap.OrderedMapEntries<Object>(object).iterator();
                 while (es.hasNext()) {
@@ -1715,8 +1737,10 @@ public final class JsonSupport {
             public ObjectLongOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 long d = jsonData.getLong("d", 0);
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
+                jsonData.remove("o");
                 jsonData = jsonData.get("m");
-                ObjectLongOrderedMap<?> data = new ObjectLongOrderedMap<>(jsonData.size);
+                ObjectLongOrderedMap<?> data = new ObjectLongOrderedMap<>(jsonData.size, order);
                 data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), BASE.readLong(value.asString()));
@@ -1779,6 +1803,7 @@ public final class JsonSupport {
                 JsonWriter writer = json.getWriter();
                 json.writeObjectStart(ObjectIntOrderedMap.class, knownType);
                 json.writeValue("d", object.getDefaultValue(), int.class);
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeObjectStart("m");
                 Iterator<ObjectIntMap.Entry<Object>> es = new ObjectIntOrderedMap.OrderedMapEntries<Object>(object).iterator();
                 while (es.hasNext()) {
@@ -1795,8 +1820,10 @@ public final class JsonSupport {
             public ObjectIntOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 int d = jsonData.getInt("d", 0);
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
+                jsonData.remove("o");
                 jsonData = jsonData.get("m");
-                ObjectIntOrderedMap<?> data = new ObjectIntOrderedMap<>(jsonData.size);
+                ObjectIntOrderedMap<?> data = new ObjectIntOrderedMap<>(jsonData.size, order);
                 data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), value.asInt());
@@ -1859,6 +1886,7 @@ public final class JsonSupport {
                 JsonWriter writer = json.getWriter();
                 json.writeObjectStart(ObjectFloatOrderedMap.class, knownType);
                 json.writeValue("d", object.getDefaultValue(), float.class);
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeObjectStart("m");
                 Iterator<ObjectFloatMap.Entry<Object>> es = new ObjectFloatOrderedMap.OrderedMapEntries<Object>(object).iterator();
                 while (es.hasNext()) {
@@ -1875,8 +1903,10 @@ public final class JsonSupport {
             public ObjectFloatOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 float d = jsonData.getFloat("d", 0);
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
+                jsonData.remove("o");
                 jsonData = jsonData.get("m");
-                ObjectFloatOrderedMap<?> data = new ObjectFloatOrderedMap<>(jsonData.size);
+                ObjectFloatOrderedMap<?> data = new ObjectFloatOrderedMap<>(jsonData.size, order);
                 data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(json.fromJson(null, value.name), value.asFloat());
@@ -1932,7 +1962,7 @@ public final class JsonSupport {
             public void write(Json json, IntObjectOrderedMap object, Class knownType) {
                 json.writeObjectStart(IntObjectOrderedMap.class, knownType);
                 // will never overlap with an int key
-                json.writeValue("o", object.order() instanceof IntDeque, boolean.class);
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeValue("d", object.getDefaultValue(), null);
                 for (IntObjectOrderedMap.Entry<Object> e : new IntObjectOrderedMap.OrderedMapEntries<Object>(object)) {
                     json.writeValue(Integer.toString(e.key), e.getValue(), null);
@@ -1944,11 +1974,11 @@ public final class JsonSupport {
             public IntObjectOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
-                boolean order = jsonData.getBoolean("o", false);
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
                 jsonData.remove("o");
-                IntObjectOrderedMap data = new IntObjectOrderedMap<>(jsonData.size, order);
                 Object d = json.readValue("d", null, jsonData);
                 jsonData.remove("d");
+                IntObjectOrderedMap data = new IntObjectOrderedMap<>(jsonData.size, order);
                 data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), json.readValue(null, value));
@@ -2004,7 +2034,7 @@ public final class JsonSupport {
             public void write(Json json, IntIntOrderedMap object, Class knownType) {
                 json.writeObjectStart(IntIntOrderedMap.class, knownType);
                 // will never overlap with an int key
-                json.writeValue("o", object.order() instanceof IntDeque, boolean.class);
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeValue("d", object.getDefaultValue(), int.class);
                 for (IntIntOrderedMap.Entry e : new IntIntOrderedMap.OrderedMapEntries(object)) {
                     json.writeValue(Integer.toString(e.key), e.getValue());
@@ -2016,11 +2046,11 @@ public final class JsonSupport {
             public IntIntOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
-                boolean order = jsonData.getBoolean("o", false);
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
                 jsonData.remove("o");
-                IntIntOrderedMap data = new IntIntOrderedMap(jsonData.size - 1, order);
                 int d = jsonData.getInt("d", 0);
                 jsonData.remove("d");
+                IntIntOrderedMap data = new IntIntOrderedMap(jsonData.size, order);
                 data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), value.asInt());
@@ -2076,7 +2106,7 @@ public final class JsonSupport {
             public void write(Json json, IntLongOrderedMap object, Class knownType) {
                 json.writeObjectStart(IntLongOrderedMap.class, knownType);
                 // will never overlap with an int key
-                json.writeValue("o", object.order() instanceof IntDeque, boolean.class);
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeValue("d", object.getDefaultValue(), long.class);
                 for (IntLongOrderedMap.Entry e : new IntLongOrderedMap.OrderedMapEntries(object)) {
                     json.writeValue(Integer.toString(e.key), e.getValue());
@@ -2088,11 +2118,11 @@ public final class JsonSupport {
             public IntLongOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
-                boolean order = jsonData.getBoolean("o", false);
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
                 jsonData.remove("o");
-                IntLongOrderedMap data = new IntLongOrderedMap(jsonData.size - 1, order);
                 long d = jsonData.getLong("d", 0);
                 jsonData.remove("d");
+                IntLongOrderedMap data = new IntLongOrderedMap(jsonData.size, order);
                 data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), value.asLong());
@@ -2148,7 +2178,7 @@ public final class JsonSupport {
             public void write(Json json, IntFloatOrderedMap object, Class knownType) {
                 json.writeObjectStart(IntFloatOrderedMap.class, knownType);
                 // will never overlap with an int key
-                json.writeValue("o", object.order() instanceof IntDeque, boolean.class);
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeValue("d", object.getDefaultValue(), long.class);
                 for (IntFloatOrderedMap.Entry e : new IntFloatOrderedMap.OrderedMapEntries(object)) {
                     json.writeValue(Integer.toString(e.key), e.getValue());
@@ -2160,11 +2190,11 @@ public final class JsonSupport {
             public IntFloatOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
-                boolean order = jsonData.getBoolean("o", false);
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
                 jsonData.remove("o");
-                IntFloatOrderedMap data = new IntFloatOrderedMap(jsonData.size - 1, order);
                 float d = jsonData.getFloat("d", 0);
                 jsonData.remove("d");
+                IntFloatOrderedMap data = new IntFloatOrderedMap(jsonData.size, order);
                 data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Integer.parseInt(value.name), value.asFloat());
@@ -2220,7 +2250,7 @@ public final class JsonSupport {
             public void write(Json json, LongObjectOrderedMap object, Class knownType) {
                 json.writeObjectStart(LongObjectOrderedMap.class, knownType);
                 // will never overlap with a key
-                json.writeValue("o", object.order() instanceof LongDeque, boolean.class);
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeValue("d", object.getDefaultValue(), null);
                 for (LongObjectOrderedMap.Entry<Object> e : new LongObjectOrderedMap.OrderedMapEntries<Object>(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue(), null);
@@ -2232,11 +2262,11 @@ public final class JsonSupport {
             public LongObjectOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
-                boolean order = jsonData.getBoolean("o", false);
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
                 jsonData.remove("o");
-                LongObjectOrderedMap data = new LongObjectOrderedMap<>(jsonData.size, order);
                 Object d = json.readValue("d", null, jsonData);
                 jsonData.remove("d");
+                LongObjectOrderedMap data = new LongObjectOrderedMap<>(jsonData.size, order);
                 data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), json.readValue(null, value));
@@ -2292,7 +2322,7 @@ public final class JsonSupport {
             public void write(Json json, LongIntOrderedMap object, Class knownType) {
                 json.writeObjectStart(LongIntOrderedMap.class, knownType);
                 // will never overlap with a key
-                json.writeValue("o", object.order() instanceof LongDeque, boolean.class);
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeValue("d", object.getDefaultValue(), int.class);
                 for (LongIntOrderedMap.Entry e : new LongIntOrderedMap.OrderedMapEntries(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue());
@@ -2304,11 +2334,11 @@ public final class JsonSupport {
             public LongIntOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
-                boolean order = jsonData.getBoolean("o", false);
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
                 jsonData.remove("o");
-                LongIntOrderedMap data = new LongIntOrderedMap(jsonData.size - 1, order);
                 int d = jsonData.getInt("d", 0);
                 jsonData.remove("d");
+                LongIntOrderedMap data = new LongIntOrderedMap(jsonData.size, order);
                 data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), value.asInt());
@@ -2364,7 +2394,7 @@ public final class JsonSupport {
             public void write(Json json, LongLongOrderedMap object, Class knownType) {
                 json.writeObjectStart(LongLongOrderedMap.class, knownType);
                 // will never overlap with a key
-                json.writeValue("o", object.order() instanceof LongDeque, boolean.class);
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeValue("d", object.getDefaultValue(), long.class);
                 for (LongLongOrderedMap.Entry e : new LongLongOrderedMap.OrderedMapEntries(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue());
@@ -2376,11 +2406,11 @@ public final class JsonSupport {
             public LongLongOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
-                boolean order = jsonData.getBoolean("o", false);
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
                 jsonData.remove("o");
-                LongLongOrderedMap data = new LongLongOrderedMap(jsonData.size - 1, order);
                 long d = jsonData.getLong("d", 0);
                 jsonData.remove("d");
+                LongLongOrderedMap data = new LongLongOrderedMap(jsonData.size, order);
                 data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), value.asLong());
@@ -2436,7 +2466,7 @@ public final class JsonSupport {
             public void write(Json json, LongFloatOrderedMap object, Class knownType) {
                 json.writeObjectStart(LongFloatOrderedMap.class, knownType);
                 // will never overlap with a key
-                json.writeValue("o", object.order() instanceof LongDeque, boolean.class);
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeValue("d", object.getDefaultValue(), float.class);
                 for (LongFloatOrderedMap.Entry e : new LongFloatOrderedMap.OrderedMapEntries(object)) {
                     json.writeValue(Long.toString(e.key), e.getValue());
@@ -2448,11 +2478,11 @@ public final class JsonSupport {
             public LongFloatOrderedMap read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
-                boolean order = jsonData.getBoolean("o", false);
+                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
                 jsonData.remove("o");
-                LongFloatOrderedMap data = new LongFloatOrderedMap(jsonData.size - 1, order);
                 float d = jsonData.getFloat("d", 0);
                 jsonData.remove("d");
+                LongFloatOrderedMap data = new LongFloatOrderedMap(jsonData.size, order);
                 data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(Long.parseLong(value.name), value.asFloat());
