@@ -2644,6 +2644,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, CaseInsensitiveMap object, Class knownType) {
                 json.writeObjectStart(CaseInsensitiveMap.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), null);
                 json.writeObjectStart("m");
                 Iterator<Map.Entry<CharSequence, Object>> es = new CaseInsensitiveMap.Entries<CharSequence, Object>(object).iterator();
                 while (es.hasNext()) {
@@ -2658,8 +2659,10 @@ public final class JsonSupport {
             public CaseInsensitiveMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
+                Object d = json.readValue("d", null, jsonData);
                 jsonData = jsonData.get("m");
-                CaseInsensitiveMap<?> data = new CaseInsensitiveMap<>(jsonData.size);
+                CaseInsensitiveMap data = new CaseInsensitiveMap<>(jsonData.size);
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(value.name, json.readValue(null, value));
                 }
@@ -2680,6 +2683,7 @@ public final class JsonSupport {
             public void write(Json json, CaseInsensitiveOrderedMap object, Class knownType) {
                 json.writeObjectStart(CaseInsensitiveOrderedMap.class, knownType);
                 json.writeValue("o", object.getOrderType().name(), String.class);
+                json.writeValue("d", object.getDefaultValue(), null);
                 json.writeObjectStart("m");
                 Iterator<Map.Entry<CharSequence, Object>> es = new ObjectObjectOrderedMap.OrderedMapEntries<CharSequence, Object>(object).iterator();
                 while (es.hasNext()) {
@@ -2695,9 +2699,10 @@ public final class JsonSupport {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
                 OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
-                jsonData.remove("o");
+                Object d = json.readValue("d", null, jsonData);
                 jsonData = jsonData.get("m");
-                CaseInsensitiveOrderedMap<?> data = new CaseInsensitiveOrderedMap<>(jsonData.size, order);
+                CaseInsensitiveOrderedMap data = new CaseInsensitiveOrderedMap<>(jsonData.size, order);
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(value.name, json.readValue(null, value));
                 }
@@ -2788,6 +2793,7 @@ public final class JsonSupport {
             public void write(Json json, FilteredStringMap object, Class knownType) {
                 json.writeObjectStart(FilteredStringMap.class, knownType);
                 json.writeValue("filtering", object.getFilter().getName());
+                json.writeValue("d", object.getDefaultValue(), null);
                 json.writeObjectStart("data");
                 Iterator<Map.Entry<String, Object>> es = new FilteredStringMap.Entries<String, Object>(object).iterator();
                 while (es.hasNext()) {
@@ -2803,8 +2809,10 @@ public final class JsonSupport {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
                 CharFilter filter = CharFilter.get(jsonData.getString("filtering"));
+                Object d = json.readValue("d", null, jsonData);
                 jsonData = jsonData.get("data");
-                FilteredStringMap<?> data = new FilteredStringMap<>(filter, jsonData.size, Utilities.getDefaultLoadFactor());
+                FilteredStringMap data = new FilteredStringMap<>(filter, jsonData.size, Utilities.getDefaultLoadFactor());
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(value.name, json.readValue(null, value));
                 }
@@ -2827,6 +2835,7 @@ public final class JsonSupport {
                 json.writeObjectStart(FilteredStringOrderedMap.class, knownType);
                 json.writeValue("filtering", object.getFilter().getName());
                 json.writeValue("o", object.getOrderType().name(), String.class);
+                json.writeValue("d", object.getDefaultValue(), null);
                 json.writeObjectStart("data");
                 Iterator<Map.Entry<String, Object>> es = new FilteredStringOrderedMap.Entries<String, Object>(object).iterator();
                 while (es.hasNext()) {
@@ -2843,9 +2852,10 @@ public final class JsonSupport {
                 jsonData.remove("class");
                 CharFilter filter = CharFilter.get(jsonData.getString("filtering"));
                 OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
-                jsonData.remove("o");
+                Object d = json.readValue("d", null, jsonData);
                 jsonData = jsonData.get("data");
-                FilteredStringOrderedMap<?> data = new FilteredStringOrderedMap<>(filter, jsonData.size, Utilities.getDefaultLoadFactor(), order);
+                FilteredStringOrderedMap data = new FilteredStringOrderedMap<>(filter, jsonData.size, Utilities.getDefaultLoadFactor(), order);
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
                     data.put(value.name, json.readValue(null, value));
                 }
