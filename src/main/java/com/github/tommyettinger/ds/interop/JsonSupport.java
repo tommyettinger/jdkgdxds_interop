@@ -1304,6 +1304,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, EnumMap object, Class knownType) {
                 json.writeObjectStart(EnumMap.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), Enum.class);
                 Iterator<Map.Entry<Enum<?>, Object>> es = new EnumMap.Entries<Object>(object).iterator();
                 json.writeArrayStart("parts");
                 while (es.hasNext()) {
@@ -1319,7 +1320,10 @@ public final class JsonSupport {
             public EnumMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
-                EnumMap<?> data = new EnumMap<>();
+                Enum d = json.readValue("d", Enum.class, jsonData);
+                jsonData.remove("d");
+                EnumMap data = new EnumMap<>();
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
                     data.put(json.readValue(Enum.class, value), json.readValue(null, value = value.next));
                 }
@@ -1339,6 +1343,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, EnumOrderedMap object, Class knownType) {
                 json.writeObjectStart(EnumOrderedMap.class, knownType);
+                json.writeValue("d", object.getDefaultValue(), Enum.class);
                 Iterator<Map.Entry<Enum<?>, Object>> es = object.entrySet().iterator();
                 json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeArrayStart("parts");
@@ -1355,9 +1360,12 @@ public final class JsonSupport {
             public EnumOrderedMap<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 jsonData.remove("class");
+                Enum d = json.readValue("d", Enum.class, jsonData);
+                jsonData.remove("d");
                 OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
                 jsonData.remove("o");
-                EnumOrderedMap<?> data = new EnumOrderedMap<>(order);
+                EnumOrderedMap data = new EnumOrderedMap<>(order);
+                data.setDefaultValue(d);
                 for (JsonValue value = jsonData.getChild("parts"); value != null; value = value.next) {
                     data.put(json.readValue(Enum.class, value), json.readValue(null, value = value.next));
                 }
