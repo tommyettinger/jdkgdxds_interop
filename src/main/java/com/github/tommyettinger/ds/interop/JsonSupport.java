@@ -1086,6 +1086,7 @@ public final class JsonSupport {
             @Override
             public void write(Json json, EnumOrderedSet object, Class knownType) {
                 json.writeObjectStart(EnumOrderedSet.class, knownType);
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeArrayStart("items"); // This name is special.
                 for (Enum<?> o : object) {
                     json.writeValue(o, Enum.class);
@@ -1646,6 +1647,7 @@ public final class JsonSupport {
                 JsonWriter writer = json.getWriter();
                 json.writeObjectStart(ObjectObjectOrderedMap.class, knownType);
                 json.writeValue("d", object.getDefaultValue(), null);
+                json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeObjectStart("m");
                 Iterator<Map.Entry<Object, Object>> es = new ObjectObjectOrderedMap.OrderedMapEntries<Object, Object>(object).iterator();
                 while (es.hasNext()) {
