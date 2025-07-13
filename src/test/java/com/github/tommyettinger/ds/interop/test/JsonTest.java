@@ -340,7 +340,8 @@ public class JsonTest {
     public void testEnumOrderedSet() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerEnumOrderedSet(json);
-        EnumOrderedSet words = EnumOrderedSet.with(Banana.PEANUT, Banana.BUTTER, Banana.JELLY, Banana.TIME);
+        EnumOrderedSet words = new EnumOrderedSet(Banana.values(), OrderType.BAG);
+        words.addVarargs(Banana.PEANUT, Banana.BUTTER, Banana.JELLY, Banana.TIME);
         String data = json.toJson(words);
         System.out.println(data);
         EnumOrderedSet words2 = json.fromJson(EnumOrderedSet.class, data);
@@ -349,8 +350,10 @@ public class JsonTest {
             System.out.print(", ");
         }
         Assert.assertEquals(words, words2);
+        Assert.assertEquals(words.getOrderType(), words2.getOrderType());
         System.out.println();
-        EnumOrderedSet points = EnumOrderedSet.allOf(Plane.PlaneSide.values());
+        EnumOrderedSet points = new EnumOrderedSet(Plane.PlaneSide.values(), OrderType.BAG);
+        points.addAll(Plane.PlaneSide.values());
         data = json.toJson(points);
         System.out.println(data);
         EnumOrderedSet points2 = json.fromJson(EnumOrderedSet.class, data);
@@ -359,6 +362,7 @@ public class JsonTest {
             System.out.print(", ");
         }
         Assert.assertEquals(points, points2);
+        Assert.assertEquals(points.getOrderType(), points2.getOrderType());
         System.out.println();
 
         EnumOrderedSet empty = new EnumOrderedSet();
@@ -650,7 +654,8 @@ public class JsonTest {
     public void testObjectOrderedSet() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerObjectOrderedSet(json);
-        ObjectOrderedSet<String> words = ObjectOrderedSet.with("Peanut", "Butter", "Jelly", "Time");
+        ObjectOrderedSet<String> words = new ObjectOrderedSet(4, OrderType.BAG);
+        words.addVarargs("Peanut", "Butter", "Jelly", "Time");
         String data = json.toJson(words);
         System.out.println(data);
         ObjectOrderedSet<?> words2 = json.fromJson(ObjectOrderedSet.class, data);
@@ -659,6 +664,7 @@ public class JsonTest {
             System.out.print(", ");
         }
         Assert.assertEquals(words, words2);
+        Assert.assertEquals(words.getOrderType(), words2.getOrderType());
         System.out.println();
         ObjectOrderedSet<GridPoint2> points = ObjectOrderedSet.with(new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666));
         data = json.toJson(points);
@@ -694,7 +700,8 @@ public class JsonTest {
     public void testIntOrderedSet() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerIntOrderedSet(json);
-        IntOrderedSet numbers = IntOrderedSet.with(42, 23, 666, 420);
+        IntOrderedSet numbers = new IntOrderedSet(4, OrderType.BAG);
+        numbers.addVarargs(42, 23, 666, 420);
         String data = json.toJson(numbers);
         System.out.println(data);
         IntOrderedSet numbers2 = json.fromJson(IntOrderedSet.class, data);
@@ -705,6 +712,7 @@ public class JsonTest {
                 System.out.print(", ");
         }
         Assert.assertEquals(numbers, numbers2);
+        Assert.assertEquals(numbers.getOrderType(), numbers2.getOrderType());
         System.out.println();
     }
 
@@ -730,7 +738,8 @@ public class JsonTest {
     public void testLongOrderedSet() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerLongOrderedSet(json);
-        LongOrderedSet numbers = LongOrderedSet.with(42L, 23L, 666666666666L, 4200000000000000L);
+        LongOrderedSet numbers = new LongOrderedSet(4, OrderType.DEQUE);
+        numbers.addVarargs(42L, 23L, 666666666666L, 4200000000000000L);
         String data = json.toJson(numbers);
         System.out.println(data);
         LongOrderedSet numbers2 = json.fromJson(LongOrderedSet.class, data);
@@ -741,6 +750,7 @@ public class JsonTest {
                 System.out.print(", ");
         }
         Assert.assertEquals(numbers, numbers2);
+        Assert.assertEquals(numbers.getOrderType(), numbers2.getOrderType());
         System.out.println();
     }
 

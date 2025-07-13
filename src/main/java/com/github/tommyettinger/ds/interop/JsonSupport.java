@@ -1098,7 +1098,7 @@ public final class JsonSupport {
             @Override
             public EnumOrderedSet read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
+                OrderType order = OrderType.valueOf(jsonData.parent.getString("o", "LIST"));
                 jsonData.remove("o");
                 EnumOrderedSet data = new EnumOrderedSet(order);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
@@ -1163,7 +1163,7 @@ public final class JsonSupport {
             @Override
             public ObjectOrderedSet<?> read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
+                OrderType order = OrderType.valueOf(jsonData.parent.getString("o", "LIST"));
                 jsonData.remove("o");
                 ObjectOrderedSet<?> data = new ObjectOrderedSet<>(jsonData.size, order);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
@@ -2622,7 +2622,7 @@ public final class JsonSupport {
             @Override
             public CaseInsensitiveOrderedSet read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
+                OrderType order = OrderType.valueOf(jsonData.parent.getString("o", "LIST"));
                 jsonData.remove("o");
                 CaseInsensitiveOrderedSet data = new CaseInsensitiveOrderedSet(jsonData.size, order);
                 for (JsonValue value = jsonData.child; value != null; value = value.next) {
@@ -2769,7 +2769,7 @@ public final class JsonSupport {
             @Override
             public FilteredStringOrderedSet read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                OrderType order = OrderType.valueOf(jsonData.getString("o", "LIST"));
+                OrderType order = OrderType.valueOf(jsonData.parent.getString("o", "LIST"));
                 jsonData.remove("o");
                 CharFilter filter = CharFilter.get(jsonData.parent.getString("filtering"));
                 FilteredStringOrderedSet data = new FilteredStringOrderedSet(filter, jsonData.size, Utilities.getDefaultLoadFactor(), order);
