@@ -654,7 +654,7 @@ public class JsonTest {
     public void testObjectOrderedSet() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerObjectOrderedSet(json);
-        ObjectOrderedSet<String> words = new ObjectOrderedSet(4, OrderType.BAG);
+        ObjectOrderedSet<String> words = new ObjectOrderedSet<>(4, OrderType.BAG);
         words.addVarargs("Peanut", "Butter", "Jelly", "Time");
         String data = json.toJson(words);
         System.out.println(data);
@@ -791,7 +791,7 @@ public class JsonTest {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerObjectObjectOrderedMap(json);
         ObjectObjectOrderedMap<String, GridPoint2> words = new ObjectObjectOrderedMap<>(new String[]{"foo", "bar", "baz"},
-                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)});
+                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)}, OrderType.BAG);
         String data = json.toJson(words);
         System.out.println(data);
         ObjectObjectOrderedMap<?, ?> words2 = json.fromJson(ObjectObjectOrderedMap.class, data);
@@ -802,6 +802,7 @@ public class JsonTest {
             System.out.print("; ");
         }
         Assert.assertEquals(words, words2);
+        Assert.assertEquals(words.getOrderType(), words2.getOrderType());
         System.out.println();
         ObjectObjectOrderedMap<GridPoint2, String> points = new ObjectObjectOrderedMap<>(
                 new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)},
@@ -855,7 +856,7 @@ public class JsonTest {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerObjectLongOrderedMap(json);
         ObjectLongOrderedMap<String> words = new ObjectLongOrderedMap<>(new String[]{"foo", "bar", "baz"},
-                new long[]{42L, 23L, 666666666666L});
+                new long[]{42L, 23L, 666666666666L}, OrderType.BAG);
         String data = json.toJson(words);
         System.out.println(data);
         ObjectLongOrderedMap<?> words2 = json.fromJson(ObjectLongOrderedMap.class, data);
@@ -866,6 +867,7 @@ public class JsonTest {
             System.out.print("; ");
         }
         Assert.assertEquals(words, words2);
+        Assert.assertEquals(words.getOrderType(), words2.getOrderType());
         System.out.println();
         ObjectLongOrderedMap<GridPoint2> points = new ObjectLongOrderedMap<>(
                 new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)},
@@ -919,7 +921,7 @@ public class JsonTest {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerObjectIntOrderedMap(json);
         ObjectIntOrderedMap<String> words = new ObjectIntOrderedMap<>(new String[]{"foo", "bar", "baz"},
-                new int[]{42, 23, 666});
+                new int[]{42, 23, 666}, OrderType.BAG);
         String data = json.toJson(words);
         System.out.println(data);
         ObjectIntOrderedMap<?> words2 = json.fromJson(ObjectIntOrderedMap.class, data);
@@ -930,6 +932,7 @@ public class JsonTest {
             System.out.print("; ");
         }
         Assert.assertEquals(words, words2);
+        Assert.assertEquals(words.getOrderType(), words2.getOrderType());
         System.out.println();
         ObjectIntOrderedMap<GridPoint2> points = new ObjectIntOrderedMap<>(
                 new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)},
@@ -984,7 +987,7 @@ public class JsonTest {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerObjectFloatOrderedMap(json);
         ObjectFloatOrderedMap<String> words = new ObjectFloatOrderedMap<>(new String[]{"foo", "bar", "baz"},
-                new float[]{42.42f, 23.23f, 666.666f});
+                new float[]{42.42f, 23.23f, 666.666f}, OrderType.BAG);
         String data = json.toJson(words);
         System.out.println(data);
         ObjectFloatOrderedMap<?> words2 = json.fromJson(ObjectFloatOrderedMap.class, data);
@@ -995,6 +998,7 @@ public class JsonTest {
             System.out.print("; ");
         }
         Assert.assertEquals(words, words2);
+        Assert.assertEquals(words.getOrderType(), words2.getOrderType());
         System.out.println();
         ObjectFloatOrderedMap<GridPoint2> points = new ObjectFloatOrderedMap<>(
                 new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)},
@@ -1046,7 +1050,7 @@ public class JsonTest {
     public void testIntObjectOrderedMap() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerIntObjectOrderedMap(json);
-        IntObjectOrderedMap<String> words = new IntObjectOrderedMap<>(new int[]{42, 23, 666}, new String[]{"foo", "bar", "baz"});
+        IntObjectOrderedMap<String> words = new IntObjectOrderedMap<>(new int[]{42, 23, 666}, new String[]{"foo", "bar", "baz"}, OrderType.BAG);
         String data = json.toJson(words);
         System.out.println(data);
         IntObjectOrderedMap<?> words2 = json.fromJson(IntObjectOrderedMap.class, data);
@@ -1057,6 +1061,7 @@ public class JsonTest {
             System.out.print("; ");
         }
         Assert.assertEquals(words, words2);
+        Assert.assertEquals(words.getOrderType(), words2.getOrderType());
         System.out.println();
         IntObjectOrderedMap<GridPoint2> points = new IntObjectOrderedMap<>(new int[]{42, 23, 666},
                 new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)});
@@ -1097,16 +1102,19 @@ public class JsonTest {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerIntIntOrderedMap(json);
         IntIntOrderedMap numbers = new IntIntOrderedMap(new int[]{42, 23, 666},
-                new int[]{1, 10, 100});
+                new int[]{1, 10, 100}, OrderType.BAG);
         String data = json.toJson(numbers);
+        IntIntOrderedMap numbers2 = json.fromJson(IntIntOrderedMap.class, data);
         System.out.println(data);
-        IntIntOrderedMap points2 = json.fromJson(IntIntOrderedMap.class, data);
-        for(IntIntOrderedMap.Entry pair : points2) {
+        for(IntIntOrderedMap.Entry pair : numbers2) {
             System.out.print(pair.getKey());
             System.out.print("=");
             System.out.print(pair.getValue());
             System.out.print("; ");
         }
+        Assert.assertEquals(numbers, numbers2);
+        Assert.assertEquals(numbers.getOrderType(), numbers2.getOrderType());
+        System.out.println(data);
     }
 
     @Test
@@ -1133,7 +1141,7 @@ public class JsonTest {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerIntLongOrderedMap(json);
         IntLongOrderedMap numbers = new IntLongOrderedMap(new int[]{42, 23, 666},
-                new long[]{1L, 10000000000L, -1000000000000000L});
+                new long[]{1L, 10000000000L, -1000000000000000L}, OrderType.BAG);
         String data = json.toJson(numbers);
         System.out.println(data);
         IntLongOrderedMap numbers2 = json.fromJson(IntLongOrderedMap.class, data);
@@ -1144,6 +1152,7 @@ public class JsonTest {
             System.out.print("; ");
         }
         Assert.assertEquals(numbers, numbers2);
+        Assert.assertEquals(numbers.getOrderType(), numbers2.getOrderType());
         System.out.println();
     }
 
@@ -1172,7 +1181,7 @@ public class JsonTest {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerIntFloatOrderedMap(json);
         IntFloatOrderedMap numbers = new IntFloatOrderedMap(new int[]{42, 23, 666},
-                new float[]{42.42f, 23.23f, 666.666f});
+                new float[]{42.42f, 23.23f, 666.666f}, OrderType.DEQUE);
         String data = json.toJson(numbers);
         System.out.println(data);
         IntFloatOrderedMap numbers2 = json.fromJson(IntFloatOrderedMap.class, data);
@@ -1183,6 +1192,7 @@ public class JsonTest {
             System.out.print("; ");
         }
         Assert.assertEquals(numbers, numbers2);
+        Assert.assertEquals(numbers.getOrderType(), numbers2.getOrderType());
         System.out.println();
     }
 
@@ -1224,7 +1234,7 @@ public class JsonTest {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerLongObjectOrderedMap(json);
         LongObjectOrderedMap<String> words = new LongObjectOrderedMap<>(new long[]{42L, 23L, 666666666666L},
-                new String[]{"foo", "bar", "baz"});
+                new String[]{"foo", "bar", "baz"}, OrderType.DEQUE);
         String data = json.toJson(words);
         System.out.println(data);
         LongObjectOrderedMap<?> words2 = json.fromJson(LongObjectOrderedMap.class, data);
@@ -1235,6 +1245,7 @@ public class JsonTest {
             System.out.print("; ");
         }
         Assert.assertEquals(words, words2);
+        Assert.assertEquals(words.getOrderType(), words2.getOrderType());
         System.out.println();
         LongObjectOrderedMap<GridPoint2> points = new LongObjectOrderedMap<>(new long[]{42L, 23L, 666666666666L},
                 new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)});
@@ -1248,6 +1259,7 @@ public class JsonTest {
             System.out.print("; ");
         }
         Assert.assertEquals(points, points2);
+        Assert.assertEquals(points.getOrderType(), points2.getOrderType());
         System.out.println();
     }
 
@@ -1275,7 +1287,7 @@ public class JsonTest {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerLongIntOrderedMap(json);
         LongIntOrderedMap numbers = new LongIntOrderedMap(new long[]{42L, 23L, 666666666666L},
-                new int[]{1, 10, 100});
+                new int[]{1, 10, 100}, OrderType.BAG);
         String data = json.toJson(numbers);
         System.out.println(data);
         LongIntOrderedMap numbers2 = json.fromJson(LongIntOrderedMap.class, data);
@@ -1286,6 +1298,7 @@ public class JsonTest {
             System.out.print("; ");
         }
         Assert.assertEquals(numbers, numbers2);
+        Assert.assertEquals(numbers.getOrderType(), numbers2.getOrderType());
         System.out.println();
     }
 
@@ -1314,7 +1327,7 @@ public class JsonTest {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerLongLongOrderedMap(json);
         LongLongOrderedMap numbers = new LongLongOrderedMap(new long[]{42L, 23L, 666666666666L},
-                new long[]{1L, 10000000000L, -1000000000000000L});
+                new long[]{1L, 10000000000L, -1000000000000000L}, OrderType.BAG);
         String data = json.toJson(numbers);
         System.out.println(data);
         LongLongOrderedMap numbers2 = json.fromJson(LongLongOrderedMap.class, data);
@@ -1325,6 +1338,7 @@ public class JsonTest {
             System.out.print("; ");
         }
         Assert.assertEquals(numbers, numbers2);
+        Assert.assertEquals(numbers.getOrderType(), numbers2.getOrderType());
         System.out.println();
     }
 
@@ -1352,7 +1366,7 @@ public class JsonTest {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerLongFloatOrderedMap(json);
         LongFloatOrderedMap numbers = new LongFloatOrderedMap(new long[]{42L, 23L, 666666666666L},
-                new float[]{42.42f, 23.23f, 666.666f});
+                new float[]{42.42f, 23.23f, 666.666f}, OrderType.BAG);
         String data = json.toJson(numbers);
         System.out.println(data);
         LongFloatOrderedMap numbers2 = json.fromJson(LongFloatOrderedMap.class, data);
@@ -1363,6 +1377,7 @@ public class JsonTest {
             System.out.print("; ");
         }
         Assert.assertEquals(numbers, numbers2);
+        Assert.assertEquals(numbers.getOrderType(), numbers2.getOrderType());
         System.out.println();
     }
 
@@ -1386,7 +1401,8 @@ public class JsonTest {
     public void testCaseInsensitiveOrderedSet() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerCaseInsensitiveOrderedSet(json);
-        CaseInsensitiveOrderedSet words = CaseInsensitiveOrderedSet.with("Peanut", "Butter", "Jelly", "Time", "peanut", "butter", "jelly", "TIME");
+        CaseInsensitiveOrderedSet words = new CaseInsensitiveOrderedSet(8, OrderType.BAG);
+        words.addVarargs("Peanut", "Butter", "Jelly", "Time", "peanut", "butter", "jelly", "TIME");
         String data = json.toJson(words, (Class) null);
         System.out.println(data);
         CaseInsensitiveOrderedSet words2 = json.fromJson(CaseInsensitiveOrderedSet.class, data);
@@ -1395,6 +1411,7 @@ public class JsonTest {
             System.out.print(", ");
         }
         Assert.assertEquals(words, words2);
+        Assert.assertEquals(words.getOrderType(), words2.getOrderType());
         System.out.println();
     }
 
@@ -1424,7 +1441,7 @@ public class JsonTest {
         json.addClassTag("Grd2", GridPoint2.class);
         JsonSupport.registerCaseInsensitiveOrderedMap(json);
         CaseInsensitiveOrderedMap<GridPoint2> words = new CaseInsensitiveOrderedMap<>(new String[]{"foo", "bar", "baz"},
-                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)});
+                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)}, OrderType.BAG);
         String data = json.toJson(words);
         System.out.println(data);
         CaseInsensitiveOrderedMap<?> words2 = json.fromJson(CaseInsensitiveOrderedMap.class, data);
@@ -1435,6 +1452,7 @@ public class JsonTest {
             System.out.print("; ");
         }
         Assert.assertEquals(words, words2);
+        Assert.assertEquals(words.getOrderType(), words2.getOrderType());
         System.out.println();
     }
 
@@ -1460,7 +1478,8 @@ public class JsonTest {
         Json json = new Json(JsonWriter.OutputType.minimal);
         CharFilter filter = CharFilter.getOrCreate("LettersOnlyIgnoreCase", Character::isLetter, Character::toUpperCase);
         JsonSupport.registerFilteredStringOrderedSet(json);
-        FilteredStringOrderedSet words = FilteredStringOrderedSet.with(filter, "Peanut!!", "Butter!!", "Jelly!!", "Time!!", "peanut", "butter", "jelly", "TIME");
+        FilteredStringOrderedSet words = new FilteredStringOrderedSet(filter, 8, OrderType.BAG);
+        words.addVarargs("Peanut!!", "Butter!!", "Jelly!!", "Time!!", "peanut", "butter", "jelly", "TIME");
         String data = json.toJson(words);
         System.out.println(data);
         FilteredStringOrderedSet words2 = json.fromJson(FilteredStringOrderedSet.class, data);
@@ -1469,6 +1488,7 @@ public class JsonTest {
             System.out.print(", ");
         }
         Assert.assertEquals(words, words2);
+        Assert.assertEquals(words.getOrderType(), words2.getOrderType());
         System.out.println();
     }
 
@@ -1501,7 +1521,7 @@ public class JsonTest {
         CharFilter filter = CharFilter.getOrCreate("LettersOnlyIgnoreCase", Character::isLetter, Character::toUpperCase);
         JsonSupport.registerFilteredStringOrderedMap(json);
         FilteredStringOrderedMap<GridPoint2> words = new FilteredStringOrderedMap<>(filter, new String[]{"foo", "bar", "baz"},
-                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)});
+                new GridPoint2[]{new GridPoint2(42, 42), new GridPoint2(23, 23), new GridPoint2(666, 666)}, OrderType.BAG);
         String data = json.toJson(words, FilteredStringOrderedMap.class);
         System.out.println(data);
         FilteredStringOrderedMap<?> words2 = json.fromJson(FilteredStringOrderedMap.class, data);
@@ -1512,6 +1532,7 @@ public class JsonTest {
             System.out.print("; ");
         }
         Assert.assertEquals(words, words2);
+        Assert.assertEquals(words.getOrderType(), words2.getOrderType());
         System.out.println();
     }
 
