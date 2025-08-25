@@ -3733,7 +3733,6 @@ public final class JsonSupport {
         });
     }
 
-
     /**
      * Registers GoldenQuasiRandom with the given Json object, so GoldenQuasiRandom can be written to and read from JSON.
      *
@@ -3751,6 +3750,29 @@ public final class JsonSupport {
             @Override
             public GoldenQuasiRandom read(Json json, JsonValue jsonData, Class type) {
                 GoldenQuasiRandom r = new GoldenQuasiRandom(1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers LFSR64QuasiRandom with the given Json object, so LFSR64QuasiRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerLFSR64QuasiRandom(@NonNull Json json) {
+        if(json.getSerializer(LFSR64QuasiRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("GoQR", LFSR64QuasiRandom.class);
+        json.setSerializer(LFSR64QuasiRandom.class, new Json.Serializer<LFSR64QuasiRandom>() {
+            @Override
+            public void write(Json json, LFSR64QuasiRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public LFSR64QuasiRandom read(Json json, JsonValue jsonData, Class type) {
+                LFSR64QuasiRandom r = new LFSR64QuasiRandom(1L);
                 r.stringDeserialize(jsonData.asString(), BASE);
                 return r;
             }
@@ -4008,6 +4030,7 @@ public final class JsonSupport {
         registerJsf32Random(json);
         registerKnownSequenceRandom(json);
         registerLaserRandom(json);
+        registerLFSR64QuasiRandom(json);
         registerLowChangeQuasiRandom(json);
         registerTraceRandom(json);
         registerMizuchiRandom(json);
@@ -4045,8 +4068,7 @@ public final class JsonSupport {
                 try {
                     return Deserializer.deserialize(jsonData.asString(), BASE);
                 } catch (RuntimeException e) {
-                    System.out.println("Json Read Exception (EnhancedRandom): " + e.toString() + "\n"
-                            + jsonData.toJson(JsonWriter.OutputType.json));
+                    Gdx.app.error("Json Read Exception (EnhancedRandom)", e.toString());
                     return null;
                 }
             }
