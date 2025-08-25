@@ -3711,22 +3711,22 @@ public final class JsonSupport {
     }
 
     /**
-     * Registers MaceRandom with the given Json object, so MaceRandom can be written to and read from JSON.
+     * Registers TraceRandom with the given Json object, so TraceRandom can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerMaceRandom(@NonNull Json json) {
-        if(json.getSerializer(MaceRandom.class) != null) return;
-        if(ADD_CLASS_TAGS) json.addClassTag("AceR", MaceRandom.class);
-        json.setSerializer(MaceRandom.class, new Json.Serializer<MaceRandom>() {
+    public static void registerTraceRandom(@NonNull Json json) {
+        if(json.getSerializer(TraceRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("AceR", TraceRandom.class);
+        json.setSerializer(TraceRandom.class, new Json.Serializer<TraceRandom>() {
             @Override
-            public void write(Json json, MaceRandom object, Class knownType) {
+            public void write(Json json, TraceRandom object, Class knownType) {
                 json.writeValue(object.stringSerialize(BASE));
             }
 
             @Override
-            public MaceRandom read(Json json, JsonValue jsonData, Class type) {
-                MaceRandom r = new MaceRandom(1, 1L, 1L, 1L, 1L, 1L);
+            public TraceRandom read(Json json, JsonValue jsonData, Class type) {
+                TraceRandom r = new TraceRandom(1, 1L, 1L, 1L, 1L, 1L);
                 r.stringDeserialize(jsonData.asString(), BASE);
                 return r;
             }
@@ -4009,7 +4009,7 @@ public final class JsonSupport {
         registerKnownSequenceRandom(json);
         registerLaserRandom(json);
         registerLowChangeQuasiRandom(json);
-        registerMaceRandom(json);
+        registerTraceRandom(json);
         registerMizuchiRandom(json);
         registerOrbitalRandom(json);
         registerPasarRandom(json);
@@ -4045,7 +4045,8 @@ public final class JsonSupport {
                 try {
                     return Deserializer.deserialize(jsonData.asString(), BASE);
                 } catch (RuntimeException e) {
-                    Gdx.app.error("Json Read Exception (EnhancedRandom)", e.toString());
+                    System.out.println("Json Read Exception (EnhancedRandom): " + e.toString() + "\n"
+                            + jsonData.toJson(JsonWriter.OutputType.json));
                     return null;
                 }
             }
@@ -4851,7 +4852,7 @@ public final class JsonSupport {
     /**
      * Registers Base with the given Json object, so Base can be written to and read from JSON.
      * This is a simple wrapper around Base's built-in {@link Base#serializeToString()} and
-     * {@link Base#deserializeFromString(String)} methods.
+     * {@link Base#deserializeFromString(CharSequence)} methods.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
