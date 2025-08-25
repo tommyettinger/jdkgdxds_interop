@@ -3389,6 +3389,29 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers ThrashRandom with the given Json object, so ThrashRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerThrashRandom(@NonNull Json json) {
+        if(json.getSerializer(ThrashRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("ThaR", ThrashRandom.class);
+        json.setSerializer(ThrashRandom.class, new Json.Serializer<ThrashRandom>() {
+            @Override
+            public void write(Json json, ThrashRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public ThrashRandom read(Json json, JsonValue jsonData, Class type) {
+                ThrashRandom r = new ThrashRandom(1L, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers LaserRandom with the given Json object, so LaserRandom can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -4045,6 +4068,7 @@ public final class JsonSupport {
         registerSoloRandom(json);
         registerStrangerRandom(json);
         registerTaxon32Random(json);
+        registerThrashRandom(json);
         registerTricycleRandom(json);
         registerTrimRandom(json);
         registerTupleQuasiRandom(json);
