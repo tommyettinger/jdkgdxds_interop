@@ -93,6 +93,7 @@ public final class JsonSupport {
         registerLongOrderedSet(json);
         registerOffsetBitSet(json);
         registerEnumSet(json);
+        registerEnumOrderedSet(json);
 
         registerObjectObjectMap(json);
         registerObjectObjectOrderedMap(json);
@@ -122,6 +123,13 @@ public final class JsonSupport {
         registerLongFloatOrderedMap(json);
 
         registerEnumMap(json);
+        registerEnumOrderedMap(json);
+        registerEnumIntMap(json);
+        registerEnumIntOrderedMap(json);
+        registerEnumLongMap(json);
+        registerEnumLongOrderedMap(json);
+        registerEnumFloatMap(json);
+        registerEnumFloatOrderedMap(json);
 
         registerCaseInsensitiveSet(json);
         registerCaseInsensitiveOrderedSet(json);

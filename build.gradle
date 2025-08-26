@@ -6,7 +6,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.31.0'
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.34.0'
     }
 }
 
@@ -68,7 +68,7 @@ mavenPublishing {
     configure(new JavaLibrary(new JavadocJar.Javadoc(), true))
 }
 
-mavenPlainJavadocJar.archiveBaseName.set("$projectName")
+plainJavadocJar.archiveBaseName.set("$projectName")
 
 compileJava {
     sourceCompatibility = 8
@@ -89,8 +89,8 @@ compileTestJava {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven { url 'https://oss.sonatype.org/content/repositories/releases/' }
-    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+//    maven { url 'https://oss.sonatype.org/content/repositories/releases/' }
+//    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     maven { url 'https://jitpack.io' }
 }
 
@@ -98,6 +98,7 @@ dependencies {
     api "com.github.tommyettinger:digital:$digitalVersion"
     api "com.github.tommyettinger:juniper:$juniperVersion"
     api "com.github.tommyettinger:jdkgdxds:$jdkgdxdsVersion"
+    //noinspection GDXOutdatedVersionGradleGroovy
     api "com.badlogicgames.gdx:gdx:$gdxVersion"
     testImplementation "junit:junit:4.13.2"
 }
