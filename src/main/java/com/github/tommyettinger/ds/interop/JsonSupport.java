@@ -92,6 +92,7 @@ public final class JsonSupport {
         registerLongSet(json);
         registerLongOrderedSet(json);
         registerOffsetBitSet(json);
+        registerCharBitSet(json);
         registerEnumSet(json);
         registerEnumOrderedSet(json);
 
@@ -2901,6 +2902,35 @@ public final class JsonSupport {
                 obs.setOffset(jsonData.get("offset").asInt());
                 obs.addAll(jsonData.get("values").asIntArray());
                 return obs;
+            }
+        });
+    }
+
+
+    /**
+     * Registers CharBitSet with the given Json object, so CharBitSet can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerCharBitSet(@NonNull Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("cBS", CharBitSet.class); // char items, Bit kind, Set type
+        json.setSerializer(CharBitSet.class, new Json.Serializer<CharBitSet>() {
+            @Override
+            public void write(Json json, CharBitSet object, Class knownType) {
+                json.writeObjectStart(CharBitSet.class, knownType);
+                json.writeArrayStart("raw");
+                int[] bits = object.getRawBits();
+                for (int i = 0, n = bits.length; i < n; i++) {
+                    json.writeValue(bits[i]);
+                }
+                json.writeArrayEnd();
+                json.writeObjectEnd();
+            }
+
+            @Override
+            public CharBitSet read(Json json, JsonValue jsonData, Class type) {
+                if (jsonData == null || jsonData.isNull()) return null;
+                return new CharBitSet(jsonData.get("raw").asIntArray(), true);
             }
         });
     }
