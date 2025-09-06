@@ -1618,6 +1618,26 @@ public class JsonTest {
         System.out.println();
     }
 
+
+    @Test
+    public void testCharBitSet() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerCharBitSet(json);
+        CharBitSet digits = new CharBitSet(Character::isDigit);
+        digits.add('Z');
+        String data = json.toJson(digits);
+        System.out.println(data);
+        CharBitSet digits2 = json.fromJson(CharBitSet.class, data);
+        CharIterator it = digits2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextChar());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+        Assert.assertEquals(digits, digits2);
+        System.out.println();
+    }
+
     @Test
     public void testLaserRandom() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
