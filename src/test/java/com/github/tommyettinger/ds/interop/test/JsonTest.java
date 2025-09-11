@@ -29,12 +29,10 @@ import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.ds.EnumMap;
 import com.github.tommyettinger.ds.EnumSet;
 import com.github.tommyettinger.ds.interop.JsonSupport;
-import com.github.tommyettinger.function.CharPredicate;
-import com.github.tommyettinger.function.CharToCharFunction;
 import com.github.tommyettinger.random.*;
 import com.github.tommyettinger.ds.support.util.*;
 import com.github.tommyettinger.random.distribution.*;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -1563,7 +1561,7 @@ public class JsonTest {
 
     public static class TestNode<E> extends BinaryHeap.Node {
 
-        public E element;
+        public @Nullable E element;
 
         TestNode(){
             super(0f);
@@ -1573,7 +1571,7 @@ public class JsonTest {
          * @param value The initial value for the node. To change the value, use {@link BinaryHeap.Node#add(BinaryHeap.Node, float)} if the node is
          *              not in the heap, or {@link BinaryHeap.Node#setValue(BinaryHeap.Node, float)} if the node is in the heap.
          */
-        public TestNode(E element, float value) {
+        public TestNode(@Nullable E element, float value) {
             super(value);
             this.element = element;
         }
@@ -3119,8 +3117,8 @@ public class JsonTest {
 
             Composite composite = (Composite) o;
 
-            if (random != null ? !random.equals(composite.random) : composite.random != null) return false;
-            return mapping != null ? mapping.equals(composite.mapping) : composite.mapping == null;
+            if (!Objects.equals(random, composite.random)) return false;
+            return Objects.equals(mapping, composite.mapping);
         }
 
         @Override
@@ -3131,7 +3129,7 @@ public class JsonTest {
         }
     }
 
-    public static void registerComposite(@NonNull Json json) {
+    public static void registerComposite(Json json) {
         JsonSupport.registerObjectObjectMap(json);
         JsonSupport.registerEnhancedRandom(json);
         json.setSerializer(Composite.class, new Json.Serializer<Composite>() {
@@ -3144,7 +3142,7 @@ public class JsonTest {
             }
 
             @Override
-            public Composite read(Json json, JsonValue jsonData, Class type) {
+            public @Nullable Composite read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 JsonValue current = jsonData.child;
                 EnhancedRandom random = json.readValue(EnhancedRandom.class, current);
@@ -3164,9 +3162,9 @@ public class JsonTest {
         String data = json.toJson(composite);
         System.out.println(data);
         Composite composite2 = json.fromJson(Composite.class, data);
-        System.out.println(composite.mapping.toString());
+        System.out.println(composite.mapping);
         System.out.println(composite.random.nextInt());
-        System.out.println(composite2.mapping.toString());
+        System.out.println(composite2.mapping);
         System.out.println(composite2.random.nextInt());
         System.out.println();
     }
@@ -3174,8 +3172,6 @@ public class JsonTest {
     @SuppressWarnings({"unchecked", "DataFlowIssue"})
     @Test
     public void testDeep() {
-//        json.addClassTag("str", String.class);
-//        json.setTypeName("=");
         {
             ObjectList<ObjectList<ObjectObjectMap<Vector2, String>>> deep = new ObjectList<>(8), after;
             ObjectObjectMap<Vector2, String> hm0 = new ObjectObjectMap<>(1);

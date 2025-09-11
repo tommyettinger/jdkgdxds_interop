@@ -29,7 +29,7 @@ import com.github.tommyettinger.ds.interop.JsonSupport;
 import com.github.tommyettinger.ds.support.util.*;
 import com.github.tommyettinger.random.*;
 import com.github.tommyettinger.random.distribution.*;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -2701,7 +2701,7 @@ public class NoRegistrationJsonTest {
         }
     }
 
-    public static void registerComposite(@NonNull Json json) {
+    public static void registerComposite(@NotNull Json json) {
         //JsonSupport.registerObjectObjectMap(json);
         //JsonSupport.registerEnhancedRandom(json);
         json.setSerializer(Composite.class, new Json.Serializer<Composite>() {
