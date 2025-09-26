@@ -3801,7 +3801,7 @@ public final class JsonSupport {
      */
     public static void registerTraceRandom(@NotNull Json json) {
         if(json.getSerializer(TraceRandom.class) != null) return;
-        if(ADD_CLASS_TAGS) json.addClassTag("AceR", TraceRandom.class);
+        if(ADD_CLASS_TAGS) json.addClassTag("TrcR", TraceRandom.class);
         json.setSerializer(TraceRandom.class, new Json.Serializer<TraceRandom>() {
             @Override
             public void write(Json json, TraceRandom object, Class knownType) {
@@ -3811,6 +3811,30 @@ public final class JsonSupport {
             @Override
             public TraceRandom read(Json json, JsonValue jsonData, Class type) {
                 TraceRandom r = new TraceRandom(1, 1L, 1L, 1L, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers MaceRandom with the given Json object, so MaceRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerMaceRandom(@NotNull Json json) {
+        if(json.getSerializer(MaceRandom.class) != null) return;
+        MaceRandom.registerWithDeserializer();
+        if(ADD_CLASS_TAGS) json.addClassTag("MceR", MaceRandom.class);
+        json.setSerializer(MaceRandom.class, new Json.Serializer<MaceRandom>() {
+            @Override
+            public void write(Json json, MaceRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public MaceRandom read(Json json, JsonValue jsonData, Class type) {
+                MaceRandom r = new MaceRandom(1, 1L, 1L, 1L, 1L, 1L);
                 r.stringDeserialize(jsonData.asString(), BASE);
                 return r;
             }
@@ -4117,6 +4141,7 @@ public final class JsonSupport {
         registerLFSR64QuasiRandom(json);
         registerLowChangeQuasiRandom(json);
         registerTraceRandom(json);
+        registerMaceRandom(json);
         registerMizuchiRandom(json);
         registerOrbitalRandom(json);
         registerPasarRandom(json);
