@@ -3565,6 +3565,29 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers Mx3Random with the given Json object, so Mx3Random can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerMx3Random(@NotNull Json json) {
+        if(json.getSerializer(Mx3Random.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("Mx3R", Mx3Random.class);
+        json.setSerializer(Mx3Random.class, new Json.Serializer<Mx3Random>() {
+            @Override
+            public void write(Json json, Mx3Random object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Mx3Random read(Json json, JsonValue jsonData, Class type) {
+                Mx3Random r = new Mx3Random(1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers ScruffRandom with the given Json object, so ScruffRandom can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -4140,9 +4163,9 @@ public final class JsonSupport {
         registerLaserRandom(json);
         registerLFSR64QuasiRandom(json);
         registerLowChangeQuasiRandom(json);
-        registerTraceRandom(json);
         registerMaceRandom(json);
         registerMizuchiRandom(json);
+        registerMx3Random(json);
         registerOrbitalRandom(json);
         registerPasarRandom(json);
         registerPcgRXSMXSRandom(json);
@@ -4156,6 +4179,7 @@ public final class JsonSupport {
         registerTaxon32Random(json);
         registerThrashRandom(json);
         registerThrooshRandom(json);
+        registerTraceRandom(json);
         registerTricycleRandom(json);
         registerTrimRandom(json);
         registerTupleQuasiRandom(json);
