@@ -3587,6 +3587,30 @@ public final class JsonSupport {
         });
     }
 
+
+    /**
+     * Registers HornRandom with the given Json object, so HornRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerHornRandom(@NotNull Json json) {
+        if(json.getSerializer(HornRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("HrnR", HornRandom.class);
+        json.setSerializer(HornRandom.class, new Json.Serializer<HornRandom>() {
+            @Override
+            public void write(Json json, HornRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public HornRandom read(Json json, JsonValue jsonData, Class type) {
+                HornRandom r = new HornRandom(1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
     /**
      * Registers ScruffRandom with the given Json object, so ScruffRandom can be written to and read from JSON.
      *
@@ -4158,6 +4182,7 @@ public final class JsonSupport {
         registerFlowRandom(json);
         registerFourWheelRandom(json);
         registerGoldenQuasiRandom(json);
+        registerHornRandom(json);
         registerJsf32Random(json);
         registerKnownSequenceRandom(json);
         registerLaserRandom(json);
