@@ -29,7 +29,6 @@ import com.github.tommyettinger.ds.interop.JsonSupport;
 import com.github.tommyettinger.ds.support.util.*;
 import com.github.tommyettinger.random.*;
 import com.github.tommyettinger.random.distribution.*;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -2701,7 +2700,7 @@ public class NoRegistrationJsonTest {
         }
     }
 
-    public static void registerComposite(@NotNull Json json) {
+    public static void registerComposite(Json json) {
         //JsonSupport.registerObjectObjectMap(json);
         //JsonSupport.registerEnhancedRandom(json);
         json.setSerializer(Composite.class, new Json.Serializer<Composite>() {
@@ -2741,7 +2740,7 @@ public class NoRegistrationJsonTest {
         System.out.println();
     }
 
-    @SuppressWarnings({"unchecked", "DataFlowIssue"})
+    @SuppressWarnings({"unchecked"})
     @Test
     public void testDeep() {
 //        json.addClassTag("str", String.class);

@@ -14,7 +14,4 @@
  * limitations under the License.
  */
 
-@NotNullByDefault
 package com.github.tommyettinger.ds.interop.test;
-
-import org.jetbrains.annotations.NotNullByDefault;

@@ -32,7 +32,6 @@ import com.github.tommyettinger.ds.interop.JsonSupport;
 import com.github.tommyettinger.random.*;
 import com.github.tommyettinger.ds.support.util.*;
 import com.github.tommyettinger.random.distribution.*;
-import org.jetbrains.annotations.Nullable;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -1561,7 +1560,7 @@ public class JsonTest {
 
     public static class TestNode<E> extends BinaryHeap.Node {
 
-        public @Nullable E element;
+        public E element;
 
         TestNode(){
             super(0f);
@@ -1571,7 +1570,7 @@ public class JsonTest {
          * @param value The initial value for the node. To change the value, use {@link BinaryHeap.Node#add(BinaryHeap.Node, float)} if the node is
          *              not in the heap, or {@link BinaryHeap.Node#setValue(BinaryHeap.Node, float)} if the node is in the heap.
          */
-        public TestNode(@Nullable E element, float value) {
+        public TestNode(E element, float value) {
             super(value);
             this.element = element;
         }
@@ -3142,7 +3141,7 @@ public class JsonTest {
             }
 
             @Override
-            public @Nullable Composite read(Json json, JsonValue jsonData, Class type) {
+            public Composite read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
                 JsonValue current = jsonData.child;
                 EnhancedRandom random = json.readValue(EnhancedRandom.class, current);

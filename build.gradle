@@ -85,8 +85,5 @@ dependencies {
     //noinspection GDXOutdatedVersionGradleGroovy
     api "com.badlogicgames.gdx:gdx:$gdxVersion"
 
-    compileOnly "org.jetbrains:annotations:$jbAnnotations"
-    testCompileOnly "org.jetbrains:annotations:$jbAnnotations"
-
     testImplementation "junit:junit:4.13.2"
 }

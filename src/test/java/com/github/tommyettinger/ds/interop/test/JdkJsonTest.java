@@ -237,7 +237,7 @@ public class JdkJsonTest {
         }
         System.out.println();
     }
-    @SuppressWarnings({"unchecked", "DataFlowIssue"})
+    @SuppressWarnings({"unchecked"})
     @Test(expected = ClassCastException.class)
     public void testDeep() {
 //        json.addClassTag("str", String.class);

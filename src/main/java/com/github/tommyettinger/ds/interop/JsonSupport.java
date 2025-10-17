@@ -30,19 +30,17 @@ import com.github.tommyettinger.ds.support.util.*;
 import com.github.tommyettinger.function.ObjToObjFunction;
 import com.github.tommyettinger.random.*;
 import com.github.tommyettinger.random.distribution.*;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings({"rawtypes", "unchecked"})
 public final class JsonSupport {
     private JsonSupport() {
     }
 
-    @NotNull
     private static Base BASE = Base.BASE10;
 
     private static boolean LEGIBLE_FLOATS = true;
@@ -54,7 +52,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have serializers registered for all JDKGDXDS types.
      */
-    public static void registerAll(@NotNull Json json) {
+    public static void registerAll(Json json) {
         registerObjectList(json);
         registerIntList(json);
         registerLongList(json);
@@ -302,7 +300,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerObjectList(@NotNull Json json) {
+    public static void registerObjectList(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("oL", ObjectList.class);
         json.setSerializer(ObjectList.class, new Json.Serializer<ObjectList>() {
             @Override
@@ -333,7 +331,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerIntList(@NotNull Json json) {
+    public static void registerIntList(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("iL", IntList.class);
         json.setSerializer(IntList.class, new Json.Serializer<IntList>() {
             @Override
@@ -357,7 +355,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLongList(@NotNull Json json) {
+    public static void registerLongList(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("lL", LongList.class);
         json.setSerializer(LongList.class, new Json.Serializer<LongList>() {
             @Override
@@ -380,7 +378,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerFloatList(@NotNull Json json) {
+    public static void registerFloatList(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("fL", FloatList.class);
         json.setSerializer(FloatList.class, new Json.Serializer<FloatList>() {
             @Override
@@ -403,7 +401,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerByteList(@NotNull Json json) {
+    public static void registerByteList(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("bL", ByteList.class);
         json.setSerializer(ByteList.class, new Json.Serializer<ByteList>() {
             @Override
@@ -426,7 +424,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerShortList(@NotNull Json json) {
+    public static void registerShortList(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("sL", ShortList.class);
         json.setSerializer(ShortList.class, new Json.Serializer<ShortList>() {
             @Override
@@ -449,7 +447,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerCharList(@NotNull Json json) {
+    public static void registerCharList(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("cL", CharList.class);
         json.setSerializer(CharList.class, new Json.Serializer<CharList>() {
             @Override
@@ -472,7 +470,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerDoubleList(@NotNull Json json) {
+    public static void registerDoubleList(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("dL", DoubleList.class);
         json.setSerializer(DoubleList.class, new Json.Serializer<DoubleList>() {
             @Override
@@ -495,7 +493,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerBooleanList(@NotNull Json json) {
+    public static void registerBooleanList(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("tL", BooleanList.class); // t for truth; represents boolean
         json.setSerializer(BooleanList.class, new Json.Serializer<BooleanList>() {
             @Override
@@ -518,7 +516,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerObjectBag(@NotNull Json json) {
+    public static void registerObjectBag(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("oB", ObjectBag.class);
         json.setSerializer(ObjectBag.class, new Json.Serializer<ObjectBag>() {
             @Override
@@ -549,7 +547,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerIntBag(@NotNull Json json) {
+    public static void registerIntBag(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("iB", IntBag.class);
         json.setSerializer(IntBag.class, new Json.Serializer<IntBag>() {
             @Override
@@ -578,7 +576,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLongBag(@NotNull Json json) {
+    public static void registerLongBag(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("lB", LongBag.class);
         json.setSerializer(LongBag.class, new Json.Serializer<LongBag>() {
             @Override
@@ -606,7 +604,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerFloatBag(@NotNull Json json) {
+    public static void registerFloatBag(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("fB", FloatBag.class);
         json.setSerializer(FloatBag.class, new Json.Serializer<FloatBag>() {
             @Override
@@ -629,7 +627,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerByteBag(@NotNull Json json) {
+    public static void registerByteBag(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("bB", ByteBag.class);
         json.setSerializer(ByteBag.class, new Json.Serializer<ByteBag>() {
             @Override
@@ -657,7 +655,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerShortBag(@NotNull Json json) {
+    public static void registerShortBag(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("sB", ShortBag.class);
         json.setSerializer(ShortBag.class, new Json.Serializer<ShortBag>() {
             @Override
@@ -685,7 +683,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerCharBag(@NotNull Json json) {
+    public static void registerCharBag(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("cB", CharBag.class);
         json.setSerializer(CharBag.class, new Json.Serializer<CharBag>() {
             @Override
@@ -713,7 +711,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerDoubleBag(@NotNull Json json) {
+    public static void registerDoubleBag(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("dB", DoubleBag.class);
         json.setSerializer(DoubleBag.class, new Json.Serializer<DoubleBag>() {
             @Override
@@ -736,7 +734,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerBooleanBag(@NotNull Json json) {
+    public static void registerBooleanBag(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("tB", BooleanBag.class); // t for truth; represents boolean
         json.setSerializer(BooleanBag.class, new Json.Serializer<BooleanBag>() {
             @Override
@@ -759,7 +757,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerObjectDeque(@NotNull Json json) {
+    public static void registerObjectDeque(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("oQ", ObjectDeque.class);
         json.setSerializer(ObjectDeque.class, new Json.Serializer<ObjectDeque>() {
             @Override
@@ -792,7 +790,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLongDeque(@NotNull Json json) {
+    public static void registerLongDeque(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("lQ", LongDeque.class);
         json.setSerializer(LongDeque.class, new Json.Serializer<LongDeque>() {
             @Override
@@ -825,7 +823,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerIntDeque(@NotNull Json json) {
+    public static void registerIntDeque(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("iQ", IntDeque.class);
         json.setSerializer(IntDeque.class, new Json.Serializer<IntDeque>() {
             @Override
@@ -858,7 +856,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerCharDeque(@NotNull Json json) {
+    public static void registerCharDeque(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("cQ", CharDeque.class);
         json.setSerializer(CharDeque.class, new Json.Serializer<CharDeque>() {
             @Override
@@ -891,7 +889,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerShortDeque(@NotNull Json json) {
+    public static void registerShortDeque(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("sQ", ShortDeque.class);
         json.setSerializer(ShortDeque.class, new Json.Serializer<ShortDeque>() {
             @Override
@@ -924,7 +922,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerByteDeque(@NotNull Json json) {
+    public static void registerByteDeque(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("bQ", ByteDeque.class);
         json.setSerializer(ByteDeque.class, new Json.Serializer<ByteDeque>() {
             @Override
@@ -957,7 +955,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerFloatDeque(@NotNull Json json) {
+    public static void registerFloatDeque(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("fQ", FloatDeque.class);
         json.setSerializer(FloatDeque.class, new Json.Serializer<FloatDeque>() {
             @Override
@@ -991,7 +989,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerDoubleDeque(@NotNull Json json) {
+    public static void registerDoubleDeque(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("dQ", DoubleDeque.class);
         json.setSerializer(DoubleDeque.class, new Json.Serializer<DoubleDeque>() {
             @Override
@@ -1025,7 +1023,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerBooleanDeque(@NotNull Json json) {
+    public static void registerBooleanDeque(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("tQ", ObjectDeque.class); // t for truth (boolean)
         json.setSerializer(BooleanDeque.class, new Json.Serializer<BooleanDeque>() {
             @Override
@@ -1058,7 +1056,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerEnumSet(@NotNull Json json) {
+    public static void registerEnumSet(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("eS", EnumSet.class);
         json.setSerializer(EnumSet.class, new Json.Serializer<EnumSet>() {
             @Override
@@ -1089,7 +1087,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerEnumOrderedSet(@NotNull Json json) {
+    public static void registerEnumOrderedSet(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("eOS", EnumOrderedSet.class);
         json.setSerializer(EnumOrderedSet.class, new Json.Serializer<EnumOrderedSet>() {
             @Override
@@ -1123,7 +1121,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerObjectSet(@NotNull Json json) {
+    public static void registerObjectSet(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("oS", ObjectSet.class);
         json.setSerializer(ObjectSet.class, new Json.Serializer<ObjectSet>() {
             @Override
@@ -1154,7 +1152,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerObjectOrderedSet(@NotNull Json json) {
+    public static void registerObjectOrderedSet(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("oOS", ObjectOrderedSet.class);
         json.setSerializer(ObjectOrderedSet.class, new Json.Serializer<ObjectOrderedSet>() {
             @Override
@@ -1188,7 +1186,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerIntSet(@NotNull Json json) {
+    public static void registerIntSet(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("iS", IntSet.class);
         json.setSerializer(IntSet.class, new Json.Serializer<IntSet>() {
             @Override
@@ -1216,7 +1214,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerIntOrderedSet(@NotNull Json json) {
+    public static void registerIntOrderedSet(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("iOS", IntOrderedSet.class);
         json.setSerializer(IntOrderedSet.class, new Json.Serializer<IntOrderedSet>() {
             @Override
@@ -1248,7 +1246,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLongSet(@NotNull Json json) {
+    public static void registerLongSet(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("lS", LongSet.class);
         json.setSerializer(LongSet.class, new Json.Serializer<LongSet>() {
             @Override
@@ -1276,7 +1274,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLongOrderedSet(@NotNull Json json) {
+    public static void registerLongOrderedSet(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("lOS", LongOrderedSet.class);
         json.setSerializer(LongOrderedSet.class, new Json.Serializer<LongOrderedSet>() {
             @Override
@@ -1308,7 +1306,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerEnumMap(@NotNull Json json) {
+    public static void registerEnumMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("eoM", EnumMap.class);
         json.setSerializer(EnumMap.class, new Json.Serializer<EnumMap>() {
             @Override
@@ -1347,7 +1345,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerEnumOrderedMap(@NotNull Json json) {
+    public static void registerEnumOrderedMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("eoOM", EnumOrderedMap.class);
         json.setSerializer(EnumOrderedMap.class, new Json.Serializer<EnumOrderedMap>() {
             @Override
@@ -1389,7 +1387,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerEnumIntMap(@NotNull Json json) {
+    public static void registerEnumIntMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("elM", EnumIntMap.class);
         json.setSerializer(EnumIntMap.class, new Json.Serializer<EnumIntMap>() {
             @Override
@@ -1424,7 +1422,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerEnumIntOrderedMap(@NotNull Json json) {
+    public static void registerEnumIntOrderedMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("elOM", EnumIntOrderedMap.class);
         json.setSerializer(EnumIntOrderedMap.class, new Json.Serializer<EnumIntOrderedMap>() {
             @Override
@@ -1462,7 +1460,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerEnumLongMap(@NotNull Json json) {
+    public static void registerEnumLongMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("elM", EnumLongMap.class);
         json.setSerializer(EnumLongMap.class, new Json.Serializer<EnumLongMap>() {
             @Override
@@ -1497,7 +1495,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerEnumLongOrderedMap(@NotNull Json json) {
+    public static void registerEnumLongOrderedMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("elOM", EnumLongOrderedMap.class);
         json.setSerializer(EnumLongOrderedMap.class, new Json.Serializer<EnumLongOrderedMap>() {
             @Override
@@ -1535,7 +1533,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerEnumFloatMap(@NotNull Json json) {
+    public static void registerEnumFloatMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("elM", EnumFloatMap.class);
         json.setSerializer(EnumFloatMap.class, new Json.Serializer<EnumFloatMap>() {
             @Override
@@ -1570,7 +1568,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerEnumFloatOrderedMap(@NotNull Json json) {
+    public static void registerEnumFloatOrderedMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("elOM", EnumFloatOrderedMap.class);
         json.setSerializer(EnumFloatOrderedMap.class, new Json.Serializer<EnumFloatOrderedMap>() {
             @Override
@@ -1608,7 +1606,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerObjectObjectMap(@NotNull Json json) {
+    public static void registerObjectObjectMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("ooM", ObjectObjectMap.class);
         json.setSerializer(ObjectObjectMap.class, new Json.Serializer<ObjectObjectMap>() {
             @Override
@@ -1648,7 +1646,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerObjectObjectOrderedMap(@NotNull Json json) {
+    public static void registerObjectObjectOrderedMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("ooOM", ObjectObjectOrderedMap.class);
         json.setSerializer(ObjectObjectOrderedMap.class, new Json.Serializer<ObjectObjectOrderedMap>() {
             @Override
@@ -1691,7 +1689,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerObjectLongMap(@NotNull Json json) {
+    public static void registerObjectLongMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("olM", ObjectLongMap.class);
         json.setSerializer(ObjectLongMap.class, new Json.Serializer<ObjectLongMap>() {
             @Override
@@ -1731,7 +1729,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerObjectLongOrderedMap(@NotNull Json json) {
+    public static void registerObjectLongOrderedMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("olOM", ObjectLongOrderedMap.class);
         json.setSerializer(ObjectLongOrderedMap.class, new Json.Serializer<ObjectLongOrderedMap>() {
             @Override
@@ -1774,7 +1772,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerObjectIntMap(@NotNull Json json) {
+    public static void registerObjectIntMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("oiM", ObjectIntMap.class);
         json.setSerializer(ObjectIntMap.class, new Json.Serializer<ObjectIntMap>() {
             @Override
@@ -1814,7 +1812,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerObjectIntOrderedMap(@NotNull Json json) {
+    public static void registerObjectIntOrderedMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("oiOM", ObjectIntOrderedMap.class);
         json.setSerializer(ObjectIntOrderedMap.class, new Json.Serializer<ObjectIntOrderedMap>() {
             @Override
@@ -1857,7 +1855,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerObjectFloatMap(@NotNull Json json) {
+    public static void registerObjectFloatMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("ofM", ObjectFloatMap.class);
         json.setSerializer(ObjectFloatMap.class, new Json.Serializer<ObjectFloatMap>() {
             @Override
@@ -1897,7 +1895,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerObjectFloatOrderedMap(@NotNull Json json) {
+    public static void registerObjectFloatOrderedMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("ofOM", ObjectFloatOrderedMap.class);
         json.setSerializer(ObjectFloatOrderedMap.class, new Json.Serializer<ObjectFloatOrderedMap>() {
             @Override
@@ -1940,7 +1938,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerIntObjectMap(@NotNull Json json) {
+    public static void registerIntObjectMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("ioM", IntObjectMap.class);
         json.setSerializer(IntObjectMap.class, new Json.Serializer<IntObjectMap>() {
             @Override
@@ -1974,7 +1972,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerIntObjectOrderedMap(@NotNull Json json) {
+    public static void registerIntObjectOrderedMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("ioOM", IntObjectOrderedMap.class);
         json.setSerializer(IntObjectOrderedMap.class, new Json.Serializer<IntObjectOrderedMap>() {
             @Override
@@ -2012,7 +2010,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerIntIntMap(@NotNull Json json) {
+    public static void registerIntIntMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("iiM", IntIntMap.class);
         json.setSerializer(IntIntMap.class, new Json.Serializer<IntIntMap>() {
             @Override
@@ -2046,7 +2044,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerIntIntOrderedMap(@NotNull Json json) {
+    public static void registerIntIntOrderedMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("iiOM", IntIntOrderedMap.class);
         json.setSerializer(IntIntOrderedMap.class, new Json.Serializer<IntIntOrderedMap>() {
             @Override
@@ -2084,7 +2082,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerIntLongMap(@NotNull Json json) {
+    public static void registerIntLongMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("ilM", IntLongMap.class);
         json.setSerializer(IntLongMap.class, new Json.Serializer<IntLongMap>() {
             @Override
@@ -2118,7 +2116,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerIntLongOrderedMap(@NotNull Json json) {
+    public static void registerIntLongOrderedMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("ilOM", IntLongOrderedMap.class);
         json.setSerializer(IntLongOrderedMap.class, new Json.Serializer<IntLongOrderedMap>() {
             @Override
@@ -2156,7 +2154,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerIntFloatMap(@NotNull Json json) {
+    public static void registerIntFloatMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("ifM", IntFloatMap.class);
         json.setSerializer(IntFloatMap.class, new Json.Serializer<IntFloatMap>() {
             @Override
@@ -2190,7 +2188,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerIntFloatOrderedMap(@NotNull Json json) {
+    public static void registerIntFloatOrderedMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("ifOM", IntFloatOrderedMap.class);
         json.setSerializer(IntFloatOrderedMap.class, new Json.Serializer<IntFloatOrderedMap>() {
             @Override
@@ -2228,7 +2226,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLongObjectMap(@NotNull Json json) {
+    public static void registerLongObjectMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("loM", LongObjectMap.class);
         json.setSerializer(LongObjectMap.class, new Json.Serializer<LongObjectMap>() {
             @Override
@@ -2262,7 +2260,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLongObjectOrderedMap(@NotNull Json json) {
+    public static void registerLongObjectOrderedMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("loOM", LongObjectOrderedMap.class);
         json.setSerializer(LongObjectOrderedMap.class, new Json.Serializer<LongObjectOrderedMap>() {
             @Override
@@ -2300,7 +2298,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLongIntMap(@NotNull Json json) {
+    public static void registerLongIntMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("liM", LongIntMap.class);
         json.setSerializer(LongIntMap.class, new Json.Serializer<LongIntMap>() {
             @Override
@@ -2334,7 +2332,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLongIntOrderedMap(@NotNull Json json) {
+    public static void registerLongIntOrderedMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("liOM", LongIntOrderedMap.class);
         json.setSerializer(LongIntOrderedMap.class, new Json.Serializer<LongIntOrderedMap>() {
             @Override
@@ -2372,7 +2370,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLongLongMap(@NotNull Json json) {
+    public static void registerLongLongMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("llM", LongLongMap.class);
         json.setSerializer(LongLongMap.class, new Json.Serializer<LongLongMap>() {
             @Override
@@ -2406,7 +2404,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLongLongOrderedMap(@NotNull Json json) {
+    public static void registerLongLongOrderedMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("llOM", LongLongOrderedMap.class);
         json.setSerializer(LongLongOrderedMap.class, new Json.Serializer<LongLongOrderedMap>() {
             @Override
@@ -2444,7 +2442,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLongFloatMap(@NotNull Json json) {
+    public static void registerLongFloatMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("lfM", LongFloatMap.class);
         json.setSerializer(LongFloatMap.class, new Json.Serializer<LongFloatMap>() {
             @Override
@@ -2478,7 +2476,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLongFloatOrderedMap(@NotNull Json json) {
+    public static void registerLongFloatOrderedMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("lfOM", LongFloatOrderedMap.class);
         json.setSerializer(LongFloatOrderedMap.class, new Json.Serializer<LongFloatOrderedMap>() {
             @Override
@@ -2518,7 +2516,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerBinaryHeap(@NotNull Json json) {
+    public static void registerBinaryHeap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("oBQ", BinaryHeap.class); // object items, Bit kind, Queue type
         json.setSerializer(BinaryHeap.class, new Json.Serializer<BinaryHeap>() {
             @Override
@@ -2551,7 +2549,7 @@ public final class JsonSupport {
      * @param json a libGDX Json object that will have a serializer registered
      */
     
-    public static void registerNumberedSet(@NotNull Json json) {
+    public static void registerNumberedSet(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("oNS", NumberedSet.class); // object items, Numbered kind, Set type
         json.setSerializer(NumberedSet.class, new Json.Serializer<NumberedSet>() {
             @Override
@@ -2582,7 +2580,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerCaseInsensitiveSet(@NotNull Json json) {
+    public static void registerCaseInsensitiveSet(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("oCS", CaseInsensitiveSet.class); // object items, Case-insensitive kind, Set type
         json.setSerializer(CaseInsensitiveSet.class, new Json.Serializer<CaseInsensitiveSet>() {
             @Override
@@ -2613,7 +2611,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerCaseInsensitiveOrderedSet(@NotNull Json json) {
+    public static void registerCaseInsensitiveOrderedSet(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("oCOS", CaseInsensitiveOrderedSet.class); // object items, Case-insensitive+Ordered kind, Set type
         json.setSerializer(CaseInsensitiveOrderedSet.class, new Json.Serializer<CaseInsensitiveOrderedSet>() {
             @Override
@@ -2647,7 +2645,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerCaseInsensitiveMap(@NotNull Json json) {
+    public static void registerCaseInsensitiveMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("ooCM", CaseInsensitiveSet.class); // object keys, object values, Case-insensitive kind, Map type
         json.setSerializer(CaseInsensitiveMap.class, new Json.Serializer<CaseInsensitiveMap>() {
             @Override
@@ -2685,7 +2683,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerCaseInsensitiveOrderedMap(@NotNull Json json) {
+    public static void registerCaseInsensitiveOrderedMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("ooCOM", CaseInsensitiveSet.class); // object keys, object values, Case-insensitive+Ordered kind, Map type
         json.setSerializer(CaseInsensitiveOrderedMap.class, new Json.Serializer<CaseInsensitiveOrderedMap>() {
             @Override
@@ -2725,7 +2723,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerFilteredStringSet(@NotNull Json json) {
+    public static void registerFilteredStringSet(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("oFSS", FilteredStringSet.class); // object items, Filtered String kind, Set type
         json.setSerializer(FilteredStringSet.class, new Json.Serializer<FilteredStringSet>() {
             @Override
@@ -2759,7 +2757,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerFilteredStringOrderedSet(@NotNull Json json) {
+    public static void registerFilteredStringOrderedSet(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("oFSOS", FilteredStringOrderedSet.class); // object items, Filtered String kind, Ordered kind, Set type
         json.setSerializer(FilteredStringOrderedSet.class, new Json.Serializer<FilteredStringOrderedSet>() {
             @Override
@@ -2795,7 +2793,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerFilteredStringMap(@NotNull Json json) {
+    public static void registerFilteredStringMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("ooFSM", FilteredStringSet.class); // object keys, object values, Filtered String kind, Map type
         json.setSerializer(FilteredStringMap.class, new Json.Serializer<FilteredStringMap>() {
             @Override
@@ -2836,7 +2834,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerFilteredStringOrderedMap(@NotNull Json json) {
+    public static void registerFilteredStringOrderedMap(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("ooFSOM", FilteredStringSet.class); // object keys, object values, Filtered String kind, Ordered kind, Map type
         json.setSerializer(FilteredStringOrderedMap.class, new Json.Serializer<FilteredStringOrderedMap>() {
             @Override
@@ -2878,7 +2876,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerOffsetBitSet(@NotNull Json json) {
+    public static void registerOffsetBitSet(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("iBS", OffsetBitSet.class); // int items, Bit kind, Set type
         json.setSerializer(OffsetBitSet.class, new Json.Serializer<OffsetBitSet>() {
             @Override
@@ -2912,7 +2910,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerCharBitSet(@NotNull Json json) {
+    public static void registerCharBitSet(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("cBS", CharBitSet.class); // char items, Bit kind, Set type
         json.setSerializer(CharBitSet.class, new Json.Serializer<CharBitSet>() {
             @Override
@@ -2947,7 +2945,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have class tags added, if allowed
      */
-    public static void registerJunction(@NotNull Json json) {
+    public static void registerJunction(Json json) {
         if(ADD_CLASS_TAGS) {
             json.addClassTag("Junc", Junction.class);
             json.addClassTag("JAny", Junction.Any.class);
@@ -2968,7 +2966,7 @@ public final class JsonSupport {
      * Surprisingly, this method is compatible with GWT, even though most concurrent code doesn't work there.
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerAtomicLong(@NotNull Json json) {
+    public static void registerAtomicLong(Json json) {
         json.setSerializer(AtomicLong.class, new Json.Serializer<AtomicLong>() {
             @Override
             public void write(Json json, AtomicLong object, Class knownType) {
@@ -2994,7 +2992,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerAlternateRandom(@NotNull Json json) {
+    public static void registerAlternateRandom(Json json) {
         if(json.getSerializer(AlternateRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("AltR", AlternateRandom.class);
         json.setSerializer(AlternateRandom.class, new Json.Serializer<AlternateRandom>() {
@@ -3017,7 +3015,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerFourWheelRandom(@NotNull Json json) {
+    public static void registerFourWheelRandom(Json json) {
         if(json.getSerializer(FourWheelRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("FoWR", FourWheelRandom.class);
         json.setSerializer(FourWheelRandom.class, new Json.Serializer<FourWheelRandom>() {
@@ -3040,7 +3038,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerTrimRandom(@NotNull Json json) {
+    public static void registerTrimRandom(Json json) {
         if(json.getSerializer(TrimRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("TrmR", TrimRandom.class);
         json.setSerializer(TrimRandom.class, new Json.Serializer<TrimRandom>() {
@@ -3063,7 +3061,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerWhiskerRandom(@NotNull Json json) {
+    public static void registerWhiskerRandom(Json json) {
         if(json.getSerializer(WhiskerRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("WhiR", WhiskerRandom.class);
         json.setSerializer(WhiskerRandom.class, new Json.Serializer<WhiskerRandom>() {
@@ -3086,7 +3084,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerPasarRandom(@NotNull Json json) {
+    public static void registerPasarRandom(Json json) {
         if(json.getSerializer(PasarRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("PasR", PasarRandom.class);
         json.setSerializer(PasarRandom.class, new Json.Serializer<PasarRandom>() {
@@ -3109,7 +3107,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerAceRandom(@NotNull Json json) {
+    public static void registerAceRandom(Json json) {
         if(json.getSerializer(AceRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("AceR", AceRandom.class);
         json.setSerializer(AceRandom.class, new Json.Serializer<AceRandom>() {
@@ -3132,7 +3130,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerChopRandom(@NotNull Json json) {
+    public static void registerChopRandom(Json json) {
         if(json.getSerializer(ChopRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("ChpR", ChopRandom.class);
         json.setSerializer(ChopRandom.class, new Json.Serializer<ChopRandom>() {
@@ -3155,7 +3153,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerJsf32Random(@NotNull Json json) {
+    public static void registerJsf32Random(Json json) {
         if(json.getSerializer(Jsf32Random.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("JS3R", Jsf32Random.class);
         json.setSerializer(Jsf32Random.class, new Json.Serializer<Jsf32Random>() {
@@ -3178,7 +3176,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerXoshiro128PlusPlusRandom(@NotNull Json json) {
+    public static void registerXoshiro128PlusPlusRandom(Json json) {
         if(json.getSerializer(Xoshiro128PlusPlusRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("XPPR", Xoshiro128PlusPlusRandom.class);
         json.setSerializer(Xoshiro128PlusPlusRandom.class, new Json.Serializer<Xoshiro128PlusPlusRandom>() {
@@ -3201,7 +3199,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerChip32Random(@NotNull Json json) {
+    public static void registerChip32Random(Json json) {
         if(json.getSerializer(Chip32Random.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("XPPR", Chip32Random.class);
         json.setSerializer(Chip32Random.class, new Json.Serializer<Chip32Random>() {
@@ -3224,7 +3222,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerXoshiro160RoadroxoRandom(@NotNull Json json) {
+    public static void registerXoshiro160RoadroxoRandom(Json json) {
         if(json.getSerializer(Xoshiro160RoadroxoRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("XPPR", Xoshiro160RoadroxoRandom.class);
         json.setSerializer(Xoshiro160RoadroxoRandom.class, new Json.Serializer<Xoshiro160RoadroxoRandom>() {
@@ -3247,7 +3245,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerRespite32Random(@NotNull Json json) {
+    public static void registerRespite32Random(Json json) {
         if(json.getSerializer(Respite32Random.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("Re3R", Respite32Random.class);
         json.setSerializer(Respite32Random.class, new Json.Serializer<Respite32Random>() {
@@ -3270,7 +3268,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerStrangerRandom(@NotNull Json json) {
+    public static void registerStrangerRandom(Json json) {
         if(json.getSerializer(StrangerRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("StrR", StrangerRandom.class);
         json.setSerializer(StrangerRandom.class, new Json.Serializer<StrangerRandom>() {
@@ -3293,7 +3291,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerXoshiro256StarStarRandom(@NotNull Json json) {
+    public static void registerXoshiro256StarStarRandom(Json json) {
         if(json.getSerializer(Xoshiro256StarStarRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("XSSR", Xoshiro256StarStarRandom.class);
         json.setSerializer(Xoshiro256StarStarRandom.class, new Json.Serializer<Xoshiro256StarStarRandom>() {
@@ -3316,7 +3314,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerXoroshiro128StarStarRandom(@NotNull Json json) {
+    public static void registerXoroshiro128StarStarRandom(Json json) {
         if(json.getSerializer(Xoroshiro128StarStarRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("XSSR", Xoroshiro128StarStarRandom.class);
         json.setSerializer(Xoroshiro128StarStarRandom.class, new Json.Serializer<Xoroshiro128StarStarRandom>() {
@@ -3339,7 +3337,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerXoshiro256MX3Random(@NotNull Json json) {
+    public static void registerXoshiro256MX3Random(Json json) {
         if(json.getSerializer(Xoshiro256MX3Random.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("XMXR", Xoshiro256MX3Random.class);
         json.setSerializer(Xoshiro256MX3Random.class, new Json.Serializer<Xoshiro256MX3Random>() {
@@ -3362,7 +3360,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerTricycleRandom(@NotNull Json json) {
+    public static void registerTricycleRandom(Json json) {
         if(json.getSerializer(TricycleRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("TriR", TricycleRandom.class);
         json.setSerializer(TricycleRandom.class, new Json.Serializer<TricycleRandom>() {
@@ -3385,7 +3383,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerRomuTrioRandom(@NotNull Json json) {
+    public static void registerRomuTrioRandom(Json json) {
         if(json.getSerializer(RomuTrioRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("RTrR", RomuTrioRandom.class);
         json.setSerializer(RomuTrioRandom.class, new Json.Serializer<RomuTrioRandom>() {
@@ -3408,7 +3406,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerSoloRandom(@NotNull Json json) {
+    public static void registerSoloRandom(Json json) {
         if(json.getSerializer(SoloRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("SolR", SoloRandom.class);
         json.setSerializer(SoloRandom.class, new Json.Serializer<SoloRandom>() {
@@ -3431,7 +3429,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerThrashRandom(@NotNull Json json) {
+    public static void registerThrashRandom(Json json) {
         if(json.getSerializer(ThrashRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("ThaR", ThrashRandom.class);
         json.setSerializer(ThrashRandom.class, new Json.Serializer<ThrashRandom>() {
@@ -3454,7 +3452,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerThrooshRandom(@NotNull Json json) {
+    public static void registerThrooshRandom(Json json) {
         if(json.getSerializer(ThrooshRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("ThoR", ThrooshRandom.class);
         json.setSerializer(ThrooshRandom.class, new Json.Serializer<ThrooshRandom>() {
@@ -3477,7 +3475,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLaserRandom(@NotNull Json json) {
+    public static void registerLaserRandom(Json json) {
         if(json.getSerializer(LaserRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("LasR", LaserRandom.class);
         json.setSerializer(LaserRandom.class, new Json.Serializer<LaserRandom>() {
@@ -3500,7 +3498,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerMizuchiRandom(@NotNull Json json) {
+    public static void registerMizuchiRandom(Json json) {
         if(json.getSerializer(MizuchiRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("MizR", MizuchiRandom.class);
         json.setSerializer(MizuchiRandom.class, new Json.Serializer<MizuchiRandom>() {
@@ -3523,7 +3521,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerPcgRXSMXSRandom(@NotNull Json json) {
+    public static void registerPcgRXSMXSRandom(Json json) {
         if(json.getSerializer(PcgRXSMXSRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("PRXR", PcgRXSMXSRandom.class);
         json.setSerializer(PcgRXSMXSRandom.class, new Json.Serializer<PcgRXSMXSRandom>() {
@@ -3546,7 +3544,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerDistinctRandom(@NotNull Json json) {
+    public static void registerDistinctRandom(Json json) {
         if(json.getSerializer(DistinctRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("DisR", DistinctRandom.class);
         json.setSerializer(DistinctRandom.class, new Json.Serializer<DistinctRandom>() {
@@ -3569,7 +3567,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerMx3Random(@NotNull Json json) {
+    public static void registerMx3Random(Json json) {
         if(json.getSerializer(Mx3Random.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("Mx3R", Mx3Random.class);
         json.setSerializer(Mx3Random.class, new Json.Serializer<Mx3Random>() {
@@ -3593,7 +3591,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerHornRandom(@NotNull Json json) {
+    public static void registerHornRandom(Json json) {
         if(json.getSerializer(HornRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("HrnR", HornRandom.class);
         json.setSerializer(HornRandom.class, new Json.Serializer<HornRandom>() {
@@ -3616,7 +3614,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerScruffRandom(@NotNull Json json) {
+    public static void registerScruffRandom(Json json) {
         if(json.getSerializer(ScruffRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("ScrR", ScruffRandom.class);
         json.setSerializer(ScruffRandom.class, new Json.Serializer<ScruffRandom>() {
@@ -3639,7 +3637,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerPouchRandom(@NotNull Json json) {
+    public static void registerPouchRandom(Json json) {
         if(json.getSerializer(PouchRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("PouR", PouchRandom.class);
         json.setSerializer(PouchRandom.class, new Json.Serializer<PouchRandom>() {
@@ -3662,7 +3660,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerSfc64Random(@NotNull Json json) {
+    public static void registerSfc64Random(Json json) {
         if(json.getSerializer(Sfc64Random.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("SfcR", Sfc64Random.class);
         json.setSerializer(Sfc64Random.class, new Json.Serializer<Sfc64Random>() {
@@ -3685,7 +3683,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerCrand64Random(@NotNull Json json) {
+    public static void registerCrand64Random(Json json) {
         if(json.getSerializer(Crand64Random.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("CraR", Crand64Random.class);
         json.setSerializer(Crand64Random.class, new Json.Serializer<Crand64Random>() {
@@ -3708,7 +3706,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerFlowRandom(@NotNull Json json) {
+    public static void registerFlowRandom(Json json) {
         if(json.getSerializer(FlowRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("FloR", FlowRandom.class);
         json.setSerializer(FlowRandom.class, new Json.Serializer<FlowRandom>() {
@@ -3731,7 +3729,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerOrbitalRandom(@NotNull Json json) {
+    public static void registerOrbitalRandom(Json json) {
         if(json.getSerializer(OrbitalRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("OrbR", OrbitalRandom.class);
         json.setSerializer(OrbitalRandom.class, new Json.Serializer<OrbitalRandom>() {
@@ -3754,7 +3752,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerTaxon32Random(@NotNull Json json) {
+    public static void registerTaxon32Random(Json json) {
         if(json.getSerializer(Taxon32Random.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("TxnR", Taxon32Random.class);
         json.setSerializer(Taxon32Random.class, new Json.Serializer<Taxon32Random>() {
@@ -3777,7 +3775,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerChoo32Random(@NotNull Json json) {
+    public static void registerChoo32Random(Json json) {
         if(json.getSerializer(Choo32Random.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("ChoR", Choo32Random.class);
         json.setSerializer(Choo32Random.class, new Json.Serializer<Choo32Random>() {
@@ -3800,7 +3798,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerChill32Random(@NotNull Json json) {
+    public static void registerChill32Random(Json json) {
         if(json.getSerializer(Chill32Random.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("Ch3R", Chill32Random.class);
         json.setSerializer(Chill32Random.class, new Json.Serializer<Chill32Random>() {
@@ -3823,7 +3821,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerBear32Random(@NotNull Json json) {
+    public static void registerBear32Random(Json json) {
         if(json.getSerializer(Bear32Random.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("BeaR", Bear32Random.class);
         json.setSerializer(Bear32Random.class, new Json.Serializer<Bear32Random>() {
@@ -3846,7 +3844,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerTraceRandom(@NotNull Json json) {
+    public static void registerTraceRandom(Json json) {
         if(json.getSerializer(TraceRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("TrcR", TraceRandom.class);
         json.setSerializer(TraceRandom.class, new Json.Serializer<TraceRandom>() {
@@ -3866,10 +3864,11 @@ public final class JsonSupport {
 
     /**
      * Registers MaceRandom with the given Json object, so MaceRandom can be written to and read from JSON.
+     * Note that MaceRandom is deprecated, and using {@link TraceRandom} instead is encouraged.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerMaceRandom(@NotNull Json json) {
+    public static void registerMaceRandom(Json json) {
         if(json.getSerializer(MaceRandom.class) != null) return;
         MaceRandom.registerWithDeserializer();
         if(ADD_CLASS_TAGS) json.addClassTag("MceR", MaceRandom.class);
@@ -3893,7 +3892,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerGoldenQuasiRandom(@NotNull Json json) {
+    public static void registerGoldenQuasiRandom(Json json) {
         if(json.getSerializer(GoldenQuasiRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("GoQR", GoldenQuasiRandom.class);
         json.setSerializer(GoldenQuasiRandom.class, new Json.Serializer<GoldenQuasiRandom>() {
@@ -3916,7 +3915,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLFSR64QuasiRandom(@NotNull Json json) {
+    public static void registerLFSR64QuasiRandom(Json json) {
         if(json.getSerializer(LFSR64QuasiRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("GoQR", LFSR64QuasiRandom.class);
         json.setSerializer(LFSR64QuasiRandom.class, new Json.Serializer<LFSR64QuasiRandom>() {
@@ -3939,7 +3938,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerVanDerCorputQuasiRandom(@NotNull Json json) {
+    public static void registerVanDerCorputQuasiRandom(Json json) {
         if(json.getSerializer(VanDerCorputQuasiRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("VCQR", VanDerCorputQuasiRandom.class);
         json.setSerializer(VanDerCorputQuasiRandom.class, new Json.Serializer<VanDerCorputQuasiRandom>() {
@@ -3962,7 +3961,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLowChangeQuasiRandom(@NotNull Json json) {
+    public static void registerLowChangeQuasiRandom(Json json) {
         if(json.getSerializer(LowChangeQuasiRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("VCQR", LowChangeQuasiRandom.class);
         json.setSerializer(LowChangeQuasiRandom.class, new Json.Serializer<LowChangeQuasiRandom>() {
@@ -3985,7 +3984,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerTupleQuasiRandom(@NotNull Json json) {
+    public static void registerTupleQuasiRandom(Json json) {
         if(json.getSerializer(TupleQuasiRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("TuQR", TupleQuasiRandom.class);
         json.setSerializer(TupleQuasiRandom.class, new Json.Serializer<TupleQuasiRandom>() {
@@ -4008,7 +4007,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerKnownSequenceRandom(@NotNull Json json) {
+    public static void registerKnownSequenceRandom(Json json) {
         if(json.getSerializer(KnownSequenceRandom.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("KnSR", KnownSequenceRandom.class);
         json.setSerializer(KnownSequenceRandom.class, new Json.Serializer<KnownSequenceRandom>() {
@@ -4031,7 +4030,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLongSequence(@NotNull Json json) {
+    public static void registerLongSequence(Json json) {
         if(json.getSerializer(LongSequence.class) != null) return;
         if(ADD_CLASS_TAGS) json.addClassTag("LSeq", LongSequence.class);
         json.setSerializer(LongSequence.class, new Json.Serializer<LongSequence>() {
@@ -4055,7 +4054,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerReverseWrapper(@NotNull Json json) {
+    public static void registerReverseWrapper(Json json) {
         if(json.getSerializer(ReverseWrapper.class) != null) return;
         JsonSupport.registerEnhancedRandom(json);
         if(ADD_CLASS_TAGS) json.addClassTag("RevW", ReverseWrapper.class);
@@ -4080,7 +4079,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerArchivalWrapper(@NotNull Json json) {
+    public static void registerArchivalWrapper(Json json) {
         if(json.getSerializer(ArchivalWrapper.class) != null) return;
         JsonSupport.registerEnhancedRandom(json);
         JsonSupport.registerLongSequence(json);
@@ -4106,7 +4105,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerDistributedRandom(@NotNull Json json) {
+    public static void registerDistributedRandom(Json json) {
         if(json.getSerializer(DistributedRandom.class) != null) return;
         JsonSupport.registerEnhancedRandom(json);
         JsonSupport.registerDistribution(json);
@@ -4130,7 +4129,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerInterpolatedRandom(@NotNull Json json) {
+    public static void registerInterpolatedRandom(Json json) {
         if(json.getSerializer(InterpolatedRandom.class) != null) return;
         JsonSupport.registerEnhancedRandom(json);
         JsonSupport.registerInterpolator(json);
@@ -4168,7 +4167,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerEnhancedRandom(@NotNull Json json) {
+    public static void registerEnhancedRandom(Json json) {
         if(json.getSerializer(EnhancedRandom.class) != null) return;
         registerAtomicLong(json);
         registerAceRandom(json);
@@ -4243,7 +4242,7 @@ public final class JsonSupport {
      * able to read some fields from it.
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerRandomXS128(@NotNull Json json) {
+    public static void registerRandomXS128(Json json) {
         if(json.getSerializer(RandomXS128.class) != null) return;
         json.setSerializer(RandomXS128.class, new Json.Serializer<RandomXS128>() {
             @Override
@@ -4264,7 +4263,7 @@ public final class JsonSupport {
     }
 
     //// This can be used with no dependencies other than libGDX. It does allocate more than the above version.
-//    public static void registerRandomXS128(@NotNull Json json) {
+//    public static void registerRandomXS128(Json json) {
 //        json.setSerializer(RandomXS128.class, new Json.Serializer<RandomXS128>() {
 //            @Override
 //            public void write(Json json, RandomXS128 object, Class knownType) {
@@ -4289,7 +4288,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerArcsineDistribution(@NotNull Json json) {
+    public static void registerArcsineDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Arcsine", ArcsineDistribution.class);
         json.setSerializer(ArcsineDistribution.class, new Json.Serializer<ArcsineDistribution>() {
             @Override
@@ -4311,7 +4310,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerBernoulliDistribution(@NotNull Json json) {
+    public static void registerBernoulliDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Bernoulli", BernoulliDistribution.class);
         json.setSerializer(BernoulliDistribution.class, new Json.Serializer<BernoulliDistribution>() {
             @Override
@@ -4333,7 +4332,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerBetaDistribution(@NotNull Json json) {
+    public static void registerBetaDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Beta", BetaDistribution.class);
         json.setSerializer(BetaDistribution.class, new Json.Serializer<BetaDistribution>() {
             @Override
@@ -4355,7 +4354,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerBetaPrimeDistribution(@NotNull Json json) {
+    public static void registerBetaPrimeDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("BetaPrime", BetaPrimeDistribution.class);
         json.setSerializer(BetaPrimeDistribution.class, new Json.Serializer<BetaPrimeDistribution>() {
             @Override
@@ -4377,7 +4376,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerBinomialDistribution(@NotNull Json json) {
+    public static void registerBinomialDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Binomial", BinomialDistribution.class);
         json.setSerializer(BinomialDistribution.class, new Json.Serializer<BinomialDistribution>() {
             @Override
@@ -4399,7 +4398,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerCauchyDistribution(@NotNull Json json) {
+    public static void registerCauchyDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Cauchy", CauchyDistribution.class);
         json.setSerializer(CauchyDistribution.class, new Json.Serializer<CauchyDistribution>() {
             @Override
@@ -4421,7 +4420,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerChiDistribution(@NotNull Json json) {
+    public static void registerChiDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Chi", ChiDistribution.class);
         json.setSerializer(ChiDistribution.class, new Json.Serializer<ChiDistribution>() {
             @Override
@@ -4443,7 +4442,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerChiSquareDistribution(@NotNull Json json) {
+    public static void registerChiSquareDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("ChiSquare", ChiSquareDistribution.class);
         json.setSerializer(ChiSquareDistribution.class, new Json.Serializer<ChiSquareDistribution>() {
             @Override
@@ -4465,7 +4464,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerContinuousUniformDistribution(@NotNull Json json) {
+    public static void registerContinuousUniformDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("ContinuousUniform", ContinuousUniformDistribution.class);
         json.setSerializer(ContinuousUniformDistribution.class, new Json.Serializer<ContinuousUniformDistribution>() {
             @Override
@@ -4487,7 +4486,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerDiscreteUniformDistribution(@NotNull Json json) {
+    public static void registerDiscreteUniformDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("DiscreteUniform", DiscreteUniformDistribution.class);
         json.setSerializer(DiscreteUniformDistribution.class, new Json.Serializer<DiscreteUniformDistribution>() {
             @Override
@@ -4509,7 +4508,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerErlangDistribution(@NotNull Json json) {
+    public static void registerErlangDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Erlang", ErlangDistribution.class);
         json.setSerializer(ErlangDistribution.class, new Json.Serializer<ErlangDistribution>() {
             @Override
@@ -4531,7 +4530,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerExponentialDistribution(@NotNull Json json) {
+    public static void registerExponentialDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Exponential", ExponentialDistribution.class);
         json.setSerializer(ExponentialDistribution.class, new Json.Serializer<ExponentialDistribution>() {
             @Override
@@ -4553,7 +4552,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerFisherSnedecorDistribution(@NotNull Json json) {
+    public static void registerFisherSnedecorDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("FisherSnedecor", FisherSnedecorDistribution.class);
         json.setSerializer(FisherSnedecorDistribution.class, new Json.Serializer<FisherSnedecorDistribution>() {
             @Override
@@ -4575,7 +4574,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerFisherTippettDistribution(@NotNull Json json) {
+    public static void registerFisherTippettDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("FisherTippett", FisherTippettDistribution.class);
         json.setSerializer(FisherTippettDistribution.class, new Json.Serializer<FisherTippettDistribution>() {
             @Override
@@ -4597,7 +4596,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerGammaDistribution(@NotNull Json json) {
+    public static void registerGammaDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Gamma", GammaDistribution.class);
         json.setSerializer(GammaDistribution.class, new Json.Serializer<GammaDistribution>() {
             @Override
@@ -4619,7 +4618,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerGeometricDistribution(@NotNull Json json) {
+    public static void registerGeometricDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Geometric", GeometricDistribution.class);
         json.setSerializer(GeometricDistribution.class, new Json.Serializer<GeometricDistribution>() {
             @Override
@@ -4641,7 +4640,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerKumaraswamyDistribution(@NotNull Json json) {
+    public static void registerKumaraswamyDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Kumaraswamy", KumaraswamyDistribution.class);
         json.setSerializer(KumaraswamyDistribution.class, new Json.Serializer<KumaraswamyDistribution>() {
             @Override
@@ -4663,7 +4662,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLaplaceDistribution(@NotNull Json json) {
+    public static void registerLaplaceDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Laplace", LaplaceDistribution.class);
         json.setSerializer(LaplaceDistribution.class, new Json.Serializer<LaplaceDistribution>() {
             @Override
@@ -4685,7 +4684,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLogCauchyDistribution(@NotNull Json json) {
+    public static void registerLogCauchyDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("LogCauchy", LogCauchyDistribution.class);
         json.setSerializer(LogCauchyDistribution.class, new Json.Serializer<LogCauchyDistribution>() {
             @Override
@@ -4707,7 +4706,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLogisticDistribution(@NotNull Json json) {
+    public static void registerLogisticDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Logistic", LogisticDistribution.class);
         json.setSerializer(LogisticDistribution.class, new Json.Serializer<LogisticDistribution>() {
             @Override
@@ -4729,7 +4728,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLogNormalDistribution(@NotNull Json json) {
+    public static void registerLogNormalDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("LogNormal", LogNormalDistribution.class);
         json.setSerializer(LogNormalDistribution.class, new Json.Serializer<LogNormalDistribution>() {
             @Override
@@ -4751,7 +4750,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerLumpDistribution(@NotNull Json json) {
+    public static void registerLumpDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Lump", LumpDistribution.class);
         json.setSerializer(LumpDistribution.class, new Json.Serializer<LumpDistribution>() {
             @Override
@@ -4773,7 +4772,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerNormalDistribution(@NotNull Json json) {
+    public static void registerNormalDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Normal", NormalDistribution.class);
         json.setSerializer(NormalDistribution.class, new Json.Serializer<NormalDistribution>() {
             @Override
@@ -4795,7 +4794,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerParetoDistribution(@NotNull Json json) {
+    public static void registerParetoDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Pareto", ParetoDistribution.class);
         json.setSerializer(ParetoDistribution.class, new Json.Serializer<ParetoDistribution>() {
             @Override
@@ -4817,7 +4816,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerPoissonDistribution(@NotNull Json json) {
+    public static void registerPoissonDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Poisson", PoissonDistribution.class);
         json.setSerializer(PoissonDistribution.class, new Json.Serializer<PoissonDistribution>() {
             @Override
@@ -4839,7 +4838,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerPowerDistribution(@NotNull Json json) {
+    public static void registerPowerDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Power", PowerDistribution.class);
         json.setSerializer(PowerDistribution.class, new Json.Serializer<PowerDistribution>() {
             @Override
@@ -4861,7 +4860,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerRayleighDistribution(@NotNull Json json) {
+    public static void registerRayleighDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Rayleigh", RayleighDistribution.class);
         json.setSerializer(RayleighDistribution.class, new Json.Serializer<RayleighDistribution>() {
             @Override
@@ -4883,7 +4882,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerStudentsTDistribution(@NotNull Json json) {
+    public static void registerStudentsTDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("StudentsT", StudentsTDistribution.class);
         json.setSerializer(StudentsTDistribution.class, new Json.Serializer<StudentsTDistribution>() {
             @Override
@@ -4905,7 +4904,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerTriangularDistribution(@NotNull Json json) {
+    public static void registerTriangularDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Triangular", TriangularDistribution.class);
         json.setSerializer(TriangularDistribution.class, new Json.Serializer<TriangularDistribution>() {
             @Override
@@ -4927,7 +4926,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerWeibullDistribution(@NotNull Json json) {
+    public static void registerWeibullDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Weibull", WeibullDistribution.class);
         json.setSerializer(WeibullDistribution.class, new Json.Serializer<WeibullDistribution>() {
             @Override
@@ -4949,7 +4948,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerZipfianDistribution(@NotNull Json json) {
+    public static void registerZipfianDistribution(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Zipfian", ZipfianDistribution.class);
         json.setSerializer(ZipfianDistribution.class, new Json.Serializer<ZipfianDistribution>() {
             @Override
@@ -4975,7 +4974,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerDistribution(@NotNull Json json) {
+    public static void registerDistribution(Json json) {
         if(json.getSerializer(Distribution.class) != null) return;
         registerArcsineDistribution(json);
         registerBernoulliDistribution(json);
@@ -5038,7 +5037,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerBase(@NotNull Json json) {
+    public static void registerBase(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Base", Base.class);
         json.setSerializer(Base.class, new Json.Serializer<Base>() {
             @Override
@@ -5060,7 +5059,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerHasher(@NotNull Json json) {
+    public static void registerHasher(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("Hshr", Hasher.class);
 
         json.setSerializer(Hasher.class, new Json.Serializer<Hasher>() {
@@ -5084,7 +5083,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerInterpolator(@NotNull Json json) {
+    public static void registerInterpolator(Json json) {
         json.addClassTag("Inlr", Interpolator.class);
         json.setSerializer(Interpolator.class, new Json.Serializer<Interpolator>() {
             @Override
@@ -5107,7 +5106,7 @@ public final class JsonSupport {
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerClass(@NotNull Json json) {
+    public static void registerClass(Json json) {
         if(ADD_CLASS_TAGS) json.addClassTag("C", Class.class); // just Class type
         json.setSerializer(Class.class, new Json.Serializer<Class>() {
             @Override
