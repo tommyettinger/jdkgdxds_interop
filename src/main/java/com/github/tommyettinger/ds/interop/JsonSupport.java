@@ -3888,6 +3888,29 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers LCG64Random with the given Json object, so LCG64Random can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerLCG64Random(Json json) {
+        if(json.getSerializer(LCG64Random.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("L64R", LCG64Random.class);
+        json.setSerializer(LCG64Random.class, new Json.Serializer<LCG64Random>() {
+            @Override
+            public void write(Json json, LCG64Random object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public LCG64Random read(Json json, JsonValue jsonData, Class type) {
+                LCG64Random r = new LCG64Random(1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers GoldenQuasiRandom with the given Json object, so GoldenQuasiRandom can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -4185,6 +4208,7 @@ public final class JsonSupport {
         registerJsf32Random(json);
         registerKnownSequenceRandom(json);
         registerLaserRandom(json);
+        registerLCG64Random(json);
         registerLFSR64QuasiRandom(json);
         registerLowChangeQuasiRandom(json);
         registerMaceRandom(json);
