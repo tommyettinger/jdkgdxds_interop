@@ -2,11 +2,11 @@ buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.34.0'
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.35.0'
     }
 }
 
@@ -14,8 +14,8 @@ apply plugin: 'java-library'
 apply plugin: 'com.vanniktech.maven.publish'
 
 def projectName = 'jdkgdxds_interop'
-version "$VERSION_NAME"
-group 'com.github.tommyettinger'
+version = "$VERSION_NAME"
+group = 'com.github.tommyettinger'
 
 [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
 
@@ -55,16 +55,16 @@ mavenPublishing {
 plainJavadocJar.archiveBaseName.set("$projectName")
 
 compileJava {
-    sourceCompatibility = 8
-    targetCompatibility = 8
+    sourceCompatibility = "8"
+    targetCompatibility = "8"
     if (JavaVersion.current().isJava9Compatible()) {
         options.release.set(8)
     }
 }
 
 compileTestJava {
-    sourceCompatibility = 17
-    targetCompatibility = 17
+    sourceCompatibility = "17"
+    targetCompatibility = "17"
     if (JavaVersion.current().isJava9Compatible()) {
         options.release.set(17)
     }
@@ -73,9 +73,7 @@ compileTestJava {
 repositories {
     mavenLocal()
     mavenCentral()
-//    maven { url 'https://oss.sonatype.org/content/repositories/releases/' }
-//    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-    maven { url 'https://jitpack.io' }
+    maven { url = 'https://jitpack.io' }
 }
 
 dependencies {
