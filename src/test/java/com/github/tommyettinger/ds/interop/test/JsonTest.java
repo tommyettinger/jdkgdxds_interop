@@ -1615,7 +1615,6 @@ public class JsonTest {
         System.out.println();
     }
 
-
     @Test
     public void testCharBitSet() {
         Json json = new Json(JsonWriter.OutputType.minimal);
@@ -1625,6 +1624,25 @@ public class JsonTest {
         String data = json.toJson(digits);
         System.out.println(data);
         CharBitSet digits2 = json.fromJson(CharBitSet.class, data);
+        CharIterator it = digits2.iterator();
+        while (it.hasNext()){
+            System.out.print(it.nextChar());
+            if(it.hasNext())
+                System.out.print(", ");
+        }
+        Assert.assertEquals(digits, digits2);
+        System.out.println();
+    }
+
+    @Test
+    public void testCharBitSetResizable() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerCharBitSetResizable(json);
+        CharBitSetResizable digits = new CharBitSetResizable("abcdefghijklmnopqrstuvwxyz".toCharArray());
+        digits.add('Z');
+        String data = json.toJson(digits);
+        System.out.println(data);
+        CharBitSetResizable digits2 = json.fromJson(CharBitSetResizable.class, data);
         CharIterator it = digits2.iterator();
         while (it.hasNext()){
             System.out.print(it.nextChar());
