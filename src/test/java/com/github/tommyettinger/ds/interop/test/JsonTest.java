@@ -1635,14 +1635,14 @@ public class JsonTest {
     }
 
     @Test
-    public void testCharBitSetResizable() {
+    public void testCharBitSetFixedSize() {
         Json json = new Json(JsonWriter.OutputType.minimal);
-        JsonSupport.registerCharBitSetResizable(json);
-        CharBitSetResizable digits = new CharBitSetResizable("abcdefghijklmnopqrstuvwxyz".toCharArray());
+        JsonSupport.registerCharBitSetFixedSize(json);
+        CharBitSetFixedSize digits = new CharBitSetFixedSize("abcdefghijklmnopqrstuvwxyz".toCharArray());
         digits.add('Z');
         String data = json.toJson(digits);
         System.out.println(data);
-        CharBitSetResizable digits2 = json.fromJson(CharBitSetResizable.class, data);
+        CharBitSetFixedSize digits2 = json.fromJson(CharBitSetFixedSize.class, data);
         CharIterator it = digits2.iterator();
         while (it.hasNext()){
             System.out.print(it.nextChar());

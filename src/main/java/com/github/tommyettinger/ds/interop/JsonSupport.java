@@ -91,7 +91,7 @@ public final class JsonSupport {
         registerLongOrderedSet(json);
         registerOffsetBitSet(json);
         registerCharBitSet(json);
-        registerCharBitSetResizable(json);
+        registerCharBitSetFixedSize(json);
         registerEnumSet(json);
         registerEnumOrderedSet(json);
 
@@ -2934,16 +2934,16 @@ public final class JsonSupport {
     }
 
     /**
-     * Registers CharBitSetResizable with the given Json object, so CharBitSetResizable can be written to and read from JSON.
+     * Registers CharBitSetFixedSize with the given Json object, so CharBitSetFixedSize can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerCharBitSetResizable(Json json) {
-        if(ADD_CLASS_TAGS) json.addClassTag("cRBS", CharBitSetResizable.class); // char items, Resizable, Bit kind, Set type
-        json.setSerializer(CharBitSetResizable.class, new Json.Serializer<CharBitSetResizable>() {
+    public static void registerCharBitSetFixedSize(Json json) {
+        if(ADD_CLASS_TAGS) json.addClassTag("cFBS", CharBitSetFixedSize.class); // char items, Fixed size, Bit kind, Set type
+        json.setSerializer(CharBitSetFixedSize.class, new Json.Serializer<CharBitSetFixedSize>() {
             @Override
-            public void write(Json json, CharBitSetResizable object, Class knownType) {
-                json.writeObjectStart(CharBitSetResizable.class, knownType);
+            public void write(Json json, CharBitSetFixedSize object, Class knownType) {
+                json.writeObjectStart(CharBitSetFixedSize.class, knownType);
                 json.writeArrayStart("raw");
                 int[] bits = object.getRawBits();
                 for (int i = 0, n = bits.length; i < n; i++) {
@@ -2954,11 +2954,9 @@ public final class JsonSupport {
             }
 
             @Override
-            public CharBitSetResizable read(Json json, JsonValue jsonData, Class type) {
+            public CharBitSetFixedSize read(Json json, JsonValue jsonData, Class type) {
                 if (jsonData == null || jsonData.isNull()) return null;
-                CharBitSetResizable obs = new CharBitSetResizable();
-                obs.setRawBits(jsonData.get("raw").asIntArray());
-                return obs;
+                return new CharBitSetFixedSize(jsonData.get("raw").asIntArray(), true);
             }
         });
     }
