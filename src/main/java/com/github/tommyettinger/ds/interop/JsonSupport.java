@@ -3246,6 +3246,29 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers Lamb32Random with the given Json object, so Lamb32Random can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerLamb32Random(Json json) {
+        if(json.getSerializer(Lamb32Random.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("Lm3R", Lamb32Random.class);
+        json.setSerializer(Lamb32Random.class, new Json.Serializer<Lamb32Random>() {
+            @Override
+            public void write(Json json, Lamb32Random object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Lamb32Random read(Json json, JsonValue jsonData, Class type) {
+                Lamb32Random r = new Lamb32Random(1, 1);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers Xoshiro160RoadroxoRandom with the given Json object, so Xoshiro160RoadroxoRandom can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -4235,6 +4258,7 @@ public final class JsonSupport {
         registerHornRandom(json);
         registerJsf32Random(json);
         registerKnownSequenceRandom(json);
+        registerLamb32Random(json);
         registerLaserRandom(json);
         registerLCG64Random(json);
         registerLFSR64QuasiRandom(json);

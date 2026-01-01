@@ -2034,6 +2034,40 @@ public class JsonTest {
         System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateC()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
+    
+    @Test
+    public void testChip32Random() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+//        JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerChip32Random(json);
+        Chip32Random random = new Chip32Random(123456789, 0xBAB1E5, 0xB0BAFE77, 0x12341234);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        Chip32Random random2 = json.fromJson(Chip32Random.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateB()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateC()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateD()));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+    
+    @Test
+    public void testLamb32Random() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+//        JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerLamb32Random(json);
+        Lamb32Random random = new Lamb32Random(123456789, 0xBAB1E5);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        Lamb32Random random2 = json.fromJson(Lamb32Random.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned((int) random2.getStateB()));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
 
     @Test
     public void testPouchRandom() {
