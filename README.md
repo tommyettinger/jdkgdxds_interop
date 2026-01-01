@@ -62,7 +62,7 @@ but long packages add to file size and can also be strenuous to read repeatedly.
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api` if other dependency
 lines do the same, is: 
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.14.0.0"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.14.1.0"
 ```
 It's not unlikely that you might need `api` instead of `implementation`, especially if you are writing a library, or a
 module that needs to be used from another section.
@@ -73,11 +73,12 @@ any breaking changes that can affect Json or the classes that `ConversionToJDK`/
 If you use GWT (libGDX's HTML target), then you also need this in your `html/build.gradle` file:
 
 ```groovy
+implementation "com.badlogicgames.gdx:gdx:1.14.0:sources"
 implementation "com.github.tommyettinger:funderby:0.1.2:sources"
-implementation "com.github.tommyettinger:digital:0.9.8:sources"
-implementation "com.github.tommyettinger:juniper:0.8.5:sources"
-implementation "com.github.tommyettinger:jdkgdxds:1.14.0:sources"
-implementation "com.github.tommyettinger:jdkgdxds_interop:1.14.0.0:sources"
+implementation "com.github.tommyettinger:digital:0.9.9:sources"
+implementation "com.github.tommyettinger:juniper:0.8.6:sources"
+implementation "com.github.tommyettinger:jdkgdxds:1.14.1:sources"
+implementation "com.github.tommyettinger:jdkgdxds_interop:1.14.1.0:sources"
 ```
 
 Newer versions of funderby, digital, and possibly juniper and jdkgdxds may be usable as well.
