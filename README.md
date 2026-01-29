@@ -62,7 +62,7 @@ but long packages add to file size and can also be strenuous to read repeatedly.
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api` if other dependency
 lines do the same, is: 
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:2.0.1.0"
+implementation "com.github.tommyettinger:jdkgdxds_interop:2.1.1.0"
 ```
 It's not unlikely that you might need `api` instead of `implementation`, especially if you are writing a library, or a
 module that needs to be used from another section.
@@ -77,8 +77,8 @@ implementation "com.badlogicgames.gdx:gdx:1.14.0:sources"
 implementation "com.github.tommyettinger:funderby:0.1.2:sources"
 implementation "com.github.tommyettinger:digital:0.9.9:sources"
 implementation "com.github.tommyettinger:juniper:0.9.0:sources"
-implementation "com.github.tommyettinger:jdkgdxds:2.0.1:sources"
-implementation "com.github.tommyettinger:jdkgdxds_interop:2.0.1.0:sources"
+implementation "com.github.tommyettinger:jdkgdxds:2.1.1:sources"
+implementation "com.github.tommyettinger:jdkgdxds_interop:2.1.1.0:sources"
 ```
 
 Newer versions of funderby, digital, and possibly juniper and jdkgdxds may be usable as well.
