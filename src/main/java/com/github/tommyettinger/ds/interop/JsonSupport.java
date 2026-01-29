@@ -2693,9 +2693,9 @@ public final class JsonSupport {
                 json.writeValue("o", object.getOrderType().name(), String.class);
                 json.writeValue("d", object.getDefaultValue(), null);
                 json.writeObjectStart("m");
-                Iterator<Map.Entry<CharSequence, Object>> es = new ObjectObjectOrderedMap.OrderedMapEntries<CharSequence, Object>(object).iterator();
+                Iterator<Map.Entry<CharSequence, Object>> es = object.iterator();
                 while (es.hasNext()) {
-                    Map.Entry<CharSequence, ?> e = es.next();
+                    Map.Entry<CharSequence, Object> e = es.next();
                     json.writeValue(e.getKey().toString(), e.getValue(), null);
                 }
                 json.writeObjectEnd();
@@ -3015,7 +3015,7 @@ public final class JsonSupport {
     /**
      * Registers AlternateRandom with the given Json object, so AlternateRandom can be written to and read from JSON.
      * Note that AlternateRandom is not a juniper EnhancedRandom, and so cannot be deserialized to an EnhancedRandom
-     * field. It is also almost exactly the same as {@link PasarRandom}, so you might want to just prefer PasarRandom
+     * field. It is also almost exactly the same as {@link AceRandom}, so you might want to just prefer AceRandom
      * if you depend on juniper anyway because of this library.
      *
      * @param json a libGDX Json object that will have a serializer registered

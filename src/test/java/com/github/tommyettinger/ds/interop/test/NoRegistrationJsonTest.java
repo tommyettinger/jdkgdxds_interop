@@ -1267,12 +1267,7 @@ public class NoRegistrationJsonTest {
     @Test
     public void testJunction() {
         Json json = new Json(JsonWriter.OutputType.minimal);
-        json.addClassTag("Junc", Junction.class);
-        json.addClassTag("JAny", Junction.Any.class);
-        json.addClassTag("JAll", Junction.All.class);
-        json.addClassTag("JOne", Junction.One.class);
-        json.addClassTag("JNot", Junction.Not.class);
-        json.addClassTag("JLea", Junction.Leaf.class);
+        JsonSupport.registerJunction(json);
         json.addClassTag("Str", String.class);
         Junction<String> junction = Junction.parse("(foo|bar|baz)&QUUX");
         System.out.println(junction);
@@ -1281,8 +1276,6 @@ public class NoRegistrationJsonTest {
         Junction<?> junction2 = json.fromJson(Junction.class, data);
         System.out.println(junction2);
         Assert.assertEquals(junction, junction2);
-
-
     }
 
     @Test
