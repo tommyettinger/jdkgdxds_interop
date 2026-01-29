@@ -146,6 +146,7 @@ public final class JsonSupport {
         registerBinaryHeap(json);
 
         registerJunction(json);
+        registerStringJunction(json);
 
         // from digital.
         registerBase(json);
@@ -2982,6 +2983,31 @@ public final class JsonSupport {
             json.addClassTag("JNot", Junction.Not.class);
             json.addClassTag("JLea", Junction.Leaf.class);
         }
+    }
+
+    /**
+     * Registers StringJunction with the given Json object, so StringJunction can be written to and read from JSON.
+     * <br>
+     * Note: If you have a StringJunction, then {@link StringJunction#toString()} can produce a valid serialized String
+     * that can be read back in with {@link StringJunction#parse(String)} . The Serializer this registers simply wraps
+     * the existing toString() and parse() methods.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerStringJunction(Json json) {
+        if(json.getSerializer(StringJunction.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("SJun", StringJunction.class);
+        json.setSerializer(StringJunction.class, new Json.Serializer<StringJunction>() {
+            @Override
+            public void write(Json json, StringJunction object, Class knownType) {
+                json.writeValue(object.toString());
+            }
+
+            @Override
+            public StringJunction read(Json json, JsonValue jsonData, Class type) {
+                return StringJunction.parse(jsonData.asString());
+            }
+        });
     }
 
     /**

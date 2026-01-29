@@ -3978,4 +3978,19 @@ public class JsonTest {
             System.out.println(after.first().first().iterator().next().getClass());
         }
     }
+
+
+    @Test
+    public void testStringJunction() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerStringJunction(json);
+        StringJunction junction = StringJunction.parse("(foo|bar|baz)&QUUX");
+        System.out.println(junction);
+        String data = json.toJson(junction, StringJunction.class);
+        System.out.println(data);
+        StringJunction junction2 = json.fromJson(StringJunction.class, data);
+        System.out.println(junction2);
+        Assert.assertEquals(junction, junction2);
+    }
+
 }
