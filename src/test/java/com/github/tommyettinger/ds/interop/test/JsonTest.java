@@ -2280,6 +2280,21 @@ public class JsonTest {
     }
 
     @Test
+    public void testDeckWrapper() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DeckWrapper()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerDeckWrapper(json);
+        DeckWrapper random = new DeckWrapper(new WhiskerRandom(123456789));
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        DeckWrapper random2 = json.fromJson(DeckWrapper.class, data);
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getSelectedState(0)));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
     public void testArchivalWrapper() {
         JsonSupport.setNumeralBase(Base.scrambledBase(new ArchivalWrapper()));
 //        JsonSupport.setNumeralBase(Base.BASE16);

@@ -157,6 +157,9 @@ public final class JsonSupport {
         // from juniper. these register many others.
         registerDistributionWrapper(json);
         registerInterpolatorWrapper(json);
+        registerReverseWrapper(json);
+        registerArchivalWrapper(json);
+        registerDeckWrapper(json);
 
         // from libGDX.
         registerRandomXS128(json);
@@ -4167,6 +4170,32 @@ public final class JsonSupport {
             @Override
             public ReverseWrapper read(Json json, JsonValue jsonData, Class type) {
                 ReverseWrapper w = new ReverseWrapper();
+                w.stringDeserialize(jsonData.asString(), BASE);
+                return w;
+            }
+        });
+    }
+
+
+    /**
+     * Registers DeckWrapper with the given Json object, so DeckWrapper can be written to and read from JSON.
+     * This also registers all other EnhancedRandom types.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerDeckWrapper(Json json) {
+        if(json.getSerializer(DeckWrapper.class) != null) return;
+        JsonSupport.registerEnhancedRandom(json);
+        if(ADD_CLASS_TAGS) json.addClassTag("DecW", DeckWrapper.class);
+        json.setSerializer(DeckWrapper.class, new Json.Serializer<DeckWrapper>() {
+            @Override
+            public void write(Json json, DeckWrapper object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public DeckWrapper read(Json json, JsonValue jsonData, Class type) {
+                DeckWrapper w = new DeckWrapper();
                 w.stringDeserialize(jsonData.asString(), BASE);
                 return w;
             }
