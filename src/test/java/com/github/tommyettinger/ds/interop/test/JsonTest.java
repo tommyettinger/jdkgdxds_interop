@@ -1939,10 +1939,11 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         AceRandom random2 = json.fromJson(AceRandom.class, data);
-        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateA()));
-        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateB()));
-        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateC()));
-        System.out.println(JsonSupport.getNumeralBase().signed(random2.getStateD()));
+        System.out.println(Base.BASE16.unsigned(random2.getStateA()));
+        System.out.println(Base.BASE16.unsigned(random2.getStateB()));
+        System.out.println(Base.BASE16.unsigned(random2.getStateC()));
+        System.out.println(Base.BASE16.unsigned(random2.getStateD()));
+        System.out.println(Base.BASE16.unsigned(random2.getStateE()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
@@ -2233,7 +2234,7 @@ public class JsonTest {
 
     @Test
     public void testDistributionWrapper() {
-        JsonSupport.setNumeralBase(Base.scrambledBase(new DistributionWrapper()));
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
         //JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerDistributionWrapper(json);
@@ -2250,7 +2251,7 @@ public class JsonTest {
 
     @Test
     public void testInterpolatorWrapper() {
-        JsonSupport.setNumeralBase(Base.scrambledBase(new InterpolatorWrapper()));
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
         //JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerInterpolatorWrapper(json);
@@ -2266,7 +2267,7 @@ public class JsonTest {
 
     @Test
     public void testReverseWrapper() {
-        JsonSupport.setNumeralBase(Base.scrambledBase(new ReverseWrapper()));
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
         //JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerReverseWrapper(json);
@@ -2281,7 +2282,7 @@ public class JsonTest {
 
     @Test
     public void testDeckWrapper() {
-        JsonSupport.setNumeralBase(Base.scrambledBase(new DeckWrapper()));
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
         //JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
         JsonSupport.registerDeckWrapper(json);
@@ -2290,6 +2291,23 @@ public class JsonTest {
         String data = json.toJson(random);
         System.out.println(data);
         DeckWrapper random2 = json.fromJson(DeckWrapper.class, data);
+        System.out.println(JsonSupport.getNumeralBase().signed(random2.getSelectedState(0)));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
+    @Test
+    public void testCompositeWrapper() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+        //JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerCompositeWrapper(json);
+        CompositeWrapper random = new CompositeWrapper(new AceRandom(123456789), new Xoshiro256MX3Random(987654321));
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        CompositeWrapper random2 = json.fromJson(CompositeWrapper.class, data);
+        System.out.println(random);
+        System.out.println(random2);
         System.out.println(JsonSupport.getNumeralBase().signed(random2.getSelectedState(0)));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }

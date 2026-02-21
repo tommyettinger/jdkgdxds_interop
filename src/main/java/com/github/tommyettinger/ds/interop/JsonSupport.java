@@ -160,6 +160,7 @@ public final class JsonSupport {
         registerReverseWrapper(json);
         registerArchivalWrapper(json);
         registerDeckWrapper(json);
+        registerCompositeWrapper(json);
 
         // from libGDX.
         registerRandomXS128(json);
@@ -4196,6 +4197,31 @@ public final class JsonSupport {
             @Override
             public DeckWrapper read(Json json, JsonValue jsonData, Class type) {
                 DeckWrapper w = new DeckWrapper();
+                w.stringDeserialize(jsonData.asString(), BASE);
+                return w;
+            }
+        });
+    }
+
+    /**
+     * Registers CompositeWrapper with the given Json object, so CompositeWrapper can be written to and read from JSON.
+     * This also registers all other EnhancedRandom types.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerCompositeWrapper(Json json) {
+        if(json.getSerializer(CompositeWrapper.class) != null) return;
+        JsonSupport.registerEnhancedRandom(json);
+        if(ADD_CLASS_TAGS) json.addClassTag("CmpW", CompositeWrapper.class);
+        json.setSerializer(CompositeWrapper.class, new Json.Serializer<CompositeWrapper>() {
+            @Override
+            public void write(Json json, CompositeWrapper object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public CompositeWrapper read(Json json, JsonValue jsonData, Class type) {
+                CompositeWrapper w = new CompositeWrapper();
                 w.stringDeserialize(jsonData.asString(), BASE);
                 return w;
             }
