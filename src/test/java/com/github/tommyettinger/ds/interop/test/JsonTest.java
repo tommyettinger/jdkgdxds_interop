@@ -2111,8 +2111,8 @@ public class JsonTest {
         JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
 //        JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
-        JsonSupport.registerInterpolatedRandom(json);
-        JsonSupport.registerDistributedRandom(json);
+        JsonSupport.registerInterpolatorWrapper(json);
+        JsonSupport.registerDistributionWrapper(json);
         ArrayList<EnhancedRandom> randoms = Deserializer.copyRandoms();
         for(EnhancedRandom r : randoms) {
             EnhancedRandom random = r.copy();
@@ -2232,34 +2232,34 @@ public class JsonTest {
     }
 
     @Test
-    public void testDistributedRandom() {
-        JsonSupport.setNumeralBase(Base.scrambledBase(new DistributedRandom()));
+    public void testDistributionWrapper() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistributionWrapper()));
         //JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
-        JsonSupport.registerDistributedRandom(json);
-        DistributedRandom random = new DistributedRandom(
+        JsonSupport.registerDistributionWrapper(json);
+        DistributionWrapper random = new DistributionWrapper(
                 new KumaraswamyDistribution(new WhiskerRandom(123456789), 2.0, 2.5),
-                DistributedRandom.ReductionMode.FRACTION);
+                DistributionWrapper.ReductionMode.FRACTION);
         random.nextLong();
         String data = json.toJson(random);
         System.out.println(data);
-        DistributedRandom random2 = json.fromJson(DistributedRandom.class, data);
+        DistributionWrapper random2 = json.fromJson(DistributionWrapper.class, data);
         System.out.println(JsonSupport.getNumeralBase().signed(random2.getSelectedState(0)));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
 
     @Test
-    public void testInterpolatedRandom() {
-        JsonSupport.setNumeralBase(Base.scrambledBase(new InterpolatedRandom()));
+    public void testInterpolatorWrapper() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new InterpolatorWrapper()));
         //JsonSupport.setNumeralBase(Base.BASE16);
         Json json = new Json(JsonWriter.OutputType.minimal);
-        JsonSupport.registerInterpolatedRandom(json);
-        InterpolatedRandom random = new InterpolatedRandom(
+        JsonSupport.registerInterpolatorWrapper(json);
+        InterpolatorWrapper random = new InterpolatorWrapper(
                 Interpolations.circleIn, new WhiskerRandom(123456789));
         random.nextLong();
         String data = json.toJson(random);
         System.out.println(data);
-        InterpolatedRandom random2 = json.fromJson(InterpolatedRandom.class, data);
+        InterpolatorWrapper random2 = json.fromJson(InterpolatorWrapper.class, data);
         System.out.println(JsonSupport.getNumeralBase().signed(random2.getSelectedState(0)));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }

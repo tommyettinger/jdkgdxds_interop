@@ -155,8 +155,8 @@ public final class JsonSupport {
         registerInterpolator(json);
 
         // from juniper. these register many others.
-        registerDistributedRandom(json);
-        registerInterpolatedRandom(json);
+        registerDistributionWrapper(json);
+        registerInterpolatorWrapper(json);
 
         // from libGDX.
         registerRandomXS128(json);
@@ -4200,49 +4200,49 @@ public final class JsonSupport {
     }
 
     /**
-     * Registers DistributedRandom with the given Json object, so DistributedRandom can be written to and read from JSON.
+     * Registers DistributionWrapper with the given Json object, so DistributionWrapper can be written to and read from JSON.
      * This also registers all other EnhancedRandom types and all Distribution types.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerDistributedRandom(Json json) {
-        if(json.getSerializer(DistributedRandom.class) != null) return;
+    public static void registerDistributionWrapper(Json json) {
+        if(json.getSerializer(DistributionWrapper.class) != null) return;
         JsonSupport.registerEnhancedRandom(json);
         JsonSupport.registerDistribution(json);
-        if(ADD_CLASS_TAGS) json.addClassTag("DsrR", DistributedRandom.class);
-        json.setSerializer(DistributedRandom.class, new Json.Serializer<DistributedRandom>() {
+        if(ADD_CLASS_TAGS) json.addClassTag("DsrW", DistributionWrapper.class);
+        json.setSerializer(DistributionWrapper.class, new Json.Serializer<DistributionWrapper>() {
             @Override
-            public void write(Json json, DistributedRandom object, Class knownType) {
+            public void write(Json json, DistributionWrapper object, Class knownType) {
                 json.writeValue(object.stringSerialize(BASE));
             }
 
             @Override
-            public DistributedRandom read(Json json, JsonValue jsonData, Class type) {
-                return new DistributedRandom().stringDeserialize(jsonData.asString(), BASE);
+            public DistributionWrapper read(Json json, JsonValue jsonData, Class type) {
+                return new DistributionWrapper().stringDeserialize(jsonData.asString(), BASE);
             }
         });
     }
 
     /**
-     * Registers InterpolatedRandom with the given Json object, so InterpolatedRandom can be written to and read from JSON.
+     * Registers InterpolatorWrapper with the given Json object, so InterpolatorWrapper can be written to and read from JSON.
      * This also registers all other EnhancedRandom types and all Interpolator types.
      *
      * @param json a libGDX Json object that will have a serializer registered
      */
-    public static void registerInterpolatedRandom(Json json) {
-        if(json.getSerializer(InterpolatedRandom.class) != null) return;
+    public static void registerInterpolatorWrapper(Json json) {
+        if(json.getSerializer(InterpolatorWrapper.class) != null) return;
         JsonSupport.registerEnhancedRandom(json);
         JsonSupport.registerInterpolator(json);
-        if(ADD_CLASS_TAGS) json.addClassTag("InrR", InterpolatedRandom.class);
-        json.setSerializer(InterpolatedRandom.class, new Json.Serializer<InterpolatedRandom>() {
+        if(ADD_CLASS_TAGS) json.addClassTag("InrW", InterpolatorWrapper.class);
+        json.setSerializer(InterpolatorWrapper.class, new Json.Serializer<InterpolatorWrapper>() {
             @Override
-            public void write(Json json, InterpolatedRandom object, Class knownType) {
+            public void write(Json json, InterpolatorWrapper object, Class knownType) {
                 json.writeValue(object.stringSerialize(BASE));
             }
 
             @Override
-            public InterpolatedRandom read(Json json, JsonValue jsonData, Class type) {
-                return new InterpolatedRandom().stringDeserialize(jsonData.asString(), BASE);
+            public InterpolatorWrapper read(Json json, JsonValue jsonData, Class type) {
+                return new InterpolatorWrapper().stringDeserialize(jsonData.asString(), BASE);
             }
         });
     }
@@ -4257,8 +4257,8 @@ public final class JsonSupport {
      * {@link GoldenQuasiRandom}, {@link VanDerCorputQuasiRandom},
      * {@link LowChangeQuasiRandom}, {@link TupleQuasiRandom}, and {@link KnownSequenceRandom}, plus
      * {@link AtomicLong} because some subclasses of {@link java.util.Random} need it. This does not register
-     * {@link DistributedRandom} or the wrappers {@link ReverseWrapper} and {@link ArchivalWrapper}, but
-     * {@link #registerDistributedRandom(Json)}, {@link #registerReverseWrapper(Json)}, and
+     * {@link DistributionWrapper} or the wrappers {@link ReverseWrapper} and {@link ArchivalWrapper}, but
+     * {@link #registerDistributionWrapper(Json)}, {@link #registerReverseWrapper(Json)}, and
      * {@link #registerArchivalWrapper(Json)} call this method instead (the first of those also calls
      * {@link #registerDistribution(Json)}).
      * <br>
