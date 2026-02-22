@@ -47,9 +47,10 @@ jar {
 
 import com.vanniktech.maven.publish.JavaLibrary
 import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.SourcesJar
 
 mavenPublishing {
-    configure(new JavaLibrary(new JavadocJar.Javadoc(), true))
+    configure(new JavaLibrary(new JavadocJar.Javadoc(), new SourcesJar.Sources()))
 }
 
 plainJavadocJar.archiveBaseName.set("$projectName")
@@ -63,10 +64,10 @@ compileJava {
 }
 
 compileTestJava {
-    sourceCompatibility = "17"
-    targetCompatibility = "17"
+    sourceCompatibility = "21"
+    targetCompatibility = "21"
     if (JavaVersion.current().isJava9Compatible()) {
-        options.release.set(17)
+        options.release.set(21)
     }
 }
 
