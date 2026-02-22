@@ -105,6 +105,28 @@ public class GdxJsonTest {
     public void testCharArray() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         CharArray numbers = CharArray.with('l', 'i', 'b', 'G', 'D', 'X', '☀');
+        // Fails with a parsing error!
+//        CharArray numbers = CharArray.with('}');
+        String data = json.toJson(numbers);
+        System.out.println(data);
+        CharArray numbers2 = json.fromJson(CharArray.class, data);
+        System.out.print(numbers2.get(0));
+        for (int i = 1; i < numbers2.size; i++) {
+            System.out.print(", ");
+            System.out.print(numbers2.get(i));
+        }
+        Assert.assertEquals(numbers, numbers2);
+        System.out.println();
+    }
+
+//    @Test // Use this line if a libGDX update fixes the closing curly brace bug
+    @Test(expected = com.badlogic.gdx.utils.SerializationException.class) // use this in libGDX 1.14.0 and older
+    public void testCharArrayBraceFailure() {
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        // Each of these will get quoted correctly, no problem
+//        CharArray numbers = CharArray.with('[', ']', '{');
+        // Closing curly brace does not get quoted by libGDX 1.14.0, though only with minimal output type
+        CharArray numbers = CharArray.with('}');
         String data = json.toJson(numbers);
         System.out.println(data);
         CharArray numbers2 = json.fromJson(CharArray.class, data);
