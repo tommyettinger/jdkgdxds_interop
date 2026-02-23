@@ -2230,6 +2230,7 @@ public class JsonTest {
         System.out.println(data);
         KnownSequenceRandom random2 = json.fromJson(KnownSequenceRandom.class, data);
         Assert.assertEquals(random.nextLong(), random2.nextLong());
+        Assert.assertEquals(random, random2);
     }
 
     @Test
@@ -2278,6 +2279,7 @@ public class JsonTest {
         ReverseWrapper random2 = json.fromJson(ReverseWrapper.class, data);
         System.out.println(JsonSupport.getNumeralBase().signed(random2.getSelectedState(0)));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
+        Assert.assertEquals(random, random2);
     }
 
     @Test
@@ -2293,6 +2295,7 @@ public class JsonTest {
         DeckWrapper random2 = json.fromJson(DeckWrapper.class, data);
         System.out.println(JsonSupport.getNumeralBase().signed(random2.getSelectedState(0)));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
+        Assert.assertEquals(random, random2);
     }
 
     @Test
@@ -2310,6 +2313,7 @@ public class JsonTest {
         System.out.println(random2);
         System.out.println(JsonSupport.getNumeralBase().signed(random2.getSelectedState(0)));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
+        Assert.assertEquals(random, random2);
     }
 
     @Test
@@ -2325,6 +2329,7 @@ public class JsonTest {
         ArchivalWrapper random2 = json.fromJson(ArchivalWrapper.class, data);
         System.out.println(JsonSupport.getNumeralBase().signed(random2.getSelectedState(0)));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
+        Assert.assertEquals(random, random2);
     }
     
     @Test
