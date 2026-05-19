@@ -206,6 +206,70 @@ public class ConversionToJDK {
     }
 
     /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.LongSet}
+     * to a new jdkgdxds {@link LongList}.
+     * @param from a libGDX LongSet
+     * @return a new jdkgdxds LongList holding the items in {@code from}
+     */
+    public static LongList toLongList(com.badlogic.gdx.utils.LongSet from) {
+        LongList set = new LongList(from.size);
+        com.badlogic.gdx.utils.LongSet.LongSetIterator it = from.iterator();
+        while (it.hasNext) {
+            set.add(it.next());
+        }
+        return set;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.LongSet}
+     * to a new jdkgdxds {@link LongBag}.
+     * @param from a libGDX LongSet
+     * @return a new jdkgdxds LongBag holding the items in {@code from}
+     */
+    public static LongBag toLongBag(com.badlogic.gdx.utils.LongSet from) {
+        LongBag set = new LongBag(from.size);
+        com.badlogic.gdx.utils.LongSet.LongSetIterator it = from.iterator();
+        while (it.hasNext) {
+            set.add(it.next());
+        }
+        return set;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.LongSet}
+     * to a new jdkgdxds {@link LongSet}.
+     * @param from a libGDX LongSet
+     * @return a new jdkgdxds LongSet holding the unique items in {@code from}
+     */
+    public static LongSet toLongSet(com.badlogic.gdx.utils.LongSet from) {
+        LongSet set = new LongSet(from.size);
+        com.badlogic.gdx.utils.LongSet.LongSetIterator it = from.iterator();
+        while (it.hasNext) {
+            set.add(it.next());
+        }
+        return set;
+    }
+
+    /**
+     * Can be used to convert from a libGDX {@link com.badlogic.gdx.utils.LongSet}
+     * to a new jdkgdxds {@link LongSet}. Because a libGDX LongSet is not
+     * meaningfully ordered, the initial order of the LongOrderedSet this returns is
+     * probably not going to match the insertion order for the LongSet. You can sort
+     * an {@link LongOrderedSet} with {@link LongOrderedSet#sort()}.
+
+     * @param from a libGDX LongSet
+     * @return a new jdkgdxds LongOrderedSet holding the unique items in {@code from}
+     */
+    public static LongOrderedSet toLongOrderedSet(com.badlogic.gdx.utils.LongSet from) {
+        LongOrderedSet set = new LongOrderedSet(from.size);
+        com.badlogic.gdx.utils.LongSet.LongSetIterator it = from.iterator();
+        while (it.hasNext) {
+            set.add(it.next());
+        }
+        return set;
+    }
+
+    /**
      * Can be used to convert from a libGDX FloatArray to a jdkgdxds FloatList.
      * @param from a libGDX FloatArray
      * @return a new FloatList holding the items of {@code from}
@@ -478,7 +542,7 @@ public class ConversionToJDK {
      * probably not going to match the insertion order for the IntSet. You can sort
      * an {@link IntOrderedSet} with {@link IntOrderedSet#sort()}.
      * @param from a libGDX IntSet
-     * @return a new jdkgdxds IntSet holding the unique items in {@code from}
+     * @return a new jdkgdxds IntOrderedSet holding the unique items in {@code from}
      */
     public static IntOrderedSet toIntOrderedSet(com.badlogic.gdx.utils.IntSet from) {
         IntOrderedSet set = new IntOrderedSet(from.size);
@@ -981,6 +1045,20 @@ public class ConversionToJDK {
         LongDeque deque = new LongDeque(from.size);
         for (int i = 0; i < from.size; i++) {
             deque.add(from.get(i));
+        }
+        return deque;
+    }
+
+    /**
+     * Can be used to convert from a libGDX LongSet to a jdkgdxds LongDeque.
+     * @param from a libGDX LongSet
+     * @return a new LongDeque holding the items of {@code from}
+     */
+    public static LongDeque toLongDeque(com.badlogic.gdx.utils.LongSet from){
+        LongDeque deque = new LongDeque(from.size);
+        com.badlogic.gdx.utils.LongSet.LongSetIterator it = from.iterator();
+        while (it.hasNext) {
+            deque.add(it.next());
         }
         return deque;
     }

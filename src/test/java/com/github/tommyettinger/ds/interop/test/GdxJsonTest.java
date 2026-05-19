@@ -119,8 +119,8 @@ public class GdxJsonTest {
         System.out.println();
     }
 
-//    @Test // Use this line if a libGDX update fixes the closing curly brace bug
-    @Test(expected = com.badlogic.gdx.utils.SerializationException.class) // use this in libGDX 1.14.0 and older
+    @Test // Use this line if a libGDX update fixes the closing curly brace bug
+//    @Test(expected = com.badlogic.gdx.utils.SerializationException.class) // use this in libGDX 1.14.0 and older
     public void testCharArrayBraceFailure() {
         Json json = new Json(JsonWriter.OutputType.minimal);
         // Each of these will get quoted correctly, no problem
