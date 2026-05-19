@@ -19,6 +19,7 @@ package com.github.tommyettinger.ds.interop;
 import com.badlogic.gdx.utils.IntFloatMap;
 import com.badlogic.gdx.utils.IntIntMap;
 import com.badlogic.gdx.utils.IntSet;
+import com.badlogic.gdx.utils.LongSet;
 import com.badlogic.gdx.utils.ObjectFloatMap;
 import com.badlogic.gdx.utils.ObjectIntMap;
 import com.badlogic.gdx.utils.ObjectLongMap;
@@ -218,6 +219,22 @@ public class ConversionToGDX {
         IntIterator it = from.iterator();
         while (it.hasNext()) {
             set.add(it.nextInt());
+        }
+        return set;
+    }
+
+    /**
+     * Can be used to convert from any int-based PrimitiveCollection, such as an {@link LongList},
+     * {@link com.github.tommyettinger.ds.LongSet}, or {@link com.github.tommyettinger.ds.LongLongMap.Keys},
+     * to a new libGDX LongSet, using only the unique items in {@code from}.
+     * @param from a primitive-int-backed data structure from jdkgdxds
+     * @return a new LongSet holding the unique items in {@code from}
+     */
+    public static LongSet toLongSet(PrimitiveCollection.OfLong from) {
+        LongSet set = new LongSet(from.size());
+        LongIterator it = from.iterator();
+        while (it.hasNext()) {
+            set.add(it.nextLong());
         }
         return set;
     }
