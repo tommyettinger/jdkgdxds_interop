@@ -2105,7 +2105,30 @@ public class JsonTest {
         System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateD()));
         Assert.assertEquals(random.nextLong(), random2.nextLong());
     }
-        
+
+    @Test
+    public void testExtendoRandom() {
+        JsonSupport.setNumeralBase(Base.scrambledBase(new DistinctRandom()));
+//        JsonSupport.setNumeralBase(Base.BASE16);
+        Json json = new Json(JsonWriter.OutputType.minimal);
+        JsonSupport.registerExtendoRandom(json);
+        ExtendoRandom random = new ExtendoRandom(123456789, 0xFA7BAB1E5L, 0xB0BAFE77L, 0x1234123412341234L);
+        random.nextLong();
+        String data = json.toJson(random);
+        System.out.println(data);
+        ExtendoRandom random2 = json.fromJson(ExtendoRandom.class, data);
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateA()));
+        System.out.println(JsonSupport.getNumeralBase().unsigned(random2.getStateB()));
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+        Assert.assertEquals(random.nextLong(), random2.nextLong());
+    }
+
 
     @Test
     public void testAllEnhancedRandom() {

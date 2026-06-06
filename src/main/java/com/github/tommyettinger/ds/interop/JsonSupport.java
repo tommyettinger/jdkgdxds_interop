@@ -3944,6 +3944,29 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers ExtendoRandom with the given Json object, so ExtendoRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerExtendoRandom(Json json) {
+        if(json.getSerializer(ExtendoRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("ExoR", ExtendoRandom.class);
+        json.setSerializer(ExtendoRandom.class, new Json.Serializer<ExtendoRandom>() {
+            @Override
+            public void write(Json json, ExtendoRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public ExtendoRandom read(Json json, JsonValue jsonData, Class type) {
+                ExtendoRandom r = new ExtendoRandom(1, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers MaceRandom with the given Json object, so MaceRandom can be written to and read from JSON.
      * Note that MaceRandom is deprecated, and using {@link TraceRandom} instead is encouraged.
      *
@@ -4333,6 +4356,7 @@ public final class JsonSupport {
         registerChopRandom(json);
         registerCrand64Random(json);
         registerDistinctRandom(json);
+        registerExtendoRandom(json);
         registerFlowRandom(json);
         registerFourWheelRandom(json);
         registerGoldenQuasiRandom(json);
