@@ -62,10 +62,16 @@ but long packages add to file size and can also be strenuous to read repeatedly.
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api` if other dependency
 lines do the same, is: 
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:2.1.4.0"
+implementation "com.github.tommyettinger:jdkgdxds_interop:2.1.5.0"
 ```
 It's not unlikely that you might need `api` instead of `implementation`, especially if you are writing a library, or a
 module that needs to be used from another section.
+
+Maven Central is no longer a feasible way to release this library, so we use JitPack to release stable releases
+as well as commits.
+See [my rant in the digital project](https://github.com/tommyettinger/digital#rant) for why.
+See [JitPack's information on using it as a repo](https://jitpack.io/#tommyettinger/jdkgdxds_interop) if you don't
+use gdx-liftoff to create projects, or you are otherwise making a project yourself and don't already use JitPack.
 
 This library currently depends on libGDX 1.14.2, and uses its `Json` class heavily. Newer versions should be checked for
 any breaking changes that can affect Json or the classes that `ConversionToJDK`/`ConversionToGDX` handle.
@@ -75,10 +81,10 @@ If you use GWT (libGDX's HTML target), then you also need this in your `html/bui
 ```groovy
 implementation "com.badlogicgames.gdx:gdx:1.14.2:sources"
 implementation "com.github.tommyettinger:funderby:0.1.2:sources"
-implementation "com.github.tommyettinger:digital:0.10.1:sources"
-implementation "com.github.tommyettinger:juniper:0.10.4:sources"
-implementation "com.github.tommyettinger:jdkgdxds:2.1.4:sources"
-implementation "com.github.tommyettinger:jdkgdxds_interop:2.1.4.0:sources"
+implementation "com.github.tommyettinger:digital:0.10.2:sources"
+implementation "com.github.tommyettinger:juniper:0.10.5:sources"
+implementation "com.github.tommyettinger:jdkgdxds:2.1.5:sources"
+implementation "com.github.tommyettinger:jdkgdxds_interop:2.1.5.0:sources"
 ```
 
 Newer versions of funderby, digital, and possibly juniper and jdkgdxds may be usable as well.
