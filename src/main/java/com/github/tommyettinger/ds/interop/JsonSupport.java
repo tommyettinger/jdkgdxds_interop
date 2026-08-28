@@ -3667,6 +3667,29 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers WoolRandom with the given Json object, so WoolRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerWoolRandom(Json json) {
+        if(json.getSerializer(WoolRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("WolR", WoolRandom.class);
+        json.setSerializer(WoolRandom.class, new Json.Serializer<WoolRandom>() {
+            @Override
+            public void write(Json json, WoolRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public WoolRandom read(Json json, JsonValue jsonData, Class type) {
+                WoolRandom r = new WoolRandom(1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers Mx3Random with the given Json object, so Mx3Random can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -4414,6 +4437,7 @@ public final class JsonSupport {
         registerTupleQuasiRandom(json);
         registerVanDerCorputQuasiRandom(json);
         registerWhiskerRandom(json);
+        registerWoolRandom(json);
         registerXoroshiro128StarStarRandom(json);
         registerXoshiro128PlusPlusRandom(json);
         registerXoshiro160RoadroxoRandom(json);
