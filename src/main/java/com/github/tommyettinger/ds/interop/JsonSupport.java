@@ -5303,7 +5303,10 @@ public final class JsonSupport {
                 try {
                     return Deserializer.deserializeDistribution(jsonData.asString(), BASE);
                 } catch (RuntimeException e) {
-                    Gdx.app.error("Json Read Exception (Distribution)", e.toString());
+                    if(Gdx.app != null)
+                        Gdx.app.error("Json Read Exception (Distribution)", e.toString());
+                    else
+                        System.out.println("Json Read Exception (Distribution): " + e);
                     return null;
                 }
             }
@@ -5406,7 +5409,10 @@ public final class JsonSupport {
                     try {
                         return ClassReflection.forName(jsonData.asString());
                     } catch (ReflectionException e) {
-                        Gdx.app.error("Json Read Exception (Class)", e.toString());
+                        if(Gdx.app != null)
+                            Gdx.app.error("Json Read Exception (Class)", e.toString());
+                        else
+                            System.out.println("Json Read Exception (Class): " + e);
                         return null;
                     }
                 }
