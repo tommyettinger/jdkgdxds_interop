@@ -3644,6 +3644,29 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers QoaxsrRandom with the given Json object, so QoaxsrRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerQoaxsrRandom(Json json) {
+        if(json.getSerializer(QoaxsrRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("QxrR", QoaxsrRandom.class);
+        json.setSerializer(QoaxsrRandom.class, new Json.Serializer<QoaxsrRandom>() {
+            @Override
+            public void write(Json json, QoaxsrRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public QoaxsrRandom read(Json json, JsonValue jsonData, Class type) {
+                QoaxsrRandom r = new QoaxsrRandom(1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers Mx3Random with the given Json object, so Mx3Random can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -4375,6 +4398,7 @@ public final class JsonSupport {
         registerPasarRandom(json);
         registerPcgRXSMXSRandom(json);
         registerPouchRandom(json);
+        registerQoaxsrRandom(json);
         registerRespite32Random(json);
         registerRomuTrioRandom(json);
         registerScruffRandom(json);
@@ -4408,7 +4432,10 @@ public final class JsonSupport {
                 try {
                     return Deserializer.deserialize(jsonData.asString(), BASE);
                 } catch (RuntimeException e) {
-                    Gdx.app.error("Json Read Exception (EnhancedRandom)", e.toString());
+                    if(Gdx.app != null)
+                        Gdx.app.error("Json Read Exception (EnhancedRandom)", e.toString());
+                    else
+                        System.out.println("Json Read Exception (EnhancedRandom): " + e);
                     return null;
                 }
             }
