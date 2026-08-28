@@ -3690,6 +3690,52 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers XorShiftBasic64QuasiRandom with the given Json object, so XorShiftBasic64QuasiRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerXorShiftBasic64QuasiRandom(Json json) {
+        if(json.getSerializer(XorShiftBasic64QuasiRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("XB6R", XorShiftBasic64QuasiRandom.class);
+        json.setSerializer(XorShiftBasic64QuasiRandom.class, new Json.Serializer<XorShiftBasic64QuasiRandom>() {
+            @Override
+            public void write(Json json, XorShiftBasic64QuasiRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public XorShiftBasic64QuasiRandom read(Json json, JsonValue jsonData, Class type) {
+                XorShiftBasic64QuasiRandom r = new XorShiftBasic64QuasiRandom(1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers XorShift64QuasiRandom with the given Json object, so XorShift64QuasiRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerXorShift64QuasiRandom(Json json) {
+        if(json.getSerializer(XorShift64QuasiRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("XS6R", XorShift64QuasiRandom.class);
+        json.setSerializer(XorShift64QuasiRandom.class, new Json.Serializer<XorShift64QuasiRandom>() {
+            @Override
+            public void write(Json json, XorShift64QuasiRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public XorShift64QuasiRandom read(Json json, JsonValue jsonData, Class type) {
+                XorShift64QuasiRandom r = new XorShift64QuasiRandom(1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers Mx3Random with the given Json object, so Mx3Random can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -4439,6 +4485,8 @@ public final class JsonSupport {
         registerWhiskerRandom(json);
         registerWoolRandom(json);
         registerXoroshiro128StarStarRandom(json);
+        registerXorShift64QuasiRandom(json);
+        registerXorShiftBasic64QuasiRandom(json);
         registerXoshiro128PlusPlusRandom(json);
         registerXoshiro160RoadroxoRandom(json);
         registerXoshiro256MX3Random(json);
