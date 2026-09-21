@@ -3092,6 +3092,121 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers Goblin3Random with the given Json object, so Goblin3Random can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerGoblin3Random(Json json) {
+        if(json.getSerializer(Goblin3Random.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("Gb3R", Goblin3Random.class);
+        json.setSerializer(Goblin3Random.class, new Json.Serializer<Goblin3Random>() {
+            @Override
+            public void write(Json json, Goblin3Random object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Goblin3Random read(Json json, JsonValue jsonData, Class type) {
+                Goblin3Random r = new Goblin3Random(1L, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers Goblin4Random with the given Json object, so Goblin4Random can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerGoblin4Random(Json json) {
+        if(json.getSerializer(Goblin4Random.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("Gb4R", Goblin4Random.class);
+        json.setSerializer(Goblin4Random.class, new Json.Serializer<Goblin4Random>() {
+            @Override
+            public void write(Json json, Goblin4Random object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Goblin4Random read(Json json, JsonValue jsonData, Class type) {
+                Goblin4Random r = new Goblin4Random(1L, 1L, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers Goblin5Random with the given Json object, so Goblin5Random can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerGoblin5Random(Json json) {
+        if(json.getSerializer(Goblin5Random.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("Gb5R", Goblin5Random.class);
+        json.setSerializer(Goblin5Random.class, new Json.Serializer<Goblin5Random>() {
+            @Override
+            public void write(Json json, Goblin5Random object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Goblin5Random read(Json json, JsonValue jsonData, Class type) {
+                Goblin5Random r = new Goblin5Random(1L, 1L, 1L, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers Goblin6Random with the given Json object, so Goblin6Random can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerGoblin6Random(Json json) {
+        if(json.getSerializer(Goblin6Random.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("Gb6R", Goblin6Random.class);
+        json.setSerializer(Goblin6Random.class, new Json.Serializer<Goblin6Random>() {
+            @Override
+            public void write(Json json, Goblin6Random object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Goblin6Random read(Json json, JsonValue jsonData, Class type) {
+                Goblin6Random r = new Goblin6Random(1L, 1L, 1L, 1L, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers Goblin7Random with the given Json object, so Goblin7Random can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerGoblin7Random(Json json) {
+        if(json.getSerializer(Goblin7Random.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("Gb7R", Goblin7Random.class);
+        json.setSerializer(Goblin7Random.class, new Json.Serializer<Goblin7Random>() {
+            @Override
+            public void write(Json json, Goblin7Random object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Goblin7Random read(Json json, JsonValue jsonData, Class type) {
+                Goblin7Random r = new Goblin7Random(1L, 1L, 1L, 1L, 1L, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers TrimRandom with the given Json object, so TrimRandom can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -3384,6 +3499,29 @@ public final class JsonSupport {
             @Override
             public Xoshiro256StarStarRandom read(Json json, JsonValue jsonData, Class type) {
                 Xoshiro256StarStarRandom r = new Xoshiro256StarStarRandom(1L, 1L, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers Xoshiro512PlusPlusRandom with the given Json object, so Xoshiro512PlusPlusRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerXoshiro512PlusPlusRandom(Json json) {
+        if(json.getSerializer(Xoshiro512PlusPlusRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("X5PR", Xoshiro512PlusPlusRandom.class);
+        json.setSerializer(Xoshiro512PlusPlusRandom.class, new Json.Serializer<Xoshiro512PlusPlusRandom>() {
+            @Override
+            public void write(Json json, Xoshiro512PlusPlusRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Xoshiro512PlusPlusRandom read(Json json, JsonValue jsonData, Class type) {
+                Xoshiro512PlusPlusRandom r = new Xoshiro512PlusPlusRandom(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L);
                 r.stringDeserialize(jsonData.asString(), BASE);
                 return r;
             }
@@ -4451,6 +4589,11 @@ public final class JsonSupport {
         registerExtendoRandom(json);
         registerFlowRandom(json);
         registerFourWheelRandom(json);
+        registerGoblin3Random(json);
+        registerGoblin4Random(json);
+        registerGoblin5Random(json);
+        registerGoblin6Random(json);
+        registerGoblin7Random(json);
         registerGoldenQuasiRandom(json);
         registerHornRandom(json);
         registerJsf32Random(json);
@@ -4491,6 +4634,7 @@ public final class JsonSupport {
         registerXoshiro160RoadroxoRandom(json);
         registerXoshiro256MX3Random(json);
         registerXoshiro256StarStarRandom(json);
+        registerXoshiro512PlusPlusRandom(json);
         if(ADD_CLASS_TAGS) json.addClassTag("EnhR", EnhancedRandom.class);
         json.setSerializer(EnhancedRandom.class, new Json.Serializer<EnhancedRandom>() {
             @Override
