@@ -3414,6 +3414,29 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers Jamb32Random with the given Json object, so Jamb32Random can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerJamb32Random(Json json) {
+        if(json.getSerializer(Jamb32Random.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("Jm3R", Jamb32Random.class);
+        json.setSerializer(Jamb32Random.class, new Json.Serializer<Jamb32Random>() {
+            @Override
+            public void write(Json json, Jamb32Random object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public Jamb32Random read(Json json, JsonValue jsonData, Class type) {
+                Jamb32Random r = new Jamb32Random(1, 1);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers Xoshiro160RoadroxoRandom with the given Json object, so Xoshiro160RoadroxoRandom can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -4197,6 +4220,52 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers L64X128MixRandom with the given Json object, so L64X128MixRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerL64X128MixRandom(Json json) {
+        if(json.getSerializer(L64X128MixRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("LxMR", L64X128MixRandom.class);
+        json.setSerializer(L64X128MixRandom.class, new Json.Serializer<L64X128MixRandom>() {
+            @Override
+            public void write(Json json, L64X128MixRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public L64X128MixRandom read(Json json, JsonValue jsonData, Class type) {
+                L64X128MixRandom r = new L64X128MixRandom(1L, 1L, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
+     * Registers L64X256MixRandom with the given Json object, so L64X256MixRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerL64X256MixRandom(Json json) {
+        if(json.getSerializer(L64X256MixRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("Gb6R", L64X256MixRandom.class);
+        json.setSerializer(L64X256MixRandom.class, new Json.Serializer<L64X256MixRandom>() {
+            @Override
+            public void write(Json json, L64X256MixRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public L64X256MixRandom read(Json json, JsonValue jsonData, Class type) {
+                L64X256MixRandom r = new L64X256MixRandom(1L, 1L, 1L, 1L, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers MaceRandom with the given Json object, so MaceRandom can be written to and read from JSON.
      * Note that MaceRandom is deprecated, and using {@link TraceRandom} instead is encouraged.
      *
@@ -4596,11 +4665,14 @@ public final class JsonSupport {
         registerGoblin7Random(json);
         registerGoldenQuasiRandom(json);
         registerHornRandom(json);
+        registerJamb32Random(json);
         registerJsf32Random(json);
         registerKnownSequenceRandom(json);
         registerLamb32Random(json);
         registerLaserRandom(json);
         registerLCG64Random(json);
+        registerL64X128MixRandom(json);
+        registerL64X256MixRandom(json);
         registerLFSR64QuasiRandom(json);
         registerLowChangeQuasiRandom(json);
         registerMaceRandom(json);
