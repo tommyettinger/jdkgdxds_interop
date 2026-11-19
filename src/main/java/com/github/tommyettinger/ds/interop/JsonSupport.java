@@ -4197,6 +4197,29 @@ public final class JsonSupport {
     }
 
     /**
+     * Registers GraceRandom with the given Json object, so GraceRandom can be written to and read from JSON.
+     *
+     * @param json a libGDX Json object that will have a serializer registered
+     */
+    public static void registerGraceRandom(Json json) {
+        if(json.getSerializer(GraceRandom.class) != null) return;
+        if(ADD_CLASS_TAGS) json.addClassTag("GrcR", GraceRandom.class);
+        json.setSerializer(GraceRandom.class, new Json.Serializer<GraceRandom>() {
+            @Override
+            public void write(Json json, GraceRandom object, Class knownType) {
+                json.writeValue(object.stringSerialize(BASE));
+            }
+
+            @Override
+            public GraceRandom read(Json json, JsonValue jsonData, Class type) {
+                GraceRandom r = new GraceRandom(1, 1L, 1L, 1L, 1L, 1L);
+                r.stringDeserialize(jsonData.asString(), BASE);
+                return r;
+            }
+        });
+    }
+
+    /**
      * Registers ExtendoRandom with the given Json object, so ExtendoRandom can be written to and read from JSON.
      *
      * @param json a libGDX Json object that will have a serializer registered
@@ -4664,6 +4687,7 @@ public final class JsonSupport {
         registerGoblin6Random(json);
         registerGoblin7Random(json);
         registerGoldenQuasiRandom(json);
+        registerGraceRandom(json);
         registerHornRandom(json);
         registerJamb32Random(json);
         registerJsf32Random(json);
