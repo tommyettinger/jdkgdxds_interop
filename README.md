@@ -38,8 +38,8 @@ Java 17 and higher block libGDX's `Json` class from accessing the state of `java
 serialization of subclasses unless they use custom serialization. This also means that `java.util.Random` can't be
 serialized or deserialized by libGDX `Json` on JDK 17 or higher, even with a custom serializer, unless some special
 additional work happens (and even that might not work on future JDKs). `digital`'s `AlternateRandom` class is also now
-serializable here; its algorithm is the same as `PasarRandom` from juniper, but it doesn't have as many features, so
-simply using `PasarRandom` is preferable if you depend on juniper anyway. 
+serializable here; its algorithm is the same as `AceRandom` from juniper, but it doesn't have as many features, so
+simply using `AceRandom` is preferable if you depend on juniper anyway. 
 
 Starting with juniper 0.1.0, it now contains quite a few statistical distributions, each of which stores some parameter
 or parameters and an EnhancedRandom to generate numbers. These can all be registered individually or as a group by
@@ -62,7 +62,7 @@ but long packages add to file size and can also be strenuous to read repeatedly.
 The Gradle dependency, with the usual caveats about optionally replacing `implementation` with `api` if other dependency
 lines do the same, is: 
 ```groovy
-implementation "com.github.tommyettinger:jdkgdxds_interop:2.1.9.2"
+implementation "com.github.tommyettinger:jdkgdxds_interop:2.1.9.3"
 ```
 It's not unlikely that you might need `api` instead of `implementation`, especially if you are writing a library, or a
 module that needs to be used from another section.
@@ -82,9 +82,9 @@ If you use GWT (libGDX's HTML target), then you also need this in your `html/bui
 implementation "com.badlogicgames.gdx:gdx:1.14.2:sources"
 implementation "com.github.tommyettinger:funderby:0.1.2:sources"
 implementation "com.github.tommyettinger:digital:0.10.3:sources"
-implementation "com.github.tommyettinger:juniper:0.10.9:sources"
+implementation "com.github.tommyettinger:juniper:0.11.0:sources"
 implementation "com.github.tommyettinger:jdkgdxds:2.1.9:sources"
-implementation "com.github.tommyettinger:jdkgdxds_interop:2.1.9.2:sources"
+implementation "com.github.tommyettinger:jdkgdxds_interop:2.1.9.3:sources"
 ```
 
 Newer versions of funderby, digital, and possibly juniper and jdkgdxds may be usable as well.
